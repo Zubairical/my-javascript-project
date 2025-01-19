@@ -1,0 +1,47 @@
+[
+  {
+    "name": "John Doe",
+    "fatherName": "Ali Khan",
+    "class": "10th",
+    "rollNo": "12345",
+    "urdu": 85,
+    "english": 75,
+    "historyGeo": 70,
+    "maths": 95,
+    "gScience": 80,
+    "drawing": 90,
+    "cScience": 88,
+    "pashto": 82,
+    "qirat": 89
+  },
+  {
+    "name": "Sara Khan",
+    "fatherName": "Imran Khan",
+    "class": "10th",
+    "rollNo": "12346",
+    "urdu": 90,
+    "english": 88,
+    "historyGeo": 92,
+    "maths": 75,
+    "gScience": 80,
+    "drawing": 84,
+    "cScience": 87,
+    "pashto": 79,
+    "qirat": 95
+  },
+  {
+    "name": "Tariq Ali",
+    "fatherName": "Aslam Ali",
+    "class": "10th",
+    "rollNo": "12347",
+    "urdu": 78,
+    "english": 72,
+    "historyGeo": 65,
+    "maths": 90,
+    "gScience": 82,
+    "drawing": 80,
+    "cScience": 84,
+    "pashto": 88,
+    "qirat": 91
+  }
+]
