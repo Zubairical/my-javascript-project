@@ -1,206 +1,187 @@
-<div id="report-card-app" style="padding: 20px; max-width: 800px; margin: auto; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; background-color: #ffffff;">
-  <input 
-    type="text" 
-    id="searchInput" 
-    placeholder="Search by Name, Roll No, or Father Name" 
-    style="width: 100%; padding: 15px; margin-bottom: 20px; box-sizing: border-box; font-size: 18px; border: 1px solid #ddd; border-radius: 5px;">
-  <div style="display: flex; justify-content: space-between; gap: 10px;">
-    <button 
-      onclick="searchStudent()" 
-      style="flex: 1; padding: 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 18px;">Search</button>
-    <button 
-      onclick="clearData()" 
-      style="flex: 1; padding: 15px; background-color: #f44336; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 18px;">Clear</button>
-  </div>
+<div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report Card</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <div id="reportCard" style="display: none; border: 1px solid #ddd; padding: 20px; margin-top: 20px; background-color: #f9f9f9; border-radius: 5px;">
-    <h2 style="text-align: center; margin-bottom: 20px; color: #333;">Student Report Card</h2>
-    <div id="studentBio" style="margin-bottom: 20px; line-height: 1.8;">
-      <p><strong>Name:</strong> <span id="bioName"></span></p>
-      <p><strong>Father Name:</strong> <span id="bioFatherName"></span></p>
-      <p><strong>Roll No:</strong> <span id="bioRollNo"></span></p>
-      <p><strong>Class:</strong> <span id="bioClass"></span></p>
+    <div class="container mt-5">
+        <h2 class="text-center">GHS Pishlor Martung Shangla</h2>
+        <h4 class="text-center">Student Report Card</h4>
+
+        <!-- Search Bar -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <input type="text" id="searchInput" class="form-control" placeholder="Enter Name, Father Name, or Roll No">
+                <button class="btn btn-primary mt-3 w-100" id="searchBtn">Search</button>
+                <button class="btn btn-secondary mt-3 w-100" id="clearBtn">Clear</button>
+            </div>
+        </div>
+
+        <!-- Report Card Display -->
+        <div id="reportCard" class="d-none p-3 border rounded bg-light">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Student Report Card</h5>
+                </div>
+                <div class="card-body">
+                    <h6><strong>Name:</strong> <span id="studentName"></span></h6>
+                    <h6><strong>Father Name:</strong> <span id="fatherName"></span></h6>
+                    <h6><strong>Class:</strong> <span id="studentClass"></span></h6>
+                    <h6><strong>Roll No:</strong> <span id="rollNo"></span></h6>
+
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Marks Obtained</th>
+                                <th>Total Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Urdu</td><td id="urduMarks"></td><td>100</td></tr>
+                            <tr><td>English</td><td id="englishMarks"></td><td>100</td></tr>
+                            <tr><td>Hist & Geo</td><td id="historyMarks"></td><td>100</td></tr>
+                            <tr><td>Maths</td><td id="mathsMarks"></td><td>100</td></tr>
+                            <tr><td>G. Science</td><td id="gScienceMarks"></td><td>100</td></tr>
+                            <tr><td>Drawing</td><td id="drawingMarks"></td><td>100</td></tr>
+                            <tr><td>C. Science</td><td id="cScienceMarks"></td><td>100</td></tr>
+                            <tr><td>Pashto</td><td id="pashtoMarks"></td><td>100</td></tr>
+                            <tr><td>Qir'at</td><td id="qiratMarks"></td><td>100</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h6><strong>Percentage:</strong> <span id="percentage"></span>%</h6>
+                    <h6><strong>Remarks:</strong> <span id="remarks"></span></h6>
+
+                    <div id="wishMessage" class="alert mt-3" role="alert"></div>
+
+                    <p class="text-muted mt-3">
+                        <em>Errors/Omissions are subject to subsequent rectification.<br>By: Rashid Ahmad SST IT</em>
+                    </p>
+
+                    <!-- Download Button -->
+                    <button id="downloadBtn" class="btn btn-success w-100 mt-3">Download Report</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="alert alert-danger mt-3 d-none" role="alert">No record found for the entered information.</div>
     </div>
 
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; text-align: left;">
-      <thead>
-        <tr style="background-color: #f1f1f1;">
-          <th style="border: 1px solid #ddd; padding: 12px;">Subject</th>
-          <th style="border: 1px solid #ddd; padding: 12px;">Marks Obtained</th>
-          <th style="border: 1px solid #ddd; padding: 12px;">Total Marks</th>
-        </tr>
-      </thead>
-      <tbody id="marksTable"></tbody>
-    </table>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const studentsData = [
+            {
+                name: "Ali Khan",
+                fatherName: "Shah Wali Khan",
+                class: "10th",
+                rollNo: "12345",
+                urdu: 85,
+                english: 90,
+                historyGeo: 80,
+                maths: 70,
+                gScience: 60,
+                drawing: 75,
+                cScience: 65,
+                pashto: 88,
+                qirat: 92
+            },
+            {
+                name: "Sara Bibi",
+                fatherName: "Zahid Bibi",
+                class: "9th",
+                rollNo: "12346",
+                urdu: 45,
+                english: 50,
+                historyGeo: 40,
+                maths: 45,
+                gScience: 50,
+                drawing: 55,
+                cScience: 60,
+                pashto: 40,
+                qirat: 30
+            },
+            {
+                name: "Zubair Ahmad",
+                fatherName: "Ali",
+                class: "9th",
+                rollNo: "2",
+                urdu: 45,
+                english: 50,
+                historyGeo: 40,
+                maths: 45,
+                gScience: 50,
+                drawing: 55,
+                cScience: 60,
+                pashto: 40,
+                qirat: 30
+            }
+        ];
 
-    <div style="margin-bottom: 20px; line-height: 1.8;">
-      <p><strong>Grand Obtained Marks:</strong> <span id="grandObtainedMarks"></span></p>
-      <p><strong>Grand Total Marks:</strong> <span id="grandTotalMarks"></span></p>
-    </div>
+        const searchBtn = document.getElementById("searchBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const downloadBtn = document.getElementById("downloadBtn");
+        const reportCard = document.getElementById("reportCard");
+        const errorMessage = document.getElementById("errorMessage");
 
-    <p><strong>Percentage:</strong> <span id="percentage"></span></p>
-    <p><strong>Remarks:</strong> <span id="remarks"></span></p>
-    <p id="passMessage" style="color: green; font-weight: bold; font-size: 18px;"></p>
-    <p id="failMessage" style="color: red; font-weight: bold; font-size: 18px;"></p>
+        function calculatePercentage(marks) {
+            const totalMarks = 100 * 9;
+            const obtainedMarks = marks.reduce((acc, mark) => acc + mark, 0);
+            return (obtainedMarks / totalMarks) * 100;
+        }
 
-    <button 
-      onclick="downloadReport()" 
-      style="width: 100%; padding: 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 18px;">Download Report</button>
-  </div>
+        function displayReportCard(student) {
+            const marks = [
+                student.urdu,
+                student.english,
+                student.historyGeo,
+                student.maths,
+                student.gScience,
+                student.drawing,
+                student.cScience,
+                student.pashto,
+                student.qirat
+            ];
 
-  <p id="noRecord" style="color: red; font-weight: bold; text-align: center; margin-top: 20px;"></p>
+            const percentage = calculatePercentage(marks);
+            const remarks = percentage < 33 ? "Failed" : "Passed";
+            const wishMessage = percentage < 33 ? "Better luck next time!" : "Congratulations on passing!";
+
+            document.getElementById("studentName").textContent = student.name;
+            document.getElementById("fatherName").textContent = student.fatherName;
+            document.getElementById("studentClass").textContent = student.class;
+            document.getElementById("rollNo").textContent = student.rollNo;
+
+            document.getElementById("urduMarks").textContent = student.urdu;
+            document.getElementById("englishMarks").textContent = student.english;
+            document.getElementById("historyMarks").textContent = student.historyGeo;
+            document.getElementById("mathsMarks").textContent = student.maths;
+            document.getElementById("gScienceMarks").textContent = student.gScience;
+            document.getElementById("drawingMarks").textContent = student.drawing;
+            document.getElementById("cScienceMarks").textContent = student.cScience;
+            document.getElementById("pashtoMarks").textContent = student.pashto;
+            document.getElementById("qiratMarks").textContent = student.qirat;
+
+            document.getElementById("percentage").textContent = percentage.toFixed(2);
+            document.getElementById("remarks").textContent = remarks;
+            document.getElementById("wishMessage").classList.add(remarks === "Failed" ? "alert-danger" : "alert-success");
+            document.getElementById("wishMessage").textContent = wishMessage;
+
+            reportCard.classList.remove("d-none");
+            errorMessage.classList.add("d-none");
+        }
+
+        function searchStudent() {
+            const searchQuery = document.getElementById("searchInput").value.toLowerCase().trim();
+            const student = studentsData.find(student => student.name.toLowerCase() === searchQuery || student.fatherName.toLowerCase() === searchQuery || student.rollNo === searchQuery);
+            if (student) displayReportCard(student);
+            else reportCard.classList.add("d-none"), errorMessage.classList.remove("d-none");
+        }
+
+        searchBtn.addEventListener("click", searchStudent);
+        clearBtn.addEventListener("click", () => { document.getElementById("searchInput").value = ""; reportCard.classList.add("d-none"); errorMessage.classList.add("d-none"); });
+    </script>
 </div>
-
-<script>
-  const studentData = [
-    {
-      "S. No": 1,
-      "Name": "Sara Bibi",
-      "Father Name": "Zahid Bibi",
-      "R. No": "12346",
-      "Class": "9th",
-      "Urdu": 45,
-      "English": 50,
-      "Hist & Geo": 40,
-      "Maths": 45,
-      "G. Science": 50,
-      "Drawing": 55,
-      "C. Science": 60,
-      "Pashto": 40,
-      "Qir'at": 30,
-      "Obtained Marks": 415,
-      "Total Marks": 1000,
-      "Percentage": 46.11,
-      "Remarks": "Passed"
-    },
-    {
-      "S. No": 2,
-      "Name": "Ali Khan",
-      "Father Name": "Rehman Khan",
-      "R. No": "12347",
-      "Class": "10th",
-      "Urdu": 70,
-      "English": 65,
-      "Hist & Geo": 60,
-      "Maths": 75,
-      "G. Science": 80,
-      "Drawing": 90,
-      "C. Science": 85,
-      "Pashto": 60,
-      "Qir'at": 70,
-      "Obtained Marks": 655,
-      "Total Marks": 1000,
-      "Percentage": 65.5,
-      "Remarks": "Passed"
-    },
-    {
-      "S. No": 3,
-      "Name": "Ayesha Noor",
-      "Father Name": "Noor Ahmed",
-      "R. No": "12348",
-      "Class": "8th",
-      "Urdu": 30,
-      "English": 25,
-      "Hist & Geo": 20,
-      "Maths": 35,
-      "G. Science": 40,
-      "Drawing": 45,
-      "C. Science": 50,
-      "Pashto": 20,
-      "Qir'at": 25,
-      "Obtained Marks": 290,
-      "Total Marks": 1000,
-      "Percentage": 29.0,
-      "Remarks": "Failed"
-    }
-  ];
-
-  function searchStudent() {
-    const query = document.getElementById("searchInput").value.toLowerCase();
-
-    const student = studentData.find(
-      (s) =>
-        s.Name.toLowerCase().includes(query) ||
-        s["R. No"].toLowerCase().includes(query) ||
-        s["Father Name"].toLowerCase().includes(query)
-    );
-
-    const reportCard = document.getElementById("reportCard");
-    const noRecord = document.getElementById("noRecord");
-
-    if (student) {
-      document.getElementById("bioName").innerText = student.Name;
-      document.getElementById("bioFatherName").innerText = student["Father Name"];
-      document.getElementById("bioRollNo").innerText = student["R. No"];
-      document.getElementById("bioClass").innerText = student.Class;
-
-      const marksTable = document.getElementById("marksTable");
-      marksTable.innerHTML = `
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">Urdu</td><td style="border: 1px solid #ddd; padding: 12px;">${student.Urdu}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">English</td><td style="border: 1px solid #ddd; padding: 12px;">${student.English}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">Hist & Geo</td><td style="border: 1px solid #ddd; padding: 12px;">${student["Hist & Geo"]}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">Maths</td><td style="border: 1px solid #ddd; padding: 12px;">${student.Maths}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">G. Science</td><td style="border: 1px solid #ddd; padding: 12px;">${student["G. Science"]}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">Drawing</td><td style="border: 1px solid #ddd; padding: 12px;">${student.Drawing}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">C. Science</td><td style="border: 1px solid #ddd; padding: 12px;">${student["C. Science"]}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">Pashto</td><td style="border: 1px solid #ddd; padding: 12px;">${student.Pashto}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ddd; padding: 12px;">Qir'at</td><td style="border: 1px solid #ddd; padding: 12px;">${student["Qir'at"]}</td><td style="border: 1px solid #ddd; padding: 12px;">100</td>
-        </tr>
-      `;
-
-      document.getElementById("grandObtainedMarks").innerText = student["Obtained Marks"];
-      document.getElementById("grandTotalMarks").innerText = student["Total Marks"];
-      document.getElementById("percentage").innerText = student.Percentage + "%";
-      document.getElementById("remarks").innerText = student.Remarks;
-
-      if (student.Percentage >= 33) {
-        document.getElementById("passMessage").innerText = "Congratulations on passing!";
-        document.getElementById("failMessage").innerText = "";
-      } else {
-        document.getElementById("passMessage").innerText = "";
-        document.getElementById("failMessage").innerText = "Unfortunately, you have failed.";
-      }
-
-      noRecord.style.display = "none";
-      reportCard.style.display = "block";
-    } else {
-      noRecord.innerText = "No record found.";
-      noRecord.style.display = "block";
-      reportCard.style.display = "none";
-    }
-  }
-
-  function clearData() {
-    document.getElementById("searchInput").value = "";
-    document.getElementById("reportCard").style.display = "none";
-    document.getElementById("noRecord").style.display = "none";
-  }
-
-  function downloadReport() {
-    const element = document.getElementById("reportCard");
-    html2canvas(element).then((canvas) => {
-      const link = document.createElement("a");
-      link.download = "report-card.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
