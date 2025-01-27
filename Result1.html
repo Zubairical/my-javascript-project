@@ -11,12 +11,18 @@
     <!-- HTML2Canvas for Download Feature -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-   <!-- Google Fonts link -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kings&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
+  <!-- Google Fonts import -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kings&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
 
-
+        /* Define the custom font style */
+        .kings-regular {
+            font-family: 'Kings', serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+    
     <style>
         body { background-color: #f8f9fa; }
         #searchInput { font-size: 18px; padding: 12px; border: 2px solid #007bff; border-radius: 10px; width: 100%; }
@@ -38,6 +44,7 @@
             100% { color: #ff0000; } /* Red */
         }
 
+        
 
  
     </style>
@@ -45,7 +52,8 @@
 </head>
 <body>
 
- <h2 class="text-center" style="font-family: 'Kings', sans-serif;">
+  <!-- Applying the 'kings-regular' class to the h2 element -->
+  <h2 class="text-center kings-regular">
     ریزلٹ چیک کرنے کے لیے نام، والد کا نام یا رول نمبر درج کریں۔
   </h2>
 
