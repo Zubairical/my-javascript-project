@@ -13,25 +13,33 @@
 
 
 
+
+
+
+
 <script>
-    (function() {
+    setTimeout(function() {
         try {
             // Check if the page is inside an iframe
             if (window.self !== window.top) {
-                // Verify if the parent website is "https://pashtoogle.com"
                 let allowedDomain = "https://pashtoogle.com";
-                
+
+                // Verify if the parent website is NOT "https://pashtoogle.com"
                 if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
-                    // Redirect unauthorized iframes to pashtoogle.com
+                    // Redirect unauthorized iframes to pashtoogle.com after 2 seconds
                     window.top.location.href = "https://pashtoogle.com/";
                 }
             }
         } catch (e) {
-            // Catch any errors (e.g., cross-origin restrictions) and still force redirect
+            // If an error occurs (e.g., cross-origin restriction), still force redirection
             window.top.location.href = "https://pashtoogle.com/";
         }
-    })();
+    }, 2000); // 2000ms = 2 seconds delay
 </script>
+
+
+    
+    
 
 
 
