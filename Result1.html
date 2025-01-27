@@ -20,22 +20,25 @@
 <script>
     setTimeout(function() {
         try {
-            // Check if the page is inside an iframe
-            if (window.self !== window.top) {
-                let allowedDomain = "https://pashtoogle.com";
+            let allowedDomain = "https://pashtoogle.com";
 
-                // Verify if the parent website is NOT "https://pashtoogle.com"
+            // If inside an iframe
+            if (window.self !== window.top) {
                 if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
-                    // Redirect unauthorized iframes to pashtoogle.com after 2 seconds
                     window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
                 }
             }
         } catch (e) {
-            // If an error occurs (e.g., cross-origin restriction), still force redirection
-            window.top.location.href = "https://pashtoogle.com/";
+            window.location.href = "https://pashtoogle.com/";
         }
-    }, 2000); // 2000ms = 2 seconds delay
+    }, 2000); // 2-second delay before redirecting
 </script>
+
 
 
     
