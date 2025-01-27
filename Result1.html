@@ -11,18 +11,6 @@
     <!-- HTML2Canvas for Download Feature -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <!-- Google Fonts import -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kings&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
-
-        /* Define the custom font style */
-        .kings-regular {
-            font-family: 'Kings', serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-    </style>
-    
     <style>
         body { background-color: #f8f9fa; }
         #searchInput { font-size: 18px; padding: 12px; border: 2px solid #007bff; border-radius: 10px; width: 100%; }
@@ -43,19 +31,21 @@
             75% { color: #ff00ff; } /* Magenta */
             100% { color: #ff0000; } /* Red */
         }
-
-        
-
- 
     </style>
-  
+     <style>
+    @font-face {
+      font-family: "MyCustomFont";
+      src: url("https://zubairical.github.io/my-javascript-project/Myfont.ttf") format("truetype");
+    }
+
+    h2 {
+      font-family: "MyCustomFont", sans-serif;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Applying the 'kings-regular' class to the h2 element -->
-  <h2 class="text-center kings-regular">
-    ریزلٹ چیک کرنے کے لیے نام، والد کا نام یا رول نمبر درج کریں۔
-  </h2>
+    <h2 class="text-center">ریزلٹ چیک کرنے کے لیے نام، والد کا نام یا رول نمبر درج کریں۔</h2>
 
     <!-- Search Box -->
     <div class="row justify-content-center mb-4">
