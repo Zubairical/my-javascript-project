@@ -11,15 +11,34 @@
     <!-- HTML2Canvas for Download Feature -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <script>
-    if (window.top !== window.self) { 
-        // Check if the page is inside an iframe
-        if (document.referrer.indexOf("https://pashtoogle.com") === -1) {
-            // Redirect unauthorized attempts to pashtoogle.com
+
+
+<script>
+    (function() {
+        try {
+            // Check if the page is inside an iframe
+            if (window.self !== window.top) {
+                // Verify if the parent website is "https://pashtoogle.com"
+                let allowedDomain = "https://pashtoogle.com";
+                
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    // Redirect unauthorized iframes to pashtoogle.com
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            // Catch any errors (e.g., cross-origin restrictions) and still force redirect
             window.top.location.href = "https://pashtoogle.com/";
         }
-    }
+    })();
 </script>
+
+
+
+    
+
+
+    
 
 
     <style>
