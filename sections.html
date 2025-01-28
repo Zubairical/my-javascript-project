@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETEA Test Sections</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJv4g6r3bR6g3pU56F1G4mG7BExQcx5n2dfewRe/Ggd8INwOYy3j6v6yfG7y" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px; /* Minimal space between the sections */
+      padding: 1px;
+      box-sizing: border-box;
+    }
+
+    .section-card {
+      width: 32%; /* Two columns */
+      margin-bottom: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      background-color: #ffffff;
+      min-height: 50px; /* Ensure card has enough height */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-card:hover {
+      transform: scale(1.05);
+    }
+
+    .section-card .card-header {
+      color: white;
+      text-align: center;
+      font-size: 16px; /* Reduced font size */
+      padding: 8px 0px 0px 0px;
+    }
+
+    .section-card .card-body {
+      padding: 0px 0px 8px 0px;
+      text-align: center;
+      flex-grow: 1; /* Allow the body to grow and occupy available space */
+    }
+
+    .section-card .card-title {
+      margin-top: 3px; /* Reduced margin above title */
+      margin-bottom: 5px; /* Reduced margin below title */
+    }
+
+    .section-card .btn {
+      background-color: #3498db;
+      color: white;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 0px;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .section-card .btn:hover {
+      background-color: #2980b9;
+    }
+
+    .section-card .card-footer {
+      background-color: #2c3e50;
+      text-align: center;
+      padding: 6px;
+      color: white;
+      font-size: 12px;
+    }
+
+    /* Custom colors for each section */
+    .pst { background-color: #1abc9c; }
+    .ct { background-color: #9b59b6; }
+    .sst-g { background-color: #f39c12; }
+    .sst-it { background-color: #c0392b; }
+    .sst-math { background-color: #16a085; }
+    .sst-sci { background-color: #2980b9; }
+    .pet { background-color: #e67e22; }
+    .dm { background-color: #27ae60; }
+    .at { background-color: #f1c40f; }
+    .tt { background-color: #e74c3c; }
+    .qari { background-color: #f36712; }
+    .ct-it { background-color: #7e495e; }
+
+    /* Icon styles */
+    .section-card i {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 767px) {
+      .section-card {
+        width: 32%; /* Two columns on small screens too */
+      }
+    }
+
+    /* Ensure proper scrolling and no overflow on mobile */
+    @media (max-width: 480px) {
+      .section-card {
+        width: 100%; /* Full width on very small screens */
+        height: auto; /* Let the height adjust */
+      }
+
+      .container {
+        padding: 10px;
+        gap: 5px; /* Minimal space between sections */
+      }
+    }
+
+  </style>
+
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+  
+</head>
+<body>
+  <div class="container">
+    <!-- Test Section Cards -->
+    <div class="section-card pst">
+      <div class="card-header">
+        <i class="fas fa-calendar-check"></i>
+        PST
+      </div>
+      <div class="card-body">
+        <p class="card-title">Pre-Screening Test</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">University of Shangla</div>
+    </div>
+
+    <div class="section-card ct">
+      <div class="card-header">
+        <i class="fas fa-laptop"></i>
+        CT
+      </div>
+      <div class="card-body">
+        <p class="card-title">Computer Test</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card sst-g">
+      <div class="card-header">
+        <i class="fas fa-globe"></i>
+        SST (G)
+      </div>
+      <div class="card-body">
+        <p class="card-title">Social Studies (General)</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card sst-it">
+      <div class="card-header">
+        <i class="fas fa-cogs"></i>
+        SST (IT)
+      </div>
+      <div class="card-body">
+        <p class="card-title">Information Technology</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card sst-math">
+      <div class="card-header">
+        <i class="fas fa-calculator"></i>
+        SST (Math/Phy)
+      </div>
+      <div class="card-body">
+        <p class="card-title">Social Studies (Math/Physics)</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card sst-sci">
+      <div class="card-header">
+        <i class="fas fa-atom"></i>
+        SST (Sci)
+      </div>
+      <div class="card-body">
+        <p class="card-title">Social Studies (Science)</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card pet">
+      <div class="card-header">
+        <i class="fas fa-running"></i>
+        PET
+      </div>
+      <div class="card-body">
+        <p class="card-title">Physical Efficiency Test</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card dm">
+      <div class="card-header">
+        <i class="fas fa-brain"></i>
+        DM
+      </div>
+      <div class="card-body">
+        <p class="card-title">Decision Making</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card at">
+      <div class="card-header">
+        <i class="fas fa-puzzle-piece"></i>
+        AT
+      </div>
+      <div class="card-body">
+        <p class="card-title">Aptitude Test</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card tt">
+      <div class="card-header">
+        <i class="fas fa-tools"></i>
+        TT
+      </div>
+      <div class="card-body">
+        <p class="card-title">Technical Test</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card qari">
+      <div class="card-header">
+        <i class="fas fa-book-open"></i>
+        Qari
+      </div>
+      <div class="card-body">
+        <p class="card-title">Qari Test</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+
+    <div class="section-card ct-it">
+      <div class="card-header">
+        <i class="fas fa-laptop-code"></i>
+        CT (IT)
+      </div>
+      <div class="card-body">
+        <p class="card-title">Computer Test (IT)</p>
+        <button class="btn">Start Test</button>
+      </div>
+      <div class="card-footer">ETEA</div>
+    </div>
+    
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-kXvHeGimfp2YOZmKOekpxtXMfbvOkz7l5w52zN07zxBv1Yj6M26zt0B+XxV6VoY+" crossorigin="anonymous"></script>
+</body>
+</html>
