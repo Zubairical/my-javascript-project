@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://your-hosting-domain.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+ {
+  "Q.No": 1,
+  "Question": "What is the default value of an int variable in Java?",
+  "Option A": 0,
+  "Option B": 1,
+  "Option C": "Undefined",
+  "Option D": "NULL",
+  "Correct Option": "A",
+  "Explanation": "In Java, the default value of an int variable is 0."
+ },
+ {
+  "Q.No": 2,
+  "Question": "Which of the following is the correct way to declare a variable in C++?",
+  "Option A": "int num;",
+  "Option B": "int num = 0;",
+  "Option C": "num = int;",
+  "Option D": "None of the above",
+  "Correct Option": "B",
+  "Explanation": "In C++, the variable must be declared first and can optionally be initialized."
+ },
+ {
+  "Q.No": 3,
+  "Question": "What does Python use to handle exceptions?",
+  "Option A": "Try-catch block",
+  "Option B": "Try-finally block",
+  "Option C": "Try-except block",
+  "Option D": "Catch-finally block",
+  "Correct Option": "C",
+  "Explanation": "Python uses the try-except block to handle exceptions."
+ },
+ {
+  "Q.No": 4,
+  "Question": "Which of the following is used for output in C++?",
+  "Option A": "printf()",
+  "Option B": "System.out.println()",
+  "Option C": "print()",
+  "Option D": "output()",
+  "Correct Option": "A",
+  "Explanation": "In C++, printf() is used for printing output."
+ },
+ {
+  "Q.No": 5,
+  "Question": "Which of the following is a valid data type in Java?",
+  "Option A": "integer",
+  "Option B": "double",
+  "Option C": "int number",
+  "Option D": "number",
+  "Correct Option": "B",
+  "Explanation": "double is a valid data type in Java, whereas integer is not."
+ },
+ {
+  "Q.No": 6,
+  "Question": "In Python, which of the following represents a floating point number?",
+  "Option A": 1.23,
+  "Option B": 123,
+  "Option C": "\"1.23\"",
+  "Option D": "1.23f",
+  "Correct Option": "A",
+  "Explanation": "In Python, floating-point numbers are represented like 1.23."
+ },
+ {
+  "Q.No": 7,
+  "Question": "What keyword is used to create a function in Java?",
+  "Option A": "func",
+  "Option B": "function",
+  "Option C": "void",
+  "Option D": "def",
+  "Correct Option": "C",
+  "Explanation": "In Java, the keyword void is used to declare a function without a return value."
+ },
+ {
+  "Q.No": 8,
+  "Question": "What is the correct syntax to define a function in C++?",
+  "Option A": "def function() {}",
+  "Option B": "function() {}",
+  "Option C": "void function() {}",
+  "Option D": "function void() {}",
+  "Correct Option": "C",
+  "Explanation": "In C++, functions are declared using the syntax returnType function()."
+ },
+ {
+  "Q.No": 9,
+  "Question": "Which of the following is used to import a module in Python?",
+  "Option A": "import moduleName",
+  "Option B": "include moduleName",
+  "Option C": "use moduleName",
+  "Option D": "load moduleName",
+  "Correct Option": "A",
+  "Explanation": "In Python, the import keyword is used to include modules."
+ },
+ {
+  "Q.No": 10,
+  "Question": "What is the correct way to declare a constant in Java?",
+  "Option A": "const int NUM = 10;",
+  "Option B": "final int NUM = 10;",
+  "Option C": "int NUM = 10;",
+  "Option D": "NUM = 10;",
+  "Correct Option": "B",
+  "Explanation": "In Java, the final keyword is used to declare constants."
+ },
+ {
+  "Q.No": 11,
+  "Question": "In Python, which of the following will generate an error?",
+  "Option A": "Jan-00",
+  "Option B": "02-Jan",
+  "Option C": "03-Feb",
+  "Option D": "Mar-00",
+  "Correct Option": "A",
+  "Explanation": "In Python, dividing by zero (1\/0) causes a ZeroDivisionError."
+ },
+ {
+  "Q.No": 12,
+  "Question": "Which operator is used for addition in C++?",
+  "Option A": "+",
+  "Option B": "-",
+  "Option C": "*",
+  "Option D": "\/",
+  "Correct Option": "A",
+  "Explanation": "In C++, the + operator is used for addition."
+ },
+ {
+  "Q.No": 13,
+  "Question": "How do you write a comment in Python?",
+  "Option A": "\/\/ Comment",
+  "Option B": "# Comment",
+  "Option C": "\/* Comment *\/",
+  "Option D": "comment:",
+  "Correct Option": "B",
+  "Explanation": "In Python, comments are written using the # symbol."
+ },
+ {
+  "Q.No": 14,
+  "Question": "What is the output of the following code in Python: print(2 + 3 * 4)?",
+  "Option A": 14,
+  "Option B": 20,
+  "Option C": 26,
+  "Option D": 12,
+  "Correct Option": "A",
+  "Explanation": "The output is 14 because multiplication has higher precedence than addition."
+ },
+ {
+  "Q.No": 15,
+  "Question": "Which of the following is the correct way to declare a string in Java?",
+  "Option A": "string str = \"Hello\";",
+  "Option B": "String str = \"Hello\";",
+  "Option C": "String str;",
+  "Option D": "str = \"Hello\";",
+  "Correct Option": "B",
+  "Explanation": "In Java, the type String is capitalized, and strings are declared as String str = \"Hello\";."
+ },
+ {
+  "Q.No": 16,
+  "Question": "Which function is used to get the length of a string in C++?",
+  "Option A": "len()",
+  "Option B": "length()",
+  "Option C": "size()",
+  "Option D": "strlen()",
+  "Correct Option": "D",
+  "Explanation": "In C++, the strlen() function is used to find the length of a string."
+ },
+ {
+  "Q.No": 17,
+  "Question": "How do you define a dictionary in Python?",
+  "Option A": "dict = {}",
+  "Option B": "dict[]",
+  "Option C": "[] = dict",
+  "Option D": "dictionary = {}",
+  "Correct Option": "A",
+  "Explanation": "In Python, dictionaries are defined using {}."
+ },
+ {
+  "Q.No": 18,
+  "Question": "What is the default value of a boolean variable in C++?",
+  "Option A": true,
+  "Option B": false,
+  "Option C": 0,
+  "Option D": "undefined",
+  "Correct Option": "B",
+  "Explanation": "The default value of a boolean in C++ is false."
+ },
+ {
+  "Q.No": 19,
+  "Question": "Which of the following is a valid loop in Java?",
+  "Option A": "while (i < 10) { }",
+  "Option B": "for (int i = 0; i < 10) { }",
+  "Option C": "repeat (i = 0; i < 10) { }",
+  "Option D": "loop (i < 10) { }",
+  "Correct Option": "B",
+  "Explanation": "The correct syntax for a for loop in Java is for (int i = 0; i < 10; i++) { }."
+ },
+ {
+  "Q.No": 20,
+  "Question": "What is the correct way to declare an array in Python?",
+  "Option A": "arr = [1, 2, 3, 4]",
+  "Option B": "arr = (1, 2, 3, 4)",
+  "Option C": "arr = {1, 2, 3, 4}",
+  "Option D": "arr[] = {1, 2, 3, 4}",
+  "Correct Option": "A",
+  "Explanation": "In Python, arrays (or lists) are declared using square brackets []."
+ },
+ {
+  "Q.No": 21,
+  "Question": "What is the output of print(type(5.5)) in Python?",
+  "Option A": "<class 'int'>",
+  "Option B": "<class 'float'>",
+  "Option C": "<class 'str'>",
+  "Option D": "<class 'bool'>",
+  "Correct Option": "B",
+  "Explanation": "The type() function returns the type of the object, and 5.5 is a float."
+ },
+ {
+  "Q.No": 22,
+  "Question": "What is the result of the following expression in C++: 5 + 2 * 3?",
+  "Option A": 21,
+  "Option B": 15,
+  "Option C": 11,
+  "Option D": 7,
+  "Correct Option": "C",
+  "Explanation": "In C++, multiplication has higher precedence than addition, so 5 + (2 * 3) equals 11."
+ },
+ {
+  "Q.No": 23,
+  "Question": "Which of the following is not a valid identifier in Python?",
+  "Option A": "_var",
+  "Option B": "var1",
+  "Option C": "1var",
+  "Option D": "Var1",
+  "Correct Option": "C",
+  "Explanation": "Identifiers cannot start with a number, so 1var is not valid in Python."
+ },
+ {
+  "Q.No": 24,
+  "Question": "Which of the following is used to define a class in C++?",
+  "Option A": "class className { }",
+  "Option B": "define class className { }",
+  "Option C": "class { className }",
+  "Option D": "def class className {}",
+  "Correct Option": "A",
+  "Explanation": "In C++, classes are defined using the class keyword followed by the class name."
+ },
+ {
+  "Q.No": 25,
+  "Question": "What is the default value of a string variable in Java?",
+  "Option A": "null",
+  "Option B": "\"\"",
+  "Option C": "undefined",
+  "Option D": 0,
+  "Correct Option": "A",
+  "Explanation": "In Java, the default value of a string variable is null."
+ },
+ {
+  "Q.No": 26,
+  "Question": "Which of the following is the correct syntax for a switch statement in C++?",
+  "Option A": "switch (expr) { case x: ... }",
+  "Option B": "switch expr { case x: ... }",
+  "Option C": "case switch (expr) { ... }",
+  "Option D": "switch expr: { case x }",
+  "Correct Option": "A",
+  "Explanation": "In C++, the correct syntax for a switch statement is switch (expr) { case x: ... }."
+ },
+ {
+  "Q.No": 27,
+  "Question": "What function is used to convert a string to an integer in Python?",
+  "Option A": "int()",
+  "Option B": "str()",
+  "Option C": "float()",
+  "Option D": "convert()",
+  "Correct Option": "A",
+  "Explanation": "In Python, int() is used to convert a string to an integer."
+ },
+ {
+  "Q.No": 28,
+  "Question": "What is the result of the following code in Java: System.out.println(5 + 2 * 3)?",
+  "Option A": 21,
+  "Option B": 11,
+  "Option C": 7,
+  "Option D": 12,
+  "Correct Option": "B",
+  "Explanation": "In Java, multiplication has higher precedence, so 5 + (2 * 3) equals 11."
+ },
+ {
+  "Q.No": 29,
+  "Question": "Which operator is used for equality check in Python?",
+  "Option A": "==",
+  "Option B": "=",
+  "Option C": "===",
+  "Option D": "!=",
+  "Correct Option": "A",
+  "Explanation": "In Python, the == operator is used to check equality."
+ },
+ {
+  "Q.No": 30,
+  "Question": "What is the correct way to declare a string in C++?",
+  "Option A": "String str = \"Hello\";",
+  "Option B": "str = \"Hello\";",
+  "Option C": "string str = \"Hello\";",
+  "Option D": "char str[] = \"Hello\";",
+  "Correct Option": "D",
+  "Explanation": "In C++, a string can be declared as char str[] = \"Hello\";."
+ },
+ {
+  "Q.No": 31,
+  "Question": "What is the output of the following Python code: print(3 > 2 and 5 < 6)?",
+  "Option A": true,
+  "Option B": false,
+  "Option C": 1,
+  "Option D": 0,
+  "Correct Option": "A",
+  "Explanation": "The logical and operator checks if both conditions are true, so the result is True."
+ },
+ {
+  "Q.No": 32,
+  "Question": "Which of the following is a valid constructor in Java?",
+  "Option A": "MyClass()",
+  "Option B": "MyClass;",
+  "Option C": "MyClass() {}",
+  "Option D": "void MyClass() {}",
+  "Correct Option": "A",
+  "Explanation": "In Java, constructors are defined using the class name followed by parentheses, like MyClass()."
+ },
+ {
+  "Q.No": 33,
+  "Question": "What keyword is used to create an object in Java?",
+  "Option A": "create",
+  "Option B": "object",
+  "Option C": "new",
+  "Option D": "make",
+  "Correct Option": "C",
+  "Explanation": "In Java, the new keyword is used to create an object."
+ },
+ {
+  "Q.No": 34,
+  "Question": "Which of the following is used for conditional execution in Python?",
+  "Option A": "if statement",
+  "Option B": "if condition",
+  "Option C": "if block",
+  "Option D": "None of the above",
+  "Correct Option": "A",
+  "Explanation": "In Python, conditional execution is handled by the if statement."
+ },
+ {
+  "Q.No": 35,
+  "Question": "Which function is used to read input from the user in C++?",
+  "Option A": "input()",
+  "Option B": "scanf()",
+  "Option C": "printf()",
+  "Option D": "getline()",
+  "Correct Option": "B",
+  "Explanation": "In C++, scanf() is used to read input from the user."
+ },
+ {
+  "Q.No": 36,
+  "Question": "What is the correct way to access a list element in Python?",
+  "Option A": "list[0]",
+  "Option B": "list.0",
+  "Option C": "list[1]",
+  "Option D": "list{0}",
+  "Correct Option": "A",
+  "Explanation": "In Python, list elements are accessed using indices, like list[0]."
+ },
+ {
+  "Q.No": 37,
+  "Question": "Which of the following is a valid data type in C++?",
+  "Option A": "string",
+  "Option B": "float",
+  "Option C": "integer",
+  "Option D": "None of the above",
+  "Correct Option": "B",
+  "Explanation": "float is a valid data type in C++."
+ },
+ {
+  "Q.No": 38,
+  "Question": "What is the function to output a string in Python?",
+  "Option A": "print()",
+  "Option B": "display()",
+  "Option C": "show()",
+  "Option D": "output()",
+  "Correct Option": "A",
+  "Explanation": "In Python, the print() function is used to output a string."
+ },
+ {
+  "Q.No": 39,
+  "Question": "Which of the following keywords is used for exception handling in Java?",
+  "Option A": "try",
+  "Option B": "handle",
+  "Option C": "except",
+  "Option D": "catch",
+  "Correct Option": "A",
+  "Explanation": "In Java, try is used to begin an exception handling block."
+ },
+ {
+  "Q.No": 40,
+  "Question": "What is the default value of an uninitialized variable in C++?",
+  "Option A": 0,
+  "Option B": "NULL",
+  "Option C": "Undefined",
+  "Option D": "Garbage value",
+  "Correct Option": "D",
+  "Explanation": "In C++, uninitialized variables contain garbage values."
+ },
+ {
+  "Q.No": 41,
+  "Question": "What is the correct syntax to write a comment in Java?",
+  "Option A": "# Comment",
+  "Option B": "\/\/ Comment",
+  "Option C": "\/* Comment *\/",
+  "Option D": "-- Comment",
+  "Correct Option": "B",
+  "Explanation": "In Java, single-line comments are written using \/\/."
+ },
+ {
+  "Q.No": 42,
+  "Question": "Which operator is used to access members of a structure in C++?",
+  "Option A": "->",
+  "Option B": ".",
+  "Option C": "::",
+  "Option D": "-> .",
+  "Correct Option": "B",
+  "Explanation": "In C++, the . operator is used to access members of a structure."
+ },
+ {
+  "Q.No": 43,
+  "Question": "What will be the output of print(\"Hello\"[1]) in Python?",
+  "Option A": "H",
+  "Option B": "e",
+  "Option C": "l",
+  "Option D": "o",
+  "Correct Option": "B",
+  "Explanation": "In Python, string indexing starts from 0, so \"Hello\"[1] will print e."
+ },
+ {
+  "Q.No": 44,
+  "Question": "Which of the following is a valid way to initialize an array in Java?",
+  "Option A": "int[] arr = new int[5];",
+  "Option B": "arr[] = new int[5];",
+  "Option C": "int arr = [1,2,3,4];",
+  "Option D": "new int arr = {1, 2, 3};",
+  "Correct Option": "A",
+  "Explanation": "In Java, arrays are initialized using the syntax int[] arr = new int[5];."
+ },
+ {
+  "Q.No": 45,
+  "Question": "What is the default value of a boolean in Java?",
+  "Option A": true,
+  "Option B": false,
+  "Option C": 0,
+  "Option D": "NULL",
+  "Correct Option": "B",
+  "Explanation": "In Java, the default value of a boolean is false."
+ },
+ {
+  "Q.No": 46,
+  "Question": "Which of the following is the correct way to initialize a list in Python?",
+  "Option A": "my_list = []",
+  "Option B": "my_list = {}",
+  "Option C": "my_list = list()",
+  "Option D": "my_list = ()",
+  "Correct Option": "A",
+  "Explanation": "In Python, lists are initialized with []."
+ },
+ {
+  "Q.No": 47,
+  "Question": "What does the continue statement do in Python?",
+  "Option A": "Exit the loop",
+  "Option B": "Skips to next iteration",
+  "Option C": "Break the loop",
+  "Option D": "None of the above",
+  "Correct Option": "B",
+  "Explanation": "In Python, the continue statement skips to the next iteration of the loop."
+ },
+ {
+  "Q.No": 48,
+  "Question": "How do you declare a variable as an integer in C++?",
+  "Option A": "int number;",
+  "Option B": "number = int;",
+  "Option C": "var number = integer;",
+  "Option D": "var int = number;",
+  "Correct Option": "A",
+  "Explanation": "In C++, integers are declared using int number;."
+ },
+ {
+  "Q.No": 49,
+  "Question": "Which of the following is not a valid Python function?",
+  "Option A": "def myFunc():",
+  "Option B": "def Myfunc{}",
+  "Option C": "def my_func():",
+  "Option D": "def My_Func(){}",
+  "Correct Option": "B",
+  "Explanation": "Python function definitions use the colon : syntax, not {}."
+ },
+ {
+  "Q.No": 50,
+  "Question": "What does the exit() function do in Python?",
+  "Option A": "Ends the program",
+  "Option B": "Stops the loop",
+  "Option C": "Exits from a function",
+  "Option D": "Nothing",
+  "Correct Option": "A",
+  "Explanation": "The exit() function in Python terminates the program."
+ },
+ {
+  "Q.No": 51,
+  "Question": "In Java, what does the keyword extends mean?",
+  "Option A": "Defines a method",
+  "Option B": "Creates a class",
+  "Option C": "Inherits from a class",
+  "Option D": "Marks a class as abstract",
+  "Correct Option": "C",
+  "Explanation": "The extends keyword is used in Java to indicate inheritance, meaning one class inherits from another."
+ },
+ {
+  "Q.No": 52,
+  "Question": "Which of the following is the correct syntax to declare an array in Python?",
+  "Option A": "arr = new int[5];",
+  "Option B": "arr = (1, 2, 3, 4);",
+  "Option C": "arr = [1, 2, 3, 4];",
+  "Option D": "arr = [1, 2, 3] = 4;",
+  "Correct Option": "C",
+  "Explanation": "In Python, arrays (or lists) are declared with square brackets like arr = [1, 2, 3, 4]."
+ },
+ {
+  "Q.No": 53,
+  "Question": "What is the output of print(10 \/\/ 3) in Python?",
+  "Option A": 3,
+  "Option B": 3.33,
+  "Option C": 3,
+  "Option D": 10,
+  "Correct Option": "A",
+  "Explanation": "The \/\/ operator performs floor division, returning the quotient without the remainder, so 10 \/\/ 3 is 3."
+ },
+ {
+  "Q.No": 54,
+  "Question": "How do you declare a pointer in C++?",
+  "Option A": "*ptr",
+  "Option B": "ptr*",
+  "Option C": "pointer ptr;",
+  "Option D": "new pointer ptr;",
+  "Correct Option": "A",
+  "Explanation": "In C++, pointers are declared using *, like *ptr;."
+ },
+ {
+  "Q.No": 55,
+  "Question": "Which of the following is the correct way to declare a method in Java?",
+  "Option A": "void method();",
+  "Option B": "method() void;",
+  "Option C": "void method() {}",
+  "Option D": "def method() {}",
+  "Correct Option": "C",
+  "Explanation": "In Java, methods are declared using the return type, method name, and parentheses, like void method() {}."
+ },
+ {
+  "Q.No": 56,
+  "Question": "What does the break statement do in C++?",
+  "Option A": "Continues the loop",
+  "Option B": "Terminates the loop",
+  "Option C": "Skips the next iteration",
+  "Option D": "Exits the program",
+  "Correct Option": "B",
+  "Explanation": "In C++, the break statement exits the current loop or switch statement."
+ },
+ {
+  "Q.No": 57,
+  "Question": "In Java, what type of variable cannot be changed after initialization?",
+  "Option A": "final",
+  "Option B": "static",
+  "Option C": "transient",
+  "Option D": "volatile",
+  "Correct Option": "A",
+  "Explanation": "In Java, the final keyword is used to define a constant, making the variable's value unchangeable."
+ },
+ {
+  "Q.No": 58,
+  "Question": "Which of the following is the correct way to import a module in Python?",
+  "Option A": "import moduleName",
+  "Option B": "include moduleName",
+  "Option C": "load moduleName",
+  "Option D": "use moduleName",
+  "Correct Option": "A",
+  "Explanation": "In Python, the import keyword is used to import a module."
+ },
+ {
+  "Q.No": 59,
+  "Question": "What is the correct way to initialize a list of integers in Java?",
+  "Option A": "List<int> list = new List<>();",
+  "Option B": "int[] list = new int[5];",
+  "Option C": "List<int> list = new List<int>();",
+  "Option D": "int list[] = new int[5];",
+  "Correct Option": "B",
+  "Explanation": "In Java, lists are typically initialized using arrays, like int[] list = new int[5];."
+ },
+ {
+  "Q.No": 60,
+  "Question": "Which function is used to find the length of a string in Python?",
+  "Option A": "length()",
+  "Option B": "size()",
+  "Option C": "len()",
+  "Option D": "str_length()",
+  "Correct Option": "C",
+  "Explanation": "In Python, the len() function is used to determine the length of a string."
+ },
+ {
+  "Q.No": 61,
+  "Question": "In C++, what does the new keyword do?",
+  "Option A": "Creates a function",
+  "Option B": "Allocates memory dynamically",
+  "Option C": "Initializes variables",
+  "Option D": "Allocates array memory",
+  "Correct Option": "B",
+  "Explanation": "In C++, the new keyword is used to allocate memory dynamically on the heap."
+ },
+ {
+  "Q.No": 62,
+  "Question": "Which of the following is the correct syntax to define a function in Python?",
+  "Option A": "function name() {}",
+  "Option B": "def functionName():",
+  "Option C": "func functionName():",
+  "Option D": "function() {}",
+  "Correct Option": "B",
+  "Explanation": "In Python, functions are defined using the def keyword followed by the function name and parentheses."
+ },
+ {
+  "Q.No": 63,
+  "Question": "What is the default value of a char variable in C++?",
+  "Option A": "'\\0'",
+  "Option B": "' '",
+  "Option C": "NULL",
+  "Option D": "Undefined",
+  "Correct Option": "A",
+  "Explanation": "In C++, the default value of a char variable is the null character '\\0'."
+ },
+ {
+  "Q.No": 64,
+  "Question": "How do you start a block of code in Python?",
+  "Option A": "{",
+  "Option B": "begin",
+  "Option C": "def",
+  "Option D": ":",
+  "Correct Option": "D",
+  "Explanation": "In Python, code blocks are started using a colon : followed by indentation."
+ },
+ {
+  "Q.No": 65,
+  "Question": "Which of the following is used to define a class in Python?",
+  "Option A": "class className:",
+  "Option B": "def class className()",
+  "Option C": "class className {}",
+  "Option D": "class className() {}",
+  "Correct Option": "A",
+  "Explanation": "In Python, classes are defined using the class keyword, followed by the class name and a colon."
+ },
+ {
+  "Q.No": 66,
+  "Question": "What will be the output of the following Java code: System.out.println(5 + \"2\")?",
+  "Option A": 52,
+  "Option B": 7,
+  "Option C": "5 + 2",
+  "Option D": "2 + 5",
+  "Correct Option": "A",
+  "Explanation": "In Java, adding a number to a string results in string concatenation, so the output is 52."
+ },
+ {
+  "Q.No": 67,
+  "Question": "In Python, what does the in keyword do?",
+  "Option A": "Checks if a number exists in a list",
+  "Option B": "Checks if a number is in a set",
+  "Option C": "Checks membership in a collection",
+  "Option D": "Checks if two variables are equal",
+  "Correct Option": "C",
+  "Explanation": "In Python, the in keyword checks for membership in a collection (list, set, etc.)."
+ },
+ {
+  "Q.No": 68,
+  "Question": "Which of the following is the correct way to read user input in Python?",
+  "Option A": "input()",
+  "Option B": "read()",
+  "Option C": "getInput()",
+  "Option D": "scan()",
+  "Correct Option": "A",
+  "Explanation": "In Python, the input() function is used to take user input from the console."
+ },
+ {
+  "Q.No": 69,
+  "Question": "What type of loop is guaranteed to execute at least once in Java?",
+  "Option A": "for loop",
+  "Option B": "while loop",
+  "Option C": "do-while loop",
+  "Option D": "None of the above",
+  "Correct Option": "C",
+  "Explanation": "In Java, a do-while loop is guaranteed to run at least once before checking the condition."
+ },
+ {
+  "Q.No": 70,
+  "Question": "Which operator is used for concatenation of strings in Java?",
+  "Option A": "&",
+  "Option B": "+",
+  "Option C": ",",
+  "Option D": "++",
+  "Correct Option": "B",
+  "Explanation": "In Java, the + operator is used to concatenate strings."
+ },
+ {
+  "Q.No": 71,
+  "Question": "What is the output of the following Python code: print(2**3)?",
+  "Option A": 8,
+  "Option B": 6,
+  "Option C": 9,
+  "Option D": 16,
+  "Correct Option": "A",
+  "Explanation": "In Python, ** is the exponentiation operator, so 2**3 equals 8."
+ },
+ {
+  "Q.No": 72,
+  "Question": "What is the correct way to define a method that returns a value in Java?",
+  "Option A": "return void methodName() {}",
+  "Option B": "void methodName() {}",
+  "Option C": "return type methodName() {}",
+  "Option D": "method() return type {}",
+  "Correct Option": "C",
+  "Explanation": "In Java, the return type is specified before the method name in the syntax return type methodName() {}."
+ },
+ {
+  "Q.No": 73,
+  "Question": "Which function is used to convert a string to lowercase in Python?",
+  "Option A": "lower()",
+  "Option B": "toLower()",
+  "Option C": "downcase()",
+  "Option D": "string.lower()",
+  "Correct Option": "A",
+  "Explanation": "In Python, the lower() function is used to convert a string to lowercase."
+ },
+ {
+  "Q.No": 74,
+  "Question": "How do you access the first element of a list in Python?",
+  "Option A": "list[1]",
+  "Option B": "list[0]",
+  "Option C": "list[2]",
+  "Option D": "list.first()",
+  "Correct Option": "B",
+  "Explanation": "In Python, list indexing starts at 0, so the first element is accessed with list[0]."
+ },
+ {
+  "Q.No": 75,
+  "Question": "What does the continue keyword do in Java?",
+  "Option A": "Skips the next iteration of the loop",
+  "Option B": "Exits the loop",
+  "Option C": "Starts a new iteration",
+  "Option D": "None of the above",
+  "Correct Option": "A",
+  "Explanation": "In Java, the continue keyword skips to the next iteration of the loop."
+ },
+ {
+  "Q.No": 76,
+  "Question": "What is the output of the following code in Python: print(10 == 10)?",
+  "Option A": true,
+  "Option B": false,
+  "Option C": 1,
+  "Option D": "None",
+  "Correct Option": "A",
+  "Explanation": "The comparison 10 == 10 evaluates to True."
+ },
+ {
+  "Q.No": 77,
+  "Question": "In C++, how is a reference to a variable created?",
+  "Option A": "&variable",
+  "Option B": "*variable",
+  "Option C": "var&",
+  "Option D": "&variable = value",
+  "Correct Option": "A",
+  "Explanation": "In C++, references are created using the & operator, like int& ref = variable;."
+ },
+ {
+  "Q.No": 78,
+  "Question": "What is the correct way to call a constructor in Java?",
+  "Option A": "MyClass();",
+  "Option B": "new MyClass();",
+  "Option C": "MyClass myObject();",
+  "Option D": "constructor MyClass() {}",
+  "Correct Option": "B",
+  "Explanation": "In Java, constructors are called using new MyClass();."
+ },
+ {
+  "Q.No": 79,
+  "Question": "Which of the following is a valid loop in Python?",
+  "Option A": "loop i in range(10):",
+  "Option B": "for i = 0; i < 10; i++ { }",
+  "Option C": "for i in range(10):",
+  "Option D": "while (i < 10) { }",
+  "Correct Option": "C",
+  "Explanation": "In Python, the correct syntax for a loop is for i in range(10):."
+ },
+ {
+  "Q.No": 80,
+  "Question": "In Java, which keyword is used to define a constant?",
+  "Option A": "final",
+  "Option B": "static",
+  "Option C": "const",
+  "Option D": "immutable",
+  "Correct Option": "A",
+  "Explanation": "In Java, the final keyword is used to define a constant."
+ },
+ {
+  "Q.No": 81,
+  "Question": "Which of the following is the correct way to initialize an integer variable in Python?",
+  "Option A": "int x = 10;",
+  "Option B": "x = 10;",
+  "Option C": "var x = 10;",
+  "Option D": "integer x = 10;",
+  "Correct Option": "B",
+  "Explanation": "In Python, variables are initialized without specifying their type, like x = 10."
+ },
+ {
+  "Q.No": 82,
+  "Question": "What is the output of print(3 > 2 and 4 > 5) in Python?",
+  "Option A": true,
+  "Option B": false,
+  "Option C": 1,
+  "Option D": 0,
+  "Correct Option": "B",
+  "Explanation": "The expression 4 > 5 is False, making the entire and expression False."
+ },
+ {
+  "Q.No": 83,
+  "Question": "In C++, how do you allocate memory for an array of 10 integers?",
+  "Option A": "int arr[10];",
+  "Option B": "int *arr = new int[10];",
+  "Option C": "arr = int[10];",
+  "Option D": "new int arr[10];",
+  "Correct Option": "B",
+  "Explanation": "In C++, dynamic memory for an array is allocated using new int[10];."
+ },
+ {
+  "Q.No": 84,
+  "Question": "What will be the output of the following Python code: print(\"Hello\" * 2)?",
+  "Option A": "HelloHello",
+  "Option B": "2Hello",
+  "Option C": "Hello2",
+  "Option D": "None",
+  "Correct Option": "A",
+  "Explanation": "In Python, the * operator is used to repeat a string, so \"Hello\" * 2 results in HelloHello."
+ },
+ {
+  "Q.No": 85,
+  "Question": "What is the default value of an integer variable in Java?",
+  "Option A": 0,
+  "Option B": "NULL",
+  "Option C": "undefined",
+  "Option D": 1,
+  "Correct Option": "A",
+  "Explanation": "In Java, the default value of an integer variable is 0."
+ },
+ {
+  "Q.No": 86,
+  "Question": "What is the result of the following Python code: print(\"2\" + \"3\")?",
+  "Option A": 23,
+  "Option B": 5,
+  "Option C": "2 + 3",
+  "Option D": 23,
+  "Correct Option": "A",
+  "Explanation": "In Python, string concatenation happens when two strings are added, so \"2\" + \"3\" results in \"23\"."
+ },
+ {
+  "Q.No": 87,
+  "Question": "What is the output of the following code in Java: System.out.println(10 != 5)?",
+  "Option A": true,
+  "Option B": false,
+  "Option C": 1,
+  "Option D": "None",
+  "Correct Option": "A",
+  "Explanation": "In Java, 10 != 5 is evaluated as true, because the values are not equal."
+ },
+ {
+  "Q.No": 88,
+  "Question": "What is the purpose of the super() function in Java?",
+  "Option A": "To call the parent class's constructor",
+  "Option B": "To stop the program",
+  "Option C": "To initialize variables",
+  "Option D": "To perform polymorphism",
+  "Correct Option": "A",
+  "Explanation": "In Java, super() is used to call the parent class's constructor."
+ },
+ {
+  "Q.No": 89,
+  "Question": "Which of the following is a correct way to define a string variable in C++?",
+  "Option A": "string str = \"Hello\";",
+  "Option B": "char str[] = \"Hello\";",
+  "Option C": "string str = 'Hello';",
+  "Option D": "str = \"Hello\";",
+  "Correct Option": "B",
+  "Explanation": "In C++, strings are typically defined as char[], like char str[] = \"Hello\";."
+ },
+ {
+  "Q.No": 90,
+  "Question": "How do you write a comment in Python?",
+  "Option A": "\/\/ comment",
+  "Option B": "\/* comment *\/",
+  "Option C": "# comment",
+  "Option D": "comment:",
+  "Correct Option": "C",
+  "Explanation": "In Python, comments are written using #."
+ }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
