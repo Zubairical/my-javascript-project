@@ -11,60 +11,63 @@
     <!-- HTML2Canvas for Download Feature -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+    <script>
+        setTimeout(function() {
+            try {
+                let allowedDomain = "https://pashtoogle.com";
 
-
-
-
-
-
-<script>
-    setTimeout(function() {
-        try {
-            let allowedDomain = "https://pashtoogle.com";
-
-            // If inside an iframe
-            if (window.self !== window.top) {
-                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
-                    window.top.location.href = "https://pashtoogle.com/";
+                // If inside an iframe
+                if (window.self !== window.top) {
+                    if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                        window.top.location.href = "https://pashtoogle.com/";
+                    }
+                } else {
+                    // If accessed directly, force redirect
+                    if (window.location.origin !== allowedDomain) {
+                        window.location.href = "https://pashtoogle.com/";
+                    }
                 }
-            } else {
-                // If accessed directly, force redirect
-                if (window.location.origin !== allowedDomain) {
-                    window.location.href = "https://pashtoogle.com/";
-                }
+            } catch (e) {
+                window.location.href = "https://pashtoogle.com/";
             }
-        } catch (e) {
-            window.location.href = "https://pashtoogle.com/";
-        }
-    }, 2000); // 2-second delay before redirecting
-</script>
-
-
-
-    
-    
-
-
+        }, 2000); // 2-second delay before redirecting
+    </script>
 
     <script>
-  function sendHeight() {
-    const height = document.body.scrollHeight;
-    parent.postMessage(height, "https://pashtoogle.com");
-  }
+        function sendHeight() {
+            const height = document.body.scrollHeight;
+            parent.postMessage(height, "*");
+        }
 
-  window.addEventListener("load", sendHeight);
-  window.addEventListener("resize", sendHeight);
-</script>
-
-
-    
-
+        window.addEventListener("load", sendHeight);
+        window.addEventListener("resize", sendHeight);
+    </script>
 
     <style>
-        body { background-color: #f8f9fa; }
-        #searchInput { font-size: 18px; padding: 12px; border: 2px solid #007bff; border-radius: 10px; width: 100%; }
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #content {
+            flex: 1;
+        }
+        #searchInput {
+            font-size: 18px;
+            padding: 12px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            width: 100%;
+        }
         
-        #searchBtn { font-size: 22px; padding: 12px; border: 2px solid #007bff; border-radius: 10px; width: 100%; }
+        #searchBtn {
+            font-size: 22px;
+            padding: 12px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            width: 100%;
+        }
 
         /* Blinking Effect for the Wishing Message */
         .blinking-wish {
@@ -74,207 +77,204 @@
         }
 
         @keyframes blinkColors {
-            0% { color: #ff0000; } /* Red */
-            25% { color: #00ff00; } /* Green */
-            50% { color: #0000ff; } /* Blue */
-            75% { color: #ff00ff; } /* Magenta */
-            100% { color: #ff0000; } /* Red */
+            0% { color: #ff0000; }
+            25% { color: #00ff00; }
+            50% { color: #0000ff; }
+            75% { color: #ff00ff; }
+            100% { color: #ff0000; }
         }
 
-footer {
-    background-color: #343a40;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 40px;
-}
+        @font-face {
+            font-family: "MyCustomFont";
+            src: url("https://zubairical.github.io/my-javascript-project/Myfont.ttf") format("truetype");
+        }
 
-footer a {
-    color: #007bff;
-    text-decoration: none;
-}
+        h2 {
+            font-family: "MyCustomFont", sans-serif;
+        }
 
-        
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
     </style>
-     <style>
-    @font-face {
-      font-family: "MyCustomFont";
-      src: url("https://zubairical.github.io/my-javascript-project/Myfont.ttf") format("truetype");
-    }
-
-    h2 {
-      font-family: "MyCustomFont", sans-serif;
-    }
-  </style>
 </head>
 <body>
 
-    <h2 class="text-center">ریزلٹ چیک کرنے کے لیے نام، والد کا نام یا رول نمبر درج کریں۔</h2>
+    <div id="content">
+        <h2 class="text-center">ریزلٹ چیک کرنے کے لیے نام، والد کا نام یا رول نمبر درج کریں۔</h2>
 
-    <!-- Search Box -->
-    <div class="row justify-content-center mb-4">
-        <div class="col-md-6">
-            <input type="text" id="searchInput" class="form-control" placeholder="Enter Name, Father Name, or Roll No">
-            <button class="btn btn-primary mt-3 w-100" id="searchBtn">🔍 Search</button>
-            <button class="btn btn-secondary mt-3 w-100" id="clearBtn">❌ Clear</button>
-        </div>
-    </div>
-
-    <!-- Report Card Display -->
-    <div id="reportCard" class="d-none border rounded bg-light">
-        <div class="card">
-            <div class="card-header">
-                <h5>📖 Student Report Card</h5>
-            </div>
-            <div class="card-body">
-                <h6><strong>Name:</strong> <span id="studentName"></span></h6>
-                <h6><strong>Father Name:</strong> <span id="fatherName"></span></h6>
-                <h6><strong>Class:</strong> <span id="studentClass"></span></h6>
-                <h6><strong>Roll No:</strong> <span id="rollNo"></span></h6>
-
-                <table class="table table-bordered mt-3">
-                    <thead>
-                        <tr>
-                            <th>Subject 📚</th>
-                            <th>Obtained Marks</th>
-                            <th>Total Marks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Is/MQ</td><td id="isMarks"></td><td>100</td></tr>
-                        <tr><td>Urdu</td><td id="urduMarks"></td><td>100</td></tr>
-                        <tr><td>English</td><td id="englishMarks"></td><td>100</td></tr>
-                        <tr><td>Hist & Geo</td><td id="historyMarks"></td><td>100</td></tr>
-                        <tr><td>Maths</td><td id="mathsMarks"></td><td>100</td></tr>
-                        <tr><td>G. Science</td><td id="gScienceMarks"></td><td>100</td></tr>
-                        <tr><td>Drawing</td><td id="drawingMarks"></td><td>100</td></tr>
-                        <tr><td>C. Science</td><td id="cScienceMarks"></td><td>100</td></tr>
-                        <tr><td>Pashto</td><td id="pashtoMarks"></td><td>100</td></tr>
-                        <tr><td>Qir'at</td><td id="qiratMarks"></td><td>100</td></tr>
-                        <tr>
-                            <td><strong>Grand Total</strong></td>
-                            <td id="grandObtainedMarks"><strong></strong></td>
-                            <td><strong>1000</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h6><strong>Percentage:</strong> <span id="percentage"></span>%</h6>
-                <h6><strong>Remarks:</strong> <span id="remarks"></span></h6>
-
-                <div id="wishMessage" class="alert mt-3 blinking-wish" role="alert"></div>
-
-                <p class="text-muted mt-3"><em>Errors/Omissions are subject to subsequent rectification.<br>By: Rashid Ahmad SST IT</em></p>
-
-                <!-- Download Button -->
-                <button id="downloadBtn" class="btn btn-success w-100 mt-3">📥 Download Report</button>
+        <!-- Search Box -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <input type="text" id="searchInput" class="form-control" placeholder="Enter Name, Father Name, or Roll No">
+                <button class="btn btn-primary mt-3 w-100" id="searchBtn">🔍 Search</button>
+                <button class="btn btn-secondary mt-3 w-100" id="clearBtn">❌ Clear</button>
             </div>
         </div>
+
+        <!-- Report Card Display -->
+        <div id="reportCard" class="d-none border rounded bg-light">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📖 Student Report Card</h5>
+                </div>
+                <div class="card-body">
+                    <h6><strong>Name:</strong> <span id="studentName"></span></h6>
+                    <h6><strong>Father Name:</strong> <span id="fatherName"></span></h6>
+                    <h6><strong>Class:</strong> <span id="studentClass"></span></h6>
+                    <h6><strong>Roll No:</strong> <span id="rollNo"></span></h6>
+
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>Subject 📚</th>
+                                <th>Obtained Marks</th>
+                                <th>Total Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Is/MQ</td><td id="isMarks"></td><td>100</td></tr>
+                            <tr><td>Urdu</td><td id="urduMarks"></td><td>100</td></tr>
+                            <tr><td>English</td><td id="englishMarks"></td><td>100</td></tr>
+                            <tr><td>Hist & Geo</td><td id="historyMarks"></td><td>100</td></tr>
+                            <tr><td>Maths</td><td id="mathsMarks"></td><td>100</td></tr>
+                            <tr><td>G. Science</td><td id="gScienceMarks"></td><td>100</td></tr>
+                            <tr><td>Drawing</td><td id="drawingMarks"></td><td>100</td></tr>
+                            <tr><td>C. Science</td><td id="cScienceMarks"></td><td>100</td></tr>
+                            <tr><td>Pashto</td><td id="pashtoMarks"></td><td>100</td></tr>
+                            <tr><td>Qir'at</td><td id="qiratMarks"></td><td>100</td></tr>
+                            <tr>
+                                <td><strong>Grand Total</strong></td>
+                                <td id="grandObtainedMarks"><strong></strong></td>
+                                <td><strong>1000</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h6><strong>Percentage:</strong> <span id="percentage"></span>%</h6>
+                    <h6><strong>Remarks:</strong> <span id="remarks"></span></h6>
+
+                    <div id="wishMessage" class="alert mt-3 blinking-wish" role="alert"></div>
+
+                    <p class="text-muted mt-3"><em>Errors/Omissions are subject to subsequent rectification.<br>By: Rashid Ahmad SST IT</em></p>
+
+                    <!-- Download Button -->
+                    <button id="downloadBtn" class="btn btn-success w-100 mt-3">📥 Download Report</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="alert alert-danger mt-3 d-none" role="alert">No record found for the entered information.</div>
     </div>
-    
-    <div id="errorMessage" class="alert alert-danger mt-3 d-none" role="alert">No record found for the entered information.</div>
 
-<!-- JavaScript -->
-<script>
-    const studentsData = [
-        { name: "Ali Khan", fatherName: "Shah Wali Khan", class: "10th", rollNo: "12345", is: 90, urdu: 85, english: 90, historyGeo: 80, maths: 70, gScience: 60, drawing: 75, cScience: 65, pashto: 88, qirat: 92 },
-        { name: "Sara Bibi", fatherName: "Zahid Bibi", class: "9th", rollNo: "12346", is: 50, urdu: 45, english: 50, historyGeo: 40, maths: 45, gScience: 50, drawing: 55, cScience: 60, pashto: 40, qirat: 30 }
-    ];
+    <footer>
+        <p>&copy; 2025 Student Report Card System. All rights reserved.</p>
+        <p>
+            <a href="https://example.com/privacy-policy" target="_blank">Privacy Policy</a> |
+            <a href="https://example.com/terms-of-service" target="_blank">Terms of Service</a>
+        </p>
+    </footer>
 
-    function displayReportCard(student) {
-        document.getElementById("studentName").textContent = student.name;
-        document.getElementById("fatherName").textContent = student.fatherName;
-        document.getElementById("studentClass").textContent = student.class;
-        document.getElementById("rollNo").textContent = student.rollNo;
+    <!-- JavaScript -->
+    <script>
+        const studentsData = [
+            { name: "Ali Khan", fatherName: "Shah Wali Khan", class: "10th", rollNo: "12345", is: 90, urdu: 85, english: 90, historyGeo: 80, maths: 70, gScience: 60, drawing: 75, cScience: 65, pashto: 88, qirat: 92 },
+            { name: "Sara Bibi", fatherName: "Zahid Bibi", class: "9th", rollNo: "12346", is: 50, urdu: 45, english: 50, historyGeo: 40, maths: 45, gScience: 50, drawing: 55, cScience: 60, pashto: 40, qirat: 30 }
+        ];
 
-        document.getElementById("isMarks").textContent = student.is;
-        document.getElementById("urduMarks").textContent = student.urdu;
-        document.getElementById("englishMarks").textContent = student.english;
-        document.getElementById("historyMarks").textContent = student.historyGeo;
-        document.getElementById("mathsMarks").textContent = student.maths;
-        document.getElementById("gScienceMarks").textContent = student.gScience;
-        document.getElementById("drawingMarks").textContent = student.drawing;
-        document.getElementById("cScienceMarks").textContent = student.cScience;
-        document.getElementById("pashtoMarks").textContent = student.pashto;
-        document.getElementById("qiratMarks").textContent = student.qirat;
+        function displayReportCard(student) {
+            document.getElementById("studentName").textContent = student.name;
+            document.getElementById("fatherName").textContent = student.fatherName;
+            document.getElementById("studentClass").textContent = student.class;
+            document.getElementById("rollNo").textContent = student.rollNo;
 
-        let obtainedMarks = student.is + student.urdu + student.english + student.historyGeo + student.maths + student.gScience + student.drawing + student.cScience + student.pashto + student.qirat;
-        document.getElementById("grandObtainedMarks").textContent = obtainedMarks;
+            document.getElementById("isMarks").textContent = student.is;
+            document.getElementById("urduMarks").textContent = student.urdu;
+            document.getElementById("englishMarks").textContent = student.english;
+            document.getElementById("historyMarks").textContent = student.historyGeo;
+            document.getElementById("mathsMarks").textContent = student.maths;
+            document.getElementById("gScienceMarks").textContent = student.gScience;
+            document.getElementById("drawingMarks").textContent = student.drawing;
+            document.getElementById("cScienceMarks").textContent = student.cScience;
+            document.getElementById("pashtoMarks").textContent = student.pashto;
+            document.getElementById("qiratMarks").textContent = student.qirat;
 
-        // Calculate Percentage
-        let percentage = (obtainedMarks / 1000) * 100;
-        document.getElementById("percentage").textContent = percentage.toFixed(2);
+            let obtainedMarks = student.is + student.urdu + student.english + student.historyGeo + student.maths + student.gScience + student.drawing + student.cScience + student.pashto + student.qirat;
+            document.getElementById("grandObtainedMarks").textContent = obtainedMarks;
 
-        // Remarks Logic
-        let remarks = '';
-        if (percentage >= 90) {
-            remarks = "Excellent! Keep it up!";
-        } else if (percentage >= 75) {
-            remarks = "Good Job!";
-        } else if (percentage >= 60) {
-            remarks = "Needs Improvement.";
-        } else {
-            remarks = "Try harder next time.";
+            // Calculate Percentage
+            let percentage = (obtainedMarks / 1000) * 100;
+            document.getElementById("percentage").textContent = percentage.toFixed(2);
+
+            // Remarks Logic
+            let remarks = '';
+            if (percentage >= 90) {
+                remarks = "Excellent! Keep it up!";
+            } else if (percentage >= 75) {
+                remarks = "Good Job!";
+            } else if (percentage >= 60) {
+                remarks = "Needs Improvement.";
+            } else {
+                remarks = "Try harder next time.";
+            }
+            document.getElementById("remarks").textContent = remarks;
+
+            // Set wish message based on percentage
+            let wishMessage = '';
+            if (percentage >= 90) {
+                wishMessage = "🌟 Congratulations on your outstanding performance!";
+            } else if (percentage >= 60) {
+                wishMessage = "🎉 Well Done!";
+            } else {
+                wishMessage = "🚀 Keep pushing yourself!";
+            }
+            document.getElementById("wishMessage").textContent = wishMessage;
+
+            // Show the report card section
+            document.getElementById("reportCard").classList.remove("d-none");
+            document.getElementById("errorMessage").classList.add("d-none");
         }
-        document.getElementById("remarks").textContent = remarks;
 
-        // Set wish message based on percentage
-        let wishMessage = '';
-        if (percentage >= 90) {
-            wishMessage = "🌟 Congratulations on your outstanding performance!";
-        } else if (percentage >= 60) {
-            wishMessage = "🎉 Well Done!";
-        } else {
-            wishMessage = "🚀 Keep pushing yourself!";
-        }
-        document.getElementById("wishMessage").textContent = wishMessage;
+        document.getElementById("searchBtn").addEventListener("click", () => {
+            let query = document.getElementById("searchInput").value.trim().toLowerCase().replace(/\s+/g, " ");
 
-        // Show the report card section
-        document.getElementById("reportCard").classList.remove("d-none");
-        document.getElementById("errorMessage").classList.add("d-none");
-    }
+            let student = studentsData.find(s => 
+                s.name.toLowerCase().replace(/\s+/g, " ") === query ||
+                s.fatherName.toLowerCase().replace(/\s+/g, " ") === query ||
+                s.rollNo.toLowerCase().replace(/\s+/g, " ") === query
+            );
 
-    document.getElementById("searchBtn").addEventListener("click", () => {
-    let query = document.getElementById("searchInput").value.trim().toLowerCase().replace(/\s+/g, " ");
-
-    let student = studentsData.find(s => 
-        s.name.toLowerCase().replace(/\s+/g, " ") === query ||
-        s.fatherName.toLowerCase().replace(/\s+/g, " ") === query ||
-        s.rollNo.toLowerCase().replace(/\s+/g, " ") === query
-    );
-
-    if (student) {
-        displayReportCard(student);
-    } else {
-        document.getElementById("errorMessage").classList.remove("d-none");
-        document.getElementById("reportCard").classList.add("d-none");
-    }
-});
-
-
-    document.getElementById("clearBtn").addEventListener("click", () => {
-        document.getElementById("searchInput").value = '';
-        document.getElementById("reportCard").classList.add("d-none");
-        document.getElementById("errorMessage").classList.add("d-none");
-    });
-
-    document.getElementById("downloadBtn").addEventListener("click", () => {
-        html2canvas(document.getElementById("reportCard")).then(canvas => {
-            let link = document.createElement("a");
-            link.href = canvas.toDataURL("image/png");
-            link.download = "Report_Card.png";
-            link.click();
+            if (student) {
+                displayReportCard(student);
+            } else {
+                document.getElementById("errorMessage").classList.remove("d-none");
+                document.getElementById("reportCard").classList.add("d-none");
+            }
         });
-    });
-</script>
 
-<footer>
-    <p>&copy; 2025 Student Report Card System. All rights reserved.</p>
-    <p>
-        <a href="https://example.com/privacy-policy" target="_blank">Privacy Policy</a> |
-        <a href="https://example.com/terms-of-service" target="_blank">Terms of Service</a>
-    </p>
-</footer>
+        document.getElementById("clearBtn").addEventListener("click", () => {
+            document.getElementById("searchInput").value = '';
+            document.getElementById("reportCard").classList.add("d-none");
+            document.getElementById("errorMessage").classList.add("d-none");
+        });
 
+        document.getElementById("downloadBtn").addEventListener("click", () => {
+            html2canvas(document.getElementById("reportCard")).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'student-report.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+    </script>
 </body>
 </html>
