@@ -17,6 +17,30 @@
 
 
 
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 2000); // 2-second delay before redirecting
+</script>
+
+
+
     
     
 
@@ -56,6 +80,21 @@
             75% { color: #ff00ff; } /* Magenta */
             100% { color: #ff0000; } /* Red */
         }
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+        
     </style>
      <style>
     @font-face {
@@ -228,6 +267,14 @@
         });
     });
 </script>
+
+<footer>
+    <p>&copy; 2025 Student Report Card System. All rights reserved.</p>
+    <p>
+        <a href="https://example.com/privacy-policy" target="_blank">Privacy Policy</a> |
+        <a href="https://example.com/terms-of-service" target="_blank">Terms of Service</a>
+    </p>
+</footer>
 
 </body>
 </html>
