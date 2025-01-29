@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report Card</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+
+        .school-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .school-header h1 {
+            font-size: 2.5em;
+            color: #0056b3;
+            font-weight: bold;
+            margin: 0;
+        }
+        .school-header p {
+            font-size: 1.2em;
+            color: #333;
+            margin: 5px 0;
+        }
+        .report-card {
+            display: none;
+            margin-top: 5px;
+        }
+        .student-info {
+            margin-bottom: 5px;
+            padding: 0px;
+        }
+        .student-info h3 {
+            font-size: 1.5em;
+            color: #0056b3;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .student-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .student-info th, .student-info td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 1.1em;
+        }
+        .student-info th {
+
+            color: black;
+            font-weight: 600;
+            width: 30%;
+        }
+        .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        .marks-table th, .marks-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .marks-table th {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .marks-table th:hover {
+            background: linear-gradient(135deg, #003f7f, #0056b3);
+        }
+        .marks-table tfoot td {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        .remarks {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border: 1px solid #0056b3;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0056b3;
+        }
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+        }
+        .developer {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #333;
+            text-align: center;
+        }
+        .btn-download, .btn-print {
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+        .btn-download i, .btn-print i {
+            margin-right: 10px;
+        }
+
+        /* Print-specific Styles */
+        @media print {
+            body, .container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            .btn-download, .btn-print, .search-container {
+                display: none;
+            }
+            .report-card {
+                display: block;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 5mm;
+            }
+            .school-header h1 {
+                font-size: 2em;
+            }
+            .marks-table th, .marks-table td {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            .remarks, .footer-note, .developer {
+                font-size: 0.9em;
+            }
+            .student-info td {
+                font-size: 0.95em;
+            }
+            
+    </style>
+</head>
+<body>
+    <div class="container" id="reportContainer">
+        <!-- School Header -->
+        <div class="school-header">
+            <h1>Government High School Pishlor</h1>
+            <p>Martung District Shangla</p>
+        </div>
+
+      <!-- Search Section -->
+<div class="search-container mb-4">
+    <input type="text" id="searchInput" class="form-control shadow p-3 mb-3" placeholder="Enter Name, Father's Name, or Roll No" style="font-size: 1.2rem; padding: 12px;">
+    <div class="d-flex flex-column mt-2">
+        <button class="btn btn-primary btn-full" onclick="searchStudent()" style="font-size: 1.1rem; padding: 10px 20px;">🔍 Search</button>
+        <button class="btn btn-secondary btn-full btn-clear mt-2" onclick="clearSearch()" style="font-size: 1.1rem; padding: 10px 20px;">Clear</button>
+    </div>
+</div>
+
+
+        <!-- Report Card -->
+        <div id="reportCard" class="report-card">
+            <!-- Student Information -->
+            <div class="student-info">
+                <h3>Student Information</h3>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <td id="bioName"></td>
+                    </tr>
+                    <tr>
+                        <th>Father's Name</th>
+                        <td id="bioFather"></td>
+                    </tr>
+                    <tr>
+                        <th>Class</th>
+                        <td id="bioClass"></td>
+                    </tr>
+                    <tr>
+                        <th>Roll No</th>
+                        <td id="bioRollNo"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Marks Table -->
+            <table class="marks-table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Obtained Marks</th>
+                        <th>Total Marks</th>
+                    </tr>
+                </thead>
+                <tbody id="marksTable"></tbody>
+                <tfoot>
+                    <tr>
+                        <td><b>Grand Total</b></td>
+                        <td id="totalMarks"></td>
+                        <td>875</td>
+                    </tr>
+                    <tr>
+                        <td><b>Percentage</b></td>
+                        <td colspan="2" id="percentage"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Remarks -->
+            <div class="remarks" id="remarks"></div>
+
+            <!-- Footer Note -->
+            <div class="footer-note">Please note: Any errors or omissions are subject to correction at a later time. You may collect your official result card from the school.
+            </div>
+
+            <!-- Developer Info -->
+            <div class="developer">
+                RMS Developed By: <b>Rashid SST IT</b>
+            </div>
+
+            <!-- Download Button -->
+            <button class="btn-download" onclick="downloadReport()">
+                <i class="fas fa-download"></i> Download Report
+            </button>
+
+            <!-- Print Button -->
+            <button class="btn-print" onclick="printReport()">
+                <i class="fas fa-print"></i> Print Report
+            </button>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMsg" class="text-danger text-center mt-3"></div>
+    </div>
+
+    <script>
+        const jsonData = [
+            { "S.No": "1", "Name": "Khaist Wali", "Father Name": "Ali Khan", "Roll No": "1", "Class": "7th", "Is/MQ ": "12", "Urdu ": "04", "English": "50", "Hist & Geo": "02", "Maths": "23", "G. Science ": "06", "Drawing": "09", "C. Science": "05", "Pashto": "50", "Qir'at": "04", "Grand Obtained Marks": "165", "Grand Total Marks": "875", "Percentage": "19", "Remarks": "Fail" },
+            { "S.No": "2", "Name": "Ashfaq Ahmad", "Father Name": "Rashid", "Roll No": "2", "Class": "8th", "Is/MQ ": "18", "Urdu ": "18", "English": "12", "Hist & Geo": "01", "Maths": "28", "G. Science ": "60", "Drawing": "50", "C. Science": "90", "Pashto": "30", "Qir'at": "05", "Grand Obtained Marks": "312", "Grand Total Marks": "875", "Percentage": "36", "Remarks": "Pass" }
+        ];
+
+        function searchStudent() {
+            const query = document.getElementById("searchInput").value.trim().toLowerCase();
+            document.getElementById("reportCard").style.display = "none";
+            document.getElementById("errorMsg").innerText = "";
+            if (!query) {
+                document.getElementById("errorMsg").innerText = "Please enter search criteria.";
+                return;
+            }
+            const student = jsonData.find(s => s["Name"].toLowerCase() === query || s["Father Name"].toLowerCase() === query || s["Roll No"].toLowerCase() === query);
+            if (student) {
+                document.getElementById("bioName").innerText = student["Name"];
+                document.getElementById("bioFather").innerText = student["Father Name"];
+                document.getElementById("bioClass").innerText = student["Class"];
+                document.getElementById("bioRollNo").innerText = student["Roll No"];
+
+                let marksHtml = "";
+                ["Is/MQ ", "Urdu ", "English", "Hist & Geo", "Maths", "G. Science ", "Drawing", "C. Science", "Pashto", "Qir'at"].forEach(subject => {
+                    let totalMarks = subject === "Is/MQ " ? 50 : subject === "Qir'at" ? 25 : 100;
+                    marksHtml += `<tr><td style="text-align: left;">${subject}</td><td>${student[subject]}</td><td>${totalMarks}</td></tr>`;
+                });
+                document.getElementById("marksTable").innerHTML = marksHtml;
+                document.getElementById("totalMarks").innerText = student["Grand Obtained Marks"];
+                document.getElementById("percentage").innerText = student["Percentage"] + "%";
+                document.getElementById("remarks").innerText = student["Remarks"];
+                document.getElementById("reportCard").style.display = "block";
+            } else {
+                document.getElementById("errorMsg").innerText = "No record found for the entered information.";
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("reportCard").style.display = "none";
+            document.getElementById("errorMsg").innerText = "";
+        }
+
+        function downloadReport() {
+            // Hide buttons and search bar before download
+            document.querySelector(".search-container").style.display = "none";
+            document.querySelector(".btn-download").style.display = "none";
+            document.querySelector(".btn-print").style.display = "none";
+
+            // Take the screenshot
+            html2canvas(document.getElementById("reportContainer")).then(canvas => {
+                let link = document.createElement("a");
+                link.href = canvas.toDataURL("image/png");
+                link.download = "report_card.png";
+                link.click();
+
+                // Show buttons and search bar again after download
+                document.querySelector(".search-container").style.display = "block";
+                document.querySelector(".btn-download").style.display = "block";
+                document.querySelector(".btn-print").style.display = "block";
+            });
+        }
+
+         function printReport() {
+            // Hide buttons before print
+            document.querySelector(".search-container").style.display = "none";
+            document.querySelector(".btn-download").style.display = "none";
+            document.querySelector(".btn-print").style.display = "none";
+
+            // Print the content
+            window.print();
+
+            // Show buttons again after print
+            document.querySelector(".search-container").style.display = "block";
+            document.querySelector(".btn-download").style.display = "block";
+            document.querySelector(".btn-print").style.display = "block";
+        }
+    </script>
+</body>
+</html>
