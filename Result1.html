@@ -44,16 +44,17 @@
     
     
 
-<script>
-  window.addEventListener("message", function (event) {
-    if (event.origin === "https://zubairical.github.io") {
-      document.getElementById("quizIframe").style.height = event.data + "px";
-    }
-  });
+
+
+    <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
 </script>
-
-
-    
 
 
     
