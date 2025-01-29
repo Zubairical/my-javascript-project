@@ -14,6 +14,18 @@
         .remarks { font-size: 1.5em; font-weight: bold; animation: colorChange 2s infinite alternate; }
         @keyframes colorChange { 0% { color: red; } 100% { color: green; } }
     </style>
+
+    
+    <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
 </head>
 <body>
     <div class="container">
