@@ -123,37 +123,48 @@ body, .container {
         }
 
         /* Print-specific Styles */
-        @media print {
-            body, .container {
-                width: 100%;
-                max-width: 100%;
-                margin: 0;
-                padding: 0;
-                box-shadow: none;
-            }
-            .btn-download, .btn-print, .search-container {
-                display: none;
-            }
-            .report-card {
-                display: block;
-            }
-            @page {
-                size: A4 portrait;
-                margin: 5mm;
-            }
-            .school-header h2 {
-                font-size: 2em;
-            }
-            .marks-table th, .marks-table td {
-                font-size: 0.9em;
-                padding: 8px;
-            }
-            .remarks, .footer-note, .developer {
-                font-size: 0.9em;
-            }
-            .student-info td {
-                font-size: 0.95em;
-            }
+        /* Print-specific Styles */
+@media print {
+    body, .container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    /* Hide elements when printing */
+    .search-container, .btn-download, .btn-print {
+        display: none !important;
+    }
+
+    .report-card {
+        display: block;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 5mm;
+    }
+
+    .school-header h2 {
+        font-size: 2em;
+    }
+
+    .marks-table th, .marks-table td {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .remarks, .footer-note, .developer {
+        font-size: 0.9em;
+    }
+
+    .student-info td {
+        font-size: 0.95em;
+    }
+}
+
             
     </style>
 </head>
