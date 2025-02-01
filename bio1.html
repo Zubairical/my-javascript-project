@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is biodiversity?",
+        "Option A": "Variety of life on Earth",
+        "Option B": "Only plants diversity",
+        "Option C": "Only animal diversity",
+        "Option D": "Only microbial diversity",
+        "Correct Option": "A",
+        "Explanation": "Biodiversity refers to the variety of all life forms on Earth, including plants, animals, fungi, and microorganisms."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which domain do viruses belong to?",
+        "Option A": "Bacteria",
+        "Option B": "Archaea",
+        "Option C": "Eukarya",
+        "Option D": "None",
+        "Correct Option": "D",
+        "Explanation": "Viruses are acellular and do not belong to any domain of life."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What is the basic unit of biodiversity?",
+        "Option A": "Biome",
+        "Option B": "Ecosystem",
+        "Option C": "Species",
+        "Option D": "Population",
+        "Correct Option": "C",
+        "Explanation": "Species is the fundamental unit of biodiversity as it represents distinct biological entities."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which of the following is acellular?",
+        "Option A": "Bacteria",
+        "Option B": "Fungi",
+        "Option C": "Viruses",
+        "Option D": "Protists",
+        "Correct Option": "C",
+        "Explanation": "Viruses are non-cellular entities that require a host to replicate."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Who proposed the five-kingdom classification?",
+        "Option A": "Linnaeus",
+        "Option B": "Whittaker",
+        "Option C": "Haeckel",
+        "Option D": "Darwin",
+        "Correct Option": "B",
+        "Explanation": "Robert Whittaker proposed the five-kingdom classification in 1969."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which of the following is NOT considered living?",
+        "Option A": "Fungi",
+        "Option B": "Protozoa",
+        "Option C": "Viruses",
+        "Option D": "Algae",
+        "Correct Option": "C",
+        "Explanation": "Viruses are considered non-living outside a host but show life-like properties inside a host."
+    },
+    {
+        "Q.No": "7",
+        "Question": "The smallest infectious agents are",
+        "Option A": "Bacteria",
+        "Option B": "Protozoa",
+        "Option C": "Fungi",
+        "Option D": "Viruses",
+        "Correct Option": "D",
+        "Explanation": "Viruses are the smallest infectious agents, smaller than bacteria."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What is the protein coat of a virus called?",
+        "Option A": "Capsule",
+        "Option B": "Capsid",
+        "Option C": "Cell wall",
+        "Option D": "Envelope",
+        "Correct Option": "B",
+        "Explanation": "The protein coat of a virus is called a capsid, which protects its genetic material."
+    },
+    {
+        "Q.No": "9",
+        "Question": "The genetic material of viruses can be",
+        "Option A": "Only DNA",
+        "Option B": "Only RNA",
+        "Option C": "Both DNA and RNA",
+        "Option D": "Either DNA or RNA",
+        "Correct Option": "D",
+        "Explanation": "Viruses can have either DNA or RNA but not both."
+    },
+    {
+        "Q.No": "10",
+        "Question": "HIV is an example of",
+        "Option A": "Bacteriophage",
+        "Option B": "Retrovirus",
+        "Option C": "DNA virus",
+        "Option D": "Lytic virus",
+        "Correct Option": "B",
+        "Explanation": "HIV is a retrovirus that contains RNA and uses reverse transcriptase to convert RNA into DNA."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which virus infects bacteria?",
+        "Option A": "Influenza",
+        "Option B": "Polio",
+        "Option C": "Bacteriophage",
+        "Option D": "Adenovirus",
+        "Correct Option": "C",
+        "Explanation": "Bacteriophages are viruses that infect and replicate within bacteria."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which of the following diseases is caused by a virus?",
+        "Option A": "Tuberculosis",
+        "Option B": "Malaria",
+        "Option C": "Measles",
+        "Option D": "Ringworm",
+        "Correct Option": "C",
+        "Explanation": "Measles is caused by the measles virus."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which of the following is a characteristic of viruses?",
+        "Option A": "Can reproduce outside host",
+        "Option B": "Have their own metabolism",
+        "Option C": "Are always beneficial",
+        "Option D": "Lack cellular structure",
+        "Correct Option": "D",
+        "Explanation": "Viruses lack cellular structure and metabolic machinery."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Biodiversity is highest in",
+        "Option A": "Desert",
+        "Option B": "Tundra",
+        "Option C": "Rainforest",
+        "Option D": "Grassland",
+        "Correct Option": "C",
+        "Explanation": "Rainforests have the highest biodiversity due to favorable climatic conditions."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is the study of viruses called?",
+        "Option A": "Virology",
+        "Option B": "Microbiology",
+        "Option C": "Mycology",
+        "Option D": "Bacteriology",
+        "Correct Option": "A",
+        "Explanation": "Virology is the branch of science that deals with the study of viruses."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Prions are",
+        "Option A": "Infectious proteins",
+        "Option B": "DNA viruses",
+        "Option C": "RNA viruses",
+        "Option D": "Bacteria",
+        "Correct Option": "A",
+        "Explanation": "Prions are infectious proteins that cause diseases like mad cow disease."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which kingdom has the highest biodiversity?",
+        "Option A": "Plantae",
+        "Option B": "Animalia",
+        "Option C": "Monera",
+        "Option D": "Fungi",
+        "Correct Option": "B",
+        "Explanation": "Animalia has the highest biodiversity with the largest number of species."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Endemic species are found",
+        "Option A": "Everywhere",
+        "Option B": "Only in zoos",
+        "Option C": "In multiple continents",
+        "Option D": "In a specific region",
+        "Correct Option": "D",
+        "Explanation": "Endemic species are found in a particular region and nowhere else."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which of the following is a viral disease?",
+        "Option A": "Cholera",
+        "Option B": "Typhoid",
+        "Option C": "Dengue",
+        "Option D": "Tuberculosis",
+        "Correct Option": "C",
+        "Explanation": "Dengue is caused by the dengue virus, transmitted by mosquitoes."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Lichens are an example of",
+        "Option A": "Mutualism",
+        "Option B": "Parasitism",
+        "Option C": "Commensalism",
+        "Option D": "Predation",
+        "Correct Option": "A",
+        "Explanation": "Lichens are a mutualistic association between fungi and algae."
+    },
+    {
+        "Q.No": "21",
+        "Question": "The term \"\"hotspot\"\" in biodiversity refers to",
+        "Option A": "Cold regions",
+        "Option B": "Areas with high species richness",
+        "Option C": "Places with no biodiversity",
+        "Option D": "Places with only aquatic life",
+        "Correct Option": "B",
+        "Explanation": "Biodiversity hotspots are regions with high species richness and endemism."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which virus caused the COVID-19 pandemic?",
+        "Option A": "Influenza virus",
+        "Option B": "HIV",
+        "Option C": "SARS-CoV-2",
+        "Option D": "H1N1",
+        "Correct Option": "C",
+        "Explanation": "The SARS-CoV-2 virus caused the COVID-19 pandemic."
+    },
+    {
+        "Q.No": "23",
+        "Question": "The smallest unit of classification is",
+        "Option A": "Family",
+        "Option B": "Order",
+        "Option C": "Genus",
+        "Option D": "Species",
+        "Correct Option": "D",
+        "Explanation": "Species is the most specific taxonomic rank."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What type of biodiversity exists at the genetic level?",
+        "Option A": "Species diversity",
+        "Option B": "Ecosystem diversity",
+        "Option C": "Genetic diversity",
+        "Option D": "Functional diversity",
+        "Correct Option": "C",
+        "Explanation": "Genetic diversity refers to the variation in genes within a species."
+    },
+    {
+        "Q.No": "25",
+        "Question": "A retrovirus contains",
+        "Option A": "DNA only",
+        "Option B": "RNA only",
+        "Option C": "Both DNA and RNA",
+        "Option D": "No genetic material",
+        "Correct Option": "B",
+        "Explanation": "Retroviruses contain RNA as their genetic material."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which part of a virus helps it attach to a host cell?",
+        "Option A": "Tail fibers",
+        "Option B": "Nucleus",
+        "Option C": "Ribosomes",
+        "Option D": "Mitochondria",
+        "Correct Option": "A",
+        "Explanation": "Tail fibers help viruses attach to specific receptors on host cells."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which of the following is NOT a component of biodiversity?",
+        "Option A": "Genetic diversity",
+        "Option B": "Species diversity",
+        "Option C": "Ecosystem diversity",
+        "Option D": "Chemical diversity",
+        "Correct Option": "D",
+        "Explanation": "Biodiversity consists of genetic, species, and ecosystem diversity, but not chemical diversity."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which organism is known as a \"\"living fossil\"\"?",
+        "Option A": "Crocodile",
+        "Option B": "Bacteria",
+        "Option C": "Horseshoe crab",
+        "Option D": "Starfish",
+        "Correct Option": "C",
+        "Explanation": "Horseshoe crabs are considered living fossils due to their ancient lineage."
+    },
+    {
+        "Q.No": "29",
+        "Question": "The most diverse group of animals is",
+        "Option A": "Mammals",
+        "Option B": "Birds",
+        "Option C": "Insects",
+        "Option D": "Amphibians",
+        "Correct Option": "C",
+        "Explanation": "Insects make up the largest group of animals in terms of species diversity."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following is an RNA virus?",
+        "Option A": "Rabies virus",
+        "Option B": "Smallpox virus",
+        "Option C": "Adenovirus",
+        "Option D": "Bacteriophage",
+        "Correct Option": "A",
+        "Explanation": "The rabies virus contains RNA as its genetic material."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is NOT a characteristic of living organisms but is found in viruses?",
+        "Option A": "Cellular structure",
+        "Option B": "Metabolism",
+        "Option C": "Independent reproduction",
+        "Option D": "Ability to mutate",
+        "Correct Option": "D",
+        "Explanation": "Viruses can mutate, but they lack metabolism and cellular structure."
+    },
+    {
+        "Q.No": "32",
+        "Question": "The enzyme used by retroviruses to convert RNA into DNA is",
+        "Option A": "DNA polymerase",
+        "Option B": "RNA polymerase",
+        "Option C": "Reverse transcriptase",
+        "Option D": "Ligase",
+        "Correct Option": "C",
+        "Explanation": "Reverse transcriptase helps convert RNA into DNA in retroviruses."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following is an example of ex-situ conservation?",
+        "Option A": "National park",
+        "Option B": "Wildlife sanctuary",
+        "Option C": "Botanical garden",
+        "Option D": "Biosphere reserve",
+        "Correct Option": "C",
+        "Explanation": "Ex-situ conservation involves protecting species outside their natural habitat, like in botanical gardens."
+    },
+    {
+        "Q.No": "34",
+        "Question": "In which type of viral cycle does the virus integrate its genome into the host's DNA?",
+        "Option A": "Lytic cycle",
+        "Option B": "Lysogenic cycle",
+        "Option C": "Binary fission",
+        "Option D": "Budding",
+        "Correct Option": "B",
+        "Explanation": "In the lysogenic cycle, the viral genome integrates into the host DNA and remains dormant."
+    },
+    {
+        "Q.No": "35",
+        "Question": "The total number of known species on Earth is approximately",
+        "Option A": "1 million",
+        "Option B": "5 million",
+        "Option C": "8.7 million",
+        "Option D": "50 million",
+        "Correct Option": "C",
+        "Explanation": "Scientists estimate about 8.7 million species, though many remain undiscovered."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which biome has the lowest biodiversity?",
+        "Option A": "Rainforest",
+        "Option B": "Desert",
+        "Option C": "Tundra",
+        "Option D": "Grassland",
+        "Correct Option": "C",
+        "Explanation": "Tundra has the lowest biodiversity due to extreme cold conditions."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is the most common shape of bacteriophages?",
+        "Option A": "Helical",
+        "Option B": "Spherical",
+        "Option C": "Icosahedral",
+        "Option D": "Complex",
+        "Correct Option": "D",
+        "Explanation": "Bacteriophages have a complex structure with a head and tail fibers."
+    },
+    {
+        "Q.No": "38",
+        "Question": "The biodiversity of an area is measured by its",
+        "Option A": "Number of biomes",
+        "Option B": "Number of ecosystems",
+        "Option C": "Number of species",
+        "Option D": "Number of genes",
+        "Correct Option": "C",
+        "Explanation": "Biodiversity is measured by the number of species in an ecosystem."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which of the following is NOT a method of biodiversity conservation?",
+        "Option A": "Afforestation",
+        "Option B": "Deforestation",
+        "Option C": "Wildlife protection laws",
+        "Option D": "Captive breeding",
+        "Correct Option": "B",
+        "Explanation": "Deforestation destroys biodiversity instead of conserving it."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which type of RNA virus can be directly used as mRNA for protein synthesis?",
+        "Option A": "Negative-sense RNA virus",
+        "Option B": "Positive-sense RNA virus",
+        "Option C": "Double-stranded RNA virus",
+        "Option D": "Retrovirus",
+        "Correct Option": "B",
+        "Explanation": "Positive-sense RNA viruses can directly function as mRNA."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which is the smallest known virus?",
+        "Option A": "Polio virus",
+        "Option B": "Hepatitis B virus",
+        "Option C": "Tobacco mosaic virus",
+        "Option D": "Rhinovirus",
+        "Correct Option": "A",
+        "Explanation": "The polio virus is one of the smallest known viruses."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Viroids are composed of",
+        "Option A": "DNA only",
+        "Option B": "RNA only",
+        "Option C": "Proteins",
+        "Option D": "Lipids",
+        "Correct Option": "B",
+        "Explanation": "Viroids are infectious RNA molecules without a protein coat."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which of the following is an example of in-situ conservation?",
+        "Option A": "Zoo",
+        "Option B": "Aquarium",
+        "Option C": "National park",
+        "Option D": "Seed bank",
+        "Correct Option": "C",
+        "Explanation": "National parks conserve species in their natural habitats."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which organisms are considered nature's decomposers?",
+        "Option A": "Herbivores",
+        "Option B": "Carnivores",
+        "Option C": "Fungi and bacteria",
+        "Option D": "Viruses",
+        "Correct Option": "C",
+        "Explanation": "Fungi and bacteria break down organic matter, recycling nutrients."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which of the following viruses causes warts in humans?",
+        "Option A": "HIV",
+        "Option B": "Human papillomavirus (HPV)",
+        "Option C": "Ebola virus",
+        "Option D": "Hepatitis C virus",
+        "Correct Option": "B",
+        "Explanation": "HPV causes warts and is linked to cervical cancer."
+    },
+    {
+        "Q.No": "46",
+        "Question": "The first virus to be crystallized was",
+        "Option A": "HIV",
+        "Option B": "Influenza virus",
+        "Option C": "Tobacco mosaic virus",
+        "Option D": "Adenovirus",
+        "Correct Option": "C",
+        "Explanation": "Tobacco mosaic virus was the first virus to be crystallized."
+    },
+    {
+        "Q.No": "47",
+        "Question": "The function of a viral envelope is to",
+        "Option A": "Replicate genetic material",
+        "Option B": "Protect against host defenses",
+        "Option C": "Store nutrients",
+        "Option D": "Capture sunlight",
+        "Correct Option": "B",
+        "Explanation": "The viral envelope helps the virus evade host immune defenses."
+    },
+    {
+        "Q.No": "48",
+        "Question": "The term \"\"gene pool\"\" refers to",
+        "Option A": "All genes in a species",
+        "Option B": "DNA in a single organism",
+        "Option C": "Collection of similar proteins",
+        "Option D": "Genetic diversity in an ecosystem",
+        "Correct Option": "A",
+        "Explanation": "The gene pool represents all genetic material in a species population."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What do bacteriophages inject into bacteria?",
+        "Option A": "Proteins",
+        "Option B": "RNA",
+        "Option C": "DNA",
+        "Option D": "Lipids",
+        "Correct Option": "C",
+        "Explanation": "Bacteriophages inject DNA into bacterial cells for replication."
+    },
+    {
+        "Q.No": "50",
+        "Question": "How do fungi primarily obtain nutrients?",
+        "Option A": "Photosynthesis",
+        "Option B": "Parasitism",
+        "Option C": "Absorption",
+        "Option D": "Ingestion",
+        "Correct Option": "C",
+        "Explanation": "Fungi absorb nutrients by breaking down organic material."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which type of biodiversity refers to the variety of ecosystems within a region?",
+        "Option A": "Genetic diversity",
+        "Option B": "Species diversity",
+        "Option C": "Ecosystem diversity",
+        "Option D": "Functional diversity",
+        "Correct Option": "C",
+        "Explanation": "Ecosystem diversity refers to the variety of ecosystems in a region."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which scientist first discovered viruses?",
+        "Option A": "Louis Pasteur",
+        "Option B": "Robert Koch",
+        "Option C": "Martinus Beijerinck",
+        "Option D": "Alexander Fleming",
+        "Correct Option": "C",
+        "Explanation": "Beijerinck confirmed the existence of viruses by studying the tobacco mosaic virus."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following is the most abundant entity in the biosphere?",
+        "Option A": "Bacteria",
+        "Option B": "Fungi",
+        "Option C": "Viruses",
+        "Option D": "Protozoa",
+        "Correct Option": "C",
+        "Explanation": "Viruses outnumber all other biological entities in the biosphere."
+    },
+    {
+        "Q.No": "54",
+        "Question": "The rabies virus is transmitted through",
+        "Option A": "Air",
+        "Option B": "Water",
+        "Option C": "Direct contact",
+        "Option D": "Animal bites",
+        "Correct Option": "D",
+        "Explanation": "Rabies spreads through the bite of infected animals."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which of the following is the largest virus?",
+        "Option A": "Mimivirus",
+        "Option B": "Influenza virus",
+        "Option C": "Dengue virus",
+        "Option D": "Poliovirus",
+        "Correct Option": "A",
+        "Explanation": "Mimivirus is one of the largest known viruses."
+    },
+    {
+        "Q.No": "56",
+        "Question": "The central dogma of molecular biology involves",
+        "Option A": "DNA → RNA → Protein",
+        "Option B": "RNA → DNA → Protein",
+        "Option C": "Protein → RNA → DNA",
+        "Option D": "RNA → Protein → DNA",
+        "Correct Option": "A",
+        "Explanation": "The central dogma describes genetic information flow from DNA to RNA to protein."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Genetic drift affects",
+        "Option A": "Large populations",
+        "Option B": "Small populations",
+        "Option C": "Both equally",
+        "Option D": "None of these",
+        "Correct Option": "B",
+        "Explanation": "Genetic drift has a greater effect on small populations."
+    },
+    {
+        "Q.No": "58",
+        "Question": "The study of fungi is called",
+        "Option A": "Bacteriology",
+        "Option B": "Virology",
+        "Option C": "Mycology",
+        "Option D": "Phycology",
+        "Correct Option": "C",
+        "Explanation": "Mycology is the scientific study of fungi."
+    },
+    {
+        "Q.No": "59",
+        "Question": "The leading cause of species extinction today is",
+        "Option A": "Overhunting",
+        "Option B": "Climate change",
+        "Option C": "Habitat destruction",
+        "Option D": "Disease",
+        "Correct Option": "C",
+        "Explanation": "Habitat destruction is the primary cause of species extinction."
+    },
+    {
+        "Q.No": "60",
+        "Question": "The protein shell of a virus is made up of",
+        "Option A": "Lipids",
+        "Option B": "Polysaccharides",
+        "Option C": "Capsomeres",
+        "Option D": "Nucleotides",
+        "Correct Option": "C",
+        "Explanation": "Capsomeres are protein subunits that form the capsid of a virus."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the primary function of a viral spike protein?",
+        "Option A": "DNA replication",
+        "Option B": "Protein synthesis",
+        "Option C": "Host cell recognition and entry",
+        "Option D": "Energy production",
+        "Correct Option": "C",
+        "Explanation": "Viral spike proteins help viruses attach to and enter host cells."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which kingdom does yeast belong to?",
+        "Option A": "Monera",
+        "Option B": "Fungi",
+        "Option C": "Protista",
+        "Option D": "Plantae",
+        "Correct Option": "B",
+        "Explanation": "Yeast is a unicellular fungus."
+    },
+    {
+        "Q.No": "63",
+        "Question": "The most significant greenhouse gas affecting biodiversity is",
+        "Option A": "Oxygen",
+        "Option B": "Carbon dioxide",
+        "Option C": "Nitrogen",
+        "Option D": "Helium",
+        "Correct Option": "B",
+        "Explanation": "CO₂ contributes to climate change, which impacts biodiversity."
+    },
+    {
+        "Q.No": "64",
+        "Question": "The most common shape of helical viruses is",
+        "Option A": "Rod-shaped",
+        "Option B": "Spherical",
+        "Option C": "Complex",
+        "Option D": "Icosahedral",
+        "Correct Option": "A",
+        "Explanation": "Helical viruses, like the tobacco mosaic virus, are rod-shaped."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Ebola virus primarily spreads through",
+        "Option A": "Airborne transmission",
+        "Option B": "Contaminated water",
+        "Option C": "Direct contact with bodily fluids",
+        "Option D": "Vector-borne transmission",
+        "Correct Option": "C",
+        "Explanation": "Ebola spreads through direct contact with infected bodily fluids."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Genetic recombination in viruses occurs through",
+        "Option A": "Binary fission",
+        "Option B": "Budding",
+        "Option C": "Transduction",
+        "Option D": "Lysis",
+        "Correct Option": "C",
+        "Explanation": "Viruses can undergo genetic recombination via transduction."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which of the following does NOT contribute to biodiversity loss?",
+        "Option A": "Deforestation",
+        "Option B": "Climate change",
+        "Option C": "Overfishing",
+        "Option D": "Ecotourism",
+        "Correct Option": "D",
+        "Explanation": "Ecotourism promotes conservation rather than biodiversity loss."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which type of biodiversity includes different functional roles of organisms in an ecosystem?",
+        "Option A": "Genetic diversity",
+        "Option B": "Species diversity",
+        "Option C": "Ecosystem diversity",
+        "Option D": "Functional diversity",
+        "Correct Option": "D",
+        "Explanation": "Functional diversity refers to the variety of roles organisms play in an ecosystem."
+    },
+    {
+        "Q.No": "69",
+        "Question": "The primary component of viral genomes is",
+        "Option A": "Only DNA",
+        "Option B": "Only RNA",
+        "Option C": "Either DNA or RNA",
+        "Option D": "Both DNA and RNA",
+        "Correct Option": "C",
+        "Explanation": "Viruses contain either DNA or RNA, but never both."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the main function of biodiversity in an ecosystem?",
+        "Option A": "Increase energy flow",
+        "Option B": "Maintain ecological balance",
+        "Option C": "Provide raw materials",
+        "Option D": "Prevent natural disasters",
+        "Correct Option": "B",
+        "Explanation": "Biodiversity maintains ecological balance and stability."
+    },
+    {
+        "Q.No": "71",
+        "Question": "The first vaccine developed was against which viral disease?",
+        "Option A": "Influenza",
+        "Option B": "Rabies",
+        "Option C": "Smallpox",
+        "Option D": "Polio",
+        "Correct Option": "C",
+        "Explanation": "Edward Jenner developed the first vaccine against smallpox."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the main purpose of a viral capsid?",
+        "Option A": "To store nutrients",
+        "Option B": "To transport the virus",
+        "Option C": "To protect viral genetic material",
+        "Option D": "To provide energy",
+        "Correct Option": "C",
+        "Explanation": "The capsid protects the viral genome from external damage."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which of the following is an example of an RNA virus?",
+        "Option A": "Hepatitis B",
+        "Option B": "HIV",
+        "Option C": "Adenovirus",
+        "Option D": "Herpesvirus",
+        "Correct Option": "B",
+        "Explanation": "HIV is an RNA virus that uses reverse transcriptase to replicate."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which type of biodiversity focuses on the variety of genes within a species?",
+        "Option A": "Species diversity",
+        "Option B": "Genetic diversity",
+        "Option C": "Ecosystem diversity",
+        "Option D": "Functional diversity",
+        "Correct Option": "B",
+        "Explanation": "Genetic diversity refers to variations in genes within a species."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which category of viruses infects bacteria?",
+        "Option A": "Retroviruses",
+        "Option B": "Bacteriophages",
+        "Option C": "Viroids",
+        "Option D": "Prions",
+        "Correct Option": "B",
+        "Explanation": "Bacteriophages specifically infect bacterial cells."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which organism is responsible for nitrogen fixation?",
+        "Option A": "Viruses",
+        "Option B": "Cyanobacteria",
+        "Option C": "Fungi",
+        "Option D": "Protozoa",
+        "Correct Option": "B",
+        "Explanation": "Cyanobacteria (e.g., Nostoc) fix atmospheric nitrogen."
+    },
+    {
+        "Q.No": "77",
+        "Question": "The ability of viruses to infect specific cells depends on",
+        "Option A": "Their metabolic activity",
+        "Option B": "Their energy production",
+        "Option C": "The presence of specific receptors",
+        "Option D": "Their size",
+        "Correct Option": "C",
+        "Explanation": "Viruses attach to host cells using specific receptor sites."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the protein subunit that makes up the viral capsid called?",
+        "Option A": "Nucleoid",
+        "Option B": "Ribosome",
+        "Option C": "Capsomere",
+        "Option D": "Envelope",
+        "Correct Option": "C",
+        "Explanation": "Capsomeres assemble to form the viral capsid."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following is NOT considered a living organism?",
+        "Option A": "Bacteria",
+        "Option B": "Fungi",
+        "Option C": "Virus",
+        "Option D": "Protozoa",
+        "Correct Option": "C",
+        "Explanation": "Viruses lack cellular structures and metabolism, making them non-living."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which kingdom has the highest species diversity?",
+        "Option A": "Plantae",
+        "Option B": "Animalia",
+        "Option C": "Fungi",
+        "Option D": "Monera",
+        "Correct Option": "B",
+        "Explanation": "The Animalia kingdom has the most species diversity."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is the term for the disappearance of a species from Earth?",
+        "Option A": "Endemism",
+        "Option B": "Extinction",
+        "Option C": "Evolution",
+        "Option D": "Mutation",
+        "Correct Option": "B",
+        "Explanation": "Extinction refers to the permanent loss of a species."
+    },
+    {
+        "Q.No": "82",
+        "Question": "The International Union for Conservation of Nature (IUCN) maintains the",
+        "Option A": "Biodiversity Index",
+        "Option B": "Red List",
+        "Option C": "Blue List",
+        "Option D": "Ecological Report",
+        "Correct Option": "B",
+        "Explanation": "The IUCN Red List categorizes species based on their risk of extinction."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following is NOT an example of ecosystem diversity?",
+        "Option A": "Coral reefs",
+        "Option B": "Tropical rainforests",
+        "Option C": "DNA variation in a population",
+        "Option D": "Grasslands",
+        "Correct Option": "C",
+        "Explanation": "DNA variation is part of genetic diversity, not ecosystem diversity."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which type of virus contains both DNA and RNA?",
+        "Option A": "Retroviruses",
+        "Option B": "Adenoviruses",
+        "Option C": "None",
+        "Option D": "Bacteriophages",
+        "Correct Option": "C",
+        "Explanation": "No known virus contains both DNA and RNA."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What does the term \"\"biodiversity hotspot\"\" refer to?",
+        "Option A": "Areas with high desertification",
+        "Option B": "Areas with rich but threatened biodiversity",
+        "Option C": "Areas with uniform species distribution",
+        "Option D": "Areas with no endemic species",
+        "Correct Option": "B",
+        "Explanation": "Biodiversity hotspots have high species richness but face threats."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which structure in viruses is responsible for attaching to host cells?",
+        "Option A": "Envelope",
+        "Option B": "Capsid",
+        "Option C": "Tail fibers",
+        "Option D": "Nucleic acid",
+        "Correct Option": "C",
+        "Explanation": "Tail fibers help bacteriophages attach to bacterial cells."
+    },
+    {
+        "Q.No": "87",
+        "Question": "The loss of biodiversity can lead to",
+        "Option A": "Increased ecosystem stability",
+        "Option B": "Improved food security",
+        "Option C": "Ecological imbalance",
+        "Option D": "Greater genetic variation",
+        "Correct Option": "C",
+        "Explanation": "Biodiversity loss disrupts ecological balance."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which of the following is NOT a human-induced cause of biodiversity loss?",
+        "Option A": "Climate change",
+        "Option B": "Natural disasters",
+        "Option C": "Habitat destruction",
+        "Option D": "Overfishing",
+        "Correct Option": "B",
+        "Explanation": "Natural disasters are not caused by human activities."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the primary reason viruses are not classified as living organisms?",
+        "Option A": "They lack a nucleus",
+        "Option B": "They cannot replicate independently",
+        "Option C": "They have no genetic material",
+        "Option D": "They do not have cell walls",
+        "Correct Option": "B",
+        "Explanation": "Viruses require a host cell for replication."
+    },
+    {
+        "Q.No": "90",
+        "Question": "How do prions differ from viruses?",
+        "Option A": "Prions have DNA, but viruses do not",
+        "Option B": "Prions are made only of protein",
+        "Option C": "Prions infect plants, viruses do not",
+        "Option D": "Prions have a lipid membrane",
+        "Correct Option": "B",
+        "Explanation": "Prions are infectious proteins without genetic material."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which ecosystem is known for having the highest biodiversity?",
+        "Option A": "Tundra",
+        "Option B": "Rainforest",
+        "Option C": "Desert",
+        "Option D": "Ocean",
+        "Correct Option": "B",
+        "Explanation": "Rainforests have the highest biodiversity due to favorable conditions."
+    },
+    {
+        "Q.No": "92",
+        "Question": "The primary role of decomposers in an ecosystem is to",
+        "Option A": "Produce oxygen",
+        "Option B": "Break down organic matter",
+        "Option C": "Absorb sunlight",
+        "Option D": "Fix nitrogen",
+        "Correct Option": "B",
+        "Explanation": "Decomposers recycle nutrients by breaking down dead matter."
+    },
+    {
+        "Q.No": "93",
+        "Question": "The most significant role of biodiversity in agriculture is",
+        "Option A": "Increasing soil erosion",
+        "Option B": "Enhancing genetic variation",
+        "Option C": "Reducing food production",
+        "Option D": "Increasing habitat loss",
+        "Correct Option": "B",
+        "Explanation": "Biodiversity ensures genetic variation, which is crucial for crops and livestock."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which term describes a species found only in a specific geographic location?",
+        "Option A": "Endemic species",
+        "Option B": "Invasive species",
+        "Option C": "Extinct species",
+        "Option D": "Migratory species",
+        "Correct Option": "A",
+        "Explanation": "Endemic species are restricted to a particular region."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which of the following is an example of a zoonotic virus?",
+        "Option A": "Dengue",
+        "Option B": "Measles",
+        "Option C": "Rabies",
+        "Option D": "Smallpox",
+        "Correct Option": "C",
+        "Explanation": "Rabies is transmitted from animals to humans (zoonotic)."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the primary mode of transmission for the influenza virus?",
+        "Option A": "Contaminated food",
+        "Option B": "Mosquito bites",
+        "Option C": "Airborne droplets",
+        "Option D": "Waterborne transmission",
+        "Correct Option": "C",
+        "Explanation": "Influenza spreads through airborne droplets."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which of the following contributes most to habitat destruction?",
+        "Option A": "Recycling",
+        "Option B": "Urbanization",
+        "Option C": "Sustainable farming",
+        "Option D": "Wildlife corridors",
+        "Correct Option": "B",
+        "Explanation": "Urbanization leads to habitat loss for many species."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the function of the viral envelope?",
+        "Option A": "Provides metabolic energy",
+        "Option B": "Helps viruses avoid the immune system",
+        "Option C": "Synthesizes proteins",
+        "Option D": "Replicates viral DNA",
+        "Correct Option": "B",
+        "Explanation": "The viral envelope protects the virus and aids in host cell entry."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which viral disease has been eradicated through vaccination?",
+        "Option A": "Smallpox",
+        "Option B": "Polio",
+        "Option C": "Measles",
+        "Option D": "HIV/AIDS",
+        "Correct Option": "A",
+        "Explanation": "Smallpox was eradicated through global vaccination efforts."
+    },
+    {
+        "Q.No": "100",
+        "Question": "The study of the interaction between organisms and their environment is called",
+        "Option A": "Biology",
+        "Option B": "Genetics",
+        "Option C": "Ecology",
+        "Option D": "Taxonomy",
+        "Correct Option": "C",
+        "Explanation": "Ecology focuses on interactions between organisms and their surroundings."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
