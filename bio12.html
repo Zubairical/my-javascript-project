@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which of the following structures provides support to plant cells?",
+        "Option A": "Mitochondria",
+        "Option B": "Chloroplast",
+        "Option C": "Cell wall",
+        "Option D": "Nucleus",
+        "Correct Option": "C",
+        "Explanation": "The cell wall in plant cells provides structure and support."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is the main function of the human skeleton?",
+        "Option A": "To produce energy",
+        "Option B": "To aid in digestion",
+        "Option C": "To provide support and protection",
+        "Option D": "To produce blood cells",
+        "Correct Option": "C",
+        "Explanation": "The skeleton provides structural support and protection for internal organs."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What type of muscle is responsible for involuntary movements in humans?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Cardiac muscle",
+        "Option C": "Smooth muscle",
+        "Option D": "Striated muscle",
+        "Correct Option": "C",
+        "Explanation": "Smooth muscle is responsible for involuntary movements, such as those in the digestive system."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is the primary function of ligaments?",
+        "Option A": "To connect muscles to bones",
+        "Option B": "To support bones",
+        "Option C": "To connect bones to bones",
+        "Option D": "To protect organs",
+        "Correct Option": "C",
+        "Explanation": "Ligaments connect bones to other bones at joints, providing stability."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What type of joint allows for the widest range of movement in humans?",
+        "Option A": "Hinge joint",
+        "Option B": "Ball-and-socket joint",
+        "Option C": "Pivot joint",
+        "Option D": "Gliding joint",
+        "Correct Option": "B",
+        "Explanation": "The ball-and-socket joint (e.g., shoulder, hip) allows the greatest range of motion."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which of the following is a characteristic of cartilage?",
+        "Option A": "It is rigid and hard",
+        "Option B": "It is flexible and rubbery",
+        "Option C": "It forms the bone structure",
+        "Option D": "It has no blood vessels",
+        "Correct Option": "B",
+        "Explanation": "Cartilage is flexible and rubbery, providing support and cushioning at joints."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is the role of tendons in the human body?",
+        "Option A": "To connect muscles to bones",
+        "Option B": "To connect bones to bones",
+        "Option C": "To support organs",
+        "Option D": "To produce movement",
+        "Correct Option": "A",
+        "Explanation": "Tendons connect muscles to bones, allowing for movement at joints."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following is an example of a hinge joint?",
+        "Option A": "Knee",
+        "Option B": "Shoulder",
+        "Option C": "Wrist",
+        "Option D": "Neck",
+        "Correct Option": "A",
+        "Explanation": "The knee joint is a hinge joint that allows movement in one plane (flexion and extension)."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which type of muscle is found in the heart?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Smooth muscle",
+        "Option C": "Cardiac muscle",
+        "Option D": "Striated muscle",
+        "Correct Option": "C",
+        "Explanation": "Cardiac muscle is found in the heart and is responsible for its contractions."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the main structural protein in bones?",
+        "Option A": "Actin",
+        "Option B": "Collagen",
+        "Option C": "Keratin",
+        "Option D": "Myosin",
+        "Correct Option": "B",
+        "Explanation": "Collagen is the main protein in bones, providing strength and flexibility."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What part of the skeleton protects the brain?",
+        "Option A": "Skull",
+        "Option B": "Ribs",
+        "Option C": "Spine",
+        "Option D": "Pelvis",
+        "Correct Option": "A",
+        "Explanation": "The skull protects the brain from physical damage."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is the name of the fluid-filled cavity in the center of bones?",
+        "Option A": "Osteon",
+        "Option B": "Medullary cavity",
+        "Option C": "Synovial fluid",
+        "Option D": "Periosteum",
+        "Correct Option": "B",
+        "Explanation": "The medullary cavity is a hollow space within bones that contains bone marrow."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which of the following structures is responsible for movement in skeletal muscles?",
+        "Option A": "Tendons",
+        "Option B": "Ligaments",
+        "Option C": "Sarcomeres",
+        "Option D": "Cartilage",
+        "Correct Option": "C",
+        "Explanation": "Sarcomeres, the basic units of muscle contraction, are responsible for movement in skeletal muscles."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What type of movement occurs at a ball-and-socket joint?",
+        "Option A": "Flexion",
+        "Option B": "Rotation",
+        "Option C": "Abduction",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Ball-and-socket joints, such as the shoulder and hip, allow various movements, including flexion, rotation, and abduction."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is the main function of the skeletal system?",
+        "Option A": "To store fat",
+        "Option B": "To produce hormones",
+        "Option C": "To maintain body temperature",
+        "Option D": "To provide structural support and facilitate movement",
+        "Correct Option": "D",
+        "Explanation": "The skeletal system provides structure, support, and enables movement through its connection with muscles."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which of the following best describes the movement of muscles?",
+        "Option A": "They contract and extend",
+        "Option B": "They stay rigid and fixed",
+        "Option C": "They grow larger",
+        "Option D": "They only contract",
+        "Correct Option": "A",
+        "Explanation": "Muscles contract and extend to produce movement in the body."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What type of muscle allows for voluntary movement?",
+        "Option A": "Smooth muscle",
+        "Option B": "Cardiac muscle",
+        "Option C": "Skeletal muscle",
+        "Option D": "Both smooth and skeletal muscle",
+        "Correct Option": "C",
+        "Explanation": "Skeletal muscle controls voluntary movements such as walking and lifting."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the function of the synovial fluid?",
+        "Option A": "To provide energy",
+        "Option B": "To lubricate joints",
+        "Option C": "To connect muscles to bones",
+        "Option D": "To protect internal organs",
+        "Correct Option": "B",
+        "Explanation": "Synovial fluid lubricates joints, reducing friction and allowing smooth movement."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which of the following bones is part of the axial skeleton?",
+        "Option A": "Femur",
+        "Option B": "Humerus",
+        "Option C": "Vertebrae",
+        "Option D": "Tibia",
+        "Correct Option": "C",
+        "Explanation": "The vertebrae are part of the axial skeleton, which includes the skull, spine, and rib cage."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the primary purpose of bones in the body?",
+        "Option A": "To store calcium",
+        "Option B": "To protect organs",
+        "Option C": "To produce blood cells",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Bones store calcium, protect vital organs, and are involved in the production of blood cells."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is the name of the hard outer layer of bone?",
+        "Option A": "Periosteum",
+        "Option B": "Compact bone",
+        "Option C": "Spongy bone",
+        "Option D": "Bone marrow",
+        "Correct Option": "B",
+        "Explanation": "Compact bone is the dense, hard outer layer of bone that provides strength."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What type of movement is demonstrated when you bend your arm at the elbow?",
+        "Option A": "Flexion",
+        "Option B": "Extension",
+        "Option C": "Rotation",
+        "Option D": "Abduction",
+        "Correct Option": "A",
+        "Explanation": "Flexion is the movement of bending a joint, such as the elbow."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following types of joints allows for rotation?",
+        "Option A": "Hinge joint",
+        "Option B": "Ball-and-socket joint",
+        "Option C": "Pivot joint",
+        "Option D": "Saddle joint",
+        "Correct Option": "C",
+        "Explanation": "Pivot joints allow rotation, such as the joint between the first and second cervical vertebrae."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the function of the bursa in joints?",
+        "Option A": "To support muscles",
+        "Option B": "To store synovial fluid",
+        "Option C": "To reduce friction",
+        "Option D": "To store calcium",
+        "Correct Option": "C",
+        "Explanation": "The bursa is a fluid-filled sac that reduces friction between joints and surrounding tissues."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is the main structural difference between ligaments and tendons?",
+        "Option A": "Ligaments connect muscles to bones, tendons connect bones to bones",
+        "Option B": "Ligaments connect bones to bones, tendons connect muscles to bones",
+        "Option C": "Ligaments are more elastic than tendons",
+        "Option D": "Tendons have a more rigid structure than ligaments",
+        "Correct Option": "B",
+        "Explanation": "Ligaments connect bones to other bones, while tendons connect muscles to bones."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which part of the human body has a hinge joint?",
+        "Option A": "Elbow",
+        "Option B": "Hip",
+        "Option C": "Spine",
+        "Option D": "Neck",
+        "Correct Option": "A",
+        "Explanation": "The elbow is a hinge joint, allowing for bending and straightening."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What type of tissue makes up the majority of the bones?",
+        "Option A": "Cartilage",
+        "Option B": "Bone tissue",
+        "Option C": "Muscle tissue",
+        "Option D": "Connective tissue",
+        "Correct Option": "B",
+        "Explanation": "Bone tissue, also known as osseous tissue, makes up the majority of the bones."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the purpose of the skeletal muscles in relation to movement?",
+        "Option A": "To provide strength to bones",
+        "Option B": "To produce movement by contracting and pulling on bones",
+        "Option C": "To generate energy",
+        "Option D": "To support vital organs",
+        "Correct Option": "B",
+        "Explanation": "Skeletal muscles produce movement by contracting and pulling on bones at the joints."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which of the following bones is part of the appendicular skeleton?",
+        "Option A": "Skull",
+        "Option B": "Rib cage",
+        "Option C": "Pelvis",
+        "Option D": "Spine",
+        "Correct Option": "C",
+        "Explanation": "The pelvis is part of the appendicular skeleton, which includes the limbs and girdles."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the role of calcium in the human skeleton?",
+        "Option A": "To make bones rigid and strong",
+        "Option B": "To help muscles contract",
+        "Option C": "To store fat",
+        "Option D": "To produce energy",
+        "Correct Option": "A",
+        "Explanation": "Calcium is a key mineral that gives bones their strength and rigidity."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which structure in the body is responsible for transporting oxygen to muscles?",
+        "Option A": "Blood vessels",
+        "Option B": "Lymphatic system",
+        "Option C": "Nerve cells",
+        "Option D": "Bone marrow",
+        "Correct Option": "A",
+        "Explanation": "Blood vessels transport oxygen, nutrients, and waste products throughout the body, including to muscles."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What is the name of the movement where a limb moves away from the midline of the body?",
+        "Option A": "Flexion",
+        "Option B": "Extension",
+        "Option C": "Abduction",
+        "Option D": "Adduction",
+        "Correct Option": "C",
+        "Explanation": "Abduction is the movement of a limb away from the midline of the body."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following muscles is responsible for voluntary control?",
+        "Option A": "Cardiac muscle",
+        "Option B": "Skeletal muscle",
+        "Option C": "Smooth muscle",
+        "Option D": "Both skeletal and cardiac muscle",
+        "Correct Option": "B",
+        "Explanation": "Skeletal muscles are under voluntary control and allow conscious movement."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What part of the skeleton allows for movement and flexibility?",
+        "Option A": "Ligaments",
+        "Option B": "Cartilage",
+        "Option C": "Tendons",
+        "Option D": "Joints",
+        "Correct Option": "D",
+        "Explanation": "Joints are the connections between bones that allow for movement and flexibility."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the term for the contraction of skeletal muscles to produce movement?",
+        "Option A": "Extension",
+        "Option B": "Flexion",
+        "Option C": "Locomotion",
+        "Option D": "Muscle contraction",
+        "Correct Option": "D",
+        "Explanation": "Muscle contraction produces movement by shortening and pulling on bones."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which type of muscle is responsible for the rhythmic contractions of the heart?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Cardiac muscle",
+        "Option C": "Smooth muscle",
+        "Option D": "Both cardiac and skeletal muscles",
+        "Correct Option": "B",
+        "Explanation": "Cardiac muscle is responsible for the rhythmic contractions of the heart."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is the primary function of the skeletal system in terms of movement?",
+        "Option A": "To protect the body",
+        "Option B": "To facilitate movement through muscle-bone interaction",
+        "Option C": "To store calcium",
+        "Option D": "To produce blood cells",
+        "Correct Option": "B",
+        "Explanation": "The skeletal system facilitates movement by providing a framework for muscles to act on."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What are osteoblasts responsible for in bone tissue?",
+        "Option A": "Destroying old bone tissue",
+        "Option B": "Producing bone matrix",
+        "Option C": "Storing fat",
+        "Option D": "Transporting oxygen",
+        "Correct Option": "B",
+        "Explanation": "Osteoblasts are responsible for producing bone matrix and building new bone tissue."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the function of the periosteum in bones?",
+        "Option A": "To produce blood cells",
+        "Option B": "To provide energy",
+        "Option C": "To protect and nourish bone tissue",
+        "Option D": "To store calcium",
+        "Correct Option": "C",
+        "Explanation": "The periosteum is a protective layer that nourishes and supports bone tissue."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following is a characteristic of skeletal muscles?",
+        "Option A": "They are involuntary",
+        "Option B": "They are striated and multinucleated",
+        "Option C": "They are found in the walls of organs",
+        "Option D": "They are found in the heart",
+        "Correct Option": "B",
+        "Explanation": "Skeletal muscles are striated, multinucleated, and responsible for voluntary movement."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is the term for the end of a bone that articulates with another bone at a joint?",
+        "Option A": "Diaphysis",
+        "Option B": "Epiphysis",
+        "Option C": "Medullary cavity",
+        "Option D": "Periosteum",
+        "Correct Option": "B",
+        "Explanation": "The epiphysis is the end of a bone that forms a joint with another bone."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which of the following is a function of cartilage?",
+        "Option A": "To store calcium",
+        "Option B": "To provide support and reduce friction at joints",
+        "Option C": "To connect muscles to bones",
+        "Option D": "To produce blood cells",
+        "Correct Option": "B",
+        "Explanation": "Cartilage reduces friction and provides support at joints, facilitating smooth movement."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the role of red bone marrow in the skeletal system?",
+        "Option A": "To store calcium",
+        "Option B": "To produce blood cells",
+        "Option C": "To provide bone rigidity",
+        "Option D": "To produce energy",
+        "Correct Option": "B",
+        "Explanation": "Red bone marrow is responsible for producing red blood cells, white blood cells, and platelets."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the term for the process of bone formation?",
+        "Option A": "Osteogenesis",
+        "Option B": "Osteolysis",
+        "Option C": "Osteoporosis",
+        "Option D": "Osteopathy",
+        "Correct Option": "A",
+        "Explanation": "Osteogenesis is the process of bone formation in the body."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which part of the human skeleton is responsible for protecting the lungs and heart?",
+        "Option A": "Skull",
+        "Option B": "Ribs",
+        "Option C": "Spine",
+        "Option D": "Pelvis",
+        "Correct Option": "B",
+        "Explanation": "The ribs form a protective cage around the heart and lungs."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which of the following movements occurs at a hinge joint?",
+        "Option A": "Rotation",
+        "Option B": "Flexion",
+        "Option C": "Abduction",
+        "Option D": "Adduction",
+        "Correct Option": "B",
+        "Explanation": "Flexion is a movement that occurs at a hinge joint, such as the elbow or knee."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is the role of smooth muscle in the body?",
+        "Option A": "To provide voluntary movement",
+        "Option B": "To control the heartbeat",
+        "Option C": "To facilitate movement of food through the digestive system",
+        "Option D": "To allow for quick reflexes",
+        "Correct Option": "C",
+        "Explanation": "Smooth muscle controls involuntary movements, such as peristalsis in the digestive system."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following bones is part of the appendicular skeleton?",
+        "Option A": "Skull",
+        "Option B": "Sternum",
+        "Option C": "Femur",
+        "Option D": "Rib cage",
+        "Correct Option": "C",
+        "Explanation": "The femur is part of the appendicular skeleton, which includes the limbs and girdles."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is the name of the connective tissue that surrounds and supports muscle fibers?",
+        "Option A": "Cartilage",
+        "Option B": "Tendon",
+        "Option C": "Ligament",
+        "Option D": "Endomysium",
+        "Correct Option": "D",
+        "Explanation": "The endomysium is a connective tissue layer that surrounds individual muscle fibers."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which bone is involved in the process of jaw movement?",
+        "Option A": "Tibia",
+        "Option B": "Mandible",
+        "Option C": "Femur",
+        "Option D": "Clavicle",
+        "Correct Option": "B",
+        "Explanation": "The mandible is the bone that forms the lower jaw and is involved in jaw movement."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What type of muscle is responsible for maintaining posture?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Smooth muscle",
+        "Option C": "Cardiac muscle",
+        "Option D": "Both skeletal and smooth muscle",
+        "Correct Option": "A",
+        "Explanation": "Skeletal muscles are responsible for maintaining posture by providing support and stability."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is the function of the intervertebral discs?",
+        "Option A": "To connect muscles to bones",
+        "Option B": "To cushion the vertebrae and allow movement",
+        "Option C": "To support the rib cage",
+        "Option D": "To protect the spinal cord",
+        "Correct Option": "B",
+        "Explanation": "Intervertebral discs act as shock absorbers between the vertebrae and allow movement of the spine."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following is a type of connective tissue that connects muscle to bone?",
+        "Option A": "Tendon",
+        "Option B": "Ligament",
+        "Option C": "Cartilage",
+        "Option D": "Blood vessel",
+        "Correct Option": "A",
+        "Explanation": "Tendons are connective tissues that connect muscles to bones."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the name of the fibrous tissue that holds bones together at joints?",
+        "Option A": "Cartilage",
+        "Option B": "Ligament",
+        "Option C": "Tendon",
+        "Option D": "Bone marrow",
+        "Correct Option": "B",
+        "Explanation": "Ligaments are fibrous tissues that connect bones to other bones at joints."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the function of the axial skeleton?",
+        "Option A": "To protect vital organs",
+        "Option B": "To allow movement of the limbs",
+        "Option C": "To store calcium",
+        "Option D": "To produce blood cells",
+        "Correct Option": "A",
+        "Explanation": "The axial skeleton, including the skull and vertebral column, protects vital organs like the brain and heart."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the name of the process by which muscles return to their resting length after contraction?",
+        "Option A": "Extension",
+        "Option B": "Flexion",
+        "Option C": "Relaxation",
+        "Option D": "Hyperextension",
+        "Correct Option": "C",
+        "Explanation": "Relaxation is the process by which muscles return to their resting length after contraction."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What type of joint is found between the bones of the skull?",
+        "Option A": "Hinge joint",
+        "Option B": "Ball-and-socket joint",
+        "Option C": "Sutural joint",
+        "Option D": "Pivot joint",
+        "Correct Option": "C",
+        "Explanation": "Sutural joints are immovable joints found between the bones of the skull."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is the main characteristic of a synovial joint?",
+        "Option A": "It allows no movement",
+        "Option B": "It allows limited movement",
+        "Option C": "It is connected by cartilage",
+        "Option D": "It allows free movement",
+        "Correct Option": "D",
+        "Explanation": "Synovial joints allow free movement between bones and are surrounded by synovial fluid."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which of the following is true about cardiac muscle?",
+        "Option A": "It is striated and multinucleated",
+        "Option B": "It is involuntary and found in the heart",
+        "Option C": "It is voluntary and attaches to bones",
+        "Option D": "It is smooth and lacks striations",
+        "Correct Option": "B",
+        "Explanation": "Cardiac muscle is involuntary, striated, and found only in the heart."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is the term for the bending of a limb at a joint?",
+        "Option A": "Flexion",
+        "Option B": "Extension",
+        "Option C": "Rotation",
+        "Option D": "Circumduction",
+        "Correct Option": "A",
+        "Explanation": "Flexion is the bending of a limb at a joint, reducing the angle between the bones."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the role of osteoclasts in bone tissue?",
+        "Option A": "To produce bone matrix",
+        "Option B": "To destroy old bone tissue",
+        "Option C": "To store calcium",
+        "Option D": "To form cartilage",
+        "Correct Option": "B",
+        "Explanation": "Osteoclasts break down old bone tissue in a process called bone resorption."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What type of muscle is involved in the movement of food through the digestive system?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Smooth muscle",
+        "Option C": "Cardiac muscle",
+        "Option D": "All of the above",
+        "Correct Option": "B",
+        "Explanation": "Smooth muscle is involved in involuntary movements like peristalsis in the digestive system."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which type of joint allows for the rotation of the head?",
+        "Option A": "Hinge joint",
+        "Option B": "Ball-and-socket joint",
+        "Option C": "Pivot joint",
+        "Option D": "Saddle joint",
+        "Correct Option": "C",
+        "Explanation": "A pivot joint, like the one between the first and second cervical vertebrae, allows rotation of the head."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What part of the skeleton is responsible for the movement of the arm?",
+        "Option A": "Femur",
+        "Option B": "Humerus",
+        "Option C": "Vertebrae",
+        "Option D": "Rib cage",
+        "Correct Option": "B",
+        "Explanation": "The humerus is the bone in the upper arm that is responsible for arm movement."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the role of myosin in muscle contraction?",
+        "Option A": "To store calcium",
+        "Option B": "To produce energy",
+        "Option C": "To bind to actin and pull the muscle fibers",
+        "Option D": "To break down glucose",
+        "Correct Option": "C",
+        "Explanation": "Myosin binds to actin and pulls the muscle fibers, causing muscle contraction."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is the function of the skeletal system in calcium storage?",
+        "Option A": "To produce calcium",
+        "Option B": "To store calcium for later use",
+        "Option C": "To regulate calcium levels in the blood",
+        "Option D": "To transport calcium",
+        "Correct Option": "B",
+        "Explanation": "Bones store calcium and release it into the bloodstream when needed to maintain homeostasis."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the primary role of the rotator cuff muscles in the shoulder?",
+        "Option A": "To stabilize the shoulder joint",
+        "Option B": "To rotate the shoulder blade",
+        "Option C": "To connect the shoulder to the spine",
+        "Option D": "To allow arm extension",
+        "Correct Option": "A",
+        "Explanation": "The rotator cuff muscles stabilize the shoulder joint and help in shoulder movement."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which of the following describes a ball-and-socket joint?",
+        "Option A": "It allows movement in one direction",
+        "Option B": "It allows circular motion and rotation",
+        "Option C": "It allows movement only in two directions",
+        "Option D": "It allows no movement",
+        "Correct Option": "B",
+        "Explanation": "Ball-and-socket joints allow movement in all directions, including rotation (e.g., shoulder, hip)."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What is the purpose of red bone marrow in bones?",
+        "Option A": "To provide structure",
+        "Option B": "To produce blood cells",
+        "Option C": "To store fat",
+        "Option D": "To produce bone tissue",
+        "Correct Option": "B",
+        "Explanation": "Red bone marrow is responsible for producing red blood cells, white blood cells, and platelets."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What type of muscle is found in the walls of internal organs?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Cardiac muscle",
+        "Option C": "Smooth muscle",
+        "Option D": "None of the above",
+        "Correct Option": "C",
+        "Explanation": "Smooth muscle is found in the walls of internal organs and helps in involuntary movements."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the function of the pelvic girdle?",
+        "Option A": "To protect the brain",
+        "Option B": "To connect the arms to the torso",
+        "Option C": "To protect the organs in the abdominal cavity",
+        "Option D": "To connect the lower limbs to the axial skeleton",
+        "Correct Option": "D",
+        "Explanation": "The pelvic girdle connects the lower limbs to the axial skeleton and supports the weight of the body."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What happens when skeletal muscles contract?",
+        "Option A": "They become longer",
+        "Option B": "They shorten and pull on bones",
+        "Option C": "They relax and extend",
+        "Option D": "They stay the same length",
+        "Correct Option": "B",
+        "Explanation": "Skeletal muscles shorten (contract) and pull on bones to produce movement."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the primary function of cartilage in joints?",
+        "Option A": "To provide flexibility",
+        "Option B": "To reduce friction and absorb shock",
+        "Option C": "To produce blood cells",
+        "Option D": "To connect muscles to bones",
+        "Correct Option": "B",
+        "Explanation": "Cartilage reduces friction at joints and acts as a shock absorber during movement."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which of the following is a feature of smooth muscle?",
+        "Option A": "Voluntary control",
+        "Option B": "Found in the heart",
+        "Option C": "Involuntary and non-striated",
+        "Option D": "Found in the limbs",
+        "Correct Option": "C",
+        "Explanation": "Smooth muscle is involuntary, non-striated, and found in organs like the stomach and intestines."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the purpose of the meniscus in the knee joint?",
+        "Option A": "To protect the joint from infection",
+        "Option B": "To reduce friction and absorb shock",
+        "Option C": "To store synovial fluid",
+        "Option D": "To support the ligaments",
+        "Correct Option": "B",
+        "Explanation": "The meniscus is a cartilage structure in the knee that reduces friction and absorbs shock."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the function of actin in muscle contraction?",
+        "Option A": "To store calcium",
+        "Option B": "To break down glucose",
+        "Option C": "To form muscle fibers",
+        "Option D": "To interact with myosin to produce contraction",
+        "Correct Option": "D",
+        "Explanation": "Actin interacts with myosin to produce muscle contraction by sliding past each other."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which of the following bones forms part of the axial skeleton?",
+        "Option A": "Radius",
+        "Option B": "Tibia",
+        "Option C": "Sternum",
+        "Option D": "Scapula",
+        "Correct Option": "C",
+        "Explanation": "The sternum is part of the axial skeleton, which includes the ribs, vertebral column, and skull."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What type of muscle is responsible for producing facial expressions?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Cardiac muscle",
+        "Option C": "Smooth muscle",
+        "Option D": "Both skeletal and cardiac muscle",
+        "Correct Option": "A",
+        "Explanation": "Skeletal muscles are responsible for facial expressions, which are under voluntary control."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the function of the synovial membrane in a joint?",
+        "Option A": "To produce bone marrow",
+        "Option B": "To produce synovial fluid",
+        "Option C": "To connect bones to muscles",
+        "Option D": "To stabilize the joint",
+        "Correct Option": "B",
+        "Explanation": "The synovial membrane produces synovial fluid, which lubricates the joint and reduces friction."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is the term for the movement of a limb toward the body’s midline?",
+        "Option A": "Flexion",
+        "Option B": "Extension",
+        "Option C": "Abduction",
+        "Option D": "Adduction",
+        "Correct Option": "D",
+        "Explanation": "Adduction is the movement of a limb toward the body's midline."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What type of tissue makes up the majority of the walls of blood vessels?",
+        "Option A": "Epithelial tissue",
+        "Option B": "Muscle tissue",
+        "Option C": "Connective tissue",
+        "Option D": "Nervous tissue",
+        "Correct Option": "B",
+        "Explanation": "Muscle tissue (smooth muscle) makes up the majority of the walls of blood vessels."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the name of the connective tissue that surrounds muscle fibers?",
+        "Option A": "Cartilage",
+        "Option B": "Tendon",
+        "Option C": "Ligament",
+        "Option D": "Endomysium",
+        "Correct Option": "D",
+        "Explanation": "The endomysium is the connective tissue that surrounds individual muscle fibers."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following structures is responsible for cushioning the ends of bones in joints?",
+        "Option A": "Ligaments",
+        "Option B": "Tendons",
+        "Option C": "Cartilage",
+        "Option D": "Bone marrow",
+        "Correct Option": "C",
+        "Explanation": "Cartilage cushions the ends of bones in joints, reducing friction and providing shock absorption."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the name of the tough outer layer of bones?",
+        "Option A": "Endosteum",
+        "Option B": "Periosteum",
+        "Option C": "Epiphysis",
+        "Option D": "Diaphysis",
+        "Correct Option": "B",
+        "Explanation": "The periosteum is the tough outer layer of bones, which contains blood vessels and nerves."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What happens to the skeletal system as a person ages?",
+        "Option A": "Bone density increases",
+        "Option B": "Bone density decreases",
+        "Option C": "Bone structure becomes stronger",
+        "Option D": "Bone size increases",
+        "Correct Option": "B",
+        "Explanation": "As a person ages, bone density typically decreases, making bones more fragile."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the main function of the heart muscle?",
+        "Option A": "To support the circulatory system",
+        "Option B": "To pump blood throughout the body",
+        "Option C": "To protect the lungs",
+        "Option D": "To produce blood cells",
+        "Correct Option": "B",
+        "Explanation": "The heart muscle (cardiac muscle) pumps blood throughout the body, supplying oxygen and nutrients."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which type of muscle fibers are most suited for endurance activities?",
+        "Option A": "Fast-twitch fibers",
+        "Option B": "Slow-twitch fibers",
+        "Option C": "Both fast and slow-twitch fibers",
+        "Option D": "Neither",
+        "Correct Option": "B",
+        "Explanation": "Slow-twitch muscle fibers are more suited for endurance activities due to their resistance to fatigue."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which part of the skeletal system includes the limbs and their attachments?",
+        "Option A": "Axial skeleton",
+        "Option B": "Appendicular skeleton",
+        "Option C": "Cranial skeleton",
+        "Option D": "Thoracic skeleton",
+        "Correct Option": "B",
+        "Explanation": "The appendicular skeleton includes the limbs and the girdles that attach them to the axial skeleton."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What type of joint is the elbow?",
+        "Option A": "Ball-and-socket joint",
+        "Option B": "Hinge joint",
+        "Option C": "Pivot joint",
+        "Option D": "Saddle joint",
+        "Correct Option": "B",
+        "Explanation": "The elbow is a hinge joint, allowing movement in one plane, such as flexion and extension."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the term for a bone forming within a tendon in response to stress?",
+        "Option A": "Osteoblast",
+        "Option B": "Osteoclast",
+        "Option C": "Sesamoid bone",
+        "Option D": "Ligament",
+        "Correct Option": "C",
+        "Explanation": "A sesamoid bone forms within a tendon, often in response to repetitive stress or pressure."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What type of joint allows for the movement of the jaw?",
+        "Option A": "Hinge joint",
+        "Option B": "Ball-and-socket joint",
+        "Option C": "Condyloid joint",
+        "Option D": "Pivot joint",
+        "Correct Option": "C",
+        "Explanation": "The jaw moves at a condyloid joint, allowing for opening, closing, and limited side-to-side movement."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which of the following muscles is involved in the movement of the eye?",
+        "Option A": "Orbicularis oculi",
+        "Option B": "Rectus abdominis",
+        "Option C": "Biceps brachii",
+        "Option D": "Extraocular muscles",
+        "Correct Option": "D",
+        "Explanation": "The extraocular muscles control the movement of the eye."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What type of muscle fibers are adapted for short bursts of strength and power?",
+        "Option A": "Slow-twitch fibers",
+        "Option B": "Fast-twitch fibers",
+        "Option C": "Smooth muscle fibers",
+        "Option D": "Cardiac muscle fibers",
+        "Correct Option": "B",
+        "Explanation": "Fast-twitch muscle fibers are adapted for short bursts of strength and power, such as sprinting."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is the role of synovial fluid in joints?",
+        "Option A": "To lubricate the joint",
+        "Option B": "To produce cartilage",
+        "Option C": "To stabilize the bones",
+        "Option D": "To store calcium",
+        "Correct Option": "A",
+        "Explanation": "Synovial fluid lubricates the joint, reducing friction and enabling smooth movement."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which of the following is a function of skeletal muscles?",
+        "Option A": "Producing blood cells",
+        "Option B": "Maintaining posture",
+        "Option C": "Regulating body temperature",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Skeletal muscles are responsible for posture, movement, and temperature regulation."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the primary role of ligaments?",
+        "Option A": "To attach muscles to bones",
+        "Option B": "To protect organs",
+        "Option C": "To connect bones to bones",
+        "Option D": "To store calcium",
+        "Correct Option": "C",
+        "Explanation": "Ligaments connect bones to other bones at joints, providing stability and support."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What part of the skeletal system supports the weight of the body?",
+        "Option A": "Ribs",
+        "Option B": "Spine",
+        "Option C": "Pelvis",
+        "Option D": "Femur",
+        "Correct Option": "B",
+        "Explanation": "The spine supports the weight of the body, especially the lower back and pelvis."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the primary role of the patella (knee cap)?",
+        "Option A": "To protect the knee joint",
+        "Option B": "To provide muscle attachment",
+        "Option C": "To aid in knee flexion",
+        "Option D": "To prevent joint inflammation",
+        "Correct Option": "A",
+        "Explanation": "The patella protects the knee joint and enhances the leverage of the quadriceps muscle."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the process of muscle contraction that involves the sliding of actin and myosin filaments?",
+        "Option A": "Cross-bridge cycle",
+        "Option B": "Muscle elongation",
+        "Option C": "Tendon shortening",
+        "Option D": "Bone remodeling",
+        "Correct Option": "A",
+        "Explanation": "The cross-bridge cycle involves the sliding of actin and myosin filaments to produce muscle contraction."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which of the following joints allows for limited rotation of the head?",
+        "Option A": "Hinge joint",
+        "Option B": "Pivot joint",
+        "Option C": "Ball-and-socket joint",
+        "Option D": "Saddle joint",
+        "Correct Option": "B",
+        "Explanation": "The pivot joint between the atlas and axis vertebrae allows rotation of the head."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

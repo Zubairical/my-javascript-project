@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is the main difference between sexual and asexual reproduction?",
+        "Option A": "Sexual reproduction requires two parents",
+        "Option B": "Asexual reproduction involves gametes",
+        "Option C": "Asexual reproduction requires two parents",
+        "Option D": "Sexual reproduction results in identical offspring",
+        "Correct Option": "A",
+        "Explanation": "Sexual reproduction requires two parents and combines their genetic material, while asexual reproduction does not."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following organisms reproduces through binary fission?",
+        "Option A": "Humans",
+        "Option B": "Amoeba",
+        "Option C": "Flowers",
+        "Option D": "Birds",
+        "Correct Option": "B",
+        "Explanation": "Amoeba reproduces by binary fission, a form of asexual reproduction."
+    },
+    {
+        "Q.No": "3",
+        "Question": "In which type of reproduction is genetic variation introduced?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Budding",
+        "Option C": "Sexual reproduction",
+        "Option D": "Binary fission",
+        "Correct Option": "C",
+        "Explanation": "Sexual reproduction introduces genetic variation by combining genes from two parents."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What process do plants use to reproduce sexually?",
+        "Option A": "Pollination",
+        "Option B": "Vegetative propagation",
+        "Option C": "Budding",
+        "Option D": "Binary fission",
+        "Correct Option": "A",
+        "Explanation": "Pollination is the process through which plants reproduce sexually."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following is true about asexual reproduction?",
+        "Option A": "It requires two parents",
+        "Option B": "It produces genetically identical offspring",
+        "Option C": "It results in genetic variation",
+        "Option D": "It involves fertilization",
+        "Correct Option": "B",
+        "Explanation": "Asexual reproduction produces genetically identical offspring from a single parent."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the male gamete in humans called?",
+        "Option A": "Egg",
+        "Option B": "Sperm",
+        "Option C": "Ovum",
+        "Option D": "Zygote",
+        "Correct Option": "B",
+        "Explanation": "The male gamete in humans is the sperm cell."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which of the following is a method of asexual reproduction in plants?",
+        "Option A": "Pollination",
+        "Option B": "Fragmentation",
+        "Option C": "Fertilization",
+        "Option D": "Cross-pollination",
+        "Correct Option": "B",
+        "Explanation": "Fragmentation is an asexual reproductive method in plants where a new individual is formed from a fragment of the parent."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What is the primary function of meiosis in sexual reproduction?",
+        "Option A": "To produce identical cells",
+        "Option B": "To maintain the chromosome number",
+        "Option C": "To create gametes",
+        "Option D": "To repair damaged DNA",
+        "Correct Option": "C",
+        "Explanation": "Meiosis reduces the chromosome number and produces gametes, ensuring genetic diversity in offspring."
+    },
+    {
+        "Q.No": "9",
+        "Question": "How many chromosomes does the zygote have after fertilization in humans?",
+        "Option A": "Half the number of parent chromosomes",
+        "Option B": "The same as the mother",
+        "Option C": "The same as the father",
+        "Option D": "A complete set from both parents",
+        "Correct Option": "D",
+        "Explanation": "The zygote inherits one set of chromosomes from each parent, restoring the diploid number."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the term for the fusion of male and female gametes?",
+        "Option A": "Mitosis",
+        "Option B": "Meiosis",
+        "Option C": "Fertilization",
+        "Option D": "Binary fission",
+        "Correct Option": "C",
+        "Explanation": "Fertilization is the fusion of male and female gametes to form a zygote."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which of the following is an example of external fertilization?",
+        "Option A": "Humans",
+        "Option B": "Frogs",
+        "Option C": "Birds",
+        "Option D": "Mammals",
+        "Correct Option": "B",
+        "Explanation": "Frogs perform external fertilization, where the female lays eggs and the male fertilizes them outside the body."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is the term for the process of forming a new organism without fertilization?",
+        "Option A": "Binary fission",
+        "Option B": "Parthenogenesis",
+        "Option C": "Budding",
+        "Option D": "Fragmentation",
+        "Correct Option": "B",
+        "Explanation": "Parthenogenesis is a form of asexual reproduction where offspring are produced without fertilization."
+    },
+    {
+        "Q.No": "13",
+        "Question": "In which type of organisms does regeneration occur?",
+        "Option A": "Plants only",
+        "Option B": "Animals only",
+        "Option C": "Both plants and animals",
+        "Option D": "Only fungi",
+        "Correct Option": "C",
+        "Explanation": "Regeneration occurs in both plants (e.g., through cuttings) and animals (e.g., starfish regeneration)."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is a key characteristic of vegetative reproduction in plants?",
+        "Option A": "It involves seeds",
+        "Option B": "It results in genetically diverse offspring",
+        "Option C": "New plants are formed from non-reproductive parts",
+        "Option D": "It requires cross-pollination",
+        "Correct Option": "C",
+        "Explanation": "Vegetative reproduction involves the formation of new plants from vegetative parts like roots, stems, or leaves."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What process is responsible for the development of gametes in animals?",
+        "Option A": "Mitosis",
+        "Option B": "Meiosis",
+        "Option C": "Binary fission",
+        "Option D": "Budding",
+        "Correct Option": "B",
+        "Explanation": "Meiosis is responsible for the formation of gametes in animals."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which of the following is an example of asexual reproduction in animals?",
+        "Option A": "Budding in hydra",
+        "Option B": "Fertilization in humans",
+        "Option C": "External fertilization in fish",
+        "Option D": "Pollination in plants",
+        "Correct Option": "A",
+        "Explanation": "Budding in hydra is an example of asexual reproduction, where offspring develop from a bud on the parent organism."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is the result of sexual reproduction in animals?",
+        "Option A": "Two identical offspring",
+        "Option B": "Genetic variation",
+        "Option C": "One offspring",
+        "Option D": "Multiple identical offspring",
+        "Correct Option": "B",
+        "Explanation": "Sexual reproduction results in genetic variation in offspring due to the combination of genes from two parents."
+    },
+    {
+        "Q.No": "18",
+        "Question": "In which of the following does binary fission occur?",
+        "Option A": "Bacteria",
+        "Option B": "Humans",
+        "Option C": "Dogs",
+        "Option D": "Plants",
+        "Correct Option": "A",
+        "Explanation": "Binary fission is a common method of reproduction in bacteria, where the cell divides into two identical daughter cells."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which reproductive process occurs in humans during the production of sperm and eggs?",
+        "Option A": "Meiosis",
+        "Option B": "Mitosis",
+        "Option C": "Binary fission",
+        "Option D": "Budding",
+        "Correct Option": "A",
+        "Explanation": "Meiosis is responsible for the production of sperm and eggs in humans, reducing the chromosome number by half."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the primary purpose of mitosis in reproduction?",
+        "Option A": "To reduce chromosome number",
+        "Option B": "To form gametes",
+        "Option C": "To produce identical cells for growth and repair",
+        "Option D": "To create genetic variation",
+        "Correct Option": "C",
+        "Explanation": "Mitosis is responsible for producing identical cells for growth, repair, and asexual reproduction."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is the primary role of the placenta during pregnancy?",
+        "Option A": "To protect the fetus from disease",
+        "Option B": "To allow the exchange of nutrients and gases between the mother and fetus",
+        "Option C": "To produce hormones",
+        "Option D": "To control fetal movement",
+        "Correct Option": "B",
+        "Explanation": "The placenta allows for the exchange of nutrients, gases, and waste between the mother and fetus."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What type of reproduction occurs when a single parent produces offspring without the involvement of gametes?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Sexual reproduction",
+        "Option C": "Fragmentation",
+        "Option D": "External fertilization",
+        "Correct Option": "A",
+        "Explanation": "Asexual reproduction occurs when a single parent produces offspring without the need for gametes."
+    },
+    {
+        "Q.No": "23",
+        "Question": "In which reproductive system do the testes and ovaries play a key role?",
+        "Option A": "Nervous system",
+        "Option B": "Circulatory system",
+        "Option C": "Respiratory system",
+        "Option D": "Reproductive system",
+        "Correct Option": "D",
+        "Explanation": "The testes and ovaries are key organs in the reproductive system, producing gametes and hormones."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the term for the production of female gametes?",
+        "Option A": "Spermatogenesis",
+        "Option B": "Oogenesis",
+        "Option C": "Mitosis",
+        "Option D": "Binary fission",
+        "Correct Option": "B",
+        "Explanation": "Oogenesis is the process of producing female gametes (eggs) in females."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which of the following is true about asexual reproduction?",
+        "Option A": "It involves gametes",
+        "Option B": "It leads to genetic variation",
+        "Option C": "It occurs only in animals",
+        "Option D": "It produces offspring identical to the parent",
+        "Correct Option": "D",
+        "Explanation": "Asexual reproduction produces offspring that are genetically identical to the parent organism."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is asexual reproduction by budding?",
+        "Option A": "Offspring are formed from a fragment of the parent",
+        "Option B": "New organisms are produced from specialized cells",
+        "Option C": "A new individual grows from a bud on the parent",
+        "Option D": "Offspring develop from seeds",
+        "Correct Option": "C",
+        "Explanation": "Budding is a type of asexual reproduction where a new organism grows from a bud on the parent organism."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the name of the process in which sperm and egg fuse to form a zygote?",
+        "Option A": "Fertilization",
+        "Option B": "Oogenesis",
+        "Option C": "Embryogenesis",
+        "Option D": "Pollination",
+        "Correct Option": "A",
+        "Explanation": "Fertilization is the fusion of sperm and egg to form a zygote in sexual reproduction."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which structure in flowering plants contains the male gametes?",
+        "Option A": "Ovary",
+        "Option B": "Stigma",
+        "Option C": "Anther",
+        "Option D": "Style",
+        "Correct Option": "C",
+        "Explanation": "The anther contains the male gametes (pollen) in flowering plants."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is the result of mitosis in terms of chromosome number?",
+        "Option A": "It reduces the chromosome number by half",
+        "Option B": "It maintains the chromosome number",
+        "Option C": "It increases the chromosome number",
+        "Option D": "It forms gametes",
+        "Correct Option": "B",
+        "Explanation": "Mitosis maintains the chromosome number by producing identical daughter cells."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What process occurs when a single-celled organism divides into two identical cells?",
+        "Option A": "Binary fission",
+        "Option B": "Budding",
+        "Option C": "Fertilization",
+        "Option D": "Meiosis",
+        "Correct Option": "A",
+        "Explanation": "Binary fission is the process where a single-celled organism divides into two identical cells."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is the term for the process in which an egg is released from the ovary?",
+        "Option A": "Fertilization",
+        "Option B": "Ovulation",
+        "Option C": "Menstruation",
+        "Option D": "Gestation",
+        "Correct Option": "B",
+        "Explanation": "Ovulation is the release of an egg from the ovary in female animals."
+    },
+    {
+        "Q.No": "32",
+        "Question": "In which type of reproduction are offspring genetically identical to the parent?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Sexual reproduction",
+        "Option C": "Cross-pollination",
+        "Option D": "Fragmentation",
+        "Correct Option": "A",
+        "Explanation": "Asexual reproduction produces offspring that are genetically identical to the parent."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What is the process called when an organism regenerates lost body parts?",
+        "Option A": "Regeneration",
+        "Option B": "Fertilization",
+        "Option C": "Budding",
+        "Option D": "Binary fission",
+        "Correct Option": "A",
+        "Explanation": "Regeneration is the process by which an organism regrows lost or damaged body parts."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which of the following is an example of external sexual reproduction?",
+        "Option A": "Mammals",
+        "Option B": "Birds",
+        "Option C": "Fish",
+        "Option D": "Insects",
+        "Correct Option": "C",
+        "Explanation": "Fish often reproduce externally, where eggs are fertilized outside the female's body."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which process results in the formation of identical offspring from one parent?",
+        "Option A": "Sexual reproduction",
+        "Option B": "Asexual reproduction",
+        "Option C": "Fertilization",
+        "Option D": "Pollination",
+        "Correct Option": "B",
+        "Explanation": "Asexual reproduction results in genetically identical offspring from one parent organism."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the function of the ovary in female reproductive systems?",
+        "Option A": "To produce eggs and hormones",
+        "Option B": "To nourish the embryo",
+        "Option C": "To produce sperm",
+        "Option D": "To house the zygote",
+        "Correct Option": "A",
+        "Explanation": "The ovary produces eggs (ova) and hormones such as estrogen in female reproductive systems."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What type of reproduction involves two parents?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Binary fission",
+        "Option C": "Sexual reproduction",
+        "Option D": "Budding",
+        "Correct Option": "C",
+        "Explanation": "Sexual reproduction involves the fusion of gametes from two parents to form offspring."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is the term for the joining of male and female gametes?",
+        "Option A": "Fertilization",
+        "Option B": "Mitosis",
+        "Option C": "Meiosis",
+        "Option D": "Pollination",
+        "Correct Option": "A",
+        "Explanation": "Fertilization is the process where male and female gametes fuse to form a zygote."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What process occurs during the first stage of human embryonic development?",
+        "Option A": "Fertilization",
+        "Option B": "Gastrulation",
+        "Option C": "Cleavage",
+        "Option D": "Organogenesis",
+        "Correct Option": "C",
+        "Explanation": "Cleavage is the early series of cell divisions that occurs after fertilization, leading to the formation of a blastocyst."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is the name of the male reproductive organ in animals?",
+        "Option A": "Uterus",
+        "Option B": "Testes",
+        "Option C": "Ovary",
+        "Option D": "Fallopian tube",
+        "Correct Option": "B",
+        "Explanation": "The testes are the male reproductive organs responsible for producing sperm and hormones."
+    },
+    {
+        "Q.No": "41",
+        "Question": "In which reproductive process does a zygote undergo mitotic divisions?",
+        "Option A": "Fertilization",
+        "Option B": "Meiosis",
+        "Option C": "Embryogenesis",
+        "Option D": "Regeneration",
+        "Correct Option": "C",
+        "Explanation": "Embryogenesis involves mitotic divisions of the zygote, leading to the formation of an embryo."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the main characteristic of vegetative propagation in plants?",
+        "Option A": "It involves sexual reproduction",
+        "Option B": "It occurs without the use of seeds",
+        "Option C": "It requires cross-pollination",
+        "Option D": "It results in genetically diverse offspring",
+        "Correct Option": "B",
+        "Explanation": "Vegetative propagation occurs without the use of seeds and results in genetically identical offspring."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the term for the cell division process that produces gametes?",
+        "Option A": "Mitosis",
+        "Option B": "Meiosis",
+        "Option C": "Binary fission",
+        "Option D": "Fragmentation",
+        "Correct Option": "B",
+        "Explanation": "Meiosis is the type of cell division that produces gametes with half the chromosome number."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What does asexual reproduction produce in terms of genetic variation?",
+        "Option A": "High genetic variation",
+        "Option B": "No genetic variation",
+        "Option C": "Moderate genetic variation",
+        "Option D": "No effect on variation",
+        "Correct Option": "B",
+        "Explanation": "Asexual reproduction results in offspring that are genetically identical to the parent, meaning there is no genetic variation."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which of the following organisms uses asexual reproduction by binary fission?",
+        "Option A": "Human",
+        "Option B": "Bacteria",
+        "Option C": "Frog",
+        "Option D": "Bird",
+        "Correct Option": "B",
+        "Explanation": "Bacteria reproduce by binary fission, where one cell divides to form two identical daughter cells."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is the term for the reproductive process that involves the formation of spores?",
+        "Option A": "Pollination",
+        "Option B": "Budding",
+        "Option C": "Spore formation",
+        "Option D": "Fertilization",
+        "Correct Option": "C",
+        "Explanation": "Spore formation is a method of reproduction in some fungi and plants."
+    },
+    {
+        "Q.No": "47",
+        "Question": "How many chromosomes do human gametes contain?",
+        "Option A": "46",
+        "Option B": "23",
+        "Option C": "92",
+        "Option D": "44",
+        "Correct Option": "B",
+        "Explanation": "Human gametes (sperm and egg) contain 23 chromosomes, half the normal chromosome number."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following best describes the role of the placenta in humans?",
+        "Option A": "To protect the fetus from external harm",
+        "Option B": "To produce hormones",
+        "Option C": "To allow exchange of nutrients and gases",
+        "Option D": "To develop into the umbilical cord",
+        "Correct Option": "C",
+        "Explanation": "The placenta allows for the exchange of nutrients, gases, and waste between the mother and fetus."
+    },
+    {
+        "Q.No": "49",
+        "Question": "In which type of organisms does sexual reproduction usually involve fertilization?",
+        "Option A": "Invertebrates",
+        "Option B": "Fish",
+        "Option C": "Reptiles and mammals",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Sexual reproduction in most organisms, including invertebrates, fish, reptiles, and mammals, involves fertilization."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is the name of the process in which cells undergo to form two identical daughter cells?",
+        "Option A": "Meiosis",
+        "Option B": "Mitosis",
+        "Option C": "Fertilization",
+        "Option D": "Gametogenesis",
+        "Correct Option": "B",
+        "Explanation": "Mitosis is the process where a cell divides into two identical daughter cells."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which of the following organisms can reproduce both sexually and asexually?",
+        "Option A": "Hydra",
+        "Option B": "Frog",
+        "Option C": "Human",
+        "Option D": "Bird",
+        "Correct Option": "A",
+        "Explanation": "Hydra can reproduce both sexually (via gametes) and asexually (via budding)."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is the name of the process by which plants reproduce using flowers?",
+        "Option A": "Pollination",
+        "Option B": "Budding",
+        "Option C": "Vegetative propagation",
+        "Option D": "Fertilization",
+        "Correct Option": "A",
+        "Explanation": "Pollination is the process where pollen is transferred to the stigma, allowing fertilization to occur in plants."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following is not a method of asexual reproduction?",
+        "Option A": "Binary fission",
+        "Option B": "Budding",
+        "Option C": "Fertilization",
+        "Option D": "Fragmentation",
+        "Correct Option": "C",
+        "Explanation": "Fertilization is a form of sexual reproduction, not asexual reproduction."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the main function of the male reproductive system in humans?",
+        "Option A": "To produce eggs",
+        "Option B": "To produce sperm",
+        "Option C": "To support fetal development",
+        "Option D": "To facilitate fertilization",
+        "Correct Option": "B",
+        "Explanation": "The main function of the male reproductive system is to produce sperm."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the term for the fusion of sperm and egg?",
+        "Option A": "Fertilization",
+        "Option B": "Mitosis",
+        "Option C": "Meiosis",
+        "Option D": "Budding",
+        "Correct Option": "A",
+        "Explanation": "Fertilization is the process where the sperm and egg combine to form a zygote."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What does the term \"\"asexual reproduction\"\" mean?",
+        "Option A": "Reproduction involving two parents",
+        "Option B": "Reproduction without gametes",
+        "Option C": "Reproduction with gametes",
+        "Option D": "Reproduction involving only males",
+        "Correct Option": "B",
+        "Explanation": "Asexual reproduction involves one parent and does not require gametes."
+    },
+    {
+        "Q.No": "57",
+        "Question": "In human females, where does fertilization typically occur?",
+        "Option A": "Uterus",
+        "Option B": "Fallopian tube",
+        "Option C": "Ovary",
+        "Option D": "Cervix",
+        "Correct Option": "B",
+        "Explanation": "Fertilization typically occurs in the fallopian tube in human females."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What type of asexual reproduction occurs in yeast?",
+        "Option A": "Budding",
+        "Option B": "Binary fission",
+        "Option C": "Fragmentation",
+        "Option D": "Spore formation",
+        "Correct Option": "A",
+        "Explanation": "Yeast reproduces asexually through budding, where a new organism forms from the parent."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is the term for the production of sperm in male animals?",
+        "Option A": "Oogenesis",
+        "Option B": "Spermatogenesis",
+        "Option C": "Meiosis",
+        "Option D": "Fertilization",
+        "Correct Option": "B",
+        "Explanation": "Spermatogenesis is the process by which sperm are produced in male animals."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which of the following is an example of asexual reproduction in plants?",
+        "Option A": "Pollination",
+        "Option B": "Vegetative propagation",
+        "Option C": "Cross-pollination",
+        "Option D": "Fertilization",
+        "Correct Option": "B",
+        "Explanation": "Vegetative propagation is asexual reproduction in plants, involving new plants grown from non-reproductive parts."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is a key difference between sexual and asexual reproduction?",
+        "Option A": "Sexual reproduction results in genetically identical offspring",
+        "Option B": "Asexual reproduction requires two parents",
+        "Option C": "Asexual reproduction involves gametes",
+        "Option D": "Sexual reproduction results in genetic diversity",
+        "Correct Option": "D",
+        "Explanation": "Sexual reproduction combines genetic material from two parents, leading to genetic diversity."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the role of the stigma in a flower?",
+        "Option A": "To produce pollen",
+        "Option B": "To catch pollen",
+        "Option C": "To support the ovary",
+        "Option D": "To produce seeds",
+        "Correct Option": "B",
+        "Explanation": "The stigma is the part of the flower that catches pollen during pollination."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What happens during the process of meiosis?",
+        "Option A": "Chromosomes are duplicated",
+        "Option B": "Gametes are produced",
+        "Option C": "The organism's body cells divide",
+        "Option D": "New individuals are created",
+        "Correct Option": "B",
+        "Explanation": "Meiosis is the process that produces gametes with half the chromosome number of the parent cell."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What is the main advantage of sexual reproduction?",
+        "Option A": "It is faster than asexual reproduction",
+        "Option B": "It produces genetically identical offspring",
+        "Option C": "It introduces genetic variation",
+        "Option D": "It does not require gametes",
+        "Correct Option": "C",
+        "Explanation": "Sexual reproduction introduces genetic variation, which enhances survival in changing environments."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which of the following is not an example of sexual reproduction?",
+        "Option A": "Cross-pollination in flowers",
+        "Option B": "Fertilization in animals",
+        "Option C": "Budding in yeast",
+        "Option D": "Meiosis",
+        "Correct Option": "C",
+        "Explanation": "Budding in yeast is an example of asexual reproduction, not sexual reproduction."
+    },
+    {
+        "Q.No": "66",
+        "Question": "In which of the following processes does the chromosome number stay constant?",
+        "Option A": "Mitosis",
+        "Option B": "Meiosis",
+        "Option C": "Fertilization",
+        "Option D": "Binary fission",
+        "Correct Option": "A",
+        "Explanation": "In mitosis, the chromosome number stays constant as the cell divides into two identical daughter cells."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the term for an organism's first cell after fertilization?",
+        "Option A": "Zygote",
+        "Option B": "Gamete",
+        "Option C": "Blastocyst",
+        "Option D": "Embryo",
+        "Correct Option": "A",
+        "Explanation": "The first cell formed after fertilization is called a zygote."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the main purpose of the female reproductive system in mammals?",
+        "Option A": "To produce sperm",
+        "Option B": "To produce eggs",
+        "Option C": "To support fertilization and fetal development",
+        "Option D": "To support gamete formation",
+        "Correct Option": "C",
+        "Explanation": "The female reproductive system supports fertilization and fetal development in mammals."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which of the following is a characteristic of asexual reproduction?",
+        "Option A": "It requires two parents",
+        "Option B": "It results in genetic diversity",
+        "Option C": "It produces offspring that are clones of the parent",
+        "Option D": "It requires gametes",
+        "Correct Option": "C",
+        "Explanation": "Asexual reproduction produces offspring that are genetically identical to the parent (clones)."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which of the following statements about sexual reproduction is false?",
+        "Option A": "It involves two parents",
+        "Option B": "It results in genetically unique offspring",
+        "Option C": "It produces offspring that are identical to the parent",
+        "Option D": "It involves gametes",
+        "Correct Option": "C",
+        "Explanation": "Sexual reproduction results in genetically unique offspring, not identical ones."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the name of the process where an organism grows new tissue from a fragment of itself?",
+        "Option A": "Budding",
+        "Option B": "Fragmentation",
+        "Option C": "Binary fission",
+        "Option D": "Parthenogenesis",
+        "Correct Option": "B",
+        "Explanation": "Fragmentation is a form of asexual reproduction where new individuals grow from parts of the parent organism."
+    },
+    {
+        "Q.No": "72",
+        "Question": "How does external fertilization occur in fish?",
+        "Option A": "The male deposits sperm inside the female's body",
+        "Option B": "The female deposits eggs outside the body",
+        "Option C": "Eggs and sperm are released into the water",
+        "Option D": "The male fertilizes eggs inside the female",
+        "Correct Option": "C",
+        "Explanation": "In external fertilization, fish release eggs and sperm into the water for fertilization to occur outside the body."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which of the following is not a type of asexual reproduction?",
+        "Option A": "Binary fission",
+        "Option B": "Budding",
+        "Option C": "Cross-fertilization",
+        "Option D": "Vegetative propagation",
+        "Correct Option": "C",
+        "Explanation": "Cross-fertilization is a process of sexual reproduction, not asexual reproduction."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is the term for the development of a new organism from a fragment of the parent organism?",
+        "Option A": "Fragmentation",
+        "Option B": "Mitosis",
+        "Option C": "Budding",
+        "Option D": "Binary fission",
+        "Correct Option": "A",
+        "Explanation": "Fragmentation occurs when a part of an organism breaks off and develops into a new individual."
+    },
+    {
+        "Q.No": "75",
+        "Question": "In which of the following organisms does parthenogenesis occur?",
+        "Option A": "Snake",
+        "Option B": "Fish",
+        "Option C": "Insect",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Parthenogenesis occurs in some reptiles, insects, and other organisms, where offspring are produced without fertilization."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the primary function of the ovary in the female reproductive system?",
+        "Option A": "To produce sperm",
+        "Option B": "To produce hormones and eggs",
+        "Option C": "To support fertilization",
+        "Option D": "To protect the fetus",
+        "Correct Option": "B",
+        "Explanation": "The ovary produces both eggs (ova) and reproductive hormones such as estrogen."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is the difference between meiosis and mitosis?",
+        "Option A": "Meiosis results in genetically identical cells, while mitosis results in genetically different cells",
+        "Option B": "Mitosis results in genetically identical cells, while meiosis results in genetically different cells",
+        "Option C": "Meiosis occurs only in somatic cells, and mitosis occurs in gametes",
+        "Option D": "There is no difference",
+        "Correct Option": "B",
+        "Explanation": "Meiosis reduces the chromosome number in gametes, while mitosis produces genetically identical cells."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which process in plants allows the male gamete to reach the female gamete?",
+        "Option A": "Fertilization",
+        "Option B": "Pollination",
+        "Option C": "Germination",
+        "Option D": "Meiosis",
+        "Correct Option": "B",
+        "Explanation": "Pollination allows the male gamete (pollen) to reach the female gamete (ovule) in plants."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the process in which the zygote develops into an embryo?",
+        "Option A": "Fertilization",
+        "Option B": "Embryogenesis",
+        "Option C": "Meiosis",
+        "Option D": "Mitosis",
+        "Correct Option": "B",
+        "Explanation": "Embryogenesis is the process where the zygote undergoes divisions to develop into an embryo."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is the function of the sperm cell's tail?",
+        "Option A": "To carry genetic material",
+        "Option B": "To help in fertilization",
+        "Option C": "To move the sperm cell toward the egg",
+        "Option D": "To store nutrients",
+        "Correct Option": "C",
+        "Explanation": "The tail of the sperm cell helps it swim toward the egg during fertilization."
+    },
+    {
+        "Q.No": "81",
+        "Question": "In which of the following animals does internal fertilization occur?",
+        "Option A": "Fish",
+        "Option B": "Frogs",
+        "Option C": "Humans",
+        "Option D": "All of the above",
+        "Correct Option": "C",
+        "Explanation": "Internal fertilization occurs in humans, where sperm is deposited inside the female body for fertilization."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the main advantage of asexual reproduction?",
+        "Option A": "It produces genetically diverse offspring",
+        "Option B": "It requires two parents",
+        "Option C": "It is faster and produces offspring quickly",
+        "Option D": "It introduces genetic mutations",
+        "Correct Option": "C",
+        "Explanation": "Asexual reproduction is faster and produces offspring quickly, without the need for two parents."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following is true about sexual reproduction in flowering plants?",
+        "Option A": "It involves only one parent",
+        "Option B": "It leads to genetically identical offspring",
+        "Option C": "It requires the fusion of male and female gametes",
+        "Option D": "It does not require pollinators",
+        "Correct Option": "C",
+        "Explanation": "Sexual reproduction in flowering plants involves the fusion of male (pollen) and female (ovule) gametes."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the term for the development of a new organism from a bud or outgrowth of the parent?",
+        "Option A": "Budding",
+        "Option B": "Fragmentation",
+        "Option C": "Mitosis",
+        "Option D": "Binary fission",
+        "Correct Option": "A",
+        "Explanation": "Budding is a form of asexual reproduction where a new organism develops as a bud or outgrowth of the parent."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What happens during fertilization in sexual reproduction?",
+        "Option A": "A sperm cell and an egg cell combine to form a zygote",
+        "Option B": "A single parent produces offspring",
+        "Option C": "The egg cell divides into multiple cells",
+        "Option D": "The offspring are genetically identical",
+        "Correct Option": "A",
+        "Explanation": "Fertilization occurs when a sperm cell and an egg cell combine to form a zygote, initiating the development of a new organism."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which of the following is a characteristic of external fertilization?",
+        "Option A": "It occurs inside the female body",
+        "Option B": "It requires the release of sperm and eggs into the environment",
+        "Option C": "It results in fewer offspring",
+        "Option D": "It occurs only in mammals",
+        "Correct Option": "B",
+        "Explanation": "External fertilization requires the release of sperm and eggs into the environment, as seen in fish and amphibians."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is the result of asexual reproduction in terms of genetic material?",
+        "Option A": "Offspring have different genetic material from the parent",
+        "Option B": "Offspring inherit a combination of genes from both parents",
+        "Option C": "Offspring have identical genetic material to the parent",
+        "Option D": "Offspring inherit genes from only the mother",
+        "Correct Option": "C",
+        "Explanation": "Asexual reproduction results in offspring that have identical genetic material to the parent."
+    },
+    {
+        "Q.No": "88",
+        "Question": "In which reproductive process do organisms develop from an unfertilized egg?",
+        "Option A": "Sexual reproduction",
+        "Option B": "Binary fission",
+        "Option C": "Parthenogenesis",
+        "Option D": "Regeneration",
+        "Correct Option": "C",
+        "Explanation": "Parthenogenesis is a form of asexual reproduction where offspring develop from unfertilized eggs."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the term for the process of gamete production in males?",
+        "Option A": "Spermatogenesis",
+        "Option B": "Oogenesis",
+        "Option C": "Embryogenesis",
+        "Option D": "Fertilization",
+        "Correct Option": "A",
+        "Explanation": "Spermatogenesis is the process of sperm production in males."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What type of reproduction occurs in humans?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Sexual reproduction",
+        "Option C": "Budding",
+        "Option D": "Binary fission",
+        "Correct Option": "B",
+        "Explanation": "Humans reproduce sexually, involving the fusion of male and female gametes."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which of the following is an example of an organism that reproduces by binary fission?",
+        "Option A": "Amoeba",
+        "Option B": "Human",
+        "Option C": "Frog",
+        "Option D": "Rose",
+        "Correct Option": "A",
+        "Explanation": "Amoeba reproduces asexually by binary fission, where the cell divides to form two identical cells."
+    },
+    {
+        "Q.No": "92",
+        "Question": "In human reproduction, what is the function of the fallopian tube?",
+        "Option A": "To produce eggs",
+        "Option B": "To support the embryo during pregnancy",
+        "Option C": "To transport sperm to the egg",
+        "Option D": "To provide a passage for the fertilized egg to the uterus",
+        "Correct Option": "D",
+        "Explanation": "The fallopian tube transports the fertilized egg (zygote) to the uterus for implantation."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What happens to the chromosome number during meiosis?",
+        "Option A": "It doubles",
+        "Option B": "It stays the same",
+        "Option C": "It is halved",
+        "Option D": "It is tripled",
+        "Correct Option": "C",
+        "Explanation": "Meiosis halves the chromosome number in gametes, ensuring the chromosome number remains constant after fertilization."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is the term for the fusion of two gametes in sexual reproduction?",
+        "Option A": "Cleavage",
+        "Option B": "Fertilization",
+        "Option C": "Gametogenesis",
+        "Option D": "Spore formation",
+        "Correct Option": "B",
+        "Explanation": "Fertilization is the process in which two gametes (sperm and egg) fuse to form a zygote."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the main difference between sexual and asexual reproduction?",
+        "Option A": "Sexual reproduction involves one parent",
+        "Option B": "Asexual reproduction involves two parents",
+        "Option C": "Sexual reproduction results in genetic variation",
+        "Option D": "Asexual reproduction produces genetically unique offspring",
+        "Correct Option": "C",
+        "Explanation": "Sexual reproduction involves the combination of genetic material from two parents, leading to genetic variation."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the term for the formation of male and female gametes?",
+        "Option A": "Fertilization",
+        "Option B": "Meiosis",
+        "Option C": "Gametogenesis",
+        "Option D": "Binary fission",
+        "Correct Option": "C",
+        "Explanation": "Gametogenesis is the process where male (spermatogenesis) and female (oogenesis) gametes are formed."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What happens during gamete formation in meiosis?",
+        "Option A": "The chromosome number is doubled",
+        "Option B": "The chromosome number is halved",
+        "Option C": "The chromosome number remains unchanged",
+        "Option D": "The cell divides into four genetically identical cells",
+        "Correct Option": "B",
+        "Explanation": "In meiosis, the chromosome number is halved to produce gametes with half the chromosomes of the parent cell."
+    },
+    {
+        "Q.No": "98",
+        "Question": "In plants, what is the structure that holds the female gamete?",
+        "Option A": "Stigma",
+        "Option B": "Ovary",
+        "Option C": "Anther",
+        "Option D": "Filament",
+        "Correct Option": "B",
+        "Explanation": "The ovary holds the female gametes (ovules) in plants, where fertilization occurs."
+    },
+    {
+        "Q.No": "99",
+        "Question": "In which process does the zygote divide to form a multicellular embryo?",
+        "Option A": "Fertilization",
+        "Option B": "Mitosis",
+        "Option C": "Meiosis",
+        "Option D": "Embryogenesis",
+        "Correct Option": "D",
+        "Explanation": "Embryogenesis involves the zygote dividing by mitosis to form a multicellular embryo."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What type of reproduction occurs in humans?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Sexual reproduction",
+        "Option C": "Budding",
+        "Option D": "Binary fission",
+        "Correct Option": "B",
+        "Explanation": "Humans reproduce sexually, involving the fusion of male and female gametes."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
