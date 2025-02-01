@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which part of the brain controls involuntary actions like breathing?",
+        "Option A": "Medulla oblongata",
+        "Option B": "Cerebrum",
+        "Option C": "Cerebellum",
+        "Option D": "Thalamus",
+        "Correct Option": "A",
+        "Explanation": "The medulla oblongata controls autonomic functions like breathing and heart rate."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is the function of the myelin sheath?",
+        "Option A": "Increase electrical resistance",
+        "Option B": "Speed up nerve impulse transmission",
+        "Option C": "Protect the neuron from damage",
+        "Option D": "Provide nutrients to the neuron",
+        "Correct Option": "B",
+        "Explanation": "The myelin sheath insulates the neuron, speeding up nerve impulse transmission."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which hormone is released by the pancreas to lower blood sugar levels?",
+        "Option A": "Insulin",
+        "Option B": "Glucagon",
+        "Option C": "Thyroxine",
+        "Option D": "Cortisol",
+        "Correct Option": "A",
+        "Explanation": "Insulin lowers blood sugar levels by promoting glucose uptake into cells."
+    },
+    {
+        "Q.No": "4",
+        "Question": "The main function of the hypothalamus is to",
+        "Option A": "Control heartbeat",
+        "Option B": "Regulate body temperature",
+        "Option C": "Produce digestive enzymes",
+        "Option D": "Maintain balance",
+        "Correct Option": "B",
+        "Explanation": "The hypothalamus regulates critical functions such as body temperature, hunger, and sleep."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following is a neurotransmitter involved in muscle contraction?",
+        "Option A": "Acetylcholine",
+        "Option B": "Insulin",
+        "Option C": "Glutamate",
+        "Option D": "Dopamine",
+        "Correct Option": "A",
+        "Explanation": "Acetylcholine is a neurotransmitter that plays a key role in muscle contraction."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the primary function of the autonomic nervous system?",
+        "Option A": "Regulate conscious movement",
+        "Option B": "Control automatic functions",
+        "Option C": "Process sensory information",
+        "Option D": "Process motor commands",
+        "Correct Option": "B",
+        "Explanation": "The autonomic nervous system controls involuntary functions such as heart rate and digestion."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which part of the neuron receives electrical signals?",
+        "Option A": "Axon",
+        "Option B": "Dendrite",
+        "Option C": "Cell body",
+        "Option D": "Synaptic terminal",
+        "Correct Option": "B",
+        "Explanation": "Dendrites receive signals from other neurons and transmit them to the cell body."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following hormones is responsible for the fight-or-flight response?",
+        "Option A": "Adrenaline",
+        "Option B": "Insulin",
+        "Option C": "Estrogen",
+        "Option D": "Testosterone",
+        "Correct Option": "A",
+        "Explanation": "Adrenaline triggers the fight-or-flight response during stress."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the function of the synapse?",
+        "Option A": "Transmit electrical signals along the neuron",
+        "Option B": "Facilitate communication between neurons",
+        "Option C": "Protect the neuron from external damage",
+        "Option D": "Produce hormones",
+        "Correct Option": "B",
+        "Explanation": "The synapse is the junction between neurons where neurotransmitters facilitate communication."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which part of the brain is involved in balance and coordination?",
+        "Option A": "Cerebellum",
+        "Option B": "Medulla oblongata",
+        "Option C": "Thalamus",
+        "Option D": "Hippocampus",
+        "Correct Option": "A",
+        "Explanation": "The cerebellum controls coordination and balance, essential for smooth movements."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which part of the nervous system controls voluntary movements?",
+        "Option A": "Somatic nervous system",
+        "Option B": "Autonomic nervous system",
+        "Option C": "Central nervous system",
+        "Option D": "Peripheral nervous system",
+        "Correct Option": "A",
+        "Explanation": "The somatic nervous system controls voluntary movements by transmitting signals to skeletal muscles."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is the function of the pituitary gland?",
+        "Option A": "Control emotions",
+        "Option B": "Produce digestive enzymes",
+        "Option C": "Regulate growth and development",
+        "Option D": "Control heartbeat",
+        "Correct Option": "C",
+        "Explanation": "The pituitary gland secretes hormones that regulate growth, metabolism, and reproduction."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which type of neuron transmits information from the sensory receptors to the central nervous system?",
+        "Option A": "Sensory neurons",
+        "Option B": "Motor neurons",
+        "Option C": "Interneurons",
+        "Option D": "Glial cells",
+        "Correct Option": "A",
+        "Explanation": "Sensory neurons carry signals from sensory receptors to the brain and spinal cord."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which neurotransmitter is primarily associated with mood regulation?",
+        "Option A": "Serotonin",
+        "Option B": "Dopamine",
+        "Option C": "Glutamate",
+        "Option D": "Acetylcholine",
+        "Correct Option": "A",
+        "Explanation": "Serotonin is involved in regulating mood, appetite, and sleep."
+    },
+    {
+        "Q.No": "15",
+        "Question": "The blood-brain barrier primarily protects the brain from",
+        "Option A": "Infections",
+        "Option B": "Hormones",
+        "Option C": "Nutrients",
+        "Option D": "Waste products",
+        "Correct Option": "A",
+        "Explanation": "The blood-brain barrier protects the brain from harmful pathogens and toxins."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which of the following is a hormone produced by the thyroid gland?",
+        "Option A": "Insulin",
+        "Option B": "Thyroxine",
+        "Option C": "Adrenaline",
+        "Option D": "Cortisol",
+        "Correct Option": "B",
+        "Explanation": "Thyroxine, produced by the thyroid gland, regulates metabolism and growth."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is the main function of the corpus callosum?",
+        "Option A": "Regulate emotions",
+        "Option B": "Facilitate communication between brain hemispheres",
+        "Option C": "Control heart rate",
+        "Option D": "Process visual information",
+        "Correct Option": "B",
+        "Explanation": "The corpus callosum connects the left and right brain hemispheres, enabling communication between them."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which part of the nervous system is responsible for the “rest and digest” response?",
+        "Option A": "Sympathetic nervous system",
+        "Option B": "Parasympathetic nervous system",
+        "Option C": "Central nervous system",
+        "Option D": "Peripheral nervous system",
+        "Correct Option": "B",
+        "Explanation": "The parasympathetic nervous system is responsible for resting and digesting functions."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is the role of the adrenal glands?",
+        "Option A": "Regulate insulin production",
+        "Option B": "Control emotions",
+        "Option C": "Produce hormones like adrenaline",
+        "Option D": "Process sensory input",
+        "Correct Option": "C",
+        "Explanation": "The adrenal glands produce adrenaline, which is involved in stress responses."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which part of the nervous system connects the brain and the spinal cord?",
+        "Option A": "Peripheral nervous system",
+        "Option B": "Autonomic nervous system",
+        "Option C": "Central nervous system",
+        "Option D": "Somatic nervous system",
+        "Correct Option": "C",
+        "Explanation": "The central nervous system includes the brain and spinal cord, linking them for communication."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which of the following hormones regulates calcium levels in the blood?",
+        "Option A": "Parathyroid hormone",
+        "Option B": "Thyroxine",
+        "Option C": "Insulin",
+        "Option D": "Adrenaline",
+        "Correct Option": "A",
+        "Explanation": "Parathyroid hormone regulates calcium levels by promoting bone resorption and calcium absorption."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which cell type supports and nourishes neurons?",
+        "Option A": "Glial cells",
+        "Option B": "Red blood cells",
+        "Option C": "Muscle cells",
+        "Option D": "Epithelial cells",
+        "Correct Option": "A",
+        "Explanation": "Glial cells provide support, nourishment, and protection for neurons."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is the main purpose of the action potential in a neuron?",
+        "Option A": "To conduct nerve signals",
+        "Option B": "To store neurotransmitters",
+        "Option C": "To maintain homeostasis",
+        "Option D": "To digest nutrients",
+        "Correct Option": "A",
+        "Explanation": "The action potential is an electrical signal that carries information along the neuron."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which neurotransmitter is most closely associated with reward and pleasure?",
+        "Option A": "Dopamine",
+        "Option B": "Serotonin",
+        "Option C": "Acetylcholine",
+        "Option D": "Epinephrine",
+        "Correct Option": "A",
+        "Explanation": "Dopamine is involved in the brain's reward system and pleasure responses."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is the main function of the sensory receptors in the body?",
+        "Option A": "Detect changes in the environment",
+        "Option B": "Generate electrical signals in muscles",
+        "Option C": "Control the movement of limbs",
+        "Option D": "Regulate hormone secretion",
+        "Correct Option": "A",
+        "Explanation": "Sensory receptors detect stimuli such as light, sound, and temperature."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What part of the neuron transmits the nerve impulse away from the cell body?",
+        "Option A": "Dendrite",
+        "Option B": "Axon",
+        "Option C": "Synapse",
+        "Option D": "Cell body",
+        "Correct Option": "B",
+        "Explanation": "The axon transmits nerve impulses from the cell body to other neurons or muscles."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which structure in the brain is involved in regulating emotions?",
+        "Option A": "Limbic system",
+        "Option B": "Medulla oblongata",
+        "Option C": "Cerebellum",
+        "Option D": "Thalamus",
+        "Correct Option": "A",
+        "Explanation": "The limbic system regulates emotions, memory, and arousal."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which of the following is a function of the somatic nervous system?",
+        "Option A": "Involuntary movement regulation",
+        "Option B": "Stress response regulation",
+        "Option C": "Sensory information processing",
+        "Option D": "Voluntary movement control",
+        "Correct Option": "D",
+        "Explanation": "The somatic nervous system controls voluntary movements by transmitting signals to skeletal muscles."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which type of muscle is under involuntary control?",
+        "Option A": "Skeletal muscle",
+        "Option B": "Smooth muscle",
+        "Option C": "Cardiac muscle",
+        "Option D": "Both B and C",
+        "Correct Option": "D",
+        "Explanation": "Smooth and cardiac muscles are controlled involuntarily by the autonomic nervous system."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the role of the neurotransmitter acetylcholine at the neuromuscular junction?",
+        "Option A": "Initiate muscle contraction",
+        "Option B": "Transport oxygen to muscle cells",
+        "Option C": "Regulate calcium levels",
+        "Option D": "Convert glucose into energy",
+        "Correct Option": "A",
+        "Explanation": "Acetylcholine stimulates muscle contraction by binding to receptors at the neuromuscular junction."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What part of the neuron releases neurotransmitters into the synapse?",
+        "Option A": "Axon terminals",
+        "Option B": "Dendrites",
+        "Option C": "Cell body",
+        "Option D": "Node of Ranvier",
+        "Correct Option": "A",
+        "Explanation": "Neurotransmitters are released from the axon terminals into the synapse."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which part of the brain is responsible for the regulation of sleep and wakefulness?",
+        "Option A": "Hypothalamus",
+        "Option B": "Cerebellum",
+        "Option C": "Medulla oblongata",
+        "Option D": "Corpus callosum",
+        "Correct Option": "A",
+        "Explanation": "The hypothalamus controls the sleep-wake cycle and circadian rhythms."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What is the role of the neurotransmitter glutamate?",
+        "Option A": "Inhibit nerve transmission",
+        "Option B": "Promote muscle contraction",
+        "Option C": "Activate the sympathetic nervous system",
+        "Option D": "Excite neurons and enhance synaptic plasticity",
+        "Correct Option": "D",
+        "Explanation": "Glutamate is an excitatory neurotransmitter that enhances synaptic activity and learning."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which hormone is responsible for regulating metabolism and energy levels?",
+        "Option A": "Thyroxine",
+        "Option B": "Adrenaline",
+        "Option C": "Estrogen",
+        "Option D": "Insulin",
+        "Correct Option": "A",
+        "Explanation": "Thyroxine regulates metabolism by controlling the rate at which cells use energy."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the function of the blood-brain barrier?",
+        "Option A": "Allow all substances to pass into the brain",
+        "Option B": "Protect the brain from harmful substances",
+        "Option C": "Regulate neurotransmitter production",
+        "Option D": "Control blood flow to the brain",
+        "Correct Option": "B",
+        "Explanation": "The blood-brain barrier protects the brain from harmful substances in the bloodstream."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What type of receptor is responsible for detecting light?",
+        "Option A": "Photoreceptor",
+        "Option B": "Chemoreceptor",
+        "Option C": "Mechanoreceptor",
+        "Option D": "Thermoreceptor",
+        "Correct Option": "A",
+        "Explanation": "Photoreceptors in the retina detect light and enable vision."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which of the following is a function of the cerebrum?",
+        "Option A": "Memory and learning",
+        "Option B": "Regulation of heart rate",
+        "Option C": "Balance and coordination",
+        "Option D": "Digestion",
+        "Correct Option": "A",
+        "Explanation": "The cerebrum is involved in high-level functions such as memory, learning, and sensory perception."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which part of the brain is primarily involved in controlling heartbeat and breathing?",
+        "Option A": "Cerebellum",
+        "Option B": "Medulla oblongata",
+        "Option C": "Hypothalamus",
+        "Option D": "Pons",
+        "Correct Option": "B",
+        "Explanation": "The medulla oblongata controls autonomic functions such as heartbeat and breathing."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which hormone is produced by the pineal gland?",
+        "Option A": "Melatonin",
+        "Option B": "Insulin",
+        "Option C": "Progesterone",
+        "Option D": "Cortisol",
+        "Correct Option": "A",
+        "Explanation": "Melatonin, produced by the pineal gland, regulates sleep and circadian rhythms."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is the main function of the sympathetic nervous system?",
+        "Option A": "Stimulate digestion",
+        "Option B": "Regulate sleep patterns",
+        "Option C": "Control voluntary muscle movements",
+        "Option D": "Initiate the fight-or-flight response",
+        "Correct Option": "D",
+        "Explanation": "The sympathetic nervous system prepares the body for stress responses, including the fight-or-flight reaction."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which hormone is responsible for increasing blood sugar levels?",
+        "Option A": "Glucagon",
+        "Option B": "Insulin",
+        "Option C": "Cortisol",
+        "Option D": "Estrogen",
+        "Correct Option": "A",
+        "Explanation": "Glucagon raises blood sugar levels by promoting the release of glucose from the liver."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the role of the axon hillock in a neuron?",
+        "Option A": "Generate the action potential",
+        "Option B": "Release neurotransmitters",
+        "Option C": "Store energy",
+        "Option D": "Protect the neuron from damage",
+        "Correct Option": "A",
+        "Explanation": "The axon hillock generates the action potential, which is then transmitted down the axon."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which type of glial cell produces the myelin sheath in the central nervous system?",
+        "Option A": "Oligodendrocytes",
+        "Option B": "Schwann cells",
+        "Option C": "Microglia",
+        "Option D": "Astrocytes",
+        "Correct Option": "A",
+        "Explanation": "Oligodendrocytes produce myelin in the central nervous system, while Schwann cells do so in the peripheral nervous system."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the function of the somatic motor neurons?",
+        "Option A": "Control heart rate",
+        "Option B": "Control voluntary muscle movement",
+        "Option C": "Control digestion",
+        "Option D": "Stimulate hormone release",
+        "Correct Option": "B",
+        "Explanation": "Somatic motor neurons transmit signals that control voluntary muscle movements."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is the role of the hypothalamus in the endocrine system?",
+        "Option A": "Secrete digestive enzymes",
+        "Option B": "Control hunger and thirst",
+        "Option C": "Produce insulin",
+        "Option D": "Regulate hormone secretion",
+        "Correct Option": "D",
+        "Explanation": "The hypothalamus regulates the release of hormones from the pituitary gland."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What part of the neuron carries electrical impulses toward the cell body?",
+        "Option A": "Axon",
+        "Option B": "Dendrites",
+        "Option C": "Myelin sheath",
+        "Option D": "Synaptic terminals",
+        "Correct Option": "B",
+        "Explanation": "Dendrites carry electrical signals toward the cell body for processing."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is the primary role of the thalamus?",
+        "Option A": "Relay sensory signals to the cerebral cortex",
+        "Option B": "Control motor movement",
+        "Option C": "Regulate emotions",
+        "Option D": "Coordinate balance",
+        "Correct Option": "A",
+        "Explanation": "The thalamus relays sensory information to the cerebral cortex for processing."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which hormone regulates water balance in the body?",
+        "Option A": "Aldosterone",
+        "Option B": "Insulin",
+        "Option C": "ADH",
+        "Option D": "Thyroxine",
+        "Correct Option": "C",
+        "Explanation": "ADH (Antidiuretic hormone) regulates water balance by influencing kidney function."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which part of the nervous system coordinates voluntary movements and balance?",
+        "Option A": "Cerebellum",
+        "Option B": "Medulla oblongata",
+        "Option C": "Spinal cord",
+        "Option D": "Thalamus",
+        "Correct Option": "A",
+        "Explanation": "The cerebellum coordinates voluntary movements, balance, and motor control."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which of the following is a function of the parasympathetic nervous system?",
+        "Option A": "Speed up heart rate",
+        "Option B": "Increase blood sugar levels",
+        "Option C": "Stimulate digestion",
+        "Option D": "Increase blood pressure",
+        "Correct Option": "C",
+        "Explanation": "The parasympathetic nervous system promotes \"\"rest and digest\"\" functions, including digestion."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which of the following structures in the brain controls the circadian rhythm?",
+        "Option A": "Pineal gland",
+        "Option B": "Cerebellum",
+        "Option C": "Hypothalamus",
+        "Option D": "Medulla oblongata",
+        "Correct Option": "A",
+        "Explanation": "The pineal gland produces melatonin, which regulates the sleep-wake cycle (circadian rhythm)."
+    },
+    {
+        "Q.No": "52",
+        "Question": "The junction between two neurons is called the",
+        "Option A": "Axon",
+        "Option B": "Synapse",
+        "Option C": "Dendrite",
+        "Option D": "Node of Ranvier",
+        "Correct Option": "B",
+        "Explanation": "The synapse is the gap between two neurons where neurotransmitters transmit signals."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which part of the neuron is responsible for producing neurotransmitters?",
+        "Option A": "Axon",
+        "Option B": "Dendrites",
+        "Option C": "Cell body",
+        "Option D": "Myelin sheath",
+        "Correct Option": "C",
+        "Explanation": "The cell body contains the nucleus and produces neurotransmitters."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which of the following hormones is released by the adrenal medulla?",
+        "Option A": "Adrenaline",
+        "Option B": "Insulin",
+        "Option C": "Estrogen",
+        "Option D": "Progesterone",
+        "Correct Option": "A",
+        "Explanation": "Adrenaline is produced by the adrenal medulla and prepares the body for stress responses."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the function of neurotransmitters in the nervous system?",
+        "Option A": "Provide nutrients to neurons",
+        "Option B": "Transmit electrical signals across synapses",
+        "Option C": "Regulate heartbeat",
+        "Option D": "Produce energy for the brain",
+        "Correct Option": "B",
+        "Explanation": "Neurotransmitters carry chemical signals across synapses to communicate between neurons."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which hormone is released by the pancreas to regulate blood sugar levels?",
+        "Option A": "Insulin",
+        "Option B": "Glucagon",
+        "Option C": "Cortisol",
+        "Option D": "Thyroxine",
+        "Correct Option": "A",
+        "Explanation": "Insulin is secreted by the pancreas to help lower blood sugar levels."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which of the following is a feature of the sympathetic nervous system?",
+        "Option A": "Stimulates digestion",
+        "Option B": "Reduces heart rate",
+        "Option C": "Increases alertness",
+        "Option D": "Promotes rest",
+        "Correct Option": "C",
+        "Explanation": "The sympathetic nervous system prepares the body for stressful situations, increasing heart rate and alertness."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which part of the nervous system processes sensory input and coordinates voluntary movement?",
+        "Option A": "Central nervous system",
+        "Option B": "Peripheral nervous system",
+        "Option C": "Somatic nervous system",
+        "Option D": "Autonomic nervous system",
+        "Correct Option": "A",
+        "Explanation": "The central nervous system processes sensory data and coordinates voluntary motor activities."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which neurotransmitter is primarily associated with pleasure and reward pathways in the brain?",
+        "Option A": "Dopamine",
+        "Option B": "Acetylcholine",
+        "Option C": "Serotonin",
+        "Option D": "Glutamate",
+        "Correct Option": "A",
+        "Explanation": "Dopamine plays a key role in reward, motivation, and pleasure pathways in the brain."
+    },
+    {
+        "Q.No": "60",
+        "Question": "The autonomic nervous system primarily controls",
+        "Option A": "Voluntary movement",
+        "Option B": "Involuntary functions",
+        "Option C": "Sensory input processing",
+        "Option D": "Motor output",
+        "Correct Option": "B",
+        "Explanation": "The autonomic nervous system controls involuntary functions like heart rate and digestion."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the function of the cerebellum?",
+        "Option A": "Control emotional responses",
+        "Option B": "Balance and motor coordination",
+        "Option C": "Regulation of body temperature",
+        "Option D": "Sensory processing",
+        "Correct Option": "B",
+        "Explanation": "The cerebellum is responsible for coordination, balance, and fine motor control."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which part of the nervous system controls basic life functions like heartbeat and respiration?",
+        "Option A": "Medulla oblongata",
+        "Option B": "Cerebellum",
+        "Option C": "Thalamus",
+        "Option D": "Hypothalamus",
+        "Correct Option": "A",
+        "Explanation": "The medulla oblongata controls autonomic functions such as heartbeat, breathing, and digestion."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which of the following receptors is responsible for detecting temperature changes?",
+        "Option A": "Thermoreceptors",
+        "Option B": "Photoreceptors",
+        "Option C": "Chemoreceptors",
+        "Option D": "Mechanoreceptors",
+        "Correct Option": "A",
+        "Explanation": "Thermoreceptors detect changes in temperature, helping regulate body temperature."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What is the function of the node of Ranvier in nerve conduction?",
+        "Option A": "Speed up the nerve impulse",
+        "Option B": "Protect the neuron from damage",
+        "Option C": "Store neurotransmitters",
+        "Option D": "Transmit the impulse across the synapse",
+        "Correct Option": "A",
+        "Explanation": "The node of Ranvier speeds up the conduction of nerve impulses by enabling saltatory conduction."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which structure in the eye contains the photoreceptors for vision?",
+        "Option A": "Retina",
+        "Option B": "Cornea",
+        "Option C": "Lens",
+        "Option D": "Iris",
+        "Correct Option": "A",
+        "Explanation": "The retina contains photoreceptor cells, such as rods and cones, responsible for detecting light and forming images."
+    },
+    {
+        "Q.No": "66",
+        "Question": "The fight-or-flight response is primarily mediated by which nervous system?",
+        "Option A": "Parasympathetic nervous system",
+        "Option B": "Sympathetic nervous system",
+        "Option C": "Somatic nervous system",
+        "Option D": "Central nervous system",
+        "Correct Option": "B",
+        "Explanation": "The sympathetic nervous system activates the fight-or-flight response during stressful situations."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which hormone is responsible for stimulating ovulation?",
+        "Option A": "Estrogen",
+        "Option B": "Progesterone",
+        "Option C": "Luteinizing hormone",
+        "Option D": "Follicle-stimulating hormone",
+        "Correct Option": "C",
+        "Explanation": "Luteinizing hormone (LH) triggers ovulation in females."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the main function of the frontal lobe of the brain?",
+        "Option A": "Vision",
+        "Option B": "Memory and reasoning",
+        "Option C": "Motor control",
+        "Option D": "Balance and coordination",
+        "Correct Option": "C",
+        "Explanation": "The frontal lobe is primarily involved in motor control, decision-making, and problem-solving."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which of the following hormones is responsible for increasing blood pressure?",
+        "Option A": "Adrenaline",
+        "Option B": "Insulin",
+        "Option C": "Progesterone",
+        "Option D": "Thyroxine",
+        "Correct Option": "A",
+        "Explanation": "Adrenaline increases heart rate and blood pressure during the fight-or-flight response."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which of the following is a role of the vagus nerve in the parasympathetic nervous system?",
+        "Option A": "Stimulate digestion",
+        "Option B": "Increase heart rate",
+        "Option C": "Decrease respiration rate",
+        "Option D": "Activate the fight-or-flight response",
+        "Correct Option": "A",
+        "Explanation": "The vagus nerve promotes \"\"rest and digest\"\" activities, including digestion."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What part of the neuron is involved in the transmission of electrical impulses over long distances?",
+        "Option A": "Axon",
+        "Option B": "Dendrites",
+        "Option C": "Synapse",
+        "Option D": "Cell body",
+        "Correct Option": "A",
+        "Explanation": "The axon transmits electrical impulses over long distances to other neurons or muscles."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the primary role of the thalamus in sensory processing?",
+        "Option A": "Transmit motor signals",
+        "Option B": "Relay sensory information to the cerebral cortex",
+        "Option C": "Produce hormones",
+        "Option D": "Regulate emotions",
+        "Correct Option": "B",
+        "Explanation": "The thalamus relays sensory information from the spinal cord to the cerebral cortex for processing."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which part of the brain is responsible for voluntary muscle control?",
+        "Option A": "Cerebellum",
+        "Option B": "Medulla oblongata",
+        "Option C": "Spinal cord",
+        "Option D": "Cerebrum",
+        "Correct Option": "D",
+        "Explanation": "The cerebrum controls voluntary muscle movements and higher cognitive functions."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which hormone is responsible for the production of milk in mammals?",
+        "Option A": "Prolactin",
+        "Option B": "Estrogen",
+        "Option C": "Testosterone",
+        "Option D": "Oxytocin",
+        "Correct Option": "A",
+        "Explanation": "Prolactin stimulates milk production in the mammary glands."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the function of the Schwann cells?",
+        "Option A": "Support neurons",
+        "Option B": "Transmit electrical signals",
+        "Option C": "Produce myelin in the peripheral nervous system",
+        "Option D": "Produce neurotransmitters",
+        "Correct Option": "C",
+        "Explanation": "Schwann cells form the myelin sheath around neurons in the peripheral nervous system."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which of the following neurotransmitters is associated with learning and memory?",
+        "Option A": "Acetylcholine",
+        "Option B": "Serotonin",
+        "Option C": "Dopamine",
+        "Option D": "GABA",
+        "Correct Option": "A",
+        "Explanation": "Acetylcholine plays a key role in memory formation and cognitive function."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is the function of the corpus callosum?",
+        "Option A": "Transfer sensory signals between hemispheres",
+        "Option B": "Connect the two brain hemispheres for communication",
+        "Option C": "Regulate motor functions",
+        "Option D": "Control vision",
+        "Correct Option": "B",
+        "Explanation": "The corpus callosum connects the left and right hemispheres of the brain to coordinate activity."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which hormone is released in response to low blood calcium levels?",
+        "Option A": "Parathyroid hormone",
+        "Option B": "Insulin",
+        "Option C": "Glucagon",
+        "Option D": "Adrenaline",
+        "Correct Option": "A",
+        "Explanation": "Parathyroid hormone increases blood calcium levels by promoting bone resorption."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following is a function of the occipital lobe?",
+        "Option A": "Vision",
+        "Option B": "Emotion regulation",
+        "Option C": "Speech production",
+        "Option D": "Motor control",
+        "Correct Option": "A",
+        "Explanation": "The occipital lobe processes visual information."
+    },
+    {
+        "Q.No": "80",
+        "Question": "The neurotransmitter serotonin is primarily involved in which of the following?",
+        "Option A": "Muscle contraction",
+        "Option B": "Mood regulation",
+        "Option C": "Digestion",
+        "Option D": "Heart rate regulation",
+        "Correct Option": "B",
+        "Explanation": "Serotonin regulates mood, appetite, and sleep."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is the primary function of the temporal lobe of the brain?",
+        "Option A": "Vision",
+        "Option B": "Memory and auditory processing",
+        "Option C": "Movement and balance",
+        "Option D": "Heart rate regulation",
+        "Correct Option": "B",
+        "Explanation": "The temporal lobe processes auditory information and plays a role in memory formation."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which of the following hormones helps regulate the body's circadian rhythm?",
+        "Option A": "Melatonin",
+        "Option B": "Thyroxine",
+        "Option C": "Insulin",
+        "Option D": "Cortisol",
+        "Correct Option": "A",
+        "Explanation": "Melatonin regulates the sleep-wake cycle and circadian rhythms."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is the role of the neurotransmitter GABA?",
+        "Option A": "Excite neurons",
+        "Option B": "Inhibit neural transmission",
+        "Option C": "Regulate blood sugar levels",
+        "Option D": "Increase heart rate",
+        "Correct Option": "B",
+        "Explanation": "GABA is an inhibitory neurotransmitter that reduces neuron excitability."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following structures helps maintain the blood-brain barrier?",
+        "Option A": "Astrocytes",
+        "Option B": "Schwann cells",
+        "Option C": "Microglia",
+        "Option D": "Oligodendrocytes",
+        "Correct Option": "A",
+        "Explanation": "Astrocytes help form the blood-brain barrier by regulating the permeability of blood vessels in the brain."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is the function of the somatic nervous system?",
+        "Option A": "Control involuntary movements",
+        "Option B": "Control voluntary muscle movements",
+        "Option C": "Regulate heart rate",
+        "Option D": "Process sensory information",
+        "Correct Option": "B",
+        "Explanation": "The somatic nervous system controls voluntary muscle movements."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which part of the nervous system is responsible for \"\"fight or flight\"\" reactions?",
+        "Option A": "Sympathetic nervous system",
+        "Option B": "Parasympathetic nervous system",
+        "Option C": "Central nervous system",
+        "Option D": "Autonomic nervous system",
+        "Correct Option": "A",
+        "Explanation": "The sympathetic nervous system is responsible for activating the body's fight-or-flight response."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which structure in the ear helps maintain balance?",
+        "Option A": "Cochlea",
+        "Option B": "Oval window",
+        "Option C": "Semicircular canals",
+        "Option D": "Tympanic membrane",
+        "Correct Option": "C",
+        "Explanation": "The semicircular canals in the inner ear help maintain balance and spatial orientation."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which part of the brain is involved in processing emotions and memory?",
+        "Option A": "Hippocampus",
+        "Option B": "Cerebellum",
+        "Option C": "Thalamus",
+        "Option D": "Medulla oblongata",
+        "Correct Option": "A",
+        "Explanation": "The hippocampus is involved in memory formation and emotional regulation."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which of the following neurotransmitters is associated with mood disorders like depression?",
+        "Option A": "Serotonin",
+        "Option B": "Acetylcholine",
+        "Option C": "Dopamine",
+        "Option D": "Glutamate",
+        "Correct Option": "A",
+        "Explanation": "Low levels of serotonin are associated with mood disorders such as depression."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the primary function of the parietal lobe?",
+        "Option A": "Hearing",
+        "Option B": "Vision",
+        "Option C": "Sensory processing and spatial awareness",
+        "Option D": "Movement control",
+        "Correct Option": "C",
+        "Explanation": "The parietal lobe processes sensory information and is involved in spatial awareness."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which of the following is a primary function of the brainstem?",
+        "Option A": "Control motor skills",
+        "Option B": "Relay sensory information",
+        "Option C": "Control basic life functions",
+        "Option D": "Produce hormones",
+        "Correct Option": "C",
+        "Explanation": "The brainstem controls basic life functions such as breathing and heartbeat."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which part of the neuron is responsible for carrying impulses away from the cell body?",
+        "Option A": "Axon",
+        "Option B": "Dendrites",
+        "Option C": "Cell body",
+        "Option D": "Synapse",
+        "Correct Option": "A",
+        "Explanation": "The axon carries electrical impulses away from the cell body toward other neurons or muscles."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the role of the endocrine system?",
+        "Option A": "Transmit electrical signals",
+        "Option B": "Regulate long-term body processes through hormones",
+        "Option C": "Control voluntary movement",
+        "Option D": "Maintain balance",
+        "Correct Option": "B",
+        "Explanation": "The endocrine system regulates processes such as metabolism, growth, and mood through hormone release."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which part of the brain controls reflex actions?",
+        "Option A": "Medulla oblongata",
+        "Option B": "Cerebellum",
+        "Option C": "Hypothalamus",
+        "Option D": "Thalamus",
+        "Correct Option": "A",
+        "Explanation": "The medulla oblongata is responsible for reflex actions and autonomic functions like breathing."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What type of neurotransmitter is involved in motor control?",
+        "Option A": "Dopamine",
+        "Option B": "Serotonin",
+        "Option C": "GABA",
+        "Option D": "Glutamate",
+        "Correct Option": "A",
+        "Explanation": "Dopamine plays a key role in motor control and coordination, particularly in diseases like Parkinson's."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What hormone regulates the menstrual cycle?",
+        "Option A": "Estrogen",
+        "Option B": "Progesterone",
+        "Option C": "Follicle-stimulating hormone",
+        "Option D": "Luteinizing hormone",
+        "Correct Option": "A",
+        "Explanation": "Estrogen regulates the menstrual cycle and the development of female reproductive tissues."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the role of the blood-brain barrier?",
+        "Option A": "Protect the brain from toxins and pathogens",
+        "Option B": "Allow all substances to pass through",
+        "Option C": "Help the brain produce neurotransmitters",
+        "Option D": "Regulate heart rate",
+        "Correct Option": "A",
+        "Explanation": "The blood-brain barrier protects the brain from harmful substances circulating in the blood."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which part of the nervous system controls involuntary functions like digestion and heart rate?",
+        "Option A": "Central nervous system",
+        "Option B": "Peripheral nervous system",
+        "Option C": "Autonomic nervous system",
+        "Option D": "Somatic nervous system",
+        "Correct Option": "C",
+        "Explanation": "The autonomic nervous system regulates involuntary functions such as digestion and heart rate."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which of the following structures is primarily involved in learning and memory?",
+        "Option A": "Hippocampus",
+        "Option B": "Cerebellum",
+        "Option C": "Medulla oblongata",
+        "Option D": "Thalamus",
+        "Correct Option": "A",
+        "Explanation": "The hippocampus is involved in learning, memory formation, and emotional responses."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which of the following hormones is released during stress?",
+        "Option A": "Cortisol",
+        "Option B": "Thyroxine",
+        "Option C": "Insulin",
+        "Option D": "Progesterone",
+        "Correct Option": "A",
+        "Explanation": "Cortisol is released by the adrenal glands during stress to help the body cope with the situation."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
