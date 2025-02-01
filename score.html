@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Score Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .qualification-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .delete-btn {
+            color: #dc3545;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .delete-btn:hover {
+            color: #bb2d3b;
+        }
+        #results {
+            border-top: 2px solid #dee2e6;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #studentName {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        #studentName:focus {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            outline: none;
+        }
+
+    </style>
+    <style>
+    @keyframes colorChange {
+        0% { color: #ff6f61; } /* Red */
+        25% { color: #6a5acd; } /* Purple */
+        50% { color: #32cd32; } /* Green */
+        75% { color: #00bfff; } /* Blue */
+        100% { color: #ff6f61; } /* Red */
+    }
+</style>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body style="background: transparent; margin: 0; padding: 0; width: 100%; height: 100%; box-shadow: none;">
+
+<div class="container-fluid" style="padding: 0; margin: 0; width: 100%;">
+
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white py-3">
+                <h2 class="h5 mb-0">Academic Score Calculator</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <input type="text" class="form-control" 
+                           placeholder="Enter Your Name" id="studentName">
+                </div>
+
+                <div id="qualificationsContainer">
+                    <div class="qualification-card">
+                        <div class="row g-2 align-items-center">
+                            <div class="col-12 col-md-4 mb-2">
+                                <label class="form-label">Qualification</label>
+                                <select class="form-select qualification-type">
+                                    <option value="">Select</option>
+                                    <option value="ssc">SSC</option>
+                                    <option value="hssc">HSSC</option>
+                                    <option value="ba">BA/B.Sc</option>
+                                    <option value="ma">MA/M.Sc</option>
+                                    <option value="bs">BS</option>
+                                    <option value="bed">B.Ed/ADE/Shahadtul Almia/Qari Sanad</option>
+                                    <option value="med">M.Ed</option>
+                                    <option value="bs_education">BS/MA Education</option>
+                                    <option value="ms">MS/M.Phil</option>
+                                    <option value="phd">Ph.D</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-md-3 mb-2">
+                                <label class="form-label">Obtained</label>
+                                <input type="number" class="form-control obtained-input">
+                            </div>
+                            <div class="col-6 col-md-3 mb-2">
+                                <label class="form-label">Total</label>
+                                <input type="number" class="form-control total-input">
+                            </div>
+                            <div class="col-12 col-md-2 text-end">
+                                <span class="delete-btn fs-5">×</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 mb-4">
+                    <button class="btn btn-outline-primary" id="addQualification">
+                        Add More Qualification
+                    </button>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary w-100 btn-lg" id="calculate">Calculate</button>
+                    <button class="btn btn-danger w-100" id="clearAll">Clear All</button>
+                    
+                </div>
+
+                <div id="results" class="d-none mt-4">
+                    <h5 class="mb-3">Mr. <span id="resultName"></span>,<br> Your Academic Score is:</h5>
+                    <div id="scoreDetails"></div>
+                    <div class="alert alert-primary mt-3 py-2">
+                        Total Score: <strong id="totalScore">0.00</strong>
+                    </div>
+                    <div style="font-family: Arial, sans-serif; font-size: 10px; font-weight: bold; text-align: center; animation: colorChange 2s infinite;">
+                        Best wishes for your future success, <br>
+                        Rashid Ahmad, SST IT ©️ Pashtoogle.com
+                    </div>
+                </div>
+
+                <!-- Download button outside the results section -->
+                <button class="btn btn-success mt-3 w-100 d-none" id="downloadResults">
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const formulaWeights = {
+            ssc: 15, 
+            hssc: 20, 
+            ba: 20, 
+            ma: 15,
+            bs: 35, 
+            bed: 15, 
+            med: 5, 
+            bs_education: 20, 
+            ms: 5, 
+            phd: 5
+        };
+
+        // Add new qualification
+        document.getElementById('addQualification').addEventListener('click', () => {
+            const newCard = document.querySelector('.qualification-card').cloneNode(true);
+            newCard.querySelectorAll('input').forEach(input => input.value = '');
+            newCard.querySelector('.qualification-type').value = '';
+            document.getElementById('qualificationsContainer').appendChild(newCard);
+            addDeleteFunctionality(newCard);
+        });
+
+        // Delete functionality
+        function addDeleteFunctionality(element) {
+            element.querySelector('.delete-btn').addEventListener('click', () => {
+                element.remove();
+            });
+        }
+
+        // Calculate scores
+        function calculateTotal() {
+            const cards = document.querySelectorAll('.qualification-card');
+            let total = 0;
+            let details = [];
+            let validInput = true;
+
+            cards.forEach(card => {
+                const type = card.querySelector('.qualification-type').value;
+                const obtained = parseFloat(card.querySelector('.obtained-input').value) || 0;
+                const totalMarks = parseFloat(card.querySelector('.total-input').value) || 0;
+                
+                if (!type || !obtained || !totalMarks) {
+                    validInput = false;
+                }
+
+                if (type && obtained && totalMarks) {
+                    const score = (obtained/totalMarks) * formulaWeights[type];
+                    details.push({
+                        type: card.querySelector('.qualification-type').selectedOptions[0].text,
+                        score: score.toFixed(2)
+                    });
+                    total += score;
+                }
+            });
+
+            if (!validInput) {
+                alert('Please fill all fields correctly before calculating.');
+                return;
+            }
+
+            if (details.length > 0) {
+                document.getElementById('results').classList.remove('d-none');
+                document.getElementById('downloadResults').classList.remove('d-none');
+                document.getElementById('resultName').textContent = 
+                    document.getElementById('studentName').value || 'Candidate';
+                document.getElementById('scoreDetails').innerHTML = details.map(d => `
+                    <div class="row border-bottom py-1">
+                        <div class="col-8">${d.type}</div>
+                        <div class="col-4 text-end">${d.score}</div>
+                    </div>
+                `).join('');
+                document.getElementById('totalScore').textContent = total.toFixed(2);
+            }
+        }
+
+        // Clear all
+        document.getElementById('clearAll').addEventListener('click', () => {
+            document.getElementById('qualificationsContainer').innerHTML = 
+                document.querySelector('.qualification-card').outerHTML;
+            document.getElementById('results').classList.add('d-none');
+            document.getElementById('downloadResults').classList.add('d-none');
+            document.getElementById('studentName').value = '';
+        });
+
+        // Download results
+        document.getElementById('downloadResults').addEventListener('click', () => {
+            const resultsElement = document.getElementById('results');
+            html2canvas(resultsElement, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'Results.png';
+                link.click();
+            });
+        });
+
+        // Initial setup
+        addDeleteFunctionality(document.querySelector('.qualification-card'));
+        document.getElementById('calculate').addEventListener('click', calculateTotal);
+    </script>
+</body>
+</html>
