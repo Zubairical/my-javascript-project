@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is the main characteristic of prokaryotic cells?",
+        "Option A": "They have a membrane-bound nucleus",
+        "Option B": "They lack a cell membrane",
+        "Option C": "They lack a membrane-bound nucleus",
+        "Option D": "They have multiple chromosomes",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotes lack a membrane-bound nucleus, unlike eukaryotes."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is a prokaryotic organism?",
+        "Option A": "Fungus",
+        "Option B": "Bacterium",
+        "Option C": "Algae",
+        "Option D": "Plant",
+        "Correct Option": "B",
+        "Explanation": "Bacteria are prokaryotic organisms, unlike fungi, algae, and plants."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Prokaryotic cells have which of the following structures?",
+        "Option A": "Nucleus",
+        "Option B": "Nucleoid",
+        "Option C": "Golgi apparatus",
+        "Option D": "Mitochondria",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic cells contain a nucleoid instead of a membrane-bound nucleus."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which of the following is absent in prokaryotic cells?",
+        "Option A": "Ribosomes",
+        "Option B": "Cytoplasm",
+        "Option C": "Nucleus",
+        "Option D": "Cell wall",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotes do not have a nucleus; they have a nucleoid region."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What is the primary function of the plasmid in prokaryotic cells?",
+        "Option A": "Protein synthesis",
+        "Option B": "Genetic recombination",
+        "Option C": "Energy production",
+        "Option D": "Photosynthesis",
+        "Correct Option": "B",
+        "Explanation": "Plasmids carry additional genetic material that can help in genetic recombination."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which of the following is a characteristic feature of prokaryotic cell division?",
+        "Option A": "Meiosis",
+        "Option B": "Mitosis",
+        "Option C": "Binary fission",
+        "Option D": "Budding",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotes divide by binary fission, a simple form of cell division."
+    },
+    {
+        "Q.No": "7",
+        "Question": "In prokaryotic cells, the cell wall is made of which substance?",
+        "Option A": "Chitin",
+        "Option B": "Cellulose",
+        "Option C": "Peptidoglycan",
+        "Option D": "Lignin",
+        "Correct Option": "C",
+        "Explanation": "Peptidoglycan is a key component of the prokaryotic cell wall, particularly in bacteria."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What type of genetic material is found in prokaryotic cells?",
+        "Option A": "DNA only",
+        "Option B": "RNA only",
+        "Option C": "DNA and RNA",
+        "Option D": "Circular DNA",
+        "Correct Option": "D",
+        "Explanation": "Prokaryotes typically have a circular form of DNA known as the nucleoid."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Prokaryotes differ from eukaryotes in that they lack which of the following?",
+        "Option A": "Ribosomes",
+        "Option B": "Mitochondria",
+        "Option C": "Plasma membrane",
+        "Option D": "Cytoplasm",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotes lack mitochondria, which are present in eukaryotic cells."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the role of ribosomes in prokaryotic cells?",
+        "Option A": "Protein synthesis",
+        "Option B": "Energy production",
+        "Option C": "DNA replication",
+        "Option D": "Photosynthesis",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes are responsible for protein synthesis in prokaryotes."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which structure protects prokaryotic cells and helps in adhesion to surfaces?",
+        "Option A": "Capsule",
+        "Option B": "Ribosomes",
+        "Option C": "Cytoplasm",
+        "Option D": "Flagella",
+        "Correct Option": "A",
+        "Explanation": "The capsule protects and helps in adhesion in prokaryotic cells."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which of the following is a function of the flagella in prokaryotic cells?",
+        "Option A": "DNA replication",
+        "Option B": "Locomotion",
+        "Option C": "Photosynthesis",
+        "Option D": "Protein synthesis",
+        "Correct Option": "B",
+        "Explanation": "Flagella help in the movement (locomotion) of prokaryotic cells."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is the function of the nucleoid in prokaryotic cells?",
+        "Option A": "Storage of water",
+        "Option B": "Protein synthesis",
+        "Option C": "Genetic material storage",
+        "Option D": "Transport of nutrients",
+        "Correct Option": "C",
+        "Explanation": "The nucleoid stores the genetic material (DNA) in prokaryotic cells."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which of the following is found in the cytoplasm of prokaryotic cells?",
+        "Option A": "Nucleolus",
+        "Option B": "Ribosomes",
+        "Option C": "Mitochondria",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "B",
+        "Explanation": "Ribosomes are found in the cytoplasm of prokaryotes for protein synthesis."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which of the following best describes prokaryotic chromosomes?",
+        "Option A": "Linear and complex",
+        "Option B": "Circular and single",
+        "Option C": "Linear and multiple",
+        "Option D": "Circular and multiple",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic chromosomes are circular and typically exist as a single copy."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Prokaryotic cells lack which of the following structures?",
+        "Option A": "Cytoplasm",
+        "Option B": "Golgi apparatus",
+        "Option C": "Plasma membrane",
+        "Option D": "Ribosomes",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotes do not have a Golgi apparatus, unlike eukaryotes."
+    },
+    {
+        "Q.No": "17",
+        "Question": "The prokaryotic cell membrane is primarily composed of which substance?",
+        "Option A": "Lipid bilayer",
+        "Option B": "Protein layers",
+        "Option C": "Peptidoglycan",
+        "Option D": "Chitin",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotic cell membranes are made up of a lipid bilayer, similar to eukaryotes."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which of the following is a prokaryotic kingdom?",
+        "Option A": "Plantae",
+        "Option B": "Protista",
+        "Option C": "Eubacteria",
+        "Option D": "Animalia",
+        "Correct Option": "C",
+        "Explanation": "Eubacteria is one of the kingdoms of prokaryotes."
+    },
+    {
+        "Q.No": "19",
+        "Question": "The structure responsible for DNA transfer between prokaryotic cells is called?",
+        "Option A": "Capsule",
+        "Option B": "Plasmid",
+        "Option C": "Pili",
+        "Option D": "Flagella",
+        "Correct Option": "C",
+        "Explanation": "Pili are used by prokaryotes to transfer DNA during conjugation."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the shape of most prokaryotic chromosomes?",
+        "Option A": "Circular",
+        "Option B": "Oval",
+        "Option C": "Linear",
+        "Option D": "Rectangular",
+        "Correct Option": "A",
+        "Explanation": "Most prokaryotic chromosomes are circular in shape."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which of the following best describes the genetic material in prokaryotes?",
+        "Option A": "A large single chromosome",
+        "Option B": "Multiple linear chromosomes",
+        "Option C": "A single linear chromosome",
+        "Option D": "No genetic material",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotes typically have a single large, circular chromosome."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What structure is responsible for the motility of some prokaryotic cells?",
+        "Option A": "Cilia",
+        "Option B": "Flagella",
+        "Option C": "Pili",
+        "Option D": "Nucleoid",
+        "Correct Option": "B",
+        "Explanation": "Flagella are responsible for motility in some prokaryotic cells."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What kind of organisms are found in the kingdom Archaebacteria?",
+        "Option A": "Prokaryotic and extreme environment dwellers",
+        "Option B": "Prokaryotic and photosynthetic",
+        "Option C": "Eukaryotic and fungi",
+        "Option D": "Eukaryotic and multicellular",
+        "Correct Option": "A",
+        "Explanation": "Archaebacteria are prokaryotic organisms that thrive in extreme environments."
+    },
+    {
+        "Q.No": "24",
+        "Question": "The process in which prokaryotic cells exchange genetic material through pili is called?",
+        "Option A": "Binary fission",
+        "Option B": "Conjugation",
+        "Option C": "Budding",
+        "Option D": "Mitosis",
+        "Correct Option": "B",
+        "Explanation": "Conjugation is the process by which prokaryotic cells exchange genetic material via pili."
+    },
+    {
+        "Q.No": "25",
+        "Question": "In which environment are Archaebacteria commonly found?",
+        "Option A": "Salty lakes and hot springs",
+        "Option B": "Soil",
+        "Option C": "Oceans",
+        "Option D": "Freshwater lakes",
+        "Correct Option": "A",
+        "Explanation": "Archaebacteria are commonly found in extreme environments, such as salty lakes and hot springs."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which of the following is a type of prokaryotic cell wall composition?",
+        "Option A": "Chitin",
+        "Option B": "Cellulose",
+        "Option C": "Peptidoglycan",
+        "Option D": "Pectin",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotic cell walls are made of peptidoglycan, especially in bacteria."
+    },
+    {
+        "Q.No": "27",
+        "Question": "The process of binary fission in prokaryotes is similar to which process in eukaryotes?",
+        "Option A": "Mitosis",
+        "Option B": "Meiosis",
+        "Option C": "Cytokinesis",
+        "Option D": "Gamete formation",
+        "Correct Option": "A",
+        "Explanation": "Binary fission is similar to mitosis, but it occurs much simpler in prokaryotes."
+    },
+    {
+        "Q.No": "28",
+        "Question": "The ribosomes in prokaryotes are different from eukaryotic ribosomes in that they are?",
+        "Option A": "Larger in size",
+        "Option B": "Smaller in size",
+        "Option C": "More complex",
+        "Option D": "Made of different subunits",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic ribosomes are smaller (70S) compared to eukaryotic ribosomes (80S)."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is the function of the capsule in prokaryotic cells?",
+        "Option A": "Protects the cell and helps in adhesion",
+        "Option B": "Assists in photosynthesis",
+        "Option C": "Synthesizes proteins",
+        "Option D": "Stores genetic material",
+        "Correct Option": "A",
+        "Explanation": "The capsule protects the cell and helps in adhesion to surfaces."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following is a characteristic feature of prokaryotic flagella?",
+        "Option A": "Made of protein filaments",
+        "Option B": "Found only in bacteria",
+        "Option C": "Used for attachment",
+        "Option D": "Found in eukaryotes",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotic flagella are made of protein filaments and help in movement."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What type of cell division occurs in prokaryotic cells?",
+        "Option A": "Meiosis",
+        "Option B": "Mitosis",
+        "Option C": "Binary fission",
+        "Option D": "Budding",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotes divide by binary fission, not by mitosis or meiosis."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which of the following is an example of a prokaryotic organism?",
+        "Option A": "Yeast",
+        "Option B": "Bacterium",
+        "Option C": "Mushroom",
+        "Option D": "Protozoa",
+        "Correct Option": "B",
+        "Explanation": "Bacteria are prokaryotic organisms, unlike yeast or mushrooms."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which part of the prokaryotic cell stores genetic information?",
+        "Option A": "Nucleoid region",
+        "Option B": "Ribosomes",
+        "Option C": "Cytoplasm",
+        "Option D": "Plasma membrane",
+        "Correct Option": "A",
+        "Explanation": "The nucleoid region stores the genetic material in prokaryotic cells."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is the main difference between prokaryotes and eukaryotes?",
+        "Option A": "Prokaryotes lack a membrane-bound nucleus",
+        "Option B": "Eukaryotes lack ribosomes",
+        "Option C": "Prokaryotes have no cell membrane",
+        "Option D": "Eukaryotes are unicellular",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotes lack a membrane-bound nucleus, unlike eukaryotes."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which of the following structures is NOT found in prokaryotic cells?",
+        "Option A": "Plasma membrane",
+        "Option B": "Ribosomes",
+        "Option C": "Mitochondria",
+        "Option D": "Cytoplasm",
+        "Correct Option": "C",
+        "Explanation": "Mitochondria are absent in prokaryotic cells; they are found in eukaryotic cells."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the name of the protective outermost layer of some prokaryotes?",
+        "Option A": "Capsule",
+        "Option B": "Flagella",
+        "Option C": "Pili",
+        "Option D": "Nucleoid",
+        "Correct Option": "A",
+        "Explanation": "Some prokaryotes have a capsule that protects them from environmental stress."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which of the following is true about the DNA in prokaryotic cells?",
+        "Option A": "It is found in the nucleus",
+        "Option B": "It is linear",
+        "Option C": "It is circular",
+        "Option D": "It is contained in a membrane-bound vesicle",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotic DNA is typically circular and located in the nucleoid region."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which of the following features do prokaryotic cells lack?",
+        "Option A": "A plasma membrane",
+        "Option B": "A cytoskeleton",
+        "Option C": "Ribosomes",
+        "Option D": "Mitochondria",
+        "Correct Option": "D",
+        "Explanation": "Prokaryotes do not have mitochondria, unlike eukaryotic cells."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the role of pili in prokaryotic cells?",
+        "Option A": "To help in locomotion",
+        "Option B": "To help in DNA transfer",
+        "Option C": "To provide energy",
+        "Option D": "To produce proteins",
+        "Correct Option": "B",
+        "Explanation": "Pili help in DNA transfer between prokaryotic cells during conjugation."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following is an example of a prokaryotic cell?",
+        "Option A": "Plant cell",
+        "Option B": "Animal cell",
+        "Option C": "Bacterium",
+        "Option D": "Yeast cell",
+        "Correct Option": "C",
+        "Explanation": "Bacteria are classic examples of prokaryotic cells."
+    },
+    {
+        "Q.No": "41",
+        "Question": "How do prokaryotic cells obtain energy?",
+        "Option A": "Through photosynthesis only",
+        "Option B": "Through cellular respiration only",
+        "Option C": "They do not require energy",
+        "Option D": "Through various biochemical processes",
+        "Correct Option": "D",
+        "Explanation": "Prokaryotes can obtain energy through various processes like respiration and photosynthesis."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the function of the cell membrane in prokaryotic cells?",
+        "Option A": "To protect the cell from viruses",
+        "Option B": "To control the movement of substances in and out",
+        "Option C": "To store nutrients",
+        "Option D": "To produce energy",
+        "Correct Option": "B",
+        "Explanation": "The cell membrane controls the movement of substances in and out of the prokaryotic cell."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the term for the structure that surrounds the plasma membrane in some prokaryotic cells?",
+        "Option A": "Capsule",
+        "Option B": "Cytoplasm",
+        "Option C": "Nucleoid",
+        "Option D": "Endospore",
+        "Correct Option": "A",
+        "Explanation": "The capsule surrounds the plasma membrane and helps protect the cell."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which of the following processes do prokaryotic cells undergo to reproduce?",
+        "Option A": "Binary fission",
+        "Option B": "Meiosis",
+        "Option C": "Mitosis",
+        "Option D": "Budding",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotic cells reproduce by binary fission, a simple form of cell division."
+    },
+    {
+        "Q.No": "45",
+        "Question": "In what way is the flagella of prokaryotes different from those of eukaryotes?",
+        "Option A": "Prokaryotic flagella are much larger",
+        "Option B": "Prokaryotic flagella rotate, while eukaryotic flagella whip",
+        "Option C": "Prokaryotic flagella are not made of proteins",
+        "Option D": "Eukaryotic flagella have no function",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic flagella rotate, while eukaryotic flagella whip to move."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is the shape of the chromosomes in prokaryotes?",
+        "Option A": "Circular",
+        "Option B": "Linear",
+        "Option C": "Rod-shaped",
+        "Option D": "Oval",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotic chromosomes are typically circular."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which of the following is true about prokaryotic ribosomes?",
+        "Option A": "They are larger than eukaryotic ribosomes",
+        "Option B": "They are smaller than eukaryotic ribosomes",
+        "Option C": "They lack a subunit",
+        "Option D": "They are not involved in protein synthesis",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic ribosomes are smaller (70S) than those found in eukaryotes (80S)."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following structures is responsible for prokaryotic cell movement?",
+        "Option A": "Cilia",
+        "Option B": "Pili",
+        "Option C": "Flagella",
+        "Option D": "Cytoplasm",
+        "Correct Option": "C",
+        "Explanation": "Flagella are the structures responsible for movement in some prokaryotic cells."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is the primary role of prokaryotic ribosomes?",
+        "Option A": "Protein synthesis",
+        "Option B": "Energy production",
+        "Option C": "Genetic material storage",
+        "Option D": "DNA replication",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes in prokaryotic cells are responsible for protein synthesis."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What distinguishes the cell wall of archaebacteria from eubacteria?",
+        "Option A": "The presence of cellulose",
+        "Option B": "The presence of peptidoglycan",
+        "Option C": "The presence of pseudomurein",
+        "Option D": "The absence of any cell wall",
+        "Correct Option": "C",
+        "Explanation": "Archaebacteria cell walls contain pseudomurein, unlike eubacteria which have peptidoglycan."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which of the following prokaryotic cells can perform photosynthesis?",
+        "Option A": "Cyanobacteria",
+        "Option B": "Bacteria",
+        "Option C": "Archaebacteria",
+        "Option D": "E. coli",
+        "Correct Option": "A",
+        "Explanation": "Cyanobacteria are prokaryotes capable of photosynthesis."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is the term for the region in prokaryotic cells where the DNA is concentrated?",
+        "Option A": "Nucleus",
+        "Option B": "Cytoplasm",
+        "Option C": "Nucleoid",
+        "Option D": "Golgi body",
+        "Correct Option": "C",
+        "Explanation": "In prokaryotic cells, the nucleoid region contains the cell's genetic material."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following structures assists prokaryotic cells in exchanging genetic material?",
+        "Option A": "Capsule",
+        "Option B": "Flagella",
+        "Option C": "Plasmid",
+        "Option D": "Pili",
+        "Correct Option": "D",
+        "Explanation": "Pili are used for genetic material exchange during conjugation in prokaryotes."
+    },
+    {
+        "Q.No": "54",
+        "Question": "The DNA in prokaryotic cells is primarily found in which shape?",
+        "Option A": "Linear",
+        "Option B": "Circular",
+        "Option C": "Rod-shaped",
+        "Option D": "Spherical",
+        "Correct Option": "B",
+        "Explanation": "The DNA in prokaryotic cells is circular in shape, stored in the nucleoid region."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which type of prokaryotic cell can survive in extreme environments such as hot springs?",
+        "Option A": "Eubacteria",
+        "Option B": "Archaebacteria",
+        "Option C": "Cyanobacteria",
+        "Option D": "All prokaryotes",
+        "Correct Option": "B",
+        "Explanation": "Archaebacteria are known to survive in extreme environments."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the function of peptidoglycan in the prokaryotic cell wall?",
+        "Option A": "To provide structure and rigidity",
+        "Option B": "To help in motility",
+        "Option C": "To synthesize proteins",
+        "Option D": "To store energy",
+        "Correct Option": "A",
+        "Explanation": "Peptidoglycan provides structure and rigidity to the prokaryotic cell wall."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which of the following is NOT a characteristic of prokaryotes?",
+        "Option A": "No membrane-bound organelles",
+        "Option B": "A single chromosome",
+        "Option C": "A defined nucleus",
+        "Option D": "A simple structure",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotes lack a defined nucleus and have simpler cellular structures compared to eukaryotes."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which of the following best describes the genetic makeup of prokaryotic cells?",
+        "Option A": "Multiple chromosomes",
+        "Option B": "Circular DNA",
+        "Option C": "Linear DNA",
+        "Option D": "Linear and multiple chromosomes",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic cells typically have circular DNA, unlike eukaryotic cells with linear chromosomes."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which of the following processes does NOT occur in prokaryotic cells?",
+        "Option A": "Photosynthesis",
+        "Option B": "Cellular respiration",
+        "Option C": "DNA replication",
+        "Option D": "Meiosis",
+        "Correct Option": "D",
+        "Explanation": "Prokaryotes do not undergo meiosis; they reproduce through binary fission."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is the main structural difference between prokaryotic and eukaryotic cells?",
+        "Option A": "Prokaryotes have a nucleus",
+        "Option B": "Eukaryotes have a membrane-bound nucleus",
+        "Option C": "Prokaryotes lack ribosomes",
+        "Option D": "Eukaryotes have simpler structures",
+        "Correct Option": "B",
+        "Explanation": "The main difference is that eukaryotes have a membrane-bound nucleus, whereas prokaryotes do not."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the function of pili in prokaryotic cells?",
+        "Option A": "Motility",
+        "Option B": "Genetic transfer",
+        "Option C": "Energy production",
+        "Option D": "Protein synthesis",
+        "Correct Option": "B",
+        "Explanation": "Pili play a key role in genetic transfer between prokaryotic cells."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the function of the plasma membrane in prokaryotic cells?",
+        "Option A": "To synthesize proteins",
+        "Option B": "To control the movement of substances",
+        "Option C": "To store genetic information",
+        "Option D": "To protect from external toxins",
+        "Correct Option": "B",
+        "Explanation": "The plasma membrane controls the passage of substances in and out of the prokaryotic cell."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the structure that surrounds the plasma membrane in some prokaryotic cells?",
+        "Option A": "Capsule",
+        "Option B": "Flagella",
+        "Option C": "Cytoplasm",
+        "Option D": "Nucleoid",
+        "Correct Option": "A",
+        "Explanation": "The capsule surrounds the plasma membrane in some prokaryotic cells for protection."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Prokaryotic cells are typically smaller than eukaryotic cells. What is the average size range of prokaryotic cells?",
+        "Option A": "10-100 micrometers",
+        "Option B": "0.1-10 micrometers",
+        "Option C": "1-5 micrometers",
+        "Option D": "1-10 nanometers",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic cells typically range from 0.1 to 10 micrometers in size."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which of the following is a prokaryotic organism that can cause disease?",
+        "Option A": "Yeast",
+        "Option B": "Staphylococcus",
+        "Option C": "Fungi",
+        "Option D": "Algae",
+        "Correct Option": "B",
+        "Explanation": "Staphylococcus is a type of bacteria that can cause diseases in humans."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which of the following is NOT a prokaryotic feature?",
+        "Option A": "Simple structure",
+        "Option B": "Lack of membrane-bound organelles",
+        "Option C": "Circular chromosomes",
+        "Option D": "Presence of mitochondria",
+        "Correct Option": "D",
+        "Explanation": "Prokaryotes lack mitochondria, which are present in eukaryotic cells."
+    },
+    {
+        "Q.No": "67",
+        "Question": "How do prokaryotic cells obtain energy?",
+        "Option A": "Through cellular respiration or fermentation",
+        "Option B": "Through photosynthesis only",
+        "Option C": "Through the digestion of food",
+        "Option D": "Through sunlight absorption",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotic cells obtain energy through cellular respiration or fermentation."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the role of the cytoplasm in prokaryotic cells?",
+        "Option A": "It stores nutrients",
+        "Option B": "It aids in cell division",
+        "Option C": "It provides structure",
+        "Option D": "It is where cellular processes occur",
+        "Correct Option": "D",
+        "Explanation": "The cytoplasm is where most of the metabolic processes occur in prokaryotic cells."
+    },
+    {
+        "Q.No": "69",
+        "Question": "How do prokaryotic cells differ from eukaryotic cells in terms of organelles?",
+        "Option A": "Prokaryotes have more organelles",
+        "Option B": "Prokaryotes lack membrane-bound organelles",
+        "Option C": "Eukaryotes have fewer organelles",
+        "Option D": "Prokaryotes have a nucleus",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic cells lack membrane-bound organelles, unlike eukaryotic cells."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What type of prokaryotic cells are capable of nitrogen fixation?",
+        "Option A": "Cyanobacteria",
+        "Option B": "Eubacteria",
+        "Option C": "Archaebacteria",
+        "Option D": "All prokaryotes",
+        "Correct Option": "A",
+        "Explanation": "Cyanobacteria are capable of nitrogen fixation, an important process for the environment."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What structure in prokaryotic cells helps them attach to surfaces?",
+        "Option A": "Flagella",
+        "Option B": "Pili",
+        "Option C": "Capsule",
+        "Option D": "Cytoplasm",
+        "Correct Option": "C",
+        "Explanation": "The capsule helps prokaryotic cells attach to surfaces."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which of the following is a characteristic of eubacteria?",
+        "Option A": "They have a nucleus",
+        "Option B": "They are larger than archaebacteria",
+        "Option C": "They have a peptidoglycan cell wall",
+        "Option D": "They live only in extreme conditions",
+        "Correct Option": "C",
+        "Explanation": "Eubacteria have a peptidoglycan cell wall and are not restricted to extreme environments."
+    },
+    {
+        "Q.No": "73",
+        "Question": "How do prokaryotic cells regulate what enters or exits the cell?",
+        "Option A": "Through the cytoplasm",
+        "Option B": "Through the plasma membrane",
+        "Option C": "Through the cell wall",
+        "Option D": "Through the ribosomes",
+        "Correct Option": "B",
+        "Explanation": "The plasma membrane controls the movement of substances in and out of the prokaryotic cell."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What structure in prokaryotic cells helps in the exchange of genetic material?",
+        "Option A": "Flagella",
+        "Option B": "Pili",
+        "Option C": "Ribosomes",
+        "Option D": "Capsule",
+        "Correct Option": "B",
+        "Explanation": "Pili are involved in the exchange of genetic material in prokaryotic cells."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which of the following is the main function of the prokaryotic capsule?",
+        "Option A": "To help in energy production",
+        "Option B": "To assist in photosynthesis",
+        "Option C": "To protect against desiccation and phagocytosis",
+        "Option D": "To store nutrients",
+        "Correct Option": "C",
+        "Explanation": "The capsule protects prokaryotic cells from desiccation and helps avoid phagocytosis by the immune system."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the primary role of the prokaryotic plasma membrane?",
+        "Option A": "To store nutrients",
+        "Option B": "To protect the cell from viruses",
+        "Option C": "To control the movement of ions and molecules",
+        "Option D": "To help with energy production",
+        "Correct Option": "C",
+        "Explanation": "The plasma membrane controls the movement of ions, molecules, and nutrients in and out of the cell."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which of the following processes is involved in prokaryotic reproduction?",
+        "Option A": "Mitosis",
+        "Option B": "Binary fission",
+        "Option C": "Budding",
+        "Option D": "Meiosis",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic cells reproduce asexually through binary fission."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the significance of prokaryotic ribosomes being smaller than eukaryotic ribosomes?",
+        "Option A": "It allows them to divide faster",
+        "Option B": "It enables protein synthesis at a faster rate",
+        "Option C": "It makes them resistant to antibiotics",
+        "Option D": "It aids in more complex protein synthesis",
+        "Correct Option": "C",
+        "Explanation": "The smaller size of prokaryotic ribosomes allows certain antibiotics to target them."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which prokaryotic group is known for thriving in extreme environments?",
+        "Option A": "Archaebacteria",
+        "Option B": "Eubacteria",
+        "Option C": "Cyanobacteria",
+        "Option D": "All prokaryotes",
+        "Correct Option": "A",
+        "Explanation": "Archaebacteria are known for thriving in extreme environments such as hot springs and salty lakes."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is the function of the prokaryotic nucleoid region?",
+        "Option A": "To help in protein synthesis",
+        "Option B": "To store the genetic material",
+        "Option C": "To maintain cell shape",
+        "Option D": "To produce energy",
+        "Correct Option": "B",
+        "Explanation": "The nucleoid region stores the genetic material in prokaryotic cells."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which of the following is true about prokaryotic chromosomes?",
+        "Option A": "They are always circular",
+        "Option B": "They are always linear",
+        "Option C": "They exist in multiple copies",
+        "Option D": "They contain histones",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotic chromosomes are typically circular and exist as a single copy."
+    },
+    {
+        "Q.No": "82",
+        "Question": "How do prokaryotes benefit from their small cell size?",
+        "Option A": "They can produce more energy",
+        "Option B": "They can divide faster",
+        "Option C": "They can store more nutrients",
+        "Option D": "They can avoid oxygen",
+        "Correct Option": "B",
+        "Explanation": "The small size of prokaryotic cells allows them to divide rapidly."
+    },
+    {
+        "Q.No": "83",
+        "Question": "How do prokaryotic cells gain energy in the absence of oxygen?",
+        "Option A": "Photosynthesis",
+        "Option B": "Cellular respiration",
+        "Option C": "Fermentation",
+        "Option D": "Anaerobic respiration",
+        "Correct Option": "C",
+        "Explanation": "Some prokaryotic cells use fermentation to gain energy in the absence of oxygen."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the primary role of prokaryotic ribosomes?",
+        "Option A": "To help in energy production",
+        "Option B": "To synthesize proteins",
+        "Option C": "To replicate DNA",
+        "Option D": "To divide the cell",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic ribosomes are responsible for protein synthesis."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What structure in prokaryotic cells assists in motility?",
+        "Option A": "Pili",
+        "Option B": "Flagella",
+        "Option C": "Capsule",
+        "Option D": "Endospores",
+        "Correct Option": "B",
+        "Explanation": "Flagella are responsible for the motility of some prokaryotic cells."
+    },
+    {
+        "Q.No": "86",
+        "Question": "How do prokaryotes exchange genetic material with each other?",
+        "Option A": "Conjugation",
+        "Option B": "Mitosis",
+        "Option C": "Budding",
+        "Option D": "Binary fission",
+        "Correct Option": "A",
+        "Explanation": "Prokaryotes exchange genetic material through conjugation using pili."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is one way prokaryotes can survive in harsh conditions?",
+        "Option A": "By creating a capsule",
+        "Option B": "By producing spores",
+        "Option C": "By increasing their ribosomes",
+        "Option D": "By dividing rapidly",
+        "Correct Option": "B",
+        "Explanation": "Some prokaryotes produce spores to survive in harsh conditions."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the function of the prokaryotic cell wall?",
+        "Option A": "To aid in protein synthesis",
+        "Option B": "To provide structural support and protection",
+        "Option C": "To synthesize energy",
+        "Option D": "To produce genetic material",
+        "Correct Option": "B",
+        "Explanation": "The cell wall in prokaryotes provides structural support and protection."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What type of prokaryotic cell wall composition is found in gram-negative bacteria?",
+        "Option A": "Pseudomurein",
+        "Option B": "Peptidoglycan",
+        "Option C": "Cellulose",
+        "Option D": "Chitin",
+        "Correct Option": "B",
+        "Explanation": "Gram-negative bacteria have a peptidoglycan cell wall surrounded by an outer membrane."
+    },
+    {
+        "Q.No": "90",
+        "Question": "How are prokaryotic cells different from eukaryotic cells in terms of DNA storage?",
+        "Option A": "Eukaryotic DNA is circular",
+        "Option B": "Eukaryotic DNA is stored in the nucleus",
+        "Option C": "Prokaryotic DNA lacks histones",
+        "Option D": "Prokaryotic DNA is linear",
+        "Correct Option": "B",
+        "Explanation": "Eukaryotic cells store their DNA in the nucleus, while prokaryotes store it in the nucleoid region."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which prokaryotic cell structure assists in the attachment to surfaces?",
+        "Option A": "Flagella",
+        "Option B": "Pili",
+        "Option C": "Capsule",
+        "Option D": "Cytoplasm",
+        "Correct Option": "C",
+        "Explanation": "The capsule helps prokaryotes attach to surfaces."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which prokaryotic group can photosynthesize?",
+        "Option A": "Eubacteria",
+        "Option B": "Cyanobacteria",
+        "Option C": "Archaebacteria",
+        "Option D": "All of the above",
+        "Correct Option": "B",
+        "Explanation": "Cyanobacteria are capable of photosynthesis among prokaryotic organisms."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which of the following best describes the structure of prokaryotic ribosomes?",
+        "Option A": "Larger and more complex",
+        "Option B": "Smaller and less complex",
+        "Option C": "Identical to eukaryotic ribosomes",
+        "Option D": "Not present in prokaryotes",
+        "Correct Option": "B",
+        "Explanation": "Prokaryotic ribosomes are smaller (70S) than eukaryotic ribosomes (80S)."
+    },
+    {
+        "Q.No": "94",
+        "Question": "How do prokaryotic cells contribute to the nitrogen cycle?",
+        "Option A": "By producing oxygen",
+        "Option B": "By performing nitrogen fixation",
+        "Option C": "By consuming oxygen",
+        "Option D": "By producing methane",
+        "Correct Option": "B",
+        "Explanation": "Some prokaryotes fix nitrogen, converting atmospheric nitrogen into usable forms for plants."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which prokaryotic group is responsible for methane production?",
+        "Option A": "Archaebacteria",
+        "Option B": "Eubacteria",
+        "Option C": "Cyanobacteria",
+        "Option D": "Algae",
+        "Correct Option": "A",
+        "Explanation": "Methanogens, a type of archaebacteria, are responsible for methane production."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which of the following is the simplest form of prokaryotic cell division?",
+        "Option A": "Binary fission",
+        "Option B": "Budding",
+        "Option C": "Mitosis",
+        "Option D": "Meiosis",
+        "Correct Option": "A",
+        "Explanation": "Binary fission is the simplest form of prokaryotic cell division."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is one function of the prokaryotic cytoplasm?",
+        "Option A": "To store the genetic material",
+        "Option B": "To carry out metabolic reactions",
+        "Option C": "To synthesize proteins",
+        "Option D": "To provide structural support",
+        "Correct Option": "B",
+        "Explanation": "The cytoplasm carries out the majority of metabolic reactions in prokaryotic cells."
+    },
+    {
+        "Q.No": "98",
+        "Question": "How does the lack of organelles in prokaryotes affect their function?",
+        "Option A": "It limits their ability to store nutrients",
+        "Option B": "It simplifies their cellular structure and function",
+        "Option C": "It allows them to specialize",
+        "Option D": "It helps them perform complex tasks",
+        "Correct Option": "B",
+        "Explanation": "The lack of organelles simplifies the structure and allows for more straightforward functions in prokaryotes."
+    },
+    {
+        "Q.No": "99",
+        "Question": "How does the small size of prokaryotic cells benefit them?",
+        "Option A": "It allows them to divide rapidly",
+        "Option B": "It allows them to store more nutrients",
+        "Option C": "It makes them more resistant to stress",
+        "Option D": "It helps them survive in low-oxygen conditions",
+        "Correct Option": "A",
+        "Explanation": "The small size of prokaryotic cells enables them to divide rapidly, increasing their population quickly."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
