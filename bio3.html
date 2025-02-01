@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "The monomer unit of proteins is",
+        "Option A": "Amino acids",
+        "Option B": "Nucleotides",
+        "Option C": "Fatty acids",
+        "Option D": "Monosaccharides",
+        "Correct Option": "A",
+        "Explanation": "Amino acids are the building blocks of proteins."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is a polysaccharide?",
+        "Option A": "Glucose",
+        "Option B": "Sucrose",
+        "Option C": "Starch",
+        "Option D": "Fructose",
+        "Correct Option": "C",
+        "Explanation": "Starch is a polysaccharide made of glucose units."
+    },
+    {
+        "Q.No": "3",
+        "Question": "The building blocks of nucleic acids are",
+        "Option A": "Amino acids",
+        "Option B": "Fatty acids",
+        "Option C": "Nucleotides",
+        "Option D": "Sugars",
+        "Correct Option": "C",
+        "Explanation": "Nucleic acids are made up of nucleotides."
+    },
+    {
+        "Q.No": "4",
+        "Question": "The process by which a protein is synthesized from an mRNA template is called",
+        "Option A": "Replication",
+        "Option B": "Translation",
+        "Option C": "Transcription",
+        "Option D": "Mutation",
+        "Correct Option": "B",
+        "Explanation": "Translation is the synthesis of proteins from mRNA."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following is NOT a component of a nucleotide?",
+        "Option A": "Phosphate group",
+        "Option B": "Sugar",
+        "Option C": "Amino acid",
+        "Option D": "Nitrogenous base",
+        "Correct Option": "C",
+        "Explanation": "Nucleotides consist of a phosphate group, sugar, and nitrogenous base."
+    },
+    {
+        "Q.No": "6",
+        "Question": "The primary function of lipids is to",
+        "Option A": "Store genetic information",
+        "Option B": "Store energy",
+        "Option C": "Catalyze reactions",
+        "Option D": "Provide structure to cells",
+        "Correct Option": "B",
+        "Explanation": "Lipids primarily serve as energy storage molecules."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which type of bond forms between amino acids in proteins?",
+        "Option A": "Ionic bond",
+        "Option B": "Hydrogen bond",
+        "Option C": "Peptide bond",
+        "Option D": "Disulfide bond",
+        "Correct Option": "C",
+        "Explanation": "A peptide bond forms between amino acids."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following is a major component of the cell membrane?",
+        "Option A": "Carbohydrates",
+        "Option B": "Proteins",
+        "Option C": "Phospholipids",
+        "Option D": "Nucleotides",
+        "Correct Option": "C",
+        "Explanation": "Phospholipids form the bilayer structure of cell membranes."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which macromolecule is primarily responsible for catalyzing biochemical reactions?",
+        "Option A": "Carbohydrates",
+        "Option B": "Proteins",
+        "Option C": "Lipids",
+        "Option D": "Nucleic acids",
+        "Correct Option": "B",
+        "Explanation": "Enzymes, which are proteins, catalyze biochemical reactions."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which of the following is a simple sugar?",
+        "Option A": "Sucrose",
+        "Option B": "Glucose",
+        "Option C": "Starch",
+        "Option D": "Glycogen",
+        "Correct Option": "B",
+        "Explanation": "Glucose is a monosaccharide, or simple sugar."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What type of molecule is DNA?",
+        "Option A": "Carbohydrate",
+        "Option B": "Protein",
+        "Option C": "Lipid",
+        "Option D": "Nucleic acid",
+        "Correct Option": "D",
+        "Explanation": "DNA is a type of nucleic acid."
+    },
+    {
+        "Q.No": "12",
+        "Question": "The structural component of plant cell walls is",
+        "Option A": "Cellulose",
+        "Option B": "Glycogen",
+        "Option C": "Chitin",
+        "Option D": "Starch",
+        "Correct Option": "A",
+        "Explanation": "Cellulose is the main structural component of plant cell walls."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which molecule is an example of a disaccharide?",
+        "Option A": "Glucose",
+        "Option B": "Sucrose",
+        "Option C": "Fructose",
+        "Option D": "Starch",
+        "Correct Option": "B",
+        "Explanation": "Sucrose is a disaccharide made of glucose and fructose."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which of the following is a function of nucleic acids?",
+        "Option A": "Energy storage",
+        "Option B": "Genetic information storage",
+        "Option C": "Catalyzing reactions",
+        "Option D": "Insulation",
+        "Correct Option": "B",
+        "Explanation": "Nucleic acids store and transmit genetic information."
+    },
+    {
+        "Q.No": "15",
+        "Question": "The secondary structure of proteins refers to",
+        "Option A": "The sequence of amino acids",
+        "Option B": "The 3D folding pattern",
+        "Option C": "The formation of alpha-helices and beta-pleated sheets",
+        "Option D": "The overall shape of the protein",
+        "Correct Option": "C",
+        "Explanation": "The secondary structure involves folding into alpha-helices and beta-pleated sheets."
+    },
+    {
+        "Q.No": "16",
+        "Question": "A phospholipid has a hydrophilic head and hydrophobic tails. What does this property help with?",
+        "Option A": "Enzyme function",
+        "Option B": "DNA replication",
+        "Option C": "Membrane formation",
+        "Option D": "Protein synthesis",
+        "Correct Option": "C",
+        "Explanation": "The amphipathic nature of phospholipids forms the cell membrane."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which of the following is a characteristic of all enzymes?",
+        "Option A": "They are proteins",
+        "Option B": "They increase activation energy",
+        "Option C": "They are consumed in reactions",
+        "Option D": "They change the equilibrium of a reaction",
+        "Correct Option": "A",
+        "Explanation": "Enzymes are proteins that catalyze reactions without being consumed."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which of the following is a lipid?",
+        "Option A": "Glucose",
+        "Option B": "Phospholipid",
+        "Option C": "RNA",
+        "Option D": "Insulin",
+        "Correct Option": "B",
+        "Explanation": "Phospholipids are a type of lipid."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which component of nucleotides varies between different nucleic acids?",
+        "Option A": "Nitrogenous base",
+        "Option B": "Phosphate group",
+        "Option C": "Sugar",
+        "Option D": "Ribosome",
+        "Correct Option": "A",
+        "Explanation": "The nitrogenous base distinguishes DNA from RNA and various other nucleic acids."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the primary function of carbohydrates in the body?",
+        "Option A": "Provide genetic information",
+        "Option B": "Provide long-term energy storage",
+        "Option C": "Serve as structural components",
+        "Option D": "Provide quick energy",
+        "Correct Option": "D",
+        "Explanation": "Carbohydrates, especially glucose, provide quick energy."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which of the following molecules contains a sugar-phosphate backbone?",
+        "Option A": "Proteins",
+        "Option B": "Nucleic acids",
+        "Option C": "Lipids",
+        "Option D": "Carbohydrates",
+        "Correct Option": "B",
+        "Explanation": "Nucleic acids, such as DNA and RNA, contain a sugar-phosphate backbone."
+    },
+    {
+        "Q.No": "22",
+        "Question": "The sequence of amino acids in a protein determines its",
+        "Option A": "Primary structure",
+        "Option B": "Secondary structure",
+        "Option C": "Tertiary structure",
+        "Option D": "Quaternary structure",
+        "Correct Option": "A",
+        "Explanation": "The primary structure is the specific sequence of amino acids in a protein."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following is an example of a storage carbohydrate in animals?",
+        "Option A": "Starch",
+        "Option B": "Cellulose",
+        "Option C": "Glycogen",
+        "Option D": "Chitin",
+        "Correct Option": "C",
+        "Explanation": "Glycogen is the storage form of glucose in animals."
+    },
+    {
+        "Q.No": "24",
+        "Question": "The quaternary structure of a protein refers to",
+        "Option A": "The sequence of amino acids",
+        "Option B": "The folding of polypeptides into 3D shapes",
+        "Option C": "The interaction of multiple polypeptide chains",
+        "Option D": "The formation of alpha-helices",
+        "Correct Option": "C",
+        "Explanation": "The quaternary structure involves the interaction of multiple polypeptide chains."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which of the following is a component of RNA but not DNA?",
+        "Option A": "Uracil",
+        "Option B": "Thymine",
+        "Option C": "Adenine",
+        "Option D": "Cytosine",
+        "Correct Option": "A",
+        "Explanation": "RNA contains uracil, while DNA contains thymine."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What type of bond holds the two strands of DNA together?",
+        "Option A": "Ionic bond",
+        "Option B": "Hydrogen bond",
+        "Option C": "Covalent bond",
+        "Option D": "Peptide bond",
+        "Correct Option": "B",
+        "Explanation": "Hydrogen bonds hold complementary base pairs together in DNA."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which of the following is the main function of ribosomes?",
+        "Option A": "DNA replication",
+        "Option B": "Protein synthesis",
+        "Option C": "Energy production",
+        "Option D": "Lipid synthesis",
+        "Correct Option": "B",
+        "Explanation": "Ribosomes are responsible for protein synthesis."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What type of molecule is a steroid?",
+        "Option A": "Carbohydrate",
+        "Option B": "Lipid",
+        "Option C": "Protein",
+        "Option D": "Nucleic acid",
+        "Correct Option": "B",
+        "Explanation": "Steroids are a type of lipid molecule."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is the main function of triglycerides?",
+        "Option A": "Store genetic information",
+        "Option B": "Provide energy storage",
+        "Option C": "Catalyze biochemical reactions",
+        "Option D": "Build cell structures",
+        "Correct Option": "B",
+        "Explanation": "Triglycerides are the primary form of energy storage in animals."
+    },
+    {
+        "Q.No": "30",
+        "Question": "The structure of RNA is similar to that of DNA, but RNA has",
+        "Option A": "Deoxyribose sugar",
+        "Option B": "Thymine as a base",
+        "Option C": "A single-stranded structure",
+        "Option D": "A double-stranded helix",
+        "Correct Option": "C",
+        "Explanation": "RNA is single-stranded, unlike DNA."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is a function of cholesterol in cell membranes?",
+        "Option A": "Act as a storage molecule",
+        "Option B": "Provide energy for cells",
+        "Option C": "Maintain membrane fluidity",
+        "Option D": "Synthesize proteins",
+        "Correct Option": "C",
+        "Explanation": "Cholesterol helps maintain the fluidity of cell membranes."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which type of RNA carries the genetic code from DNA to the ribosome?",
+        "Option A": "tRNA",
+        "Option B": "mRNA",
+        "Option C": "rRNA",
+        "Option D": "snRNA",
+        "Correct Option": "B",
+        "Explanation": "mRNA carries the genetic code from DNA to the ribosome for protein synthesis."
+    },
+    {
+        "Q.No": "33",
+        "Question": "The monosaccharide glucose is a product of",
+        "Option A": "Protein synthesis",
+        "Option B": "Photosynthesis",
+        "Option C": "Glycogen breakdown",
+        "Option D": "Fatty acid synthesis",
+        "Correct Option": "B",
+        "Explanation": "Glucose is a product of photosynthesis in plants."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which of the following is the most abundant type of lipid in cell membranes?",
+        "Option A": "Phospholipids",
+        "Option B": "Steroids",
+        "Option C": "Triglycerides",
+        "Option D": "Waxes",
+        "Correct Option": "A",
+        "Explanation": "Phospholipids are the major component of cell membranes."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which structure of a protein determines its function?",
+        "Option A": "Primary structure",
+        "Option B": "Secondary structure",
+        "Option C": "Tertiary structure",
+        "Option D": "Quaternary structure",
+        "Correct Option": "C",
+        "Explanation": "The 3D shape of a protein (tertiary structure) is essential for its function."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which of the following is the simplest type of carbohydrate?",
+        "Option A": "Monosaccharide",
+        "Option B": "Disaccharide",
+        "Option C": "Polysaccharide",
+        "Option D": "Glycogen",
+        "Correct Option": "A",
+        "Explanation": "Monosaccharides are simple sugars like glucose."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is the primary function of enzymes?",
+        "Option A": "Store energy",
+        "Option B": "Speed up chemical reactions",
+        "Option C": "Transport molecules",
+        "Option D": "Provide structural support",
+        "Correct Option": "B",
+        "Explanation": "Enzymes act as catalysts to speed up chemical reactions."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What are the monomers of nucleic acids?",
+        "Option A": "Amino acids",
+        "Option B": "Nucleotides",
+        "Option C": "Fatty acids",
+        "Option D": "Monosaccharides",
+        "Correct Option": "B",
+        "Explanation": "Nucleotides are the monomers of nucleic acids."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which of the following is the major energy carrier in cells?",
+        "Option A": "ATP",
+        "Option B": "NADH",
+        "Option C": "FADH2",
+        "Option D": "GTP",
+        "Correct Option": "A",
+        "Explanation": "ATP is the main energy carrier molecule in cells."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is the function of the enzyme amylase?",
+        "Option A": "Break down proteins",
+        "Option B": "Break down lipids",
+        "Option C": "Break down carbohydrates",
+        "Option D": "Break down nucleic acids",
+        "Correct Option": "C",
+        "Explanation": "Amylase is an enzyme that breaks down carbohydrates (starch)."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which molecule is formed when a peptide bond is broken?",
+        "Option A": "Amino acid",
+        "Option B": "Protein",
+        "Option C": "Nucleotide",
+        "Option D": "Fatty acid",
+        "Correct Option": "A",
+        "Explanation": "Breaking a peptide bond releases amino acids."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which of the following is a disaccharide?",
+        "Option A": "Glucose",
+        "Option B": "Sucrose",
+        "Option C": "Starch",
+        "Option D": "Fructose",
+        "Correct Option": "B",
+        "Explanation": "Sucrose is a disaccharide composed of glucose and fructose."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which of the following is a function of lipids in the body?",
+        "Option A": "Store genetic information",
+        "Option B": "Provide energy storage",
+        "Option C": "Act as a catalyst",
+        "Option D": "Help in protein synthesis",
+        "Correct Option": "B",
+        "Explanation": "Lipids store energy in the body, particularly in adipose tissue."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which element is a major component of proteins?",
+        "Option A": "Carbon",
+        "Option B": "Hydrogen",
+        "Option C": "Nitrogen",
+        "Option D": "Oxygen",
+        "Correct Option": "C",
+        "Explanation": "Nitrogen is a key component of amino acids and proteins."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is the role of ribosomal RNA (rRNA)?",
+        "Option A": "Translates mRNA into protein",
+        "Option B": "Synthesizes mRNA",
+        "Option C": "Makes up the structure of ribosomes",
+        "Option D": "Carries amino acids to the ribosome",
+        "Correct Option": "C",
+        "Explanation": "rRNA forms the structural component of ribosomes."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which molecule is used for long-term energy storage in plants?",
+        "Option A": "Glucose",
+        "Option B": "Fructose",
+        "Option C": "Starch",
+        "Option D": "Glycogen",
+        "Correct Option": "C",
+        "Explanation": "Starch is the energy storage molecule in plants."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which is a characteristic feature of enzymes?",
+        "Option A": "They are consumed in reactions",
+        "Option B": "They lower activation energy",
+        "Option C": "They increase the activation energy",
+        "Option D": "They do not affect reaction rates",
+        "Correct Option": "B",
+        "Explanation": "Enzymes lower the activation energy of biochemical reactions."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is the function of transfer RNA (tRNA)?",
+        "Option A": "Carry amino acids to the ribosome",
+        "Option B": "Transcribe DNA into RNA",
+        "Option C": "Act as a catalyst",
+        "Option D": "Break down carbohydrates",
+        "Correct Option": "A",
+        "Explanation": "tRNA transports amino acids to the ribosome for protein synthesis."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which of the following best describes a phospholipid?",
+        "Option A": "A hydrophilic molecule",
+        "Option B": "A hydrophobic molecule",
+        "Option C": "A molecule with both hydrophilic and hydrophobic parts",
+        "Option D": "A polar molecule",
+        "Correct Option": "C",
+        "Explanation": "Phospholipids have hydrophobic tails and hydrophilic heads."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which of the following is NOT a function of proteins?",
+        "Option A": "Enzyme catalysis",
+        "Option B": "Immune defense",
+        "Option C": "Energy storage",
+        "Option D": "Structural support",
+        "Correct Option": "C",
+        "Explanation": "Proteins serve in catalysis, defense, and structure, but not primarily in energy storage."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which of the following is true about an enzyme-substrate complex?",
+        "Option A": "The enzyme is altered during the reaction",
+        "Option B": "It slows down the reaction",
+        "Option C": "It is unstable and quickly dissociates",
+        "Option D": "The substrate is unchanged",
+        "Correct Option": "C",
+        "Explanation": "The enzyme-substrate complex is transient and quickly dissociates after the reaction."
+    },
+    {
+        "Q.No": "52",
+        "Question": "The primary source of energy in cells comes from the breakdown of which molecule?",
+        "Option A": "Protein",
+        "Option B": "Lipids",
+        "Option C": "Carbohydrates",
+        "Option D": "Nucleic acids",
+        "Correct Option": "C",
+        "Explanation": "Carbohydrates are the primary energy source in most cells."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is the function of chitin in animals?",
+        "Option A": "Energy storage",
+        "Option B": "Structural support in exoskeletons",
+        "Option C": "Catalyze reactions",
+        "Option D": "Insulation",
+        "Correct Option": "B",
+        "Explanation": "Chitin provides structural support, particularly in the exoskeletons of arthropods."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which of the following is NOT a feature of RNA?",
+        "Option A": "Contains ribose sugar",
+        "Option B": "Contains uracil",
+        "Option C": "Double-stranded",
+        "Option D": "Single-stranded",
+        "Correct Option": "C",
+        "Explanation": "RNA is usually single-stranded and contains ribose sugar and uracil instead of thymine."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the function of phospholipids in cell membranes?",
+        "Option A": "Transport molecules across the membrane",
+        "Option B": "Store energy",
+        "Option C": "Provide structural support",
+        "Option D": "Form the bilayer structure",
+        "Correct Option": "D",
+        "Explanation": "Phospholipids form the bilayer structure of the cell membrane, which is crucial for its function."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which of the following is a function of the carbohydrate glycogen in animals?",
+        "Option A": "Energy storage",
+        "Option B": "Structural support",
+        "Option C": "Immune response",
+        "Option D": "Hormone regulation",
+        "Correct Option": "A",
+        "Explanation": "Glycogen is the primary storage form of glucose in animals, mainly found in the liver and muscles."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which of the following is a nitrogenous base found in RNA but not in DNA?",
+        "Option A": "Thymine",
+        "Option B": "Cytosine",
+        "Option C": "Adenine",
+        "Option D": "Uracil",
+        "Correct Option": "D",
+        "Explanation": "Uracil is found in RNA, whereas thymine is found in DNA."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What type of bond forms between the hydroxyl group of one sugar and the anomeric carbon of another sugar in a disaccharide?",
+        "Option A": "Ionic bond",
+        "Option B": "Hydrogen bond",
+        "Option C": "Covalent bond",
+        "Option D": "Peptide bond",
+        "Correct Option": "C",
+        "Explanation": "The bond between sugars in a disaccharide is a covalent bond called a glycosidic bond."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which of the following is an example of an essential amino acid?",
+        "Option A": "Glycine",
+        "Option B": "Alanine",
+        "Option C": "Tryptophan",
+        "Option D": "Serine",
+        "Correct Option": "C",
+        "Explanation": "Tryptophan is an essential amino acid, meaning it must be obtained from the diet."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which of the following biomolecules is primarily involved in genetic information transfer?",
+        "Option A": "Carbohydrates",
+        "Option B": "Proteins",
+        "Option C": "Nucleic acids",
+        "Option D": "Lipids",
+        "Correct Option": "C",
+        "Explanation": "Nucleic acids, such as DNA and RNA, are primarily responsible for genetic information transfer."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the name of the bond formed between the carboxyl group of one amino acid and the amino group of another?",
+        "Option A": "Peptide bond",
+        "Option B": "Hydrogen bond",
+        "Option C": "Glycosidic bond",
+        "Option D": "Disulfide bond",
+        "Correct Option": "A",
+        "Explanation": "A peptide bond forms between the carboxyl group of one amino acid and the amino group of another."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which of the following lipids are essential components of the plasma membrane?",
+        "Option A": "Triglycerides",
+        "Option B": "Phospholipids",
+        "Option C": "Steroids",
+        "Option D": "Waxes",
+        "Correct Option": "B",
+        "Explanation": "Phospholipids are essential components of the plasma membrane, forming its bilayer."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which process is responsible for the formation of proteins from mRNA?",
+        "Option A": "Replication",
+        "Option B": "Transcription",
+        "Option C": "Translation",
+        "Option D": "Transformation",
+        "Correct Option": "C",
+        "Explanation": "Translation is the process in which proteins are synthesized from mRNA."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which of the following molecules is a product of cellular respiration?",
+        "Option A": "Glucose",
+        "Option B": "Oxygen",
+        "Option C": "ATP",
+        "Option D": "NADH",
+        "Correct Option": "C",
+        "Explanation": "ATP is the main product of cellular respiration, providing energy to the cell."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which of the following proteins is involved in the defense of the body against pathogens?",
+        "Option A": "Hemoglobin",
+        "Option B": "Antibodies",
+        "Option C": "Collagen",
+        "Option D": "Enzymes",
+        "Correct Option": "B",
+        "Explanation": "Antibodies are proteins that help the immune system defend against pathogens."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which molecule stores the genetic instructions for the development and functioning of living organisms?",
+        "Option A": "Proteins",
+        "Option B": "Nucleic acids",
+        "Option C": "Carbohydrates",
+        "Option D": "Lipids",
+        "Correct Option": "B",
+        "Explanation": "Nucleic acids, specifically DNA, store genetic instructions."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which of the following types of proteins are responsible for muscle contraction?",
+        "Option A": "Transport proteins",
+        "Option B": "Structural proteins",
+        "Option C": "Enzymes",
+        "Option D": "Motor proteins",
+        "Correct Option": "D",
+        "Explanation": "Motor proteins like actin and myosin are responsible for muscle contraction."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the name of the process where DNA is copied into RNA?",
+        "Option A": "Replication",
+        "Option B": "Transcription",
+        "Option C": "Translation",
+        "Option D": "Reverse transcription",
+        "Correct Option": "B",
+        "Explanation": "Transcription is the process where DNA is copied into RNA."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which of the following is an example of a protein's tertiary structure?",
+        "Option A": "Amino acid sequence",
+        "Option B": "Alpha helix",
+        "Option C": "Beta-pleated sheet",
+        "Option D": "3D folded structure",
+        "Correct Option": "D",
+        "Explanation": "The tertiary structure refers to the three-dimensional folding of a protein."
+    },
+    {
+        "Q.No": "70",
+        "Question": "The main role of ATP in cells is to",
+        "Option A": "Store genetic information",
+        "Option B": "Provide energy for cellular activities",
+        "Option C": "Act as a structural component of the cell",
+        "Option D": "Carry out protein synthesis",
+        "Correct Option": "B",
+        "Explanation": "ATP provides the energy needed for most cellular activities."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What type of bond holds the double helix of DNA together?",
+        "Option A": "Ionic bond",
+        "Option B": "Covalent bond",
+        "Option C": "Hydrogen bond",
+        "Option D": "Peptide bond",
+        "Correct Option": "C",
+        "Explanation": "Hydrogen bonds hold the complementary nitrogenous bases together in the double helix."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which biomolecule is primarily used for short-term energy storage in animals?",
+        "Option A": "Starch",
+        "Option B": "Glycogen",
+        "Option C": "Proteins",
+        "Option D": "Lipids",
+        "Correct Option": "B",
+        "Explanation": "Glycogen is used by animals for short-term energy storage."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the difference between saturated and unsaturated fatty acids?",
+        "Option A": "Saturated fatty acids have one double bond",
+        "Option B": "Saturated fatty acids are liquid at room temperature",
+        "Option C": "Unsaturated fatty acids have no double bonds",
+        "Option D": "Unsaturated fatty acids are solid at room temperature",
+        "Correct Option": "A",
+        "Explanation": "Saturated fatty acids have no double bonds, while unsaturated fatty acids have at least one double bond."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which of the following macromolecules plays a major role in energy storage in plants?",
+        "Option A": "Proteins",
+        "Option B": "Lipids",
+        "Option C": "Carbohydrates",
+        "Option D": "Nucleic acids",
+        "Correct Option": "C",
+        "Explanation": "Carbohydrates, especially starch, are the primary energy storage molecules in plants."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which of the following is NOT a polymer?",
+        "Option A": "Proteins",
+        "Option B": "Nucleic acids",
+        "Option C": "Glucose",
+        "Option D": "Polysaccharides",
+        "Correct Option": "C",
+        "Explanation": "Glucose is a monosaccharide, not a polymer."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which biomolecule is involved in providing the instructions for the synthesis of proteins?",
+        "Option A": "Nucleic acids",
+        "Option B": "Proteins",
+        "Option C": "Carbohydrates",
+        "Option D": "Lipids",
+        "Correct Option": "A",
+        "Explanation": "Nucleic acids, particularly mRNA, provide the instructions for protein synthesis."
+    },
+    {
+        "Q.No": "77",
+        "Question": "The basic structural unit of a phospholipid is composed of",
+        "Option A": "Two fatty acids, a glycerol backbone, and a phosphate group",
+        "Option B": "One fatty acid and a glucose backbone",
+        "Option C": "One glycerol molecule and three phosphate groups",
+        "Option D": "Two sugar molecules and a nitrogenous base",
+        "Correct Option": "A",
+        "Explanation": "A phospholipid consists of two fatty acids, a glycerol backbone, and a phosphate group."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the main function of cellulose in plants?",
+        "Option A": "Energy storage",
+        "Option B": "Structural support",
+        "Option C": "Hormonal regulation",
+        "Option D": "Enzyme activity",
+        "Correct Option": "B",
+        "Explanation": "Cellulose provides structural support in plant cell walls."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following is an example of a purine base in nucleic acids?",
+        "Option A": "Thymine",
+        "Option B": "Cytosine",
+        "Option C": "Adenine",
+        "Option D": "Uracil",
+        "Correct Option": "C",
+        "Explanation": "Adenine is a purine base found in both DNA and RNA."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which type of protein is responsible for the immune response by identifying and neutralizing foreign objects?",
+        "Option A": "Receptor proteins",
+        "Option B": "Transport proteins",
+        "Option C": "Antibodies",
+        "Option D": "Structural proteins",
+        "Correct Option": "C",
+        "Explanation": "Antibodies are proteins that identify and neutralize foreign objects such as pathogens."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which of the following is a function of the sugar phosphate backbone in nucleic acids?",
+        "Option A": "Store genetic information",
+        "Option B": "Provide structural stability",
+        "Option C": "Catalyze chemical reactions",
+        "Option D": "Act as a messenger molecule",
+        "Correct Option": "B",
+        "Explanation": "The sugar-phosphate backbone provides structural stability to the DNA or RNA molecule."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which of the following is a characteristic of enzymes?",
+        "Option A": "They increase the activation energy of reactions",
+        "Option B": "They are proteins that act as catalysts",
+        "Option C": "They can only work at low temperatures",
+        "Option D": "They are destroyed after catalyzing a reaction",
+        "Correct Option": "B",
+        "Explanation": "Enzymes are proteins that speed up chemical reactions by lowering the activation energy."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is the role of RNA polymerase in transcription?",
+        "Option A": "To unwind the DNA double helix",
+        "Option B": "To synthesize mRNA from a DNA template",
+        "Option C": "To carry amino acids to the ribosome",
+        "Option D": "To assemble ribosomal subunits",
+        "Correct Option": "B",
+        "Explanation": "RNA polymerase synthesizes mRNA from the DNA template during transcription."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following is the main function of triglycerides?",
+        "Option A": "Store genetic information",
+        "Option B": "Provide energy and insulation",
+        "Option C": "Act as structural components in cells",
+        "Option D": "Serve as signaling molecules",
+        "Correct Option": "B",
+        "Explanation": "Triglycerides store energy and provide insulation in animals."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which type of chemical bond holds the two strands of a double-stranded DNA molecule together?",
+        "Option A": "Peptide bond",
+        "Option B": "Disulfide bond",
+        "Option C": "Hydrogen bond",
+        "Option D": "Ionic bond",
+        "Correct Option": "C",
+        "Explanation": "Hydrogen bonds between nitrogenous bases hold the two strands of DNA together."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which of the following molecules is composed of a long chain of fatty acids?",
+        "Option A": "Phospholipids",
+        "Option B": "Triglycerides",
+        "Option C": "Proteins",
+        "Option D": "Carbohydrates",
+        "Correct Option": "B",
+        "Explanation": "Triglycerides are composed of three fatty acids attached to a glycerol molecule."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is the primary function of nucleotides in the body?",
+        "Option A": "Store genetic information",
+        "Option B": "Store energy",
+        "Option C": "Catalyze biochemical reactions",
+        "Option D": "Provide structural support",
+        "Correct Option": "A",
+        "Explanation": "Nucleotides are the building blocks of nucleic acids, which store and transmit genetic information."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which of the following is a function of enzymes?",
+        "Option A": "Increase the energy needed to start a reaction",
+        "Option B": "Speed up chemical reactions",
+        "Option C": "Serve as structural components",
+        "Option D": "Store genetic information",
+        "Correct Option": "B",
+        "Explanation": "Enzymes act as catalysts, speeding up chemical reactions without being consumed."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which type of biomolecule is the main structural component of cell membranes?",
+        "Option A": "Proteins",
+        "Option B": "Carbohydrates",
+        "Option C": "Nucleic acids",
+        "Option D": "Lipids",
+        "Correct Option": "D",
+        "Explanation": "Lipids, especially phospholipids, are the main structural components of cell membranes."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the function of the enzyme amylase?",
+        "Option A": "To break down carbohydrates",
+        "Option B": "To break down proteins",
+        "Option C": "To catalyze the synthesis of DNA",
+        "Option D": "To produce ATP",
+        "Correct Option": "A",
+        "Explanation": "Amylase is an enzyme that breaks down carbohydrates, specifically starch."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the function of the nitrogenous base in nucleic acids?",
+        "Option A": "To provide energy",
+        "Option B": "To form the backbone of DNA",
+        "Option C": "To store genetic information",
+        "Option D": "To create structural stability",
+        "Correct Option": "C",
+        "Explanation": "The nitrogenous base in nucleic acids encodes genetic information."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the main role of ribosomal RNA (rRNA)?",
+        "Option A": "Catalyzing chemical reactions",
+        "Option B": "Synthesizing proteins",
+        "Option C": "Structurally composing ribosomes",
+        "Option D": "Carrying genetic information",
+        "Correct Option": "C",
+        "Explanation": "rRNA is a component of ribosomes and is involved in protein synthesis."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the major function of carbohydrates in the human body?",
+        "Option A": "Provide long-term energy storage",
+        "Option B": "Carry genetic information",
+        "Option C": "Provide quick energy",
+        "Option D": "Act as a signaling molecule",
+        "Correct Option": "C",
+        "Explanation": "Carbohydrates, particularly glucose, provide quick energy to the body."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which of the following lipids are important for signaling in the body?",
+        "Option A": "Triglycerides",
+        "Option B": "Cholesterol",
+        "Option C": "Phospholipids",
+        "Option D": "Waxes",
+        "Correct Option": "B",
+        "Explanation": "Cholesterol plays a key role in cell signaling and hormone production."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which of the following is NOT a component of a nucleotide?",
+        "Option A": "Sugar",
+        "Option B": "Phosphate group",
+        "Option C": "Nitrogenous base",
+        "Option D": "Fatty acid",
+        "Correct Option": "D",
+        "Explanation": "Nucleotides consist of a sugar, phosphate group, and nitrogenous base."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which of the following is a characteristic of unsaturated fatty acids?",
+        "Option A": "They contain no double bonds",
+        "Option B": "They are solid at room temperature",
+        "Option C": "They contain one or more double bonds",
+        "Option D": "They are found only in animal fats",
+        "Correct Option": "C",
+        "Explanation": "Unsaturated fatty acids have one or more double bonds and are usually liquid at room temperature."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which of the following is a polymer of amino acids?",
+        "Option A": "Lipids",
+        "Option B": "Carbohydrates",
+        "Option C": "Proteins",
+        "Option D": "Nucleic acids",
+        "Correct Option": "C",
+        "Explanation": "Proteins are polymers made of amino acid monomers."
+    },
+    {
+        "Q.No": "98",
+        "Question": "The alpha helix and beta sheet are examples of which protein structure?",
+        "Option A": "Primary structure",
+        "Option B": "Secondary structure",
+        "Option C": "Tertiary structure",
+        "Option D": "Quaternary structure",
+        "Correct Option": "B",
+        "Explanation": "The alpha helix and beta sheet are examples of secondary protein structure."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the role of water in protein structure?",
+        "Option A": "Water dissolves amino acids",
+        "Option B": "Water stabilizes protein structure by forming hydrogen bonds",
+        "Option C": "Water is not involved in protein structure",
+        "Option D": "Water helps in energy production",
+        "Correct Option": "B",
+        "Explanation": "Water helps stabilize protein structures through hydrogen bonds."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which of the following is an example of a hydrophilic molecule?",
+        "Option A": "Lipids",
+        "Option B": "DNA",
+        "Option C": "Triglycerides",
+        "Option D": "Fatty acids",
+        "Correct Option": "B",
+        "Explanation": "DNA is hydrophilic, meaning it interacts well with water."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
