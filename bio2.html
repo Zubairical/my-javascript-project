@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is the main energy currency of the cell?",
+        "Option A": "NADH",
+        "Option B": "ATP",
+        "Option C": "FADH2",
+        "Option D": "Glucose",
+        "Correct Option": "B",
+        "Explanation": "ATP (Adenosine Triphosphate) is the primary energy carrier in cells."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which process directly produces ATP in the absence of oxygen?",
+        "Option A": "Aerobic respiration",
+        "Option B": "Glycolysis",
+        "Option C": "Krebs cycle",
+        "Option D": "Electron transport chain",
+        "Correct Option": "B",
+        "Explanation": "Glycolysis produces ATP anaerobically."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What is the final electron acceptor in the electron transport chain?",
+        "Option A": "Oxygen",
+        "Option B": "NAD+",
+        "Option C": "FAD+",
+        "Option D": "Carbon dioxide",
+        "Correct Option": "A",
+        "Explanation": "Oxygen accepts electrons and combines with protons to form water."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which of the following molecules stores the most energy?",
+        "Option A": "ATP",
+        "Option B": "Glucose",
+        "Option C": "NADH",
+        "Option D": "FADH2",
+        "Correct Option": "B",
+        "Explanation": "Glucose contains the most stored energy."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Where does glycolysis occur in the cell?",
+        "Option A": "Mitochondria",
+        "Option B": "Cytoplasm",
+        "Option C": "Nucleus",
+        "Option D": "Ribosome",
+        "Correct Option": "B",
+        "Explanation": "Glycolysis takes place in the cytoplasm."
+    },
+    {
+        "Q.No": "6",
+        "Question": "The first step of glycolysis involves the conversion of glucose into",
+        "Option A": "Pyruvate",
+        "Option B": "Fructose-6-phosphate",
+        "Option C": "Glucose-6-phosphate",
+        "Option D": "Acetyl-CoA",
+        "Correct Option": "C",
+        "Explanation": "Glucose is phosphorylated to glucose-6-phosphate."
+    },
+    {
+        "Q.No": "7",
+        "Question": "How many ATP molecules are produced per glucose in glycolysis?",
+        "Option A": "2",
+        "Option B": "4",
+        "Option C": "6",
+        "Option D": "8",
+        "Correct Option": "B",
+        "Explanation": "Glycolysis produces 4 ATP, but the net gain is 2 ATP."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following is not a product of glycolysis?",
+        "Option A": "ATP",
+        "Option B": "Pyruvate",
+        "Option C": "NADH",
+        "Option D": "FADH2",
+        "Correct Option": "D",
+        "Explanation": "FADH2 is produced in the Krebs cycle, not glycolysis."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the primary function of the Krebs cycle?",
+        "Option A": "Produce ATP directly",
+        "Option B": "Generate high-energy electron carriers",
+        "Option C": "Store glucose",
+        "Option D": "Break down amino acids",
+        "Correct Option": "B",
+        "Explanation": "The Krebs cycle produces NADH and FADH2 for ATP synthesis."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Where does the Krebs cycle take place?",
+        "Option A": "Cytoplasm",
+        "Option B": "Nucleus",
+        "Option C": "Mitochondrial matrix",
+        "Option D": "Ribosome",
+        "Correct Option": "C",
+        "Explanation": "The Krebs cycle occurs in the mitochondrial matrix."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What is the total number of NADH molecules generated per glucose molecule during the Krebs cycle?",
+        "Option A": "2",
+        "Option B": "4",
+        "Option C": "6",
+        "Option D": "8",
+        "Correct Option": "C",
+        "Explanation": "The Krebs cycle generates 6 NADH per glucose molecule."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What enzyme catalyzes ATP synthesis in oxidative phosphorylation?",
+        "Option A": "Hexokinase",
+        "Option B": "ATP synthase",
+        "Option C": "Rubisco",
+        "Option D": "Phosphofructokinase",
+        "Correct Option": "B",
+        "Explanation": "ATP synthase uses the proton gradient to generate ATP."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which molecule provides electrons for oxidative phosphorylation?",
+        "Option A": "Oxygen",
+        "Option B": "Water",
+        "Option C": "NADH",
+        "Option D": "ATP",
+        "Correct Option": "C",
+        "Explanation": "NADH donates electrons to the electron transport chain."
+    },
+    {
+        "Q.No": "14",
+        "Question": "How many ATP molecules are produced from one glucose in aerobic respiration?",
+        "Option A": "2",
+        "Option B": "12",
+        "Option C": "30-32",
+        "Option D": "40-42",
+        "Correct Option": "C",
+        "Explanation": "Aerobic respiration yields about 30-32 ATP per glucose."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What happens to excess energy in cells?",
+        "Option A": "Stored as ATP",
+        "Option B": "Stored as glycogen or fat",
+        "Option C": "Lost as heat",
+        "Option D": "Converted to CO2",
+        "Correct Option": "B",
+        "Explanation": "Extra energy is stored in glycogen or fat."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What is the main purpose of fermentation?",
+        "Option A": "Produce ATP",
+        "Option B": "Regenerate NAD+",
+        "Option C": "Generate CO2",
+        "Option D": "Store energy",
+        "Correct Option": "B",
+        "Explanation": "Fermentation regenerates NAD+ for glycolysis to continue."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which type of fermentation occurs in human muscles under low oxygen?",
+        "Option A": "Alcoholic",
+        "Option B": "Lactic acid",
+        "Option C": "Acetic acid",
+        "Option D": "Butyric acid",
+        "Correct Option": "B",
+        "Explanation": "Lactic acid fermentation occurs in muscles during anaerobic conditions."
+    },
+    {
+        "Q.No": "18",
+        "Question": "In which organelle does photosynthesis occur?",
+        "Option A": "Mitochondria",
+        "Option B": "Chloroplast",
+        "Option C": "Nucleus",
+        "Option D": "Ribosome",
+        "Correct Option": "B",
+        "Explanation": "Photosynthesis occurs in the chloroplasts of plant cells."
+    },
+    {
+        "Q.No": "19",
+        "Question": "The light-dependent reactions take place in the",
+        "Option A": "Stroma",
+        "Option B": "Thylakoid membrane",
+        "Option C": "Cytoplasm",
+        "Option D": "Mitochondria",
+        "Correct Option": "B",
+        "Explanation": "Light-dependent reactions occur in the thylakoid membrane."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the main pigment involved in photosynthesis?",
+        "Option A": "Carotenoids",
+        "Option B": "Xanthophylls",
+        "Option C": "Chlorophyll",
+        "Option D": "Hemoglobin",
+        "Correct Option": "C",
+        "Explanation": "Chlorophyll absorbs light for photosynthesis."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which molecule is produced in the Calvin cycle?",
+        "Option A": "ATP",
+        "Option B": "NADH",
+        "Option C": "Glucose",
+        "Option D": "Oxygen",
+        "Correct Option": "C",
+        "Explanation": "The Calvin cycle synthesizes glucose."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is the source of oxygen released during photosynthesis?",
+        "Option A": "Carbon dioxide",
+        "Option B": "Water",
+        "Option C": "Glucose",
+        "Option D": "NADPH",
+        "Correct Option": "B",
+        "Explanation": "Oxygen comes from the splitting of water."
+    },
+    {
+        "Q.No": "23",
+        "Question": "The energy required for photosynthesis comes from",
+        "Option A": "ATP",
+        "Option B": "Heat",
+        "Option C": "Sunlight",
+        "Option D": "Carbon dioxide",
+        "Correct Option": "C",
+        "Explanation": "Photosynthesis depends on light energy."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which enzyme fixes carbon in the Calvin cycle?",
+        "Option A": "ATP synthase",
+        "Option B": "Hexokinase",
+        "Option C": "Rubisco",
+        "Option D": "Pyruvate kinase",
+        "Correct Option": "C",
+        "Explanation": "Rubisco catalyzes carbon fixation."
+    },
+    {
+        "Q.No": "25",
+        "Question": "How many ATP molecules are consumed in the Calvin cycle per glucose?",
+        "Option A": "2",
+        "Option B": "6",
+        "Option C": "12",
+        "Option D": "18",
+        "Correct Option": "D",
+        "Explanation": "The Calvin cycle requires 18 ATP to form one glucose molecule."
+    },
+    {
+        "Q.No": "26",
+        "Question": "The main product of the light reactions of photosynthesis is",
+        "Option A": "ATP",
+        "Option B": "Glucose",
+        "Option C": "CO2",
+        "Option D": "Pyruvate",
+        "Correct Option": "A",
+        "Explanation": "ATP is produced in the light reactions."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which alternative pathway allows plants to survive in hot climates?",
+        "Option A": "CAM pathway",
+        "Option B": "Krebs cycle",
+        "Option C": "Glycolysis",
+        "Option D": "Oxidative phosphorylation",
+        "Correct Option": "A",
+        "Explanation": "The CAM pathway helps plants conserve water."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the first stable compound formed in the Calvin cycle?",
+        "Option A": "PGA",
+        "Option B": "RuBP",
+        "Option C": "NADPH",
+        "Option D": "Oxygen",
+        "Correct Option": "A",
+        "Explanation": "PGA (3-phosphoglycerate) is the first stable compound."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which process generates the most ATP per glucose molecule?",
+        "Option A": "Glycolysis",
+        "Option B": "Krebs cycle",
+        "Option C": "Electron transport chain",
+        "Option D": "Fermentation",
+        "Correct Option": "C",
+        "Explanation": "The electron transport chain produces the most ATP."
+    },
+    {
+        "Q.No": "30",
+        "Question": "The efficiency of cellular respiration is approximately",
+        "Option A": "10%",
+        "Option B": "20%",
+        "Option C": "40%",
+        "Option D": "90%",
+        "Correct Option": "C",
+        "Explanation": "About 40% of glucose’s energy is converted to ATP."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is the final product of anaerobic respiration in yeast?",
+        "Option A": "Lactic acid",
+        "Option B": "Ethanol and CO2",
+        "Option C": "Glucose",
+        "Option D": "ATP",
+        "Correct Option": "B",
+        "Explanation": "Yeast produces ethanol and CO2 in anaerobic respiration."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What happens to pyruvate in the absence of oxygen?",
+        "Option A": "Enters the Krebs cycle",
+        "Option B": "Converts to acetyl-CoA",
+        "Option C": "Undergoes fermentation",
+        "Option D": "Joins the electron transport chain",
+        "Correct Option": "C",
+        "Explanation": "Pyruvate undergoes fermentation when oxygen is absent."
+    },
+    {
+        "Q.No": "33",
+        "Question": "In which part of the mitochondrion does the electron transport chain occur?",
+        "Option A": "Matrix",
+        "Option B": "Cristae",
+        "Option C": "Inner membrane",
+        "Option D": "Outer membrane",
+        "Correct Option": "C",
+        "Explanation": "The electron transport chain is in the inner mitochondrial membrane."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What drives ATP synthesis in the electron transport chain?",
+        "Option A": "Electrons",
+        "Option B": "Proton gradient",
+        "Option C": "CO2",
+        "Option D": "Glucose",
+        "Correct Option": "B",
+        "Explanation": "The proton gradient across the inner membrane powers ATP synthesis."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which molecule donates electrons at the start of the electron transport chain?",
+        "Option A": "NADH",
+        "Option B": "ATP",
+        "Option C": "Glucose",
+        "Option D": "CO2",
+        "Correct Option": "A",
+        "Explanation": "NADH donates electrons to the first protein complex."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which of the following is an electron carrier in cellular respiration?",
+        "Option A": "ATP",
+        "Option B": "FADH2",
+        "Option C": "CO2",
+        "Option D": "O2",
+        "Correct Option": "B",
+        "Explanation": "FADH2 carries electrons to the electron transport chain."
+    },
+    {
+        "Q.No": "37",
+        "Question": "The chemiosmotic theory explains ATP generation through",
+        "Option A": "Electron transfer",
+        "Option B": "Proton gradient",
+        "Option C": "Glycolysis",
+        "Option D": "Substrate-level phosphorylation",
+        "Correct Option": "B",
+        "Explanation": "ATP is synthesized using the proton gradient created by the electron transport chain."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which process produces the most NADH?",
+        "Option A": "Glycolysis",
+        "Option B": "Krebs cycle",
+        "Option C": "Calvin cycle",
+        "Option D": "Fermentation",
+        "Correct Option": "B",
+        "Explanation": "The Krebs cycle produces 6 NADH per glucose molecule."
+    },
+    {
+        "Q.No": "39",
+        "Question": "The first step of the Krebs cycle combines acetyl-CoA with",
+        "Option A": "Oxaloacetate",
+        "Option B": "Citrate",
+        "Option C": "Pyruvate",
+        "Option D": "Malate",
+        "Correct Option": "A",
+        "Explanation": "Acetyl-CoA combines with oxaloacetate to form citrate."
+    },
+    {
+        "Q.No": "40",
+        "Question": "ATP synthesis in glycolysis occurs via",
+        "Option A": "Oxidative phosphorylation",
+        "Option B": "Substrate-level phosphorylation",
+        "Option C": "Chemiosmosis",
+        "Option D": "Fermentation",
+        "Correct Option": "B",
+        "Explanation": "ATP in glycolysis is generated through substrate-level phosphorylation."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is the end product of glycolysis?",
+        "Option A": "Acetyl-CoA",
+        "Option B": "ATP",
+        "Option C": "NADH",
+        "Option D": "Pyruvate",
+        "Correct Option": "D",
+        "Explanation": "Pyruvate is the final product of glycolysis."
+    },
+    {
+        "Q.No": "42",
+        "Question": "How many ATP molecules are directly generated in the Krebs cycle per glucose?",
+        "Option A": "1",
+        "Option B": "2",
+        "Option C": "4",
+        "Option D": "6",
+        "Correct Option": "B",
+        "Explanation": "Each turn of the cycle generates 1 ATP, making 2 per glucose."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Where does the Calvin cycle take place?",
+        "Option A": "Stroma",
+        "Option B": "Thylakoid",
+        "Option C": "Cytoplasm",
+        "Option D": "Mitochondria",
+        "Correct Option": "A",
+        "Explanation": "The Calvin cycle occurs in the stroma of chloroplasts."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which step of cellular respiration releases CO2?",
+        "Option A": "Glycolysis",
+        "Option B": "Krebs cycle",
+        "Option C": "Electron transport chain",
+        "Option D": "ATP synthesis",
+        "Correct Option": "B",
+        "Explanation": "The Krebs cycle releases CO2 as a byproduct."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which molecule provides electrons in the light reactions of photosynthesis?",
+        "Option A": "Water",
+        "Option B": "Glucose",
+        "Option C": "NADH",
+        "Option D": "Oxygen",
+        "Correct Option": "A",
+        "Explanation": "Water splits to provide electrons."
+    },
+    {
+        "Q.No": "46",
+        "Question": "The main function of cyclic photophosphorylation is to",
+        "Option A": "Generate ATP only",
+        "Option B": "Produce NADPH",
+        "Option C": "Release oxygen",
+        "Option D": "Split water",
+        "Correct Option": "A",
+        "Explanation": "Cyclic photophosphorylation produces ATP but not NADPH."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What type of energy conversion occurs in photosynthesis?",
+        "Option A": "Chemical to light",
+        "Option B": "Light to chemical",
+        "Option C": "Heat to chemical",
+        "Option D": "Electrical to chemical",
+        "Correct Option": "B",
+        "Explanation": "Light energy is converted into chemical energy in photosynthesis."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which factor does not affect the rate of photosynthesis?",
+        "Option A": "Light intensity",
+        "Option B": "CO2 concentration",
+        "Option C": "Oxygen concentration",
+        "Option D": "Temperature",
+        "Correct Option": "C",
+        "Explanation": "Oxygen concentration does not significantly impact photosynthesis."
+    },
+    {
+        "Q.No": "49",
+        "Question": "The enzyme that catalyzes the formation of ATP in photosynthesis is",
+        "Option A": "ATP synthase",
+        "Option B": "Rubisco",
+        "Option C": "NADP reductase",
+        "Option D": "Cytochrome c",
+        "Correct Option": "A",
+        "Explanation": "ATP synthase is responsible for ATP formation."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is the purpose of the NADPH produced in the light reactions?",
+        "Option A": "Provide electrons for the Calvin cycle",
+        "Option B": "Generate ATP",
+        "Option C": "Split water",
+        "Option D": "Release oxygen",
+        "Correct Option": "A",
+        "Explanation": "NADPH carries electrons to the Calvin cycle for carbon fixation."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which process occurs in both photosynthesis and cellular respiration?",
+        "Option A": "Glycolysis",
+        "Option B": "Calvin cycle",
+        "Option C": "Electron transport chain",
+        "Option D": "Fermentation",
+        "Correct Option": "C",
+        "Explanation": "The electron transport chain exists in both processes."
+    },
+    {
+        "Q.No": "52",
+        "Question": "The ATP produced in photosynthesis is used for",
+        "Option A": "Glycolysis",
+        "Option B": "Krebs cycle",
+        "Option C": "Light reactions",
+        "Option D": "Calvin cycle",
+        "Correct Option": "D",
+        "Explanation": "ATP from the light reactions powers the Calvin cycle."
+    },
+    {
+        "Q.No": "53",
+        "Question": "During aerobic respiration, oxygen is used to",
+        "Option A": "Form glucose",
+        "Option B": "Accept electrons at the end of the electron transport chain",
+        "Option C": "Donate electrons",
+        "Option D": "Split ATP",
+        "Correct Option": "B",
+        "Explanation": "Oxygen is the final electron acceptor."
+    },
+    {
+        "Q.No": "54",
+        "Question": "In which stage of photosynthesis is oxygen produced?",
+        "Option A": "Light-dependent reactions",
+        "Option B": "Light-independent reactions",
+        "Option C": "Calvin cycle",
+        "Option D": "Glycolysis",
+        "Correct Option": "A",
+        "Explanation": "Oxygen is released during the light-dependent reactions."
+    },
+    {
+        "Q.No": "55",
+        "Question": "How many ATP molecules are produced per FADH2 molecule in the electron transport chain?",
+        "Option A": "1",
+        "Option B": "1.5",
+        "Option C": "2.5",
+        "Option D": "3",
+        "Correct Option": "B",
+        "Explanation": "FADH2 produces approximately 1.5 ATP per molecule."
+    },
+    {
+        "Q.No": "56",
+        "Question": "The primary function of cellular respiration is to",
+        "Option A": "Produce ATP",
+        "Option B": "Store glucose",
+        "Option C": "Synthesize proteins",
+        "Option D": "Generate heat",
+        "Correct Option": "A",
+        "Explanation": "Cellular respiration generates ATP."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which pigment is directly involved in photosynthesis?",
+        "Option A": "Carotenoids",
+        "Option B": "Chlorophyll a",
+        "Option C": "Xanthophylls",
+        "Option D": "Chlorophyll b",
+        "Correct Option": "B",
+        "Explanation": "Chlorophyll a is the main photosynthetic pigment."
+    },
+    {
+        "Q.No": "58",
+        "Question": "The function of cytochrome c in the electron transport chain is to",
+        "Option A": "Pump protons",
+        "Option B": "Transfer electrons",
+        "Option C": "Produce ATP",
+        "Option D": "Fix carbon",
+        "Correct Option": "B",
+        "Explanation": "Cytochrome c transfers electrons between complexes."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is the role of carbon fixation in the Calvin cycle?",
+        "Option A": "ATP generation",
+        "Option B": "Sugar synthesis",
+        "Option C": "CO2 incorporation",
+        "Option D": "Oxygen release",
+        "Correct Option": "C",
+        "Explanation": "Carbon fixation incorporates CO2 into organic molecules."
+    },
+    {
+        "Q.No": "60",
+        "Question": "The immediate product of photosystem II is",
+        "Option A": "Oxygen",
+        "Option B": "ATP",
+        "Option C": "NADPH",
+        "Option D": "Glucose",
+        "Correct Option": "A",
+        "Explanation": "Photosystem II produces oxygen via water splitting."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the fate of pyruvate in aerobic respiration?",
+        "Option A": "Converted to acetyl-CoA",
+        "Option B": "Used directly in the Krebs cycle",
+        "Option C": "Converted to ethanol",
+        "Option D": "Broken into glucose",
+        "Correct Option": "A",
+        "Explanation": "Pyruvate is converted to acetyl-CoA."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which organelle is responsible for breaking down glucose in eukaryotic cells?",
+        "Option A": "Nucleus",
+        "Option B": "Ribosome",
+        "Option C": "Mitochondria",
+        "Option D": "Chloroplast",
+        "Correct Option": "C",
+        "Explanation": "Mitochondria break down glucose for ATP production."
+    },
+    {
+        "Q.No": "63",
+        "Question": "The process of breaking down lipids for energy is called",
+        "Option A": "Lipolysis",
+        "Option B": "Glycolysis",
+        "Option C": "Photosynthesis",
+        "Option D": "Oxidation",
+        "Correct Option": "A",
+        "Explanation": "Lipolysis breaks down fats into fatty acids for energy."
+    },
+    {
+        "Q.No": "64",
+        "Question": "The enzyme that catalyzes the first step of glycolysis is",
+        "Option A": "ATP synthase",
+        "Option B": "Phosphofructokinase",
+        "Option C": "Hexokinase",
+        "Option D": "Pyruvate kinase",
+        "Correct Option": "C",
+        "Explanation": "Hexokinase phosphorylates glucose in glycolysis."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Where do the light-independent reactions of photosynthesis occur?",
+        "Option A": "Thylakoid membrane",
+        "Option B": "Stroma",
+        "Option C": "Cytoplasm",
+        "Option D": "Inner mitochondrial membrane",
+        "Correct Option": "B",
+        "Explanation": "The Calvin cycle occurs in the stroma."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is the primary electron donor in cellular respiration?",
+        "Option A": "NADH",
+        "Option B": "Oxygen",
+        "Option C": "ATP",
+        "Option D": "CO2",
+        "Correct Option": "A",
+        "Explanation": "NADH donates electrons to the electron transport chain."
+    },
+    {
+        "Q.No": "67",
+        "Question": "The hydrogen ion gradient required for ATP synthesis is established in the",
+        "Option A": "Cytoplasm",
+        "Option B": "Inner mitochondrial membrane",
+        "Option C": "Outer mitochondrial membrane",
+        "Option D": "Stroma",
+        "Correct Option": "B",
+        "Explanation": "The inner mitochondrial membrane maintains the gradient."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which part of a plant cell captures sunlight for photosynthesis?",
+        "Option A": "Nucleus",
+        "Option B": "Chloroplast",
+        "Option C": "Mitochondria",
+        "Option D": "Ribosome",
+        "Correct Option": "B",
+        "Explanation": "Chloroplasts capture sunlight for photosynthesis."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What is the first molecule formed in the Calvin cycle?",
+        "Option A": "RuBP",
+        "Option B": "PGA",
+        "Option C": "Acetyl-CoA",
+        "Option D": "CO2",
+        "Correct Option": "B",
+        "Explanation": "PGA (3-phosphoglycerate) is the first stable compound."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which of the following molecules is an intermediate in both photosynthesis and respiration?",
+        "Option A": "RuBP",
+        "Option B": "NADH",
+        "Option C": "G3P",
+        "Option D": "ATP",
+        "Correct Option": "C",
+        "Explanation": "G3P is involved in both pathways."
+    },
+    {
+        "Q.No": "71",
+        "Question": "The energy source for oxidative phosphorylation is",
+        "Option A": "Sunlight",
+        "Option B": "Proton gradient",
+        "Option C": "ATP",
+        "Option D": "CO2",
+        "Correct Option": "B",
+        "Explanation": "The proton gradient powers ATP synthesis."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the role of oxygen in cellular respiration?",
+        "Option A": "Electron acceptor",
+        "Option B": "Proton donor",
+        "Option C": "Glucose carrier",
+        "Option D": "ATP donor",
+        "Correct Option": "A",
+        "Explanation": "Oxygen acts as the final electron acceptor."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the main function of NAD+ in glycolysis?",
+        "Option A": "Store energy",
+        "Option B": "Accept electrons",
+        "Option C": "Generate ATP",
+        "Option D": "Form CO2",
+        "Correct Option": "B",
+        "Explanation": "NAD+ accepts electrons and forms NADH."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which molecule carries electrons from the Krebs cycle to the electron transport chain?",
+        "Option A": "ATP",
+        "Option B": "NADH",
+        "Option C": "FADH2",
+        "Option D": "CO2",
+        "Correct Option": "B",
+        "Explanation": "NADH carries electrons to the electron transport chain."
+    },
+    {
+        "Q.No": "75",
+        "Question": "The ATP produced in glycolysis is a result of",
+        "Option A": "Oxidative phosphorylation",
+        "Option B": "Substrate-level phosphorylation",
+        "Option C": "Photophosphorylation",
+        "Option D": "Chemiosmosis",
+        "Correct Option": "B",
+        "Explanation": "Glycolysis produces ATP via substrate-level phosphorylation."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the final product of the electron transport chain?",
+        "Option A": "ATP",
+        "Option B": "CO2",
+        "Option C": "Water",
+        "Option D": "Oxygen",
+        "Correct Option": "C",
+        "Explanation": "Water is formed when oxygen accepts electrons and hydrogen ions."
+    },
+    {
+        "Q.No": "77",
+        "Question": "The enzyme that fixes carbon in the Calvin cycle is",
+        "Option A": "ATP synthase",
+        "Option B": "Rubisco",
+        "Option C": "PEP carboxylase",
+        "Option D": "NADP reductase",
+        "Correct Option": "B",
+        "Explanation": "Rubisco catalyzes carbon fixation in the Calvin cycle."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Where does glycolysis occur?",
+        "Option A": "Mitochondria",
+        "Option B": "Cytoplasm",
+        "Option C": "Chloroplast",
+        "Option D": "Nucleus",
+        "Correct Option": "B",
+        "Explanation": "Glycolysis takes place in the cytoplasm."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which molecule is a product of anaerobic respiration in yeast?",
+        "Option A": "Ethanol",
+        "Option B": "Lactate",
+        "Option C": "Acetyl-CoA",
+        "Option D": "Fumarate",
+        "Correct Option": "A",
+        "Explanation": "Yeast produces ethanol during anaerobic respiration."
+    },
+    {
+        "Q.No": "80",
+        "Question": "The energy required to start a chemical reaction is called",
+        "Option A": "Free energy",
+        "Option B": "Activation energy",
+        "Option C": "Gibbs energy",
+        "Option D": "Potential energy",
+        "Correct Option": "B",
+        "Explanation": "Activation energy is needed to initiate a reaction."
+    },
+    {
+        "Q.No": "81",
+        "Question": "The movement of protons across a membrane to drive ATP synthesis is known as",
+        "Option A": "Chemiosmosis",
+        "Option B": "Glycolysis",
+        "Option C": "Oxidation",
+        "Option D": "Fermentation",
+        "Correct Option": "A",
+        "Explanation": "Chemiosmosis drives ATP synthesis using a proton gradient."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the main role of NADPH in photosynthesis?",
+        "Option A": "ATP production",
+        "Option B": "Electron transport",
+        "Option C": "Carbon fixation",
+        "Option D": "Oxygen release",
+        "Correct Option": "B",
+        "Explanation": "NADPH provides electrons for carbon fixation in the Calvin cycle."
+    },
+    {
+        "Q.No": "83",
+        "Question": "The conversion of glucose into two pyruvate molecules produces how many net ATP?",
+        "Option A": "2",
+        "Option B": "4",
+        "Option C": "6",
+        "Option D": "8",
+        "Correct Option": "A",
+        "Explanation": "Glycolysis results in a net gain of 2 ATP."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which organelle is responsible for ATP production in eukaryotic cells?",
+        "Option A": "Nucleus",
+        "Option B": "Golgi apparatus",
+        "Option C": "Mitochondria",
+        "Option D": "Chloroplast",
+        "Correct Option": "C",
+        "Explanation": "Mitochondria produce ATP through cellular respiration."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is the first molecule formed in the Krebs cycle?",
+        "Option A": "Acetyl-CoA",
+        "Option B": "Oxaloacetate",
+        "Option C": "Citrate",
+        "Option D": "Succinate",
+        "Correct Option": "C",
+        "Explanation": "Citrate is the first compound formed in the Krebs cycle."
+    },
+    {
+        "Q.No": "86",
+        "Question": "The oxygen released in photosynthesis comes from",
+        "Option A": "CO2",
+        "Option B": "H2O",
+        "Option C": "Glucose",
+        "Option D": "ATP",
+        "Correct Option": "B",
+        "Explanation": "Water molecules are split to release oxygen."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which type of reaction releases energy?",
+        "Option A": "Endergonic",
+        "Option B": "Exergonic",
+        "Option C": "Anabolic",
+        "Option D": "Dehydration",
+        "Correct Option": "B",
+        "Explanation": "Exergonic reactions release energy."
+    },
+    {
+        "Q.No": "88",
+        "Question": "The site of the electron transport chain in mitochondria is the",
+        "Option A": "Inner membrane",
+        "Option B": "Outer membrane",
+        "Option C": "Cytoplasm",
+        "Option D": "Matrix",
+        "Correct Option": "A",
+        "Explanation": "The electron transport chain is located in the inner mitochondrial membrane."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which enzyme is responsible for ATP production in oxidative phosphorylation?",
+        "Option A": "Pyruvate kinase",
+        "Option B": "Rubisco",
+        "Option C": "ATP synthase",
+        "Option D": "Hexokinase",
+        "Correct Option": "C",
+        "Explanation": "ATP synthase catalyzes ATP formation."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the primary function of glycolysis?",
+        "Option A": "ATP production",
+        "Option B": "Oxygen release",
+        "Option C": "CO2 fixation",
+        "Option D": "NADPH formation",
+        "Correct Option": "A",
+        "Explanation": "Glycolysis produces ATP and NADH."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which process generates the most ATP in cellular respiration?",
+        "Option A": "Glycolysis",
+        "Option B": "Krebs cycle",
+        "Option C": "Electron transport chain",
+        "Option D": "Fermentation",
+        "Correct Option": "C",
+        "Explanation": "The electron transport chain generates the most ATP."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the major function of fermentation?",
+        "Option A": "ATP synthesis",
+        "Option B": "Oxygen production",
+        "Option C": "Regeneration of NAD+",
+        "Option D": "CO2 fixation",
+        "Correct Option": "C",
+        "Explanation": "Fermentation regenerates NAD+ to allow glycolysis to continue."
+    },
+    {
+        "Q.No": "93",
+        "Question": "How many ATP are produced per molecule of glucose in aerobic respiration?",
+        "Option A": "30-32",
+        "Option B": "2",
+        "Option C": "36-38",
+        "Option D": "20-24",
+        "Correct Option": "A",
+        "Explanation": "Aerobic respiration yields about 30-32 ATP per glucose molecule."
+    },
+    {
+        "Q.No": "94",
+        "Question": "The pH inside the mitochondrial matrix is",
+        "Option A": "Acidic",
+        "Option B": "Neutral",
+        "Option C": "Basic",
+        "Option D": "Variable",
+        "Correct Option": "C",
+        "Explanation": "The matrix is more basic due to proton pumping."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the function of light energy in photosynthesis?",
+        "Option A": "Split water molecules",
+        "Option B": "Fix CO2",
+        "Option C": "Produce glucose",
+        "Option D": "Generate ATP directly",
+        "Correct Option": "A",
+        "Explanation": "Light energy splits water molecules in photosynthesis."
+    },
+    {
+        "Q.No": "96",
+        "Question": "The Calvin cycle occurs in the",
+        "Option A": "Mitochondria",
+        "Option B": "Cytoplasm",
+        "Option C": "Stroma",
+        "Option D": "Thylakoid",
+        "Correct Option": "C",
+        "Explanation": "The Calvin cycle takes place in the stroma of chloroplasts."
+    },
+    {
+        "Q.No": "97",
+        "Question": "The energy source for the electron transport chain in cellular respiration is",
+        "Option A": "NADH and FADH2",
+        "Option B": "ATP",
+        "Option C": "CO2",
+        "Option D": "Oxygen",
+        "Correct Option": "A",
+        "Explanation": "NADH and FADH2 donate electrons to drive the electron transport chain."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which of the following is an anabolic process?",
+        "Option A": "Glycolysis",
+        "Option B": "Krebs cycle",
+        "Option C": "Photosynthesis",
+        "Option D": "Fermentation",
+        "Correct Option": "C",
+        "Explanation": "Photosynthesis is an anabolic process as it synthesizes glucose."
+    },
+    {
+        "Q.No": "99",
+        "Question": "The process of breaking down complex molecules into simpler ones is called",
+        "Option A": "Anabolism",
+        "Option B": "Catabolism",
+        "Option C": "Photosynthesis",
+        "Option D": "Polymerization",
+        "Correct Option": "B",
+        "Explanation": "Catabolism breaks down molecules to release energy."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is the main purpose of ATP in the cell?",
+        "Option A": "Store genetic information",
+        "Option B": "Catalyze reactions",
+        "Option C": "Provide energy",
+        "Option D": "Transport oxygen",
+        "Correct Option": "C",
+        "Explanation": "ATP serves as the main energy currency of the cell."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
