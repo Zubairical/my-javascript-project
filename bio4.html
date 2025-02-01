@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which organelle is known as the powerhouse of the cell?",
+        "Option A": "Nucleus",
+        "Option B": "Mitochondrion",
+        "Option C": "Ribosome",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "B",
+        "Explanation": "Mitochondria produce energy for the cell through cellular respiration."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is the main function of the cell membrane?",
+        "Option A": "Control the cell's growth",
+        "Option B": "Protect the cell",
+        "Option C": "Regulate what enters and leaves the cell",
+        "Option D": "Produce energy",
+        "Correct Option": "C",
+        "Explanation": "The cell membrane controls the movement of substances in and out of the cell."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which structure is found in plant cells but not in animal cells?",
+        "Option A": "Mitochondrion",
+        "Option B": "Chloroplast",
+        "Option C": "Nucleus",
+        "Option D": "Ribosome",
+        "Correct Option": "B",
+        "Explanation": "Chloroplasts are responsible for photosynthesis and are found only in plant cells."
+    },
+    {
+        "Q.No": "4",
+        "Question": "The fluid mosaic model refers to the structure of which part of the cell?",
+        "Option A": "Nucleus",
+        "Option B": "Cytoplasm",
+        "Option C": "Ribosome",
+        "Option D": "Cell membrane",
+        "Correct Option": "D",
+        "Explanation": "The fluid mosaic model describes the flexible structure of the cell membrane, made up of phospholipids and proteins."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which organelle is responsible for protein synthesis?",
+        "Option A": "Mitochondrion",
+        "Option B": "Ribosome",
+        "Option C": "Endoplasmic reticulum",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "B",
+        "Explanation": "Ribosomes are responsible for protein synthesis in the cell."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the main function of the nucleus?",
+        "Option A": "Energy production",
+        "Option B": "Protein synthesis",
+        "Option C": "DNA storage and transcription",
+        "Option D": "Cell division",
+        "Correct Option": "C",
+        "Explanation": "The nucleus contains the cell's genetic material and controls gene expression."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which part of the cell is responsible for packaging and modifying proteins?",
+        "Option A": "Golgi apparatus",
+        "Option B": "Endoplasmic reticulum",
+        "Option C": "Mitochondrion",
+        "Option D": "Ribosome",
+        "Correct Option": "A",
+        "Explanation": "The Golgi apparatus processes and packages proteins for secretion or use within the cell."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What type of cell has a cell wall, chloroplasts, and large vacuoles?",
+        "Option A": "Animal cell",
+        "Option B": "Bacterial cell",
+        "Option C": "Plant cell",
+        "Option D": "Fungal cell",
+        "Correct Option": "C",
+        "Explanation": "Plant cells contain cell walls, chloroplasts for photosynthesis, and large vacuoles for storage."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which of the following is a function of lysosomes?",
+        "Option A": "Protein synthesis",
+        "Option B": "Digestion of cellular waste",
+        "Option C": "Energy production",
+        "Option D": "DNA replication",
+        "Correct Option": "B",
+        "Explanation": "Lysosomes contain enzymes that digest cellular waste and foreign particles."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the primary function of the endoplasmic reticulum (ER)?",
+        "Option A": "Protein synthesis",
+        "Option B": "Lipid production and detoxification",
+        "Option C": "Storage of nutrients",
+        "Option D": "Transport of substances within the cell",
+        "Correct Option": "B",
+        "Explanation": "The ER is involved in lipid synthesis, detoxification, and transport of proteins and lipids."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which of the following is part of the cytoskeleton?",
+        "Option A": "Golgi apparatus",
+        "Option B": "Mitochondria",
+        "Option C": "Microtubules",
+        "Option D": "Ribosomes",
+        "Correct Option": "C",
+        "Explanation": "Microtubules are part of the cytoskeleton, providing structural support and aiding in intracellular transport."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is the function of the vacuole in plant cells?",
+        "Option A": "Protein synthesis",
+        "Option B": "Storage of water, nutrients, and waste",
+        "Option C": "Photosynthesis",
+        "Option D": "DNA storage",
+        "Correct Option": "B",
+        "Explanation": "Vacuoles in plant cells store water, nutrients, and waste products."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which organelle contains its own DNA and is involved in energy production?",
+        "Option A": "Chloroplast",
+        "Option B": "Nucleus",
+        "Option C": "Mitochondrion",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "C",
+        "Explanation": "Mitochondria contain their own DNA and are responsible for producing ATP through cellular respiration."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is the main function of ribosomes in the cell?",
+        "Option A": "Lipid synthesis",
+        "Option B": "Protein synthesis",
+        "Option C": "DNA replication",
+        "Option D": "Energy production",
+        "Correct Option": "B",
+        "Explanation": "Ribosomes are the site of protein synthesis in the cell."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is the role of the Golgi apparatus?",
+        "Option A": "Packaging and distributing proteins",
+        "Option B": "Synthesizing lipids",
+        "Option C": "Transcribing DNA",
+        "Option D": "Synthesizing ribosomes",
+        "Correct Option": "A",
+        "Explanation": "The Golgi apparatus modifies, sorts, and packages proteins for secretion or use within the cell."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which part of the cell is responsible for cellular respiration?",
+        "Option A": "Mitochondria",
+        "Option B": "Nucleus",
+        "Option C": "Chloroplast",
+        "Option D": "Ribosome",
+        "Correct Option": "A",
+        "Explanation": "Mitochondria are the site of cellular respiration, where energy is produced in the form of ATP."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is the main component of the cell membrane?",
+        "Option A": "Proteins",
+        "Option B": "Carbohydrates",
+        "Option C": "Phospholipids",
+        "Option D": "Nucleic acids",
+        "Correct Option": "C",
+        "Explanation": "The cell membrane is primarily composed of a phospholipid bilayer with embedded proteins."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the function of the cytoplasm?",
+        "Option A": "It controls cellular activities",
+        "Option B": "It stores genetic material",
+        "Option C": "It supports organelles and provides a medium for chemical reactions",
+        "Option D": "It synthesizes proteins",
+        "Correct Option": "C",
+        "Explanation": "The cytoplasm provides structural support for the cell and facilitates chemical reactions."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which organelle is responsible for detoxifying harmful substances in the cell?",
+        "Option A": "Smooth endoplasmic reticulum",
+        "Option B": "Ribosome",
+        "Option C": "Mitochondrion",
+        "Option D": "Nucleus",
+        "Correct Option": "A",
+        "Explanation": "The smooth ER is involved in detoxification and lipid synthesis."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which of the following structures is responsible for maintaining cell shape?",
+        "Option A": "Lysosomes",
+        "Option B": "Nucleus",
+        "Option C": "Cytoskeleton",
+        "Option D": "Mitochondrion",
+        "Correct Option": "C",
+        "Explanation": "The cytoskeleton helps maintain cell shape and facilitates cell movement."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which type of cell has a nucleoid region instead of a nucleus?",
+        "Option A": "Animal cell",
+        "Option B": "Plant cell",
+        "Option C": "Bacterial cell",
+        "Option D": "Fungal cell",
+        "Correct Option": "C",
+        "Explanation": "Bacterial cells have a nucleoid region where the genetic material is located, rather than a membrane-bound nucleus."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which of the following is the function of peroxisomes?",
+        "Option A": "Protein synthesis",
+        "Option B": "Lipid synthesis",
+        "Option C": "Detoxification of harmful substances",
+        "Option D": "Storing genetic information",
+        "Correct Option": "C",
+        "Explanation": "Peroxisomes break down fatty acids and detoxify harmful substances."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following is a characteristic of prokaryotic cells?",
+        "Option A": "Membrane-bound organelles",
+        "Option B": "Nucleus",
+        "Option C": "No membrane-bound organelles",
+        "Option D": "Multiple chromosomes",
+        "Correct Option": "C",
+        "Explanation": "Prokaryotic cells lack membrane-bound organelles and a true nucleus."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the function of the smooth endoplasmic reticulum (SER)?",
+        "Option A": "Protein synthesis",
+        "Option B": "Lipid synthesis and detoxification",
+        "Option C": "Packaging proteins",
+        "Option D": "Storage of nutrients",
+        "Correct Option": "B",
+        "Explanation": "The SER is involved in lipid synthesis, metabolism, and detoxification of harmful substances."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which of the following is the primary function of chloroplasts in plant cells?",
+        "Option A": "Protein synthesis",
+        "Option B": "Storage of energy",
+        "Option C": "Photosynthesis",
+        "Option D": "DNA replication",
+        "Correct Option": "C",
+        "Explanation": "Chloroplasts convert light energy into chemical energy through photosynthesis."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which structure in the cell is responsible for transporting proteins within the cell?",
+        "Option A": "Ribosome",
+        "Option B": "Nucleus",
+        "Option C": "Endoplasmic reticulum",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "C",
+        "Explanation": "The rough endoplasmic reticulum helps transport synthesized proteins."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the structure of the cell membrane called?",
+        "Option A": "Phospholipid bilayer",
+        "Option B": "Phospholipid monolayer",
+        "Option C": "Protein layer",
+        "Option D": "Carbohydrate layer",
+        "Correct Option": "A",
+        "Explanation": "The cell membrane is primarily composed of a phospholipid bilayer with embedded proteins."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the primary function of the nucleolus?",
+        "Option A": "Transcribing RNA",
+        "Option B": "Storing DNA",
+        "Option C": "Synthesizing ribosomal RNA (rRNA)",
+        "Option D": "Producing energy",
+        "Correct Option": "C",
+        "Explanation": "The nucleolus is responsible for synthesizing rRNA, a key component of ribosomes."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which of the following is a characteristic of eukaryotic cells?",
+        "Option A": "No membrane-bound organelles",
+        "Option B": "Single circular chromosome",
+        "Option C": "Membrane-bound organelles",
+        "Option D": "Lack of a nucleus",
+        "Correct Option": "C",
+        "Explanation": "Eukaryotic cells have membrane-bound organelles, including a true nucleus."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the main role of the cell wall in plant cells?",
+        "Option A": "Protect the cell and provide structural support",
+        "Option B": "Store energy",
+        "Option C": "Regulate cell division",
+        "Option D": "Transport nutrients",
+        "Correct Option": "A",
+        "Explanation": "The cell wall provides structural support and protection in plant cells."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is the function of the flagella in prokaryotic cells?",
+        "Option A": "Protein synthesis",
+        "Option B": "Movement",
+        "Option C": "DNA replication",
+        "Option D": "Storage",
+        "Correct Option": "B",
+        "Explanation": "Flagella are used for movement in prokaryotic cells."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What is the function of the centrosome in animal cells?",
+        "Option A": "Cell division",
+        "Option B": "Protein synthesis",
+        "Option C": "Lipid synthesis",
+        "Option D": "Energy production",
+        "Correct Option": "A",
+        "Explanation": "The centrosome organizes the microtubules and is involved in cell division."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following is a function of the cell membrane's carbohydrate chains?",
+        "Option A": "Transport substances",
+        "Option B": "Serve as enzymes",
+        "Option C": "Recognition and signaling",
+        "Option D": "Provide structural support",
+        "Correct Option": "C",
+        "Explanation": "Carbohydrates attached to proteins and lipids in the cell membrane play a role in cell recognition and signaling."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is the role of the ribosome in the cell?",
+        "Option A": "Protein synthesis",
+        "Option B": "Lipid synthesis",
+        "Option C": "Detoxification",
+        "Option D": "Energy production",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes are the sites of protein synthesis in both prokaryotic and eukaryotic cells."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the function of the mitochondrion in eukaryotic cells?",
+        "Option A": "Photosynthesis",
+        "Option B": "Detoxification",
+        "Option C": "Cellular respiration",
+        "Option D": "Protein synthesis",
+        "Correct Option": "C",
+        "Explanation": "Mitochondria generate ATP, the cell's energy currency, through cellular respiration."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which of the following organelles is involved in the breakdown of fatty acids and amino acids?",
+        "Option A": "Peroxisomes",
+        "Option B": "Golgi apparatus",
+        "Option C": "Mitochondria",
+        "Option D": "Chloroplasts",
+        "Correct Option": "A",
+        "Explanation": "Peroxisomes break down fatty acids and detoxify harmful substances."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which organelle is involved in storing and releasing calcium ions?",
+        "Option A": "Lysosome",
+        "Option B": "Endoplasmic reticulum",
+        "Option C": "Nucleus",
+        "Option D": "Mitochondrion",
+        "Correct Option": "B",
+        "Explanation": "The smooth ER stores and releases calcium ions, playing a role in muscle contraction and other processes."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is the function of the cytoskeleton?",
+        "Option A": "Energy production",
+        "Option B": "DNA replication",
+        "Option C": "Maintaining cell shape and structure",
+        "Option D": "Packaging proteins",
+        "Correct Option": "C",
+        "Explanation": "The cytoskeleton provides structural support and helps with cell movement."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which part of the cell controls the entry and exit of materials?",
+        "Option A": "Nucleus",
+        "Option B": "Mitochondrion",
+        "Option C": "Cell membrane",
+        "Option D": "Cytoplasm",
+        "Correct Option": "C",
+        "Explanation": "The cell membrane regulates what enters and leaves the cell."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What structure is responsible for providing shape and support to animal cells?",
+        "Option A": "Cell membrane",
+        "Option B": "Cytoplasm",
+        "Option C": "Cytoskeleton",
+        "Option D": "Nucleus",
+        "Correct Option": "C",
+        "Explanation": "The cytoskeleton provides structural support and shape to animal cells."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which of the following is found in both plant and animal cells?",
+        "Option A": "Cell wall",
+        "Option B": "Chloroplasts",
+        "Option C": "Mitochondria",
+        "Option D": "Vacuoles",
+        "Correct Option": "C",
+        "Explanation": "Mitochondria are found in both plant and animal cells for energy production."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which structure is involved in the synthesis of proteins and lipids?",
+        "Option A": "Ribosomes",
+        "Option B": "Golgi apparatus",
+        "Option C": "Endoplasmic reticulum",
+        "Option D": "Nucleolus",
+        "Correct Option": "C",
+        "Explanation": "The endoplasmic reticulum is involved in synthesizing proteins (rough ER) and lipids (smooth ER)."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which of the following is NOT a component of the cytoskeleton?",
+        "Option A": "Microtubules",
+        "Option B": "Intermediate filaments",
+        "Option C": "Actin filaments",
+        "Option D": "Mitochondria",
+        "Correct Option": "D",
+        "Explanation": "Mitochondria are not part of the cytoskeleton."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which structure in the cell is involved in the production of ribosomes?",
+        "Option A": "Nucleus",
+        "Option B": "Nucleolus",
+        "Option C": "Golgi apparatus",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "B",
+        "Explanation": "The nucleolus produces ribosomes in the cell."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is the function of the Golgi apparatus in relation to proteins?",
+        "Option A": "Synthesizes proteins",
+        "Option B": "Modifies and packages proteins",
+        "Option C": "Breaks down proteins",
+        "Option D": "Stores proteins",
+        "Correct Option": "B",
+        "Explanation": "The Golgi apparatus modifies, sorts, and packages proteins for secretion or use within the cell."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which of the following is a characteristic of chloroplasts?",
+        "Option A": "Contain a pigment for photosynthesis",
+        "Option B": "Found only in animal cells",
+        "Option C": "Contain the cell's DNA",
+        "Option D": "Synthesize proteins",
+        "Correct Option": "A",
+        "Explanation": "Chloroplasts contain chlorophyll, a pigment that captures light energy for photosynthesis."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which structure is responsible for transporting materials within the cell?",
+        "Option A": "Golgi apparatus",
+        "Option B": "Endoplasmic reticulum",
+        "Option C": "Lysosome",
+        "Option D": "Nucleolus",
+        "Correct Option": "B",
+        "Explanation": "The endoplasmic reticulum helps transport materials within the cell."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following organelles is responsible for protein folding?",
+        "Option A": "Ribosome",
+        "Option B": "Golgi apparatus",
+        "Option C": "Endoplasmic reticulum",
+        "Option D": "Mitochondrion",
+        "Correct Option": "C",
+        "Explanation": "The rough endoplasmic reticulum is responsible for protein folding after synthesis."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is the function of the nucleolus?",
+        "Option A": "Synthesize ribosomal RNA (rRNA)",
+        "Option B": "Synthesize proteins",
+        "Option C": "Store genetic material",
+        "Option D": "Break down waste materials",
+        "Correct Option": "A",
+        "Explanation": "The nucleolus is involved in the synthesis of ribosomal RNA (rRNA), which is necessary for ribosome production."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which of the following is a function of the lysosome?",
+        "Option A": "Protein synthesis",
+        "Option B": "Waste digestion and recycling",
+        "Option C": "Energy production",
+        "Option D": "Protein folding",
+        "Correct Option": "B",
+        "Explanation": "Lysosomes digest waste materials and recycle cellular components."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the function of microtubules in the cell?",
+        "Option A": "Protein synthesis",
+        "Option B": "Energy production",
+        "Option C": "Structural support and intracellular transport",
+        "Option D": "DNA replication",
+        "Correct Option": "C",
+        "Explanation": "Microtubules provide structural support and help transport materials within the cell."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What structure in the cell is responsible for regulating cell division?",
+        "Option A": "Centrosome",
+        "Option B": "Ribosome",
+        "Option C": "Cytoplasm",
+        "Option D": "Nucleus",
+        "Correct Option": "A",
+        "Explanation": "The centrosome organizes microtubules and plays a role in cell division."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is the function of the plasma membrane?",
+        "Option A": "Store genetic material",
+        "Option B": "Control the movement of substances in and out of the cell",
+        "Option C": "Produce energy",
+        "Option D": "Manufacture proteins",
+        "Correct Option": "B",
+        "Explanation": "The plasma membrane regulates what enters and leaves the cell."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which organelle is responsible for storing genetic information in the form of DNA?",
+        "Option A": "Nucleus",
+        "Option B": "Mitochondrion",
+        "Option C": "Ribosome",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "The nucleus contains the cell's DNA and controls genetic information."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which of the following is NOT found in eukaryotic cells?",
+        "Option A": "Nucleus",
+        "Option B": "Mitochondria",
+        "Option C": "Ribosomes",
+        "Option D": "Nucleoid",
+        "Correct Option": "D",
+        "Explanation": "The nucleoid is found in prokaryotic cells, not eukaryotic cells."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the function of the mitochondrion in terms of energy?",
+        "Option A": "Synthesize lipids",
+        "Option B": "Produce ATP",
+        "Option C": "Break down proteins",
+        "Option D": "Store calcium",
+        "Correct Option": "B",
+        "Explanation": "Mitochondria produce ATP, the energy currency of the cell, through cellular respiration."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is the primary function of the Golgi apparatus?",
+        "Option A": "Protein synthesis",
+        "Option B": "Packaging and sorting proteins",
+        "Option C": "Breaking down waste",
+        "Option D": "Energy production",
+        "Correct Option": "B",
+        "Explanation": "The Golgi apparatus modifies, packages, and sorts proteins for secretion or use."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What type of cell contains membrane-bound organelles?",
+        "Option A": "Prokaryotic",
+        "Option B": "Eukaryotic",
+        "Option C": "Animal",
+        "Option D": "Bacterial",
+        "Correct Option": "B",
+        "Explanation": "Eukaryotic cells contain membrane-bound organelles, unlike prokaryotic cells."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What structure is involved in movement and sensing in some cells?",
+        "Option A": "Flagella",
+        "Option B": "Ribosome",
+        "Option C": "Nucleus",
+        "Option D": "Cytoplasm",
+        "Correct Option": "A",
+        "Explanation": "Flagella are used for movement and sensing in some cells, such as sperm cells."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is the main role of the rough endoplasmic reticulum (RER)?",
+        "Option A": "Synthesizing lipids",
+        "Option B": "Synthesizing proteins",
+        "Option C": "Synthesizing carbohydrates",
+        "Option D": "Detoxifying substances",
+        "Correct Option": "B",
+        "Explanation": "The rough ER is involved in synthesizing and folding proteins."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What structure in the cell produces energy for cellular activities?",
+        "Option A": "Mitochondrion",
+        "Option B": "Nucleus",
+        "Option C": "Chloroplast",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "Mitochondria produce ATP, which is used for cellular activities."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which of the following structures helps in cell division?",
+        "Option A": "Microtubules",
+        "Option B": "Ribosomes",
+        "Option C": "Cytoplasm",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "A",
+        "Explanation": "Microtubules help organize the spindle fibers during cell division."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What structure in the cell contains the genetic material?",
+        "Option A": "Nucleus",
+        "Option B": "Golgi apparatus",
+        "Option C": "Ribosome",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "A",
+        "Explanation": "The nucleus contains the cell's genetic material in the form of DNA."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What is the main function of the vacuole in animal cells?",
+        "Option A": "Protein synthesis",
+        "Option B": "Transporting nutrients",
+        "Option C": "Storing water and nutrients",
+        "Option D": "Cell division",
+        "Correct Option": "C",
+        "Explanation": "Vacuoles store water, nutrients, and waste in animal cells."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What structure helps in the production of energy in the form of ATP?",
+        "Option A": "Mitochondrion",
+        "Option B": "Chloroplast",
+        "Option C": "Ribosome",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "Mitochondria generate ATP through cellular respiration."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is the role of chloroplasts in plant cells?",
+        "Option A": "Photosynthesis",
+        "Option B": "Cell division",
+        "Option C": "Energy production",
+        "Option D": "Protein synthesis",
+        "Correct Option": "A",
+        "Explanation": "Chloroplasts carry out photosynthesis in plant cells."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which of the following is involved in maintaining the shape of a cell?",
+        "Option A": "Cytoskeleton",
+        "Option B": "Ribosome",
+        "Option C": "Mitochondrion",
+        "Option D": "Chloroplast",
+        "Correct Option": "A",
+        "Explanation": "The cytoskeleton provides structural support to the cell."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What type of cell is responsible for making protein?",
+        "Option A": "Prokaryotic cells",
+        "Option B": "Eukaryotic cells",
+        "Option C": "Animal cells",
+        "Option D": "Plant cells",
+        "Correct Option": "B",
+        "Explanation": "Both prokaryotic and eukaryotic cells make proteins."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What organelle helps in cellular waste disposal?",
+        "Option A": "Lysosome",
+        "Option B": "Golgi apparatus",
+        "Option C": "Chloroplast",
+        "Option D": "Ribosome",
+        "Correct Option": "A",
+        "Explanation": "Lysosomes digest cellular waste and recycle materials."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which part of the cell is responsible for storing and releasing calcium ions?",
+        "Option A": "Cytoplasm",
+        "Option B": "Endoplasmic reticulum",
+        "Option C": "Nucleus",
+        "Option D": "Ribosome",
+        "Correct Option": "B",
+        "Explanation": "The smooth ER is responsible for storing and releasing calcium ions."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the function of the nuclear membrane?",
+        "Option A": "Store DNA",
+        "Option B": "Protect the cell",
+        "Option C": "Protect the nucleus",
+        "Option D": "Synthesize RNA",
+        "Correct Option": "C",
+        "Explanation": "The nuclear membrane surrounds the nucleus and protects it from external damage."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which of the following is responsible for cellular movement?",
+        "Option A": "Cytoplasm",
+        "Option B": "Microtubules",
+        "Option C": "Mitochondrion",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "B",
+        "Explanation": "Microtubules are involved in cellular movement and division."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the function of the centrosome?",
+        "Option A": "Control cell division",
+        "Option B": "Package proteins",
+        "Option C": "Store genetic material",
+        "Option D": "Control protein synthesis",
+        "Correct Option": "A",
+        "Explanation": "The centrosome organizes microtubules and aids in cell division."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is the function of the ribosome in the cell?",
+        "Option A": "Synthesize proteins",
+        "Option B": "Detoxify chemicals",
+        "Option C": "Maintain cell shape",
+        "Option D": "Store energy",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes are responsible for protein synthesis."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What structure is found in both plant and animal cells but is not present in bacterial cells?",
+        "Option A": "Cytoplasm",
+        "Option B": "Nucleus",
+        "Option C": "Plasma membrane",
+        "Option D": "Ribosomes",
+        "Correct Option": "B",
+        "Explanation": "The nucleus is found in eukaryotic cells but not in bacterial cells."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the function of the cell membrane in relation to the environment?",
+        "Option A": "Support the cell",
+        "Option B": "Regulate what enters and leaves the cell",
+        "Option C": "Synthesize proteins",
+        "Option D": "Store genetic information",
+        "Correct Option": "B",
+        "Explanation": "The cell membrane controls the exchange of materials between the cell and its environment."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What organelle is responsible for cellular respiration?",
+        "Option A": "Nucleus",
+        "Option B": "Mitochondrion",
+        "Option C": "Chloroplast",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "B",
+        "Explanation": "Mitochondria are responsible for cellular respiration in eukaryotic cells."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the function of the smooth endoplasmic reticulum?",
+        "Option A": "Protein synthesis",
+        "Option B": "Lipid synthesis and detoxification",
+        "Option C": "DNA replication",
+        "Option D": "Packaging proteins",
+        "Correct Option": "B",
+        "Explanation": "The smooth ER is involved in lipid synthesis and detoxification."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which structure contains digestive enzymes to break down waste and foreign particles?",
+        "Option A": "Lysosomes",
+        "Option B": "Peroxisomes",
+        "Option C": "Nucleus",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "Lysosomes contain digestive enzymes for waste breakdown."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which part of the cell is responsible for modifying and sorting proteins?",
+        "Option A": "Nucleus",
+        "Option B": "Ribosomes",
+        "Option C": "Golgi apparatus",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "C",
+        "Explanation": "The Golgi apparatus modifies and sorts proteins for secretion or use."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is the function of the ribosome?",
+        "Option A": "Synthesize proteins",
+        "Option B": "Store genetic material",
+        "Option C": "Transport nutrients",
+        "Option D": "Produce ATP",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes synthesize proteins by translating messenger RNA."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which organelle is responsible for synthesizing ribosomal RNA (rRNA)?",
+        "Option A": "Nucleus",
+        "Option B": "Nucleolus",
+        "Option C": "Golgi apparatus",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "B",
+        "Explanation": "The nucleolus synthesizes rRNA, essential for ribosome production."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is the main function of the Golgi apparatus?",
+        "Option A": "Protein synthesis",
+        "Option B": "Packaging and sorting proteins",
+        "Option C": "Photosynthesis",
+        "Option D": "DNA replication",
+        "Correct Option": "B",
+        "Explanation": "The Golgi apparatus processes and packages proteins for secretion or storage."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following is NOT a function of the smooth endoplasmic reticulum?",
+        "Option A": "Detoxification",
+        "Option B": "Lipid synthesis",
+        "Option C": "Protein folding",
+        "Option D": "Carbohydrate metabolism",
+        "Correct Option": "C",
+        "Explanation": "Protein folding is a function of the rough ER, not the smooth ER."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which of the following is an organelle involved in energy production?",
+        "Option A": "Mitochondrion",
+        "Option B": "Golgi apparatus",
+        "Option C": "Endoplasmic reticulum",
+        "Option D": "Lysosome",
+        "Correct Option": "A",
+        "Explanation": "Mitochondria generate energy for the cell through cellular respiration."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which structure helps in the synthesis of proteins from amino acids?",
+        "Option A": "Ribosomes",
+        "Option B": "Endoplasmic reticulum",
+        "Option C": "Golgi apparatus",
+        "Option D": "Nucleus",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes are the sites of protein synthesis in the cell."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which part of the cell is responsible for maintaining the cell's shape and support?",
+        "Option A": "Cytoskeleton",
+        "Option B": "Nucleus",
+        "Option C": "Ribosomes",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "The cytoskeleton helps maintain the shape and support of the cell."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which organelle is involved in the production of ATP?",
+        "Option A": "Nucleus",
+        "Option B": "Mitochondrion",
+        "Option C": "Chloroplast",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "B",
+        "Explanation": "Mitochondria produce ATP through cellular respiration."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What structure helps in maintaining cell shape, anchoring organelles, and enabling movement?",
+        "Option A": "Microtubules",
+        "Option B": "Nucleolus",
+        "Option C": "Endoplasmic reticulum",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "Microtubules are part of the cytoskeleton and are involved in maintaining cell shape and movement."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which organelle helps in modifying proteins?",
+        "Option A": "Endoplasmic reticulum",
+        "Option B": "Golgi apparatus",
+        "Option C": "Ribosome",
+        "Option D": "Chloroplast",
+        "Correct Option": "B",
+        "Explanation": "The Golgi apparatus modifies proteins before they are distributed."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What organelle contains digestive enzymes to break down cellular waste?",
+        "Option A": "Lysosomes",
+        "Option B": "Nucleus",
+        "Option C": "Ribosome",
+        "Option D": "Golgi apparatus",
+        "Correct Option": "A",
+        "Explanation": "Lysosomes contain enzymes that break down waste materials and cellular debris."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which of the following structures is found in both plant and animal cells?",
+        "Option A": "Chloroplast",
+        "Option B": "Nucleus",
+        "Option C": "Cell wall",
+        "Option D": "Ribosome",
+        "Correct Option": "B",
+        "Explanation": "The nucleus is present in both plant and animal cells."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the function of the Golgi apparatus in relation to proteins?",
+        "Option A": "Translates RNA",
+        "Option B": "Packages and modifies proteins",
+        "Option C": "Synthesizes proteins",
+        "Option D": "Stores genetic material",
+        "Correct Option": "B",
+        "Explanation": "The Golgi apparatus modifies and packages proteins for use or export."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which of the following structures stores the cell's genetic information?",
+        "Option A": "Nucleus",
+        "Option B": "Golgi apparatus",
+        "Option C": "Ribosomes",
+        "Option D": "Endoplasmic reticulum",
+        "Correct Option": "A",
+        "Explanation": "The nucleus stores the genetic material (DNA) in eukaryotic cells."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the function of the microtubules in the cell?",
+        "Option A": "Maintain cell shape",
+        "Option B": "Synthesize proteins",
+        "Option C": "Regulate movement of chromosomes during cell division",
+        "Option D": "Store nutrients",
+        "Correct Option": "C",
+        "Explanation": "Microtubules are involved in cell division and help organize the mitotic spindle."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which structure is responsible for helping cells move and divide?",
+        "Option A": "Ribosome",
+        "Option B": "Cytoskeleton",
+        "Option C": "Mitochondrion",
+        "Option D": "Nucleus",
+        "Correct Option": "B",
+        "Explanation": "The cytoskeleton supports cell movement and division."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What part of the cell provides structural support and regulates cellular activities?",
+        "Option A": "Cytoplasm",
+        "Option B": "Ribosomes",
+        "Option C": "Cell membrane",
+        "Option D": "Cytoskeleton",
+        "Correct Option": "D",
+        "Explanation": "The cytoskeleton provides structural support and regulates movement and cell division."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the function of the plasma membrane in relation to the environment?",
+        "Option A": "Control cellular growth",
+        "Option B": "Regulate what enters and leaves the cell",
+        "Option C": "Store energy",
+        "Option D": "Provide structural support",
+        "Correct Option": "B",
+        "Explanation": "The plasma membrane controls the exchange of materials with the environment."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What organelle contains its own DNA and is involved in energy production?",
+        "Option A": "Mitochondrion",
+        "Option B": "Nucleus",
+        "Option C": "Chloroplast",
+        "Option D": "Ribosome",
+        "Correct Option": "A",
+        "Explanation": "Mitochondria contain their own DNA and are involved in producing ATP."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which structure is responsible for synthesizing proteins from mRNA?",
+        "Option A": "Ribosome",
+        "Option B": "Nucleus",
+        "Option C": "Golgi apparatus",
+        "Option D": "Mitochondrion",
+        "Correct Option": "A",
+        "Explanation": "Ribosomes synthesize proteins by translating mRNA into amino acid sequences."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
