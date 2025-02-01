@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is the theory of evolution?",
+        "Option A": "A theory explaining the origin of the universe",
+        "Option B": "A theory stating that species evolve over time due to natural selection",
+        "Option C": "A theory that species are created separately",
+        "Option D": "A theory of human genetics",
+        "Correct Option": "B",
+        "Explanation": "Evolution theory states that species evolve through natural selection over generations."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Who proposed the theory of natural selection?",
+        "Option A": "Gregor Mendel",
+        "Option B": "Charles Darwin",
+        "Option C": "Jean-Baptiste Lamarck",
+        "Option D": "Alfred Russel Wallace",
+        "Correct Option": "B",
+        "Explanation": "Charles Darwin proposed the theory of natural selection in his work \"\"On the Origin of Species.\"\""
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which of the following is a key component of Darwin's theory of evolution?",
+        "Option A": "Inheritance of acquired traits",
+        "Option B": "Use and disuse of body parts",
+        "Option C": "Survival of the fittest",
+        "Option D": "Spontaneous generation",
+        "Correct Option": "C",
+        "Explanation": "\"\"Survival of the fittest\"\" refers to the idea that organisms best adapted to their environment are more likely to survive and reproduce."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is the mechanism behind natural selection?",
+        "Option A": "Random mutation",
+        "Option B": "Inheritance of acquired traits",
+        "Option C": "Adaptation to the environment",
+        "Option D": "Genetic drift",
+        "Correct Option": "C",
+        "Explanation": "Natural selection operates by favoring individuals who are better adapted to their environment."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following can lead to the formation of a new species?",
+        "Option A": "Genetic drift",
+        "Option B": "Mutations",
+        "Option C": "Natural selection",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "All of the listed factors can contribute to speciation, the formation of new species."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the term for the variety of different types of organisms on Earth?",
+        "Option A": "Speciation",
+        "Option B": "Biodiversity",
+        "Option C": "Mutation",
+        "Option D": "Cladistics",
+        "Correct Option": "B",
+        "Explanation": "Biodiversity refers to the variety of life forms in an environment or on Earth."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is adaptive radiation?",
+        "Option A": "The process by which organisms evolve to have similar traits",
+        "Option B": "The branching out of species from a common ancestor into new habitats",
+        "Option C": "A type of genetic mutation",
+        "Option D": "The extinction of species",
+        "Correct Option": "B",
+        "Explanation": "Adaptive radiation occurs when organisms diversify rapidly from a common ancestor into a variety of forms."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What type of evidence supports the theory of evolution?",
+        "Option A": "Fossil records",
+        "Option B": "Comparative anatomy",
+        "Option C": "Genetic similarities",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Fossils, anatomy, and genetics all provide evidence supporting the theory of evolution."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is a homologous structure?",
+        "Option A": "A structure that has a similar function but different origin",
+        "Option B": "A structure that has a different function but similar origin",
+        "Option C": "A structure that is identical in all species",
+        "Option D": "A structure that is irrelevant to the species",
+        "Correct Option": "B",
+        "Explanation": "Homologous structures are similar in origin but may serve different functions across species."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the main difference between homologous and analogous structures?",
+        "Option A": "Homologous structures have a common origin, while analogous structures have a similar function",
+        "Option B": "Homologous structures are found in humans, while analogous structures are found in animals",
+        "Option C": "Analogous structures are evolutionary remnants, while homologous structures are essential",
+        "Option D": "There is no difference",
+        "Correct Option": "A",
+        "Explanation": "Homologous structures share a common origin, while analogous structures have a similar function but evolved independently."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What does the term \"\"fitness\"\" mean in the context of evolution?",
+        "Option A": "The physical strength of an organism",
+        "Option B": "The ability of an organism to survive and reproduce in its environment",
+        "Option C": "The health of an organism",
+        "Option D": "The speed of an organism",
+        "Correct Option": "B",
+        "Explanation": "Fitness in evolutionary terms refers to an organism's ability to survive, reproduce, and pass on its genes."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is genetic drift?",
+        "Option A": "The movement of genes from one population to another",
+        "Option B": "A change in the allele frequency due to random events",
+        "Option C": "The process of natural selection",
+        "Option D": "The introduction of new species",
+        "Correct Option": "B",
+        "Explanation": "Genetic drift refers to random changes in allele frequencies that can occur in small populations."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is the result of mutations in the genetic material?",
+        "Option A": "Changes in the environment",
+        "Option B": "New traits in the population",
+        "Option C": "Reduction in biodiversity",
+        "Option D": "Speciation",
+        "Correct Option": "B",
+        "Explanation": "Mutations introduce new genetic variations, which can lead to new traits in the population."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is the importance of genetic variation in the process of evolution?",
+        "Option A": "It leads to the extinction of species",
+        "Option B": "It decreases survival rates",
+        "Option C": "It provides the raw material for natural selection",
+        "Option D": "It prevents speciation",
+        "Correct Option": "C",
+        "Explanation": "Genetic variation is important because it provides the raw material for natural selection to act upon."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which of the following can be considered evidence of evolution?",
+        "Option A": "Vestigial structures",
+        "Option B": "Fossils",
+        "Option C": "Molecular biology data",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Vestigial structures, fossils, and molecular biology provide evidence supporting evolution."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What is the main concept of Lamarck's theory of evolution?",
+        "Option A": "Species evolve due to the inheritance of acquired traits",
+        "Option B": "Evolution occurs through natural selection",
+        "Option C": "Species evolve through genetic mutations",
+        "Option D": "Species do not change over time",
+        "Correct Option": "A",
+        "Explanation": "Lamarck believed that organisms could pass on traits acquired during their lifetime to their offspring."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is a gene pool?",
+        "Option A": "The total number of organisms in a population",
+        "Option B": "The total collection of genes in a population",
+        "Option C": "The total number of species in an ecosystem",
+        "Option D": "The total number of ecosystems in a region",
+        "Correct Option": "B",
+        "Explanation": "A gene pool consists of all the alleles found in all individuals within a population."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What does \"\"survival of the fittest\"\" mean?",
+        "Option A": "The strongest organism survives",
+        "Option B": "The organism best suited to its environment survives and reproduces",
+        "Option C": "The oldest organism survives",
+        "Option D": "The fastest organism survives",
+        "Correct Option": "B",
+        "Explanation": "\"\"Survival of the fittest\"\" refers to the survival and reproduction of organisms that are best adapted to their environment."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is the difference between artificial selection and natural selection?",
+        "Option A": "Artificial selection is controlled by humans, while natural selection is driven by environmental pressures",
+        "Option B": "Natural selection is driven by human choices, while artificial selection is driven by environmental pressures",
+        "Option C": "Both are driven by human intervention",
+        "Option D": "There is no difference between artificial and natural selection",
+        "Correct Option": "A",
+        "Explanation": "Artificial selection is when humans choose traits for breeding, while natural selection is driven by environmental pressures."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the Hardy-Weinberg equilibrium used for in evolutionary biology?",
+        "Option A": "To predict the future evolution of a population",
+        "Option B": "To calculate the allele frequencies in a population that is not evolving",
+        "Option C": "To study genetic mutations",
+        "Option D": "To analyze the fitness of an organism",
+        "Correct Option": "B",
+        "Explanation": "The Hardy-Weinberg equilibrium provides a mathematical model for studying genetic variation in populations that are not evolving."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is the term for the gradual change in a species over time?",
+        "Option A": "Speciation",
+        "Option B": "Evolution",
+        "Option C": "Mutation",
+        "Option D": "Genetic drift",
+        "Correct Option": "B",
+        "Explanation": "Evolution refers to the gradual change in a species over time through genetic variation and natural selection."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What are vestigial structures?",
+        "Option A": "Structures that have no function but were once functional in ancestral organisms",
+        "Option B": "Structures that are essential for survival",
+        "Option C": "Structures that serve similar functions across different species",
+        "Option D": "Structures that are newly evolved",
+        "Correct Option": "A",
+        "Explanation": "Vestigial structures are remnants of organs or structures that had a function in ancestors but are no longer necessary."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following is an example of divergent evolution?",
+        "Option A": "A bat’s wings and a bird’s wings",
+        "Option B": "A whale's flipper and a human's arm",
+        "Option C": "A dolphin's fins and a shark's fins",
+        "Option D": "A butterfly's wings and a bird’s wings",
+        "Correct Option": "B",
+        "Explanation": "Divergent evolution occurs when two species with a common ancestor develop different traits."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What does the theory of punctuated equilibrium propose?",
+        "Option A": "Evolution occurs at a constant, steady pace",
+        "Option B": "Evolution happens in bursts of rapid change followed by long periods of stability",
+        "Option C": "Evolution happens through gradual changes over time",
+        "Option D": "Evolution occurs due to mutations",
+        "Correct Option": "B",
+        "Explanation": "Punctuated equilibrium suggests that evolution happens in rapid bursts, followed by periods of little change."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is a cladogram?",
+        "Option A": "A type of fossil",
+        "Option B": "A diagram showing evolutionary relationships between species",
+        "Option C": "A type of genetic mutation",
+        "Option D": "A type of natural selection",
+        "Correct Option": "B",
+        "Explanation": "A cladogram is a diagram that shows the evolutionary relationships between different species based on shared characteristics."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is the main cause of the variation in populations?",
+        "Option A": "Environmental changes",
+        "Option B": "Genetic mutations",
+        "Option C": "Immigration of individuals",
+        "Option D": "Both B and C",
+        "Correct Option": "D",
+        "Explanation": "Genetic mutations and immigration of individuals contribute to genetic variation within populations."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the role of the environment in natural selection?",
+        "Option A": "It forces organisms to evolve rapidly",
+        "Option B": "It provides the challenges and opportunities that influence which organisms survive and reproduce",
+        "Option C": "It determines the gene pool of a population",
+        "Option D": "It prevents mutations",
+        "Correct Option": "B",
+        "Explanation": "The environment creates challenges and opportunities that influence survival and reproduction, guiding natural selection."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the process of speciation?",
+        "Option A": "The formation of a new species through evolutionary changes",
+        "Option B": "The extinction of a species",
+        "Option C": "The hybridization of two species",
+        "Option D": "The adaptation of organisms to their environment",
+        "Correct Option": "A",
+        "Explanation": "Speciation occurs when a population evolves into two or more distinct species due to genetic differences."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is the term for the physical or behavioral traits that increase an organism's chances of surviving and reproducing?",
+        "Option A": "Adaptations",
+        "Option B": "Mutations",
+        "Option C": "Alleles",
+        "Option D": "Clades",
+        "Correct Option": "A",
+        "Explanation": "Adaptations are traits that enhance an organism's ability to survive and reproduce in its environment."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is a transitional fossil?",
+        "Option A": "A fossil that represents a complete evolutionary change between two species",
+        "Option B": "A fossil of a fully developed species",
+        "Option C": "A fossil that shows no evidence of evolutionary change",
+        "Option D": "A fossil of a recently extinct species",
+        "Correct Option": "A",
+        "Explanation": "Transitional fossils show intermediary forms between two distinct species, demonstrating evolutionary changes."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is an example of convergent evolution?",
+        "Option A": "The wings of birds and bats",
+        "Option B": "The legs of lizards and snakes",
+        "Option C": "The flippers of dolphins and seals",
+        "Option D": "The wings of birds and insects",
+        "Correct Option": "D",
+        "Explanation": "Convergent evolution occurs when organisms from different ancestors develop similar traits due to similar environmental pressures."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What does the concept of \"\"common descent\"\" suggest?",
+        "Option A": "All species are unrelated",
+        "Option B": "All living organisms are descended from a common ancestor",
+        "Option C": "Evolution does not occur in species",
+        "Option D": "Species evolve randomly",
+        "Correct Option": "B",
+        "Explanation": "Common descent suggests that all living organisms share a common ancestor."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following can lead to the evolution of new species?",
+        "Option A": "Geographic isolation",
+        "Option B": "Behavioral isolation",
+        "Option C": "Temporal isolation",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Geographic, behavioral, and temporal isolation can all contribute to the formation of new species."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is the primary factor driving evolution in natural selection?",
+        "Option A": "Mutation",
+        "Option B": "Genetic variation",
+        "Option C": "Survival and reproduction of the fittest",
+        "Option D": "Environmental changes",
+        "Correct Option": "C",
+        "Explanation": "Natural selection is driven by the survival and reproduction of individuals best adapted to their environment."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the principle of \"\"use and disuse\"\" proposed by Lamarck?",
+        "Option A": "Traits acquired during an organism's lifetime can be passed on to offspring",
+        "Option B": "Organisms evolve through genetic mutations",
+        "Option C": "Natural selection drives evolution",
+        "Option D": "Species evolve by random chance",
+        "Correct Option": "A",
+        "Explanation": "Lamarck's theory proposed that traits acquired during an organism's lifetime could be inherited by its offspring."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is stabilizing selection?",
+        "Option A": "Selection that favors the extremes of a population's traits",
+        "Option B": "Selection that favors the average traits of a population",
+        "Option C": "Selection that favors both extremes of a population",
+        "Option D": "Selection that eliminates intermediate traits",
+        "Correct Option": "B",
+        "Explanation": "Stabilizing selection favors the average traits and eliminates the extremes in a population."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is directional selection?",
+        "Option A": "Selection that favors the average traits of a population",
+        "Option B": "Selection that favors one extreme phenotype over others",
+        "Option C": "Selection that eliminates intermediate traits",
+        "Option D": "Selection that maintains genetic diversity",
+        "Correct Option": "B",
+        "Explanation": "Directional selection favors one extreme phenotype, leading to a shift in the population's traits over time."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is disruptive selection?",
+        "Option A": "Selection that favors the average traits of a population",
+        "Option B": "Selection that favors one extreme phenotype over others",
+        "Option C": "Selection that favors both extreme phenotypes and eliminates the average phenotype",
+        "Option D": "Selection that stabilizes population traits",
+        "Correct Option": "C",
+        "Explanation": "Disruptive selection favors both extreme phenotypes and eliminates intermediate phenotypes in a population."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is a major factor that can lead to extinction?",
+        "Option A": "Competition for resources",
+        "Option B": "Environmental change",
+        "Option C": "Habitat destruction",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Competition, environmental changes, and habitat destruction can all contribute to the extinction of species."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is the \"\"modern synthesis\"\" in evolutionary theory?",
+        "Option A": "The integration of genetic principles with Darwin's theory of natural selection",
+        "Option B": "The integration of fossils with Darwin's theory",
+        "Option C": "The acceptance of Lamarck's theory of evolution",
+        "Option D": "The denial of natural selection",
+        "Correct Option": "A",
+        "Explanation": "The modern synthesis integrates genetics with Darwin's natural selection theory, forming a comprehensive understanding of evolution."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is genetic recombination?",
+        "Option A": "The process of creating new genetic material",
+        "Option B": "The process of reshuffling genes during sexual reproduction",
+        "Option C": "The mutation of genes",
+        "Option D": "The elimination of harmful genes",
+        "Correct Option": "B",
+        "Explanation": "Genetic recombination occurs during sexual reproduction when genetic material from two parents is mixed, producing genetic diversity."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the role of reproductive isolation in speciation?",
+        "Option A": "It prevents gene flow between populations, leading to genetic differences",
+        "Option B": "It allows gene flow between populations",
+        "Option C": "It causes genetic drift",
+        "Option D": "It prevents mutations from occurring",
+        "Correct Option": "A",
+        "Explanation": "Reproductive isolation prevents gene flow between populations, contributing to speciation."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the term for when a population undergoes a rapid evolutionary change in response to a sudden environmental change?",
+        "Option A": "Punctuated equilibrium",
+        "Option B": "Gradualism",
+        "Option C": "Adaptive radiation",
+        "Option D": "Stabilizing selection",
+        "Correct Option": "A",
+        "Explanation": "Punctuated equilibrium suggests that species undergo rapid evolutionary changes followed by long periods of stability."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the founder effect?",
+        "Option A": "When a small group of individuals establishes a new population, leading to reduced genetic variation",
+        "Option B": "The result of genetic mutation in a population",
+        "Option C": "The process of natural selection in a population",
+        "Option D": "The movement of genes from one population to another",
+        "Correct Option": "A",
+        "Explanation": "The founder effect occurs when a small group of individuals establishes a new population with reduced genetic variation."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What does \"\"gene flow\"\" refer to?",
+        "Option A": "The exchange of genes between different populations",
+        "Option B": "The increase in genetic mutations within a population",
+        "Option C": "The increase in reproductive isolation",
+        "Option D": "The process of natural selection",
+        "Correct Option": "A",
+        "Explanation": "Gene flow refers to the transfer of genes between different populations, increasing genetic diversity."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is the role of sexual selection in evolution?",
+        "Option A": "It leads to the extinction of species",
+        "Option B": "It helps organisms adapt to their environment",
+        "Option C": "It promotes traits that increase mating success",
+        "Option D": "It eliminates harmful mutations",
+        "Correct Option": "C",
+        "Explanation": "Sexual selection promotes traits that increase an organism's chances of attracting mates and reproducing."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is the key idea behind the concept of \"\"descent with modification\"\"?",
+        "Option A": "All organisms are identical",
+        "Option B": "Organisms are fixed and do not change over time",
+        "Option C": "Species evolve and accumulate changes over generations",
+        "Option D": "Evolution occurs randomly without any pattern",
+        "Correct Option": "C",
+        "Explanation": "\"\"Descent with modification\"\" means that species evolve and accumulate genetic changes over time, leading to new species."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is the importance of fossils in studying evolution?",
+        "Option A": "They provide evidence of past species and evolutionary transitions",
+        "Option B": "They show the age of the Earth",
+        "Option C": "They help predict future species",
+        "Option D": "They have no role in understanding evolution",
+        "Correct Option": "A",
+        "Explanation": "Fossils provide evidence of past life forms and evolutionary transitions between species."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What does the term \"\"speciation\"\" refer to?",
+        "Option A": "The extinction of species",
+        "Option B": "The formation of new species through evolutionary processes",
+        "Option C": "The adaptation of species to their environment",
+        "Option D": "The migration of species",
+        "Correct Option": "B",
+        "Explanation": "Speciation is the process by which new species arise due to evolutionary changes in a population."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is the significance of the Galápagos finches in Darwin's theory of evolution?",
+        "Option A": "They showed that organisms cannot adapt to different environments",
+        "Option B": "They provided evidence for adaptive radiation and natural selection",
+        "Option C": "They demonstrated the importance of genetic drift",
+        "Option D": "They were not relevant to the theory of evolution",
+        "Correct Option": "B",
+        "Explanation": "The Galápagos finches provided key evidence for adaptive radiation and natural selection, showing how species evolve in response to environmental pressures."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is a key characteristic of the process of evolution?",
+        "Option A": "It occurs over a short period",
+        "Option B": "It involves gradual changes over long periods",
+        "Option C": "It leads to an immediate change in species",
+        "Option D": "It eliminates all genetic mutations",
+        "Correct Option": "B",
+        "Explanation": "Evolution occurs gradually over long periods, with small changes accumulating over time."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which of the following is an example of a fossil record supporting evolution?",
+        "Option A": "The diversity of living species today",
+        "Option B": "The change in gene frequencies in populations",
+        "Option C": "The progression from simple to more complex forms in fossil layers",
+        "Option D": "The behavior of living organisms",
+        "Correct Option": "C",
+        "Explanation": "The fossil record shows a progression from simple to more complex life forms, supporting evolutionary changes."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What does \"\"fitness\"\" in evolutionary biology refer to?",
+        "Option A": "Physical strength",
+        "Option B": "Ability to adapt to the environment",
+        "Option C": "Ability to survive and reproduce",
+        "Option D": "Speed and agility",
+        "Correct Option": "C",
+        "Explanation": "Fitness refers to an organism's ability to survive and reproduce, passing on its genes to the next generation."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which of the following is a result of genetic drift?",
+        "Option A": "Increased genetic diversity",
+        "Option B": "Decreased genetic diversity due to random changes",
+        "Option C": "Stabilization of allele frequencies in a population",
+        "Option D": "Directional selection",
+        "Correct Option": "B",
+        "Explanation": "Genetic drift causes random changes in allele frequencies, often decreasing genetic diversity."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the difference between convergent evolution and divergent evolution?",
+        "Option A": "Convergent evolution occurs in isolated populations; divergent evolution occurs in the same population",
+        "Option B": "Convergent evolution leads to similar traits in unrelated species; divergent evolution leads to different traits in related species",
+        "Option C": "Convergent evolution leads to genetic isolation; divergent evolution leads to gene flow",
+        "Option D": "There is no difference",
+        "Correct Option": "B",
+        "Explanation": "Convergent evolution results in similar traits in unrelated species, while divergent evolution results in different traits in related species."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which type of selection favors intermediate phenotypes?",
+        "Option A": "Disruptive selection",
+        "Option B": "Directional selection",
+        "Option C": "Stabilizing selection",
+        "Option D": "Artificial selection",
+        "Correct Option": "C",
+        "Explanation": "Stabilizing selection favors the intermediate phenotypes and reduces variation in a population."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is an example of an adaptive trait?",
+        "Option A": "Camouflage that helps an organism blend into its environment",
+        "Option B": "A nonfunctional organ",
+        "Option C": "A trait that reduces an organism’s chances of survival",
+        "Option D": "A trait that decreases reproduction",
+        "Correct Option": "A",
+        "Explanation": "Adaptive traits help an organism survive and reproduce by offering a better fit to its environment."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What role do mutations play in evolution?",
+        "Option A": "They always lead to harmful effects",
+        "Option B": "They provide new genetic material that can lead to evolutionary change",
+        "Option C": "They have no impact on evolution",
+        "Option D": "They only occur in response to environmental stress",
+        "Correct Option": "B",
+        "Explanation": "Mutations introduce genetic variation, which is essential for evolution to occur."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is directional selection?",
+        "Option A": "Selection that favors intermediate traits",
+        "Option B": "Selection that favors both extreme phenotypes",
+        "Option C": "Selection that favors one extreme phenotype",
+        "Option D": "Selection that reduces genetic variation",
+        "Correct Option": "C",
+        "Explanation": "Directional selection favors one extreme phenotype, leading to a shift in the population's traits."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is the key idea behind \"\"survival of the fittest\"\"?",
+        "Option A": "Strong organisms survive",
+        "Option B": "The organisms best adapted to their environment are most likely to survive and reproduce",
+        "Option C": "Only the largest organisms survive",
+        "Option D": "The fastest organisms will outlive others",
+        "Correct Option": "B",
+        "Explanation": "\"\"Survival of the fittest\"\" refers to the survival and reproduction of the most adapted individuals in a population."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the \"\"gene flow\"\" in evolution?",
+        "Option A": "The movement of alleles between different populations",
+        "Option B": "The mutation of genes within a population",
+        "Option C": "The extinction of species",
+        "Option D": "The random selection of traits for reproduction",
+        "Correct Option": "A",
+        "Explanation": "Gene flow refers to the transfer of alleles from one population to another, which can increase genetic diversity."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is speciation?",
+        "Option A": "The process by which two populations evolve into distinct species",
+        "Option B": "The extinction of a species",
+        "Option C": "The survival of an organism in its environment",
+        "Option D": "The adaptation of an organism to its environment",
+        "Correct Option": "A",
+        "Explanation": "Speciation is the formation of new and distinct species through evolutionary processes."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What does the term \"\"adaptive radiation\"\" refer to?",
+        "Option A": "Rapid diversification of a species into a variety of forms",
+        "Option B": "Evolution of a single species without much variation",
+        "Option C": "The extinction of all members of a species",
+        "Option D": "The appearance of mutations in a population",
+        "Correct Option": "A",
+        "Explanation": "Adaptive radiation occurs when a single species diversifies rapidly into multiple forms to adapt to different environments."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What type of isolation occurs when two populations of a species breed at different times?",
+        "Option A": "Temporal isolation",
+        "Option B": "Geographic isolation",
+        "Option C": "Behavioral isolation",
+        "Option D": "Mechanical isolation",
+        "Correct Option": "A",
+        "Explanation": "Temporal isolation occurs when populations breed at different times, preventing interbreeding."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is a common feature of all living organisms that supports the theory of evolution?",
+        "Option A": "They all share similar metabolic processes",
+        "Option B": "They have similar DNA sequences",
+        "Option C": "They all live in similar environments",
+        "Option D": "They all evolve at the same rate",
+        "Correct Option": "B",
+        "Explanation": "Similar DNA sequences across species suggest a common ancestry and support the theory of evolution."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is the importance of genetic variation in a population?",
+        "Option A": "It makes the population more vulnerable to extinction",
+        "Option B": "It reduces the survival chances of the species",
+        "Option C": "It provides the raw material for evolution to act upon",
+        "Option D": "It prevents mutations",
+        "Correct Option": "C",
+        "Explanation": "Genetic variation provides the raw material for evolution and allows populations to adapt to changing environments."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which process describes how new species arise from an existing population?",
+        "Option A": "Natural selection",
+        "Option B": "Genetic drift",
+        "Option C": "Speciation",
+        "Option D": "Genetic recombination",
+        "Correct Option": "C",
+        "Explanation": "Speciation occurs when an existing population evolves into a new species through evolutionary processes."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is a \"\"homologous structure\"\"?",
+        "Option A": "A structure that performs the same function in different species",
+        "Option B": "A structure that has a similar origin but may serve different functions in different species",
+        "Option C": "A structure with no function in a species",
+        "Option D": "A structure that evolves independently in different species",
+        "Correct Option": "B",
+        "Explanation": "Homologous structures share a common origin but may serve different functions across species."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What evidence does comparative anatomy provide for evolution?",
+        "Option A": "It shows that different species have different origins",
+        "Option B": "It shows that organisms have similar reproductive systems",
+        "Option C": "It shows how similar structures evolved from a common ancestor",
+        "Option D": "It proves that all species were created independently",
+        "Correct Option": "C",
+        "Explanation": "Comparative anatomy shows how similar structures in different species evolved from a common ancestor, supporting evolution."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What does the theory of punctuated equilibrium suggest about the pace of evolution?",
+        "Option A": "Evolution occurs gradually over time without any interruptions",
+        "Option B": "Evolution occurs at a constant rate",
+        "Option C": "Evolution happens in bursts of rapid change followed by long periods of stability",
+        "Option D": "Evolution only occurs in response to environmental changes",
+        "Correct Option": "C",
+        "Explanation": "Punctuated equilibrium suggests that evolution happens in rapid bursts, followed by long periods of stability."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is a \"\"cladogram\"\"?",
+        "Option A": "A tree diagram that shows the evolutionary relationships between species",
+        "Option B": "A chart of genetic mutations",
+        "Option C": "A diagram of the embryological development of species",
+        "Option D": "A chart showing the behavior of different species",
+        "Correct Option": "A",
+        "Explanation": "A cladogram is a tree diagram that shows the evolutionary relationships based on shared characteristics."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the term for the physical and genetic changes in populations over time?",
+        "Option A": "Evolution",
+        "Option B": "Natural selection",
+        "Option C": "Speciation",
+        "Option D": "Genetic drift",
+        "Correct Option": "A",
+        "Explanation": "Evolution refers to the changes in populations over time due to genetic variation, mutations, and natural selection."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the role of sexual selection in evolution?",
+        "Option A": "It favors traits that increase an organism’s ability to survive",
+        "Option B": "It favors traits that enhance an organism’s chances of reproducing",
+        "Option C": "It eliminates unfavorable genetic traits",
+        "Option D": "It has no impact on evolution",
+        "Correct Option": "B",
+        "Explanation": "Sexual selection favors traits that increase an organism's chances of attracting mates and reproducing."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What does \"\"survival of the fittest\"\" imply about fitness in evolution?",
+        "Option A": "Only the strongest survive",
+        "Option B": "The most adaptable organisms survive and reproduce",
+        "Option C": "Fitness is determined by an organism's physical size",
+        "Option D": "Organisms with the most offspring are always the fittest",
+        "Correct Option": "B",
+        "Explanation": "\"\"Survival of the fittest\"\" implies that the most adaptable organisms are the ones that survive and reproduce."
+    },
+    {
+        "Q.No": "75",
+        "Question": "How can a mutation lead to evolution?",
+        "Option A": "It can introduce new genetic material into the population",
+        "Option B": "It can eliminate harmful traits from the population",
+        "Option C": "It does not affect evolution",
+        "Option D": "It causes all organisms to become identical",
+        "Correct Option": "A",
+        "Explanation": "Mutations introduce new genetic material, contributing to genetic variation, which drives evolution."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is \"\"gene pool\"\"?",
+        "Option A": "The genetic material of a single organism",
+        "Option B": "The total genetic diversity in a population",
+        "Option C": "The genes passed on to offspring",
+        "Option D": "The genetic makeup of a species",
+        "Correct Option": "B",
+        "Explanation": "A gene pool is the total genetic material available within a population."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What does it mean if a population is in Hardy-Weinberg equilibrium?",
+        "Option A": "The population is evolving",
+        "Option B": "The population is not evolving",
+        "Option C": "There is a decrease in genetic variation",
+        "Option D": "The population is extinct",
+        "Correct Option": "B",
+        "Explanation": "Hardy-Weinberg equilibrium means that allele frequencies are not changing, indicating no evolution."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the main idea behind Darwin's concept of natural selection?",
+        "Option A": "Organisms with the most offspring survive",
+        "Option B": "Individuals with advantageous traits are more likely to survive and reproduce",
+        "Option C": "Evolution is a random process",
+        "Option D": "Species remain unchanged over time",
+        "Correct Option": "B",
+        "Explanation": "Darwin's theory suggests that advantageous traits increase an organism's chances of survival and reproduction."
+    },
+    {
+        "Q.No": "79",
+        "Question": "How can geographical isolation lead to speciation?",
+        "Option A": "It prevents gene flow between populations, leading to genetic differences",
+        "Option B": "It creates new habitats for populations to colonize",
+        "Option C": "It increases competition between populations",
+        "Option D": "It eliminates the need for genetic variation",
+        "Correct Option": "A",
+        "Explanation": "Geographical isolation prevents gene flow between populations, leading to the accumulation of genetic differences and potential speciation."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What does the term \"\"fitness\"\" refer to in evolutionary biology?",
+        "Option A": "The physical health of an organism",
+        "Option B": "The ability of an organism to survive and reproduce",
+        "Option C": "The strength of an organism",
+        "Option D": "The reproductive age of an organism",
+        "Correct Option": "B",
+        "Explanation": "Fitness refers to the ability of an organism to survive, reproduce, and pass on its genes to the next generation."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which of the following is an example of convergent evolution?",
+        "Option A": "The wings of birds and bats",
+        "Option B": "The different types of beaks in Darwin's finches",
+        "Option C": "The limbs of humans and whales",
+        "Option D": "The color patterns in butterflies",
+        "Correct Option": "A",
+        "Explanation": "Convergent evolution occurs when different species evolve similar traits due to similar environmental pressures."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the importance of the theory of evolution in modern biology?",
+        "Option A": "It explains how life on Earth originated",
+        "Option B": "It provides a framework for understanding the diversity of life",
+        "Option C": "It shows that organisms never change over time",
+        "Option D": "It eliminates the need for further research in biology",
+        "Correct Option": "B",
+        "Explanation": "The theory of evolution provides a framework for understanding the diversity of life and how species change over time."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is a key factor in natural selection?",
+        "Option A": "The random movement of individuals",
+        "Option B": "The selection of traits based on their usefulness for survival and reproduction",
+        "Option C": "The disappearance of harmful mutations",
+        "Option D": "The increase in population size",
+        "Correct Option": "B",
+        "Explanation": "Natural selection favors traits that are beneficial for survival and reproduction in a given environment."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following best explains the concept of \"\"survival of the fittest\"\"?",
+        "Option A": "The strongest individuals survive",
+        "Option B": "The organisms that are best suited to their environment are more likely to survive and reproduce",
+        "Option C": "Only the most intelligent survive",
+        "Option D": "The individuals that can adapt to any environment survive",
+        "Correct Option": "B",
+        "Explanation": "\"\"Survival of the fittest\"\" refers to the survival of organisms best adapted to their environment."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is \"\"artificial selection\"\"?",
+        "Option A": "The process of natural selection occurring in nature",
+        "Option B": "The intentional breeding of organisms with specific traits by humans",
+        "Option C": "The mutation of genes in a laboratory setting",
+        "Option D": "The elimination of less fit organisms in the wild",
+        "Correct Option": "B",
+        "Explanation": "Artificial selection involves humans intentionally breeding organisms with specific desirable traits."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is an example of a vestigial structure?",
+        "Option A": "The wings of a bird",
+        "Option B": "The tailbone in humans",
+        "Option C": "The large jaws of carnivorous mammals",
+        "Option D": "The beak of a hummingbird",
+        "Correct Option": "B",
+        "Explanation": "Vestigial structures are remnants of organs or traits that were once useful but no longer serve a function, such as the human tailbone."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is a \"\"phylogenetic tree\"\"?",
+        "Option A": "A diagram showing the evolutionary relationships among species",
+        "Option B": "A chart showing the population size over time",
+        "Option C": "A map of the migration patterns of species",
+        "Option D": "A model predicting the future evolution of a species",
+        "Correct Option": "A",
+        "Explanation": "A phylogenetic tree shows the evolutionary relationships between species based on shared ancestry."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is \"\"biogeography\"\"?",
+        "Option A": "The study of organisms' physical features",
+        "Option B": "The study of how species evolve in specific regions of the world",
+        "Option C": "The study of genetic mutations in species",
+        "Option D": "The study of how species behave",
+        "Correct Option": "B",
+        "Explanation": "Biogeography is the study of how species evolve and adapt in specific geographical regions."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the main conclusion of Darwin’s theory of evolution?",
+        "Option A": "Species do not change over time",
+        "Option B": "All species are created in their current form",
+        "Option C": "Species evolve over time through natural selection",
+        "Option D": "Evolution only happens in response to environmental changes",
+        "Correct Option": "C",
+        "Explanation": "Darwin concluded that species evolve over time through natural selection."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the \"\"bottleneck effect\"\"?",
+        "Option A": "A type of genetic drift where a population's size is significantly reduced",
+        "Option B": "A process of rapid evolution",
+        "Option C": "A mechanism that stabilizes allele frequencies in a population",
+        "Option D": "The result of sexual selection in a population",
+        "Correct Option": "A",
+        "Explanation": "The bottleneck effect occurs when a population's size is drastically reduced, leading to a loss of genetic diversity."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which of the following is an example of coevolution?",
+        "Option A": "The mutual adaptation of predators and prey",
+        "Option B": "The evolution of an organism in response to environmental changes",
+        "Option C": "The adaptation of organisms to their physical environment",
+        "Option D": "The accumulation of genetic mutations in a population",
+        "Correct Option": "A",
+        "Explanation": "Coevolution refers to the process where two species evolve in response to each other, such as predators and their prey."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What does the term \"\"biological evolution\"\" mean?",
+        "Option A": "The gradual change of species over time",
+        "Option B": "The survival of the fittest in nature",
+        "Option C": "The extinction of species over time",
+        "Option D": "The adaptation of organisms to their environment",
+        "Correct Option": "A",
+        "Explanation": "Biological evolution refers to the gradual change in species over time, driven by natural selection and genetic variation."
+    },
+    {
+        "Q.No": "93",
+        "Question": "How do fossils contribute to our understanding of evolution?",
+        "Option A": "By providing evidence of extinct species and evolutionary transitions",
+        "Option B": "By showing how species were formed",
+        "Option C": "By proving that species have always been the same",
+        "Option D": "By demonstrating that evolution never occurs",
+        "Correct Option": "A",
+        "Explanation": "Fossils provide evidence of extinct species and the transitional forms that connect different groups in the evolutionary tree."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is the significance of the Cambrian Explosion in the history of evolution?",
+        "Option A": "It marked the sudden appearance of many diverse animal forms",
+        "Option B": "It led to the extinction of most species",
+        "Option C": "It was a period when mammals first appeared",
+        "Option D": "It was when plants began to evolve on land",
+        "Correct Option": "A",
+        "Explanation": "The Cambrian Explosion marked a rapid increase in the diversity of life forms, particularly animals, in the fossil record."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What does \"\"evolutionary fitness\"\" refer to?",
+        "Option A": "The ability of an organism to adapt to its environment",
+        "Option B": "The ability of an organism to survive and reproduce",
+        "Option C": "The physical strength of an organism",
+        "Option D": "The size of an organism’s brain",
+        "Correct Option": "B",
+        "Explanation": "Evolutionary fitness refers to the ability of an organism to survive, reproduce, and pass on its genes."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the role of competition in evolution?",
+        "Option A": "It prevents evolution from occurring",
+        "Option B": "It can drive natural selection by favoring individuals with advantageous traits",
+        "Option C": "It has no effect on evolution",
+        "Option D": "It increases genetic variation in a population",
+        "Correct Option": "B",
+        "Explanation": "Competition for resources can drive natural selection, favoring individuals with traits that enhance survival and reproduction."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is an example of natural selection in action?",
+        "Option A": "The evolution of antibiotic resistance in bacteria",
+        "Option B": "The breeding of dogs for specific traits",
+        "Option C": "The creation of genetically modified organisms",
+        "Option D": "The extinction of certain species",
+        "Correct Option": "A",
+        "Explanation": "Natural selection is evident in the evolution of antibiotic resistance in bacteria, where resistant individuals survive and reproduce."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the result of reproductive isolation between two populations?",
+        "Option A": "They will merge into a single population",
+        "Option B": "They will evolve into separate species",
+        "Option C": "They will form hybrid offspring",
+        "Option D": "They will share the same gene pool",
+        "Correct Option": "B",
+        "Explanation": "Reproductive isolation prevents gene flow between two populations, leading to the evolution of separate species."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What role do mutations play in the process of evolution?",
+        "Option A": "They provide the genetic variation that natural selection acts upon",
+        "Option B": "They prevent evolutionary change",
+        "Option C": "They make all organisms identical",
+        "Option D": "They have no impact on evolution",
+        "Correct Option": "A",
+        "Explanation": "Mutations introduce genetic variation, providing the raw material for natural selection to act upon."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What does the term \"\"microevolution\"\" refer to?",
+        "Option A": "Large-scale changes in a population over long periods",
+        "Option B": "Evolution occurring within a population over a short time frame",
+        "Option C": "The extinction of species",
+        "Option D": "The adaptation of species to different environments",
+        "Correct Option": "B",
+        "Explanation": "Microevolution refers to small-scale evolutionary changes within a population over a short period."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
