@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is the term for the genetic makeup of an organism?",
+        "Option A": "Genotype",
+        "Option B": "Phenotype",
+        "Option C": "Alleles",
+        "Option D": "Gene pool",
+        "Correct Option": "A",
+        "Explanation": "Genotype refers to the genetic makeup or composition of an organism."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which molecule carries genetic information?",
+        "Option A": "DNA",
+        "Option B": "Protein",
+        "Option C": "Lipids",
+        "Option D": "Carbohydrates",
+        "Correct Option": "A",
+        "Explanation": "DNA (Deoxyribonucleic acid) carries the genetic instructions used in the growth, development, functioning, and reproduction of organisms."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What is the observable trait or characteristic of an organism called?",
+        "Option A": "Genotype",
+        "Option B": "Phenotype",
+        "Option C": "Locus",
+        "Option D": "Allele",
+        "Correct Option": "B",
+        "Explanation": "Phenotype refers to the observable physical characteristics of an organism, which result from its genotype."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is the process of passing on traits from parents to offspring?",
+        "Option A": "Reproduction",
+        "Option B": "Inheritance",
+        "Option C": "Evolution",
+        "Option D": "Genetic mutation",
+        "Correct Option": "B",
+        "Explanation": "Inheritance is the process of passing genetic information from parents to offspring."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following is a heterozygous genotype?",
+        "Option A": "AA",
+        "Option B": "Aa",
+        "Option C": "aa",
+        "Option D": "AB",
+        "Correct Option": "B",
+        "Explanation": "Aa represents a heterozygous genotype, where one allele is dominant and the other is recessive."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the purpose of meiosis in sexual reproduction?",
+        "Option A": "To produce identical cells",
+        "Option B": "To create genetic variation",
+        "Option C": "To generate energy",
+        "Option D": "To replicate DNA",
+        "Correct Option": "B",
+        "Explanation": "Meiosis is a type of cell division that produces genetically diverse gametes."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is the term for different forms of a gene?",
+        "Option A": "Alleles",
+        "Option B": "Chromosomes",
+        "Option C": "Nucleotides",
+        "Option D": "Codons",
+        "Correct Option": "A",
+        "Explanation": "Alleles are different versions of a gene that arise through mutation."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following determines the gender of an offspring?",
+        "Option A": "Autosomes",
+        "Option B": "X chromosomes",
+        "Option C": "Y chromosomes",
+        "Option D": "Sex chromosomes",
+        "Correct Option": "D",
+        "Explanation": "The combination of sex chromosomes (XX or XY) determines the gender of the offspring."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the law of segregation?",
+        "Option A": "Alleles segregate into different gametes",
+        "Option B": "Two alleles for a gene are located on the same chromosome",
+        "Option C": "Homologous chromosomes do not separate",
+        "Option D": "Genes for different traits always assort together",
+        "Correct Option": "A",
+        "Explanation": "The law of segregation states that alleles for a gene segregate (separate) into different gametes during meiosis."
+    },
+    {
+        "Q.No": "10",
+        "Question": "In a Mendelian cross between two heterozygous individuals (Aa x Aa), what is the probability of getting an offspring with the homozygous recessive genotype (aa)?",
+        "Option A": "25%",
+        "Option B": "50%",
+        "Option C": "75%",
+        "Option D": "100%",
+        "Correct Option": "A",
+        "Explanation": "The probability of obtaining the homozygous recessive genotype (aa) is 25%."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What is the genetic basis of variation within a population?",
+        "Option A": "Mutation",
+        "Option B": "Genetic drift",
+        "Option C": "Natural selection",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Variation in a population is caused by mutation, genetic drift, and natural selection."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is a Punnett square used for?",
+        "Option A": "To determine the phenotypic ratio",
+        "Option B": "To determine the genotypic ratio",
+        "Option C": "To predict offspring traits based on parental genotypes",
+        "Option D": "To map genes on chromosomes",
+        "Correct Option": "C",
+        "Explanation": "A Punnett square is used to predict the likelihood of offspring inheriting specific traits based on the parental genotypes."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which of the following is an example of incomplete dominance?",
+        "Option A": "Red and white flowers produce pink offspring",
+        "Option B": "Yellow and green pea plants produce only yellow plants",
+        "Option C": "A red and white cat produces a red cat",
+        "Option D": "Blue and green frogs always produce green offspring",
+        "Correct Option": "A",
+        "Explanation": "Incomplete dominance occurs when two different alleles result in a blended phenotype, such as pink flowers from red and white parents."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is the process of crossing over?",
+        "Option A": "The fusion of two gametes",
+        "Option B": "The exchange of genetic material between homologous chromosomes",
+        "Option C": "The splitting of chromosomes during cell division",
+        "Option D": "The mutation of genes during DNA replication",
+        "Correct Option": "B",
+        "Explanation": "Crossing over is the process where homologous chromosomes exchange genetic material during meiosis, leading to genetic variation."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is the term for the physical location of a gene on a chromosome?",
+        "Option A": "Allele",
+        "Option B": "Locus",
+        "Option C": "Trait",
+        "Option D": "Gene pool",
+        "Correct Option": "B",
+        "Explanation": "A locus is the specific physical location of a gene on a chromosome."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which of the following is an example of a dominant allele?",
+        "Option A": "A allele for green eyes",
+        "Option B": "A allele for blue eyes",
+        "Option C": "A allele for brown eyes",
+        "Option D": "A allele for sickle cell anemia",
+        "Correct Option": "C",
+        "Explanation": "Brown eyes are typically a dominant trait in humans."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is the term for the failure of chromosomes to separate properly during meiosis?",
+        "Option A": "Nondisjunction",
+        "Option B": "Crossing over",
+        "Option C": "Mutation",
+        "Option D": "Genetic drift",
+        "Correct Option": "A",
+        "Explanation": "Nondisjunction occurs when chromosomes fail to separate properly during meiosis, leading to gametes with abnormal chromosome numbers."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the primary difference between mitosis and meiosis?",
+        "Option A": "Mitosis results in four daughter cells, while meiosis results in two",
+        "Option B": "Mitosis involves the division of gametes, while meiosis involves somatic cells",
+        "Option C": "Mitosis creates genetically identical cells, while meiosis creates genetically diverse cells",
+        "Option D": "Mitosis involves crossing over, while meiosis does not",
+        "Correct Option": "C",
+        "Explanation": "Mitosis creates two genetically identical cells, while meiosis creates four genetically diverse gametes."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which of the following is true about a homozygous individual?",
+        "Option A": "They have two different alleles for a gene",
+        "Option B": "They have two identical alleles for a gene",
+        "Option C": "They cannot pass on genetic traits",
+        "Option D": "They produce only dominant alleles",
+        "Correct Option": "B",
+        "Explanation": "A homozygous individual has two identical alleles for a particular gene."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which process leads to the formation of gametes?",
+        "Option A": "Mitosis",
+        "Option B": "Meiosis",
+        "Option C": "Binary fission",
+        "Option D": "Genetic recombination",
+        "Correct Option": "B",
+        "Explanation": "Meiosis is the process that leads to the formation of gametes, such as sperm and egg cells."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is the term for the genetic makeup of an organism with respect to a particular trait?",
+        "Option A": "Genotype",
+        "Option B": "Phenotype",
+        "Option C": "Alleles",
+        "Option D": "Gene pool",
+        "Correct Option": "A",
+        "Explanation": "Genotype refers to the genetic makeup of an organism regarding a specific trait."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which of the following best describes a recessive allele?",
+        "Option A": "It is always expressed in the phenotype",
+        "Option B": "It is only expressed when two copies are present",
+        "Option C": "It cannot be inherited",
+        "Option D": "It is stronger than the dominant allele",
+        "Correct Option": "B",
+        "Explanation": "A recessive allele is only expressed in the phenotype when two copies are present, one from each parent."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is the term for the genetic expression of a dominant allele in a heterozygous individual?",
+        "Option A": "Codominance",
+        "Option B": "Incomplete dominance",
+        "Option C": "Complete dominance",
+        "Option D": "Polymorphism",
+        "Correct Option": "C",
+        "Explanation": "Complete dominance occurs when the dominant allele is expressed in a heterozygous individual."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is a carrier in genetic terms?",
+        "Option A": "A person who expresses a dominant allele",
+        "Option B": "A person who expresses a recessive allele",
+        "Option C": "A person who has one recessive allele and one dominant allele",
+        "Option D": "A person who has two dominant alleles",
+        "Correct Option": "C",
+        "Explanation": "A carrier has one recessive allele and one dominant allele, so they do not express the recessive trait but can pass it on."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is the term for the observed traits of an organism, such as height or eye color?",
+        "Option A": "Genotype",
+        "Option B": "Phenotype",
+        "Option C": "Allele",
+        "Option D": "Chromosome",
+        "Correct Option": "B",
+        "Explanation": "Phenotype refers to the observed traits of an organism."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which of the following is an example of codominance?",
+        "Option A": "Red and white flowers produce pink offspring",
+        "Option B": "Both red and white flower colors are expressed in the offspring",
+        "Option C": "A red and white cat produces a red cat",
+        "Option D": "Both blue and green skin in frogs",
+        "Correct Option": "B",
+        "Explanation": "Codominance occurs when both alleles are expressed equally, such as in red and white flowers producing offspring with both red and white spots."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is a mutation?",
+        "Option A": "A change in the sequence of DNA",
+        "Option B": "A process that prevents inheritance",
+        "Option C": "The passing of traits from parents to offspring",
+        "Option D": "A form of genetic recombination",
+        "Correct Option": "A",
+        "Explanation": "A mutation is a change in the sequence of DNA that can lead to changes in traits."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the main function of genetic recombination during meiosis?",
+        "Option A": "To create identical daughter cells",
+        "Option B": "To increase genetic diversity",
+        "Option C": "To maintain chromosome number",
+        "Option D": "To repair damaged DNA",
+        "Correct Option": "B",
+        "Explanation": "Genetic recombination during meiosis increases genetic diversity in offspring."
+    },
+    {
+        "Q.No": "29",
+        "Question": "In a dihybrid cross, what is the ratio of phenotypes expected in the F2 generation?",
+        "Option A": "1:01",
+        "Option B": "3:01",
+        "Option C": "9:3:3:1",
+        "Option D": "4:04",
+        "Correct Option": "C",
+        "Explanation": "A dihybrid cross between two heterozygous individuals typically results in a 9:3:3:1 phenotypic ratio."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following is true about X-linked traits?",
+        "Option A": "They are inherited in a similar manner by both males and females",
+        "Option B": "They are more commonly expressed in females",
+        "Option C": "They are inherited only from the mother",
+        "Option D": "They are more commonly expressed in males",
+        "Correct Option": "D",
+        "Explanation": "X-linked traits are more commonly expressed in males because they have only one X chromosome."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is the main difference between genotype and phenotype?",
+        "Option A": "Genotype is determined by the environment, while phenotype is genetic",
+        "Option B": "Genotype refers to the genetic makeup, and phenotype refers to the physical appearance",
+        "Option C": "Genotype refers to the traits expressed, and phenotype is the DNA sequence",
+        "Option D": "Phenotype refers to the DNA sequence, and genotype refers to the traits",
+        "Correct Option": "B",
+        "Explanation": "Genotype refers to the genetic makeup of an organism, while phenotype is the outward expression of those genes."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which of the following factors contribute to genetic variation in a population?",
+        "Option A": "Mutation",
+        "Option B": "Genetic recombination",
+        "Option C": "Natural selection",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Genetic variation is influenced by mutation, genetic recombination, and natural selection."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What is the term for the genetic change in a population over time?",
+        "Option A": "Evolution",
+        "Option B": "Mutation",
+        "Option C": "Genetic drift",
+        "Option D": "Gene flow",
+        "Correct Option": "A",
+        "Explanation": "Evolution is the process by which the genetic composition of a population changes over time."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which of the following is an example of a gene mutation that results in a change in phenotype?",
+        "Option A": "A mutation causing cystic fibrosis",
+        "Option B": "A mutation in the mitochondrial DNA",
+        "Option C": "A silent mutation",
+        "Option D": "A missense mutation",
+        "Correct Option": "A",
+        "Explanation": "A mutation causing cystic fibrosis is an example of a gene mutation that results in a change in phenotype."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the genetic term for the process where two homologous chromosomes exchange genetic material?",
+        "Option A": "Transcription",
+        "Option B": "Translation",
+        "Option C": "Crossing over",
+        "Option D": "Replication",
+        "Correct Option": "C",
+        "Explanation": "Crossing over is the process in which homologous chromosomes exchange genetic material during meiosis."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the term for the inheritance of traits controlled by a single gene?",
+        "Option A": "Monogenic inheritance",
+        "Option B": "Polygenic inheritance",
+        "Option C": "Codominance",
+        "Option D": "Incomplete dominance",
+        "Correct Option": "A",
+        "Explanation": "Monogenic inheritance refers to the inheritance of traits controlled by a single gene."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which of the following genetic disorders is caused by a recessive allele?",
+        "Option A": "Cystic fibrosis",
+        "Option B": "Huntington's disease",
+        "Option C": "Hemophilia",
+        "Option D": "Down syndrome",
+        "Correct Option": "A",
+        "Explanation": "Cystic fibrosis is a genetic disorder caused by a recessive allele."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is the probability of a homozygous dominant individual (AA) having offspring with a homozygous recessive individual (aa)?",
+        "Option A": "0%",
+        "Option B": "25%",
+        "Option C": "50%",
+        "Option D": "100%",
+        "Correct Option": "C",
+        "Explanation": "The cross between AA and aa would produce 50% heterozygous offspring (Aa)."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the effect of a mutation on a gene?",
+        "Option A": "It always causes a genetic disorder",
+        "Option B": "It can lead to a change in the protein produced",
+        "Option C": "It always enhances the organism's traits",
+        "Option D": "It has no effect on the organism",
+        "Correct Option": "B",
+        "Explanation": "A mutation in a gene can lead to a change in the protein that is produced, potentially altering traits."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following terms describes a gene variant that can be passed to offspring?",
+        "Option A": "Allele",
+        "Option B": "Locus",
+        "Option C": "Trait",
+        "Option D": "Genotype",
+        "Correct Option": "A",
+        "Explanation": "An allele is a variant form of a gene that can be inherited from parents to offspring."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What type of inheritance is demonstrated by a trait controlled by multiple genes?",
+        "Option A": "Monogenic inheritance",
+        "Option B": "Polygenic inheritance",
+        "Option C": "Codominance",
+        "Option D": "Incomplete dominance",
+        "Correct Option": "B",
+        "Explanation": "Polygenic inheritance occurs when a trait is controlled by multiple genes."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the term for the process by which organisms with traits better suited to their environment are more likely to survive and reproduce?",
+        "Option A": "Natural selection",
+        "Option B": "Genetic drift",
+        "Option C": "Mutation",
+        "Option D": "Evolution",
+        "Correct Option": "A",
+        "Explanation": "Natural selection is the process by which organisms with advantageous traits are more likely to survive and reproduce."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the main function of tRNA during translation?",
+        "Option A": "To carry genetic information from DNA",
+        "Option B": "To form the ribosome",
+        "Option C": "To bring amino acids to the ribosome",
+        "Option D": "To transcribe DNA into mRNA",
+        "Correct Option": "C",
+        "Explanation": "tRNA brings amino acids to the ribosome during protein synthesis."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the genetic material in bacteria?",
+        "Option A": "DNA in a nucleus",
+        "Option B": "Circular DNA in the cytoplasm",
+        "Option C": "RNA in the cytoplasm",
+        "Option D": "Mitochondrial DNA",
+        "Correct Option": "B",
+        "Explanation": "Bacteria have circular DNA located in the cytoplasm, not in a nucleus."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which of the following describes the inheritance pattern of color blindness?",
+        "Option A": "Autosomal dominant",
+        "Option B": "Autosomal recessive",
+        "Option C": "X-linked recessive",
+        "Option D": "X-linked dominant",
+        "Correct Option": "C",
+        "Explanation": "Color blindness is inherited as an X-linked recessive trait."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which of the following represents the genotype for a female with normal vision and a male who is colorblind?",
+        "Option A": "XcX, XcY",
+        "Option B": "XcX, XY",
+        "Option C": "XX, XcY",
+        "Option D": "XcX, XcY",
+        "Correct Option": "B",
+        "Explanation": "The female is heterozygous with normal vision (XcX), while the male is colorblind (XcY)."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is the term for the process where a gene expression can be modified by environmental factors?",
+        "Option A": "Genetic drift",
+        "Option B": "Epigenetics",
+        "Option C": "Natural selection",
+        "Option D": "Gene flow",
+        "Correct Option": "B",
+        "Explanation": "Epigenetics refers to changes in gene expression influenced by environmental factors."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is the term for the exchange of genes between different populations?",
+        "Option A": "Mutation",
+        "Option B": "Gene flow",
+        "Option C": "Genetic drift",
+        "Option D": "Inbreeding",
+        "Correct Option": "B",
+        "Explanation": "Gene flow is the exchange of genetic material between different populations."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What does a pedigree chart show?",
+        "Option A": "The family tree of an organism",
+        "Option B": "The geographic distribution of genes",
+        "Option C": "The genotype of individuals",
+        "Option D": "The mutation rate of a gene",
+        "Correct Option": "A",
+        "Explanation": "A pedigree chart shows the family tree, indicating the inheritance of traits through generations."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which of the following is an example of a polygenic trait?",
+        "Option A": "Eye color",
+        "Option B": "Blood type",
+        "Option C": "Height",
+        "Option D": "Cystic fibrosis",
+        "Correct Option": "C",
+        "Explanation": "Height is an example of a polygenic trait, influenced by multiple genes."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is a gene mutation?",
+        "Option A": "A change in the DNA sequence",
+        "Option B": "A process that replicates genes",
+        "Option C": "A crossing over event",
+        "Option D": "A duplication of a chromosome",
+        "Correct Option": "A",
+        "Explanation": "A gene mutation is a change in the DNA sequence that can alter gene expression."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which of the following is true for a sex-linked trait?",
+        "Option A": "It is inherited via the Y chromosome",
+        "Option B": "It is inherited via the X chromosome",
+        "Option C": "It only affects males",
+        "Option D": "It only affects females",
+        "Correct Option": "B",
+        "Explanation": "Sex-linked traits are carried on the X chromosome, affecting both males and females, though often more in males."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is the F1 generation?",
+        "Option A": "The first generation of offspring from the parental cross",
+        "Option B": "The second generation of offspring",
+        "Option C": "The offspring from self-pollination",
+        "Option D": "The first-generation parents",
+        "Correct Option": "A",
+        "Explanation": "The F1 generation refers to the first-generation offspring resulting from the parental (P) cross."
+    },
+    {
+        "Q.No": "54",
+        "Question": "In a dihybrid cross, how many different genotypes are possible in the F2 generation?",
+        "Option A": "1",
+        "Option B": "4",
+        "Option C": "16",
+        "Option D": "9",
+        "Correct Option": "C",
+        "Explanation": "In a dihybrid cross, the F2 generation typically produces 16 different genotype combinations."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What type of dominance occurs when the heterozygote expresses a phenotype that is a blend of the two homozygotes?",
+        "Option A": "Complete dominance",
+        "Option B": "Incomplete dominance",
+        "Option C": "Codominance",
+        "Option D": "Polygenic inheritance",
+        "Correct Option": "B",
+        "Explanation": "Incomplete dominance occurs when the heterozygote shows a blending of the two homozygous phenotypes."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the term for the exchange of sections of chromosomes during meiosis?",
+        "Option A": "Transcription",
+        "Option B": "Translation",
+        "Option C": "Crossing over",
+        "Option D": "Replication",
+        "Correct Option": "C",
+        "Explanation": "Crossing over is the process where homologous chromosomes exchange segments of DNA during meiosis."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is the term for the phenomenon where both alleles contribute equally to the phenotype?",
+        "Option A": "Incomplete dominance",
+        "Option B": "Codominance",
+        "Option C": "Complete dominance",
+        "Option D": "Epistasis",
+        "Correct Option": "B",
+        "Explanation": "Codominance occurs when both alleles contribute equally to the phenotype, as seen in blood type inheritance."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which of the following is the correct definition of polygenic inheritance?",
+        "Option A": "Inheritance controlled by multiple genes",
+        "Option B": "Inheritance of traits from one gene",
+        "Option C": "A trait that can be controlled by multiple alleles",
+        "Option D": "A mutation affecting multiple genes",
+        "Correct Option": "A",
+        "Explanation": "Polygenic inheritance involves traits controlled by the interaction of multiple genes."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is the function of the gene p53 in cell division?",
+        "Option A": "It helps in DNA replication",
+        "Option B": "It helps in the repair of damaged DNA",
+        "Option C": "It promotes uncontrolled cell division",
+        "Option D": "It is involved in crossing over",
+        "Correct Option": "B",
+        "Explanation": "The p53 gene plays a role in repairing DNA and can prevent the progression of damaged cells in the cell cycle."
+    },
+    {
+        "Q.No": "60",
+        "Question": "In a cross between a homozygous dominant individual (AA) and a homozygous recessive individual (aa), what will be the genotypic ratio of the offspring?",
+        "Option A": "1:01",
+        "Option B": "100% Aa",
+        "Option C": "3:01",
+        "Option D": "50% Aa, 50% AA",
+        "Correct Option": "B",
+        "Explanation": "All offspring will inherit the dominant allele from the homozygous dominant parent and the recessive allele from the homozygous recessive parent, resulting in a 100% Aa genotype."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the primary function of ribosomes in the process of protein synthesis?",
+        "Option A": "To store genetic information",
+        "Option B": "To synthesize mRNA",
+        "Option C": "To synthesize proteins",
+        "Option D": "To replicate DNA",
+        "Correct Option": "C",
+        "Explanation": "Ribosomes are responsible for protein synthesis, translating mRNA into a polypeptide chain."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which of the following best defines a carrier in genetic terms?",
+        "Option A": "An individual with a dominant trait",
+        "Option B": "An individual with a recessive trait",
+        "Option C": "An individual who has one dominant and one recessive allele",
+        "Option D": "An individual with a genetic mutation",
+        "Correct Option": "C",
+        "Explanation": "A carrier is an individual who has one dominant allele and one recessive allele for a particular trait, and does not express the recessive trait."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the term for a change in the chromosome number in a cell?",
+        "Option A": "Genetic mutation",
+        "Option B": "Chromosomal aberration",
+        "Option C": "Crossing over",
+        "Option D": "Genetic drift",
+        "Correct Option": "B",
+        "Explanation": "Chromosomal aberrations refer to changes in the chromosome number or structure."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What is the term for the process of fertilization in plants where the pollen grain reaches the ovule?",
+        "Option A": "Pollination",
+        "Option B": "Germination",
+        "Option C": "Fertilization",
+        "Option D": "Cross-pollination",
+        "Correct Option": "A",
+        "Explanation": "Pollination is the transfer of pollen to the female reproductive organs of a flower, leading to fertilization."
+    },
+    {
+        "Q.No": "65",
+        "Question": "In a Punnett square, what does each box represent?",
+        "Option A": "A possible genotype combination of offspring",
+        "Option B": "The phenotype of the offspring",
+        "Option C": "The number of offspring",
+        "Option D": "The sex of the offspring",
+        "Correct Option": "A",
+        "Explanation": "Each box in a Punnett square represents a possible genotype combination of offspring from the parents."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which of the following statements is true about autosomal recessive inheritance?",
+        "Option A": "Two heterozygous parents will have affected offspring in all cases",
+        "Option B": "Only homozygous recessive individuals are affected",
+        "Option C": "All offspring will express the recessive trait",
+        "Option D": "Heterozygous individuals express the trait",
+        "Correct Option": "B",
+        "Explanation": "Autosomal recessive inheritance requires two recessive alleles for the trait to be expressed."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the term for the observable physical expression of an organism's genetic makeup?",
+        "Option A": "Allele",
+        "Option B": "Genotype",
+        "Option C": "Phenotype",
+        "Option D": "Chromosome",
+        "Correct Option": "C",
+        "Explanation": "Phenotype refers to the observable traits or characteristics of an organism, influenced by its genotype."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is a recessive allele?",
+        "Option A": "An allele that is always expressed in the phenotype",
+        "Option B": "An allele that is only expressed in the absence of a dominant allele",
+        "Option C": "An allele that is dominant over other alleles",
+        "Option D": "An allele that has no effect on the phenotype",
+        "Correct Option": "B",
+        "Explanation": "A recessive allele is expressed in the phenotype only when two copies are present (homozygous recessive)."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What is the purpose of a test cross in genetics?",
+        "Option A": "To predict offspring genotypes",
+        "Option B": "To determine whether an individual is homozygous or heterozygous",
+        "Option C": "To determine the genotype of an unknown parent",
+        "Option D": "To study gene mutations",
+        "Correct Option": "C",
+        "Explanation": "A test cross is used to determine the genotype of an individual with a dominant phenotype by crossing it with a homozygous recessive individual."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the term for a set of alleles that an organism carries for a specific trait?",
+        "Option A": "Locus",
+        "Option B": "Genotype",
+        "Option C": "Phenotype",
+        "Option D": "Gene pool",
+        "Correct Option": "B",
+        "Explanation": "The genotype is the set of alleles that an organism carries for a specific trait."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which of the following types of inheritance occurs when both alleles of a gene contribute equally to the phenotype?",
+        "Option A": "Incomplete dominance",
+        "Option B": "Codominance",
+        "Option C": "Epistasis",
+        "Option D": "Dominance",
+        "Correct Option": "B",
+        "Explanation": "Codominance occurs when both alleles contribute equally to the phenotype, such as in the case of AB blood type."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the term for the observable traits or characteristics of an organism?",
+        "Option A": "Alleles",
+        "Option B": "Phenotype",
+        "Option C": "Genotype",
+        "Option D": "Traits",
+        "Correct Option": "B",
+        "Explanation": "Phenotype refers to the observable physical characteristics or traits of an organism."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What type of mutation changes one nucleotide base pair and results in the coding of a different amino acid?",
+        "Option A": "Silent mutation",
+        "Option B": "Missense mutation",
+        "Option C": "Nonsense mutation",
+        "Option D": "Frameshift mutation",
+        "Correct Option": "B",
+        "Explanation": "A missense mutation results in a change in one amino acid in the protein sequence, often affecting protein function."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is the role of DNA polymerase during DNA replication?",
+        "Option A": "To unwind the DNA strands",
+        "Option B": "To join the RNA nucleotides",
+        "Option C": "To add complementary nucleotides to the growing DNA strand",
+        "Option D": "To replace the thymine bases",
+        "Correct Option": "C",
+        "Explanation": "DNA polymerase adds complementary nucleotides to the growing DNA strand during replication."
+    },
+    {
+        "Q.No": "75",
+        "Question": "In human genetics, what is the chromosome number in a gamete?",
+        "Option A": "23 chromosomes",
+        "Option B": "46 chromosomes",
+        "Option C": "92 chromosomes",
+        "Option D": "44 chromosomes",
+        "Correct Option": "A",
+        "Explanation": "Human gametes (sperm and egg cells) have 23 chromosomes, half the number found in somatic cells."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which of the following is an example of a polygenic trait?",
+        "Option A": "Eye color",
+        "Option B": "Height",
+        "Option C": "Blood type",
+        "Option D": "Sickle cell anemia",
+        "Correct Option": "B",
+        "Explanation": "Height is a polygenic trait, determined by the interaction of multiple genes."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What does the principle of independent assortment state?",
+        "Option A": "Alleles of different genes are inherited together",
+        "Option B": "Alleles of different genes are inherited independently of one another",
+        "Option C": "Traits are inherited based on the dominant allele",
+        "Option D": "Alleles segregate equally during meiosis",
+        "Correct Option": "B",
+        "Explanation": "Independent assortment states that alleles for different traits are inherited independently from each other."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What does a monohybrid cross examine?",
+        "Option A": "The inheritance of one trait",
+        "Option B": "The inheritance of two traits",
+        "Option C": "The inheritance of genetic mutations",
+        "Option D": "The inheritance of sex chromosomes",
+        "Correct Option": "A",
+        "Explanation": "A monohybrid cross examines the inheritance of a single trait, typically involving two alleles."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the role of RNA in protein synthesis?",
+        "Option A": "To carry genetic information from DNA to the cytoplasm",
+        "Option B": "To form the ribosome",
+        "Option C": "To produce ATP",
+        "Option D": "To replicate DNA",
+        "Correct Option": "A",
+        "Explanation": "RNA (specifically mRNA) carries genetic information from the DNA in the nucleus to the ribosome for protein synthesis."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What does the law of independent assortment state?",
+        "Option A": "Genes for different traits are inherited together",
+        "Option B": "Genes for different traits assort independently during gamete formation",
+        "Option C": "Genes do not assort independently",
+        "Option D": "Genes can be mutated during inheritance",
+        "Correct Option": "B",
+        "Explanation": "The law of independent assortment states that genes for different traits assort independently during gamete formation."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What type of inheritance involves the interaction of two or more alleles to create a third phenotype?",
+        "Option A": "Codominance",
+        "Option B": "Incomplete dominance",
+        "Option C": "Epistasis",
+        "Option D": "Multiple alleles",
+        "Correct Option": "B",
+        "Explanation": "Incomplete dominance occurs when the heterozygous phenotype is a blend of the two parental phenotypes."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which of the following describes a gene that is located on the X chromosome and causes a genetic disorder in males?",
+        "Option A": "X-linked dominant",
+        "Option B": "X-linked recessive",
+        "Option C": "Autosomal dominant",
+        "Option D": "Autosomal recessive",
+        "Correct Option": "B",
+        "Explanation": "X-linked recessive genes are often expressed in males because they have only one X chromosome."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which type of genetic variation is responsible for the different colors in a species of flowers?",
+        "Option A": "Genetic drift",
+        "Option B": "Gene flow",
+        "Option C": "Mutation",
+        "Option D": "Gene recombination",
+        "Correct Option": "C",
+        "Explanation": "Mutation causes genetic variation, which can lead to different phenotypic traits such as flower color."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the term for a genetic disorder that is caused by the presence of three copies of chromosome 21?",
+        "Option A": "Down syndrome",
+        "Option B": "Turner's syndrome",
+        "Option C": "Klinefelter's syndrome",
+        "Option D": "Huntington's disease",
+        "Correct Option": "A",
+        "Explanation": "Down syndrome is caused by a trisomy of chromosome 21."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which of the following is an example of a genetic disorder caused by a dominant allele?",
+        "Option A": "Cystic fibrosis",
+        "Option B": "Sickle cell anemia",
+        "Option C": "Huntington's disease",
+        "Option D": "Hemophilia",
+        "Correct Option": "C",
+        "Explanation": "Huntington's disease is a genetic disorder caused by a dominant allele."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the role of meiosis in sexual reproduction?",
+        "Option A": "It creates genetically identical offspring",
+        "Option B": "It creates genetically diverse offspring",
+        "Option C": "It replicates the DNA in somatic cells",
+        "Option D": "It synthesizes proteins",
+        "Correct Option": "B",
+        "Explanation": "Meiosis produces genetically diverse offspring by reducing chromosome number and introducing genetic variation."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is the principle of segregation in genetics?",
+        "Option A": "Alleles for a trait segregate during meiosis",
+        "Option B": "Different traits are inherited together",
+        "Option C": "Genes mutate during inheritance",
+        "Option D": "Chromosomes do not assort independently",
+        "Correct Option": "A",
+        "Explanation": "The principle of segregation states that alleles for a trait segregate during gamete formation, resulting in offspring with different combinations of alleles."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which of the following best describes codominance?",
+        "Option A": "One allele is completely dominant over the other",
+        "Option B": "Both alleles contribute equally to the phenotype",
+        "Option C": "The heterozygote phenotype is a blend of both alleles",
+        "Option D": "Neither allele is expressed in the phenotype",
+        "Correct Option": "B",
+        "Explanation": "Codominance occurs when both alleles contribute equally to the phenotype."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the primary function of mRNA in transcription?",
+        "Option A": "To carry genetic information from DNA to the ribosome",
+        "Option B": "To synthesize proteins",
+        "Option C": "To replicate DNA",
+        "Option D": "To transport amino acids",
+        "Correct Option": "A",
+        "Explanation": "mRNA carries the genetic instructions from DNA in the nucleus to the ribosome for protein synthesis."
+    },
+    {
+        "Q.No": "90",
+        "Question": "In a dihybrid cross, what is the phenotypic ratio of the F2 generation?",
+        "Option A": "1:01",
+        "Option B": "9:3:3:1",
+        "Option C": "3:01",
+        "Option D": "16:16",
+        "Correct Option": "B",
+        "Explanation": "The phenotypic ratio for a dihybrid cross is typically 9:3:3:1."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What does a homozygous recessive genotype mean?",
+        "Option A": "The individual has two dominant alleles",
+        "Option B": "The individual has two recessive alleles",
+        "Option C": "The individual has one dominant and one recessive allele",
+        "Option D": "The individual carries a recessive allele but does not express the trait",
+        "Correct Option": "B",
+        "Explanation": "A homozygous recessive genotype means the individual has two recessive alleles for a trait."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the definition of a gene pool in a population?",
+        "Option A": "The sum of all alleles in all individuals",
+        "Option B": "The number of chromosomes in an individual",
+        "Option C": "The number of mutations present in the population",
+        "Option D": "The set of traits expressed in the population",
+        "Correct Option": "A",
+        "Explanation": "The gene pool refers to the total collection of alleles in a population."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What does the process of meiosis result in?",
+        "Option A": "Two identical daughter cells",
+        "Option B": "Four genetically diverse daughter cells",
+        "Option C": "Two genetically diverse daughter cells",
+        "Option D": "One cell with double the chromosome number",
+        "Correct Option": "B",
+        "Explanation": "Meiosis results in four genetically diverse daughter cells, each with half the chromosome number of the parent cell."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is the inheritance pattern of hemophilia?",
+        "Option A": "Autosomal dominant",
+        "Option B": "Autosomal recessive",
+        "Option C": "X-linked recessive",
+        "Option D": "X-linked dominant",
+        "Correct Option": "C",
+        "Explanation": "Hemophilia is an X-linked recessive disorder, which is more common in males."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the main cause of genetic diversity within a population?",
+        "Option A": "Mutation",
+        "Option B": "Gene flow",
+        "Option C": "Genetic drift",
+        "Option D": "Natural selection",
+        "Correct Option": "A",
+        "Explanation": "Mutation is the primary source of genetic diversity, creating new alleles."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is a genotype?",
+        "Option A": "The physical appearance of an organism",
+        "Option B": "The genetic makeup of an organism",
+        "Option C": "The interaction between the environment and genes",
+        "Option D": "The environmental influences on a phenotype",
+        "Correct Option": "B",
+        "Explanation": "A genotype refers to the genetic makeup of an organism for a specific trait."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the process by which genetic material from two parents combines to form offspring?",
+        "Option A": "Asexual reproduction",
+        "Option B": "Meiosis",
+        "Option C": "Fertilization",
+        "Option D": "Mitosis",
+        "Correct Option": "C",
+        "Explanation": "Fertilization is the process by which genetic material from two parents combines to form offspring."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which of the following is an example of genetic drift?",
+        "Option A": "A mutation causing a new trait",
+        "Option B": "A random reduction in population size leading to allele frequency changes",
+        "Option C": "Natural selection favoring certain traits",
+        "Option D": "A gene flow between two populations",
+        "Correct Option": "B",
+        "Explanation": "Genetic drift is the random change in allele frequencies due to a reduction in population size."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the purpose of a pedigree chart?",
+        "Option A": "To trace genetic disorders across generations",
+        "Option B": "To analyze the chromosomal structure of individuals",
+        "Option C": "To determine the number of alleles in a population",
+        "Option D": "To track the phenotypic traits in a population",
+        "Correct Option": "A",
+        "Explanation": "A pedigree chart is used to trace genetic disorders or traits across generations of a family."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is an allele?",
+        "Option A": "A type of chromosome",
+        "Option B": "A variant form of a gene",
+        "Option C": "A type of gene mutation",
+        "Option D": "A part of a gene pool",
+        "Correct Option": "B",
+        "Explanation": "An allele is a variant form of a gene that determines a specific trait."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
