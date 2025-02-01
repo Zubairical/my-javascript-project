@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which process in animals involves the breakdown of food into simple molecules?",
+        "Option A": "Digestion",
+        "Option B": "Respiration",
+        "Option C": "Excretion",
+        "Option D": "Circulation",
+        "Correct Option": "A",
+        "Explanation": "Digestion breaks down food into simpler molecules, which can then be absorbed."
+    },
+    {
+        "Q.No": "2",
+        "Question": "In which part of the human digestive system does most nutrient absorption take place?",
+        "Option A": "Stomach",
+        "Option B": "Large intestine",
+        "Option C": "Small intestine",
+        "Option D": "Mouth",
+        "Correct Option": "C",
+        "Explanation": "Most nutrient absorption occurs in the small intestine."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What is the primary function of the circulatory system in animals?",
+        "Option A": "Pumping blood",
+        "Option B": "Absorbing nutrients",
+        "Option C": "Transporting gases",
+        "Option D": "Transporting hormones and waste products",
+        "Correct Option": "C",
+        "Explanation": "The circulatory system transports oxygen and carbon dioxide (gaseous exchange) throughout the body."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which type of nutrition is found in humans?",
+        "Option A": "Autotrophic nutrition",
+        "Option B": "Heterotrophic nutrition",
+        "Option C": "Parasitic nutrition",
+        "Option D": "Saprophytic nutrition",
+        "Correct Option": "B",
+        "Explanation": "Humans are heterotrophs, relying on other organisms for food."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What is the role of chlorophyll in plants?",
+        "Option A": "To absorb water",
+        "Option B": "To trap light energy",
+        "Option C": "To produce sugars",
+        "Option D": "To store oxygen",
+        "Correct Option": "B",
+        "Explanation": "Chlorophyll absorbs light energy required for photosynthesis."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the process by which plants make their food?",
+        "Option A": "Photosynthesis",
+        "Option B": "Respiration",
+        "Option C": "Transpiration",
+        "Option D": "Germination",
+        "Correct Option": "A",
+        "Explanation": "Plants make their own food through the process of photosynthesis."
+    },
+    {
+        "Q.No": "7",
+        "Question": "In which part of the plant does photosynthesis mainly occur?",
+        "Option A": "Roots",
+        "Option B": "Stems",
+        "Option C": "Leaves",
+        "Option D": "Flowers",
+        "Correct Option": "C",
+        "Explanation": "Photosynthesis mainly occurs in the leaves, where chlorophyll is present."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What is the main product of photosynthesis in plants?",
+        "Option A": "Oxygen",
+        "Option B": "Glucose",
+        "Option C": "Water",
+        "Option D": "Carbon dioxide",
+        "Correct Option": "B",
+        "Explanation": "The main product of photosynthesis is glucose, with oxygen as a byproduct."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the process by which plants lose water vapor through stomata called?",
+        "Option A": "Respiration",
+        "Option B": "Photosynthesis",
+        "Option C": "Transpiration",
+        "Option D": "Absorption",
+        "Correct Option": "C",
+        "Explanation": "Transpiration is the loss of water vapor through stomata in plants."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which organ in humans is responsible for gas exchange?",
+        "Option A": "Lungs",
+        "Option B": "Heart",
+        "Option C": "Liver",
+        "Option D": "Kidneys",
+        "Correct Option": "A",
+        "Explanation": "The lungs are the primary organs for gaseous exchange in humans."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What type of circulatory system do humans have?",
+        "Option A": "Open circulatory system",
+        "Option B": "Closed circulatory system",
+        "Option C": "Both open and closed circulatory systems",
+        "Option D": "No circulatory system",
+        "Correct Option": "B",
+        "Explanation": "Humans have a closed circulatory system, where blood is confined to vessels."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What gas do animals primarily inhale during respiration?",
+        "Option A": "Nitrogen",
+        "Option B": "Oxygen",
+        "Option C": "Carbon dioxide",
+        "Option D": "Hydrogen",
+        "Correct Option": "B",
+        "Explanation": "Animals inhale oxygen during respiration to produce energy."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is the function of the human alveoli?",
+        "Option A": "Pump blood",
+        "Option B": "Absorb oxygen",
+        "Option C": "Transport nutrients",
+        "Option D": "Remove waste",
+        "Correct Option": "B",
+        "Explanation": "The alveoli in the lungs are responsible for the exchange of oxygen and carbon dioxide."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is the primary function of red blood cells in humans?",
+        "Option A": "Fighting infections",
+        "Option B": "Carrying oxygen",
+        "Option C": "Clotting blood",
+        "Option D": "Regulating body temperature",
+        "Correct Option": "B",
+        "Explanation": "Red blood cells carry oxygen from the lungs to tissues and carbon dioxide from tissues to the lungs."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is the role of the phloem in plants?",
+        "Option A": "Transporting water",
+        "Option B": "Transporting nutrients",
+        "Option C": "Transporting sugars and organic compounds",
+        "Option D": "Transporting oxygen",
+        "Correct Option": "C",
+        "Explanation": "Phloem transports sugars and organic compounds throughout the plant."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What is the role of xylem in plants?",
+        "Option A": "Transporting sugars",
+        "Option B": "Transporting water and minerals",
+        "Option C": "Transporting oxygen",
+        "Option D": "Transporting nutrients",
+        "Correct Option": "B",
+        "Explanation": "Xylem transports water and minerals from the roots to the rest of the plant."
+    },
+    {
+        "Q.No": "17",
+        "Question": "How do plants obtain carbon dioxide for photosynthesis?",
+        "Option A": "Through the stomata",
+        "Option B": "Through the roots",
+        "Option C": "Through the stem",
+        "Option D": "From the soil",
+        "Correct Option": "A",
+        "Explanation": "Plants absorb carbon dioxide from the atmosphere through the stomata in the leaves."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the function of the stomata in plants?",
+        "Option A": "To absorb sunlight",
+        "Option B": "To exchange gases",
+        "Option C": "To produce food",
+        "Option D": "To store water",
+        "Correct Option": "B",
+        "Explanation": "Stomata are pores in the leaves that allow the exchange of gases like oxygen and carbon dioxide."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which organ system is responsible for the transportation of nutrients, gases, and wastes in animals?",
+        "Option A": "Circulatory system",
+        "Option B": "Digestive system",
+        "Option C": "Nervous system",
+        "Option D": "Excretory system",
+        "Correct Option": "A",
+        "Explanation": "The circulatory system is responsible for transporting nutrients, gases, and wastes."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the process of cellular respiration in animals?",
+        "Option A": "Breakdown of food to release energy",
+        "Option B": "Production of glucose",
+        "Option C": "Transport of oxygen to cells",
+        "Option D": "Excretion of waste",
+        "Correct Option": "A",
+        "Explanation": "Cellular respiration is the process of breaking down food to release energy for the body."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which molecule is the primary energy source for plants during photosynthesis?",
+        "Option A": "Oxygen",
+        "Option B": "Glucose",
+        "Option C": "Carbon dioxide",
+        "Option D": "Water",
+        "Correct Option": "B",
+        "Explanation": "Glucose is the primary energy source produced by plants during photosynthesis."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is the role of the diaphragm in humans?",
+        "Option A": "To circulate blood",
+        "Option B": "To exchange gases in the lungs",
+        "Option C": "To control the amount of air entering the lungs",
+        "Option D": "To pump oxygen into the blood",
+        "Correct Option": "C",
+        "Explanation": "The diaphragm helps regulate the intake of air into the lungs during breathing."
+    },
+    {
+        "Q.No": "23",
+        "Question": "How do aquatic plants exchange gases?",
+        "Option A": "Through their roots",
+        "Option B": "Through their stems",
+        "Option C": "Through their leaves",
+        "Option D": "Through their flowers",
+        "Correct Option": "C",
+        "Explanation": "Aquatic plants exchange gases through their leaves, similar to terrestrial plants."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the role of the mouth in the digestive system of humans?",
+        "Option A": "To absorb nutrients",
+        "Option B": "To break down food into smaller pieces",
+        "Option C": "To transport food to the stomach",
+        "Option D": "To release digestive enzymes",
+        "Correct Option": "B",
+        "Explanation": "The mouth breaks down food into smaller pieces through chewing to aid digestion."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is the function of bile in the digestive system?",
+        "Option A": "To digest proteins",
+        "Option B": "To emulsify fats",
+        "Option C": "To absorb carbohydrates",
+        "Option D": "To neutralize stomach acids",
+        "Correct Option": "B",
+        "Explanation": "Bile helps emulsify fats, making them easier to digest by enzymes."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which part of the human digestive system absorbs water and forms feces?",
+        "Option A": "Stomach",
+        "Option B": "Large intestine",
+        "Option C": "Small intestine",
+        "Option D": "Rectum",
+        "Correct Option": "B",
+        "Explanation": "The large intestine absorbs water and forms feces for excretion."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the process by which water moves from the roots of plants to the leaves?",
+        "Option A": "Transpiration",
+        "Option B": "Osmosis",
+        "Option C": "Diffusion",
+        "Option D": "Capillary action",
+        "Correct Option": "D",
+        "Explanation": "Capillary action helps move water from the roots to the leaves through xylem vessels."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the main function of the human respiratory system?",
+        "Option A": "To digest food",
+        "Option B": "To exchange gases",
+        "Option C": "To circulate blood",
+        "Option D": "To filter waste products",
+        "Correct Option": "B",
+        "Explanation": "The primary function of the respiratory system is gas exchange, providing oxygen and removing carbon dioxide."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which enzyme is responsible for breaking down starch in the mouth?",
+        "Option A": "Amylase",
+        "Option B": "Lipase",
+        "Option C": "Protease",
+        "Option D": "Lactase",
+        "Correct Option": "A",
+        "Explanation": "Amylase breaks down starch into simpler sugars in the mouth during digestion."
+    },
+    {
+        "Q.No": "30",
+        "Question": "How does the human circulatory system maintain homeostasis?",
+        "Option A": "By maintaining body temperature",
+        "Option B": "By pumping blood through the body",
+        "Option C": "By exchanging gases with tissues",
+        "Option D": "By controlling hormone levels",
+        "Correct Option": "B",
+        "Explanation": "The circulatory system helps maintain homeostasis by pumping blood, ensuring nutrient and gas transport."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is the main function of the roots in plants?",
+        "Option A": "To produce food",
+        "Option B": "To store water",
+        "Option C": "To absorb water and minerals",
+        "Option D": "To transport food",
+        "Correct Option": "C",
+        "Explanation": "The roots absorb water and minerals from the soil to nourish the plant."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What type of circulatory system do plants have?",
+        "Option A": "Open circulatory system",
+        "Option B": "Closed circulatory system",
+        "Option C": "Both open and closed systems",
+        "Option D": "No circulatory system",
+        "Correct Option": "D",
+        "Explanation": "Plants do not have a circulatory system like animals but rely on diffusion and transpiration."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which organ in plants is primarily responsible for the uptake of water?",
+        "Option A": "Leaves",
+        "Option B": "Flowers",
+        "Option C": "Roots",
+        "Option D": "Stems",
+        "Correct Option": "C",
+        "Explanation": "The roots are responsible for absorbing water and minerals from the soil."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is the role of the heart in the circulatory system?",
+        "Option A": "To pump oxygen",
+        "Option B": "To pump blood",
+        "Option C": "To filter waste",
+        "Option D": "To store nutrients",
+        "Correct Option": "B",
+        "Explanation": "The heart pumps blood throughout the body, providing oxygen and nutrients to tissues."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the function of the vascular bundle in plants?",
+        "Option A": "To store water",
+        "Option B": "To support the plant",
+        "Option C": "To transport water, nutrients, and sugars",
+        "Option D": "To produce chlorophyll",
+        "Correct Option": "C",
+        "Explanation": "The vascular bundle in plants transports water, nutrients, and sugars through the xylem and phloem."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the role of the liver in digestion?",
+        "Option A": "To produce bile",
+        "Option B": "To absorb nutrients",
+        "Option C": "To break down proteins",
+        "Option D": "To store glucose",
+        "Correct Option": "A",
+        "Explanation": "The liver produces bile, which helps break down fats in the digestive process."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is the main site for the absorption of nutrients in humans?",
+        "Option A": "Large intestine",
+        "Option B": "Stomach",
+        "Option C": "Small intestine",
+        "Option D": "Mouth",
+        "Correct Option": "C",
+        "Explanation": "The small intestine is the primary site for nutrient absorption in humans."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which substance is essential for the transport of oxygen in human blood?",
+        "Option A": "Hemoglobin",
+        "Option B": "Plasma",
+        "Option C": "White blood cells",
+        "Option D": "Platelets",
+        "Correct Option": "A",
+        "Explanation": "Hemoglobin is a protein in red blood cells that binds to oxygen for transport."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the primary function of the kidneys in humans?",
+        "Option A": "Filtering waste products from blood",
+        "Option B": "Pumping blood to the heart",
+        "Option C": "Producing bile",
+        "Option D": "Producing insulin",
+        "Correct Option": "A",
+        "Explanation": "The kidneys filter waste products and excess substances from the blood to form urine."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is the function of the human sweat glands?",
+        "Option A": "To produce hormones",
+        "Option B": "To release digestive enzymes",
+        "Option C": "To regulate body temperature",
+        "Option D": "To absorb water",
+        "Correct Option": "C",
+        "Explanation": "Sweat glands help regulate body temperature by releasing sweat, which cools the body."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which part of the plant helps in the process of transpiration?",
+        "Option A": "Roots",
+        "Option B": "Flowers",
+        "Option C": "Leaves",
+        "Option D": "Stems",
+        "Correct Option": "C",
+        "Explanation": "Transpiration occurs through the stomata in the leaves, where water vapor is released."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the role of oxygen in cellular respiration?",
+        "Option A": "To break down glucose",
+        "Option B": "To help produce ATP",
+        "Option C": "To remove waste products",
+        "Option D": "To transport glucose",
+        "Correct Option": "B",
+        "Explanation": "Oxygen helps produce ATP by acting as the final electron acceptor in cellular respiration."
+    },
+    {
+        "Q.No": "43",
+        "Question": "How do plants transport water and nutrients from the soil to the leaves?",
+        "Option A": "Through phloem",
+        "Option B": "Through xylem",
+        "Option C": "Through stomata",
+        "Option D": "Through roots",
+        "Correct Option": "B",
+        "Explanation": "Xylem transports water and nutrients from the roots to the leaves."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the main function of white blood cells in humans?",
+        "Option A": "Carry oxygen",
+        "Option B": "Fight infections",
+        "Option C": "Aid digestion",
+        "Option D": "Control blood clotting",
+        "Correct Option": "B",
+        "Explanation": "White blood cells are involved in the immune response, fighting infections and foreign invaders."
+    },
+    {
+        "Q.No": "45",
+        "Question": "How do animals obtain energy?",
+        "Option A": "Through photosynthesis",
+        "Option B": "By absorbing nutrients from the environment",
+        "Option C": "By consuming other organisms",
+        "Option D": "By recycling waste products",
+        "Correct Option": "C",
+        "Explanation": "Animals obtain energy by consuming other organisms in a process called heterotrophy."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is the process by which plants convert light energy into chemical energy?",
+        "Option A": "Respiration",
+        "Option B": "Photosynthesis",
+        "Option C": "Transpiration",
+        "Option D": "Germination",
+        "Correct Option": "B",
+        "Explanation": "Photosynthesis converts light energy into chemical energy stored in glucose."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which gas is produced during cellular respiration?",
+        "Option A": "Oxygen",
+        "Option B": "Carbon dioxide",
+        "Option C": "Nitrogen",
+        "Option D": "Hydrogen",
+        "Correct Option": "B",
+        "Explanation": "Carbon dioxide is produced as a waste product during cellular respiration."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is the primary role of the stomach in digestion?",
+        "Option A": "To absorb nutrients",
+        "Option B": "To break down food using acids and enzymes",
+        "Option C": "To store bile",
+        "Option D": "To circulate nutrients",
+        "Correct Option": "B",
+        "Explanation": "The stomach breaks down food using stomach acids and digestive enzymes."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which part of the plant absorbs most of the water and minerals?",
+        "Option A": "Stem",
+        "Option B": "Leaves",
+        "Option C": "Roots",
+        "Option D": "Flowers",
+        "Correct Option": "C",
+        "Explanation": "The roots absorb water and minerals from the soil for the plant’s nourishment."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What happens during the process of inhalation in humans?",
+        "Option A": "The diaphragm contracts, and the chest cavity expands",
+        "Option B": "The diaphragm relaxes, and the chest cavity compresses",
+        "Option C": "The lungs contract, and the ribs expand",
+        "Option D": "The lungs fill with carbon dioxide",
+        "Correct Option": "A",
+        "Explanation": "During inhalation, the diaphragm contracts, and the chest cavity expands to allow air into the lungs."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the function of the circulatory system in plants?",
+        "Option A": "To transport water",
+        "Option B": "To transport glucose",
+        "Option C": "To transport oxygen",
+        "Option D": "No circulatory system",
+        "Correct Option": "A",
+        "Explanation": "Plants have no circulatory system, but water is transported through xylem."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is the main byproduct of respiration in both plants and animals?",
+        "Option A": "Oxygen",
+        "Option B": "Nitrogen",
+        "Option C": "Carbon dioxide",
+        "Option D": "Glucose",
+        "Correct Option": "C",
+        "Explanation": "Carbon dioxide is produced during cellular respiration in both plants and animals."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following structures in plants transports water and minerals?",
+        "Option A": "Phloem",
+        "Option B": "Xylem",
+        "Option C": "Stomata",
+        "Option D": "Leaf veins",
+        "Correct Option": "B",
+        "Explanation": "Xylem is responsible for transporting water and minerals from roots to leaves."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the name of the pigment in plants that absorbs light energy?",
+        "Option A": "Chlorophyll",
+        "Option B": "Carotenoids",
+        "Option C": "Hemoglobin",
+        "Option D": "Melanin",
+        "Correct Option": "A",
+        "Explanation": "Chlorophyll absorbs light energy needed for photosynthesis in plants."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the process by which plants use light energy to make food?",
+        "Option A": "Respiration",
+        "Option B": "Photosynthesis",
+        "Option C": "Fermentation",
+        "Option D": "Transpiration",
+        "Correct Option": "B",
+        "Explanation": "Photosynthesis is the process where plants convert light energy into food (glucose)."
+    },
+    {
+        "Q.No": "56",
+        "Question": "How do guard cells regulate the opening and closing of stomata in plants?",
+        "Option A": "By controlling water flow",
+        "Option B": "By regulating light absorption",
+        "Option C": "By absorbing oxygen",
+        "Option D": "By controlling turgor pressure",
+        "Correct Option": "D",
+        "Explanation": "Guard cells regulate stomata by controlling turgor pressure, allowing gas exchange."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which part of the digestive system is responsible for producing bile in humans?",
+        "Option A": "Stomach",
+        "Option B": "Liver",
+        "Option C": "Pancreas",
+        "Option D": "Gallbladder",
+        "Correct Option": "B",
+        "Explanation": "The liver produces bile, which aids in fat digestion."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Where does the majority of gas exchange take place in humans?",
+        "Option A": "Trachea",
+        "Option B": "Bronchi",
+        "Option C": "Alveoli",
+        "Option D": "Pharynx",
+        "Correct Option": "C",
+        "Explanation": "The alveoli are the primary site of gas exchange in the lungs."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What role do villi play in the human digestive system?",
+        "Option A": "Absorbing nutrients",
+        "Option B": "Breaking down fats",
+        "Option C": "Producing bile",
+        "Option D": "Transporting food",
+        "Correct Option": "A",
+        "Explanation": "Villi increase the surface area in the small intestine, aiding in nutrient absorption."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What does the term \"\"autotrophic nutrition\"\" refer to?",
+        "Option A": "Obtaining food from other organisms",
+        "Option B": "Synthesizing food using light energy",
+        "Option C": "Consuming dead organic matter",
+        "Option D": "Absorbing nutrients from the soil",
+        "Correct Option": "B",
+        "Explanation": "Autotrophic nutrition refers to organisms, like plants, synthesizing their own food using light."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the main product of the breakdown of glucose during cellular respiration?",
+        "Option A": "Oxygen",
+        "Option B": "Glucose",
+        "Option C": "Water",
+        "Option D": "ATP",
+        "Correct Option": "D",
+        "Explanation": "ATP (adenosine triphosphate) is the main product, providing energy for the cell."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the name of the process by which glucose is broken down into energy in plants?",
+        "Option A": "Transpiration",
+        "Option B": "Photosynthesis",
+        "Option C": "Cellular respiration",
+        "Option D": "Germination",
+        "Correct Option": "C",
+        "Explanation": "Cellular respiration is the process where glucose is broken down to release energy in plants."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the role of the stomata in plant leaves?",
+        "Option A": "To absorb sunlight",
+        "Option B": "To allow for gas exchange",
+        "Option C": "To transport water",
+        "Option D": "To produce sugars",
+        "Correct Option": "B",
+        "Explanation": "Stomata allow gases like oxygen and carbon dioxide to enter and exit the plant."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which of the following processes occurs in the mitochondria of cells?",
+        "Option A": "Photosynthesis",
+        "Option B": "Cellular respiration",
+        "Option C": "Protein synthesis",
+        "Option D": "DNA replication",
+        "Correct Option": "B",
+        "Explanation": "Cellular respiration occurs in the mitochondria to produce energy in the form of ATP."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the primary function of the circulatory system in animals?",
+        "Option A": "Pumping oxygen",
+        "Option B": "Transporting blood",
+        "Option C": "Digestion",
+        "Option D": "Filtering waste",
+        "Correct Option": "B",
+        "Explanation": "The circulatory system's primary function is to transport blood, carrying oxygen, nutrients, and waste."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What happens during exhalation in humans?",
+        "Option A": "The diaphragm contracts, and the chest cavity expands",
+        "Option B": "The diaphragm relaxes, and the chest cavity compresses",
+        "Option C": "The diaphragm expands, and the chest cavity compresses",
+        "Option D": "The lungs fill with oxygen",
+        "Correct Option": "B",
+        "Explanation": "During exhalation, the diaphragm relaxes, and the chest cavity compresses, pushing air out."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which gas do plants take in during photosynthesis?",
+        "Option A": "Nitrogen",
+        "Option B": "Oxygen",
+        "Option C": "Carbon dioxide",
+        "Option D": "Hydrogen",
+        "Correct Option": "C",
+        "Explanation": "Plants take in carbon dioxide from the air during photosynthesis."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the function of red blood cells in humans?",
+        "Option A": "To fight infections",
+        "Option B": "To produce hormones",
+        "Option C": "To transport oxygen",
+        "Option D": "To regulate body temperature",
+        "Correct Option": "C",
+        "Explanation": "Red blood cells transport oxygen from the lungs to tissues and remove carbon dioxide."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which process in plants involves the conversion of solar energy into chemical energy?",
+        "Option A": "Cellular respiration",
+        "Option B": "Transpiration",
+        "Option C": "Photosynthesis",
+        "Option D": "Germination",
+        "Correct Option": "C",
+        "Explanation": "Photosynthesis involves converting solar energy into chemical energy stored in glucose."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which structure in plants is responsible for the uptake of nutrients and water from the soil?",
+        "Option A": "Leaves",
+        "Option B": "Flowers",
+        "Option C": "Roots",
+        "Option D": "Stems",
+        "Correct Option": "C",
+        "Explanation": "Roots are responsible for absorbing water and nutrients from the soil."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the role of the pancreas in human digestion?",
+        "Option A": "Producing bile",
+        "Option B": "Breaking down carbohydrates",
+        "Option C": "Secreting digestive enzymes",
+        "Option D": "Storing glucose",
+        "Correct Option": "C",
+        "Explanation": "The pancreas secretes enzymes that help break down food in the small intestine."
+    },
+    {
+        "Q.No": "72",
+        "Question": "How do plants exchange gases?",
+        "Option A": "Through roots",
+        "Option B": "Through flowers",
+        "Option C": "Through stomata",
+        "Option D": "Through leaves",
+        "Correct Option": "C",
+        "Explanation": "Plants exchange gases through stomata located on the surface of leaves."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What happens in the process of respiration in animals?",
+        "Option A": "Oxygen is absorbed by cells and glucose is broken down for energy",
+        "Option B": "Glucose is absorbed from the soil",
+        "Option C": "Oxygen is released as a waste product",
+        "Option D": "Carbon dioxide is absorbed from the atmosphere",
+        "Correct Option": "A",
+        "Explanation": "In respiration, oxygen is used to break down glucose for energy."
+    },
+    {
+        "Q.No": "74",
+        "Question": "In which part of the plant does most photosynthesis occur?",
+        "Option A": "Roots",
+        "Option B": "Flowers",
+        "Option C": "Leaves",
+        "Option D": "Stems",
+        "Correct Option": "C",
+        "Explanation": "Photosynthesis mainly occurs in the leaves, where chloroplasts and chlorophyll are present."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the purpose of the human respiratory system?",
+        "Option A": "To remove carbon dioxide from the body",
+        "Option B": "To produce energy",
+        "Option C": "To transport glucose",
+        "Option D": "To excrete waste",
+        "Correct Option": "A",
+        "Explanation": "The primary purpose of the respiratory system is to exchange gases, removing carbon dioxide and bringing in oxygen."
+    },
+    {
+        "Q.No": "76",
+        "Question": "How is oxygen transported in the human body?",
+        "Option A": "By red blood cells",
+        "Option B": "By white blood cells",
+        "Option C": "By platelets",
+        "Option D": "In the lymph",
+        "Correct Option": "A",
+        "Explanation": "Oxygen is transported by red blood cells through hemoglobin."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is the main energy molecule used by cells in both animals and plants?",
+        "Option A": "NADPH",
+        "Option B": "ATP",
+        "Option C": "Glucose",
+        "Option D": "Oxygen",
+        "Correct Option": "B",
+        "Explanation": "ATP is the main energy molecule used by cells in both plants and animals."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which of the following is true about plant respiration?",
+        "Option A": "It occurs only during the night",
+        "Option B": "It is the same as photosynthesis",
+        "Option C": "It occurs in the presence of sunlight",
+        "Option D": "It releases oxygen as a byproduct",
+        "Correct Option": "A",
+        "Explanation": "Plant respiration occurs both day and night, but photosynthesis only occurs in the presence of sunlight."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the function of the vascular system in plants?",
+        "Option A": "To provide structural support",
+        "Option B": "To transport water, nutrients, and sugars",
+        "Option C": "To store food",
+        "Option D": "To control gas exchange",
+        "Correct Option": "B",
+        "Explanation": "The vascular system in plants, consisting of xylem and phloem, transports water, nutrients, and sugars."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What role does oxygen play in aerobic respiration?",
+        "Option A": "It breaks down glucose",
+        "Option B": "It acts as the final electron acceptor",
+        "Option C": "It helps in the formation of glucose",
+        "Option D": "It transports nutrients",
+        "Correct Option": "B",
+        "Explanation": "Oxygen serves as the final electron acceptor in aerobic respiration."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which of the following organs is responsible for filtering the blood in humans?",
+        "Option A": "Lungs",
+        "Option B": "Kidneys",
+        "Option C": "Heart",
+        "Option D": "Liver",
+        "Correct Option": "B",
+        "Explanation": "The kidneys filter the blood to remove waste products and excess substances."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the role of phloem in plants?",
+        "Option A": "Transporting water",
+        "Option B": "Transporting sugars and organic compounds",
+        "Option C": "Transporting oxygen",
+        "Option D": "Transporting minerals",
+        "Correct Option": "B",
+        "Explanation": "Phloem transports sugars and organic compounds produced by photosynthesis throughout the plant."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following is a byproduct of cellular respiration in humans?",
+        "Option A": "Oxygen",
+        "Option B": "Carbon dioxide",
+        "Option C": "Nitrogen",
+        "Option D": "Glucose",
+        "Correct Option": "B",
+        "Explanation": "Carbon dioxide is produced as a byproduct of cellular respiration in humans."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the role of the human liver in digestion?",
+        "Option A": "To produce bile",
+        "Option B": "To filter blood",
+        "Option C": "To break down glucose",
+        "Option D": "To produce hormones",
+        "Correct Option": "A",
+        "Explanation": "The liver produces bile, which is important for the digestion and emulsification of fats."
+    },
+    {
+        "Q.No": "85",
+        "Question": "How do unicellular organisms perform the process of respiration?",
+        "Option A": "Through specialized organs",
+        "Option B": "By diffusion across the cell membrane",
+        "Option C": "Through the circulatory system",
+        "Option D": "By absorption of oxygen",
+        "Correct Option": "B",
+        "Explanation": "Unicellular organisms rely on diffusion across the cell membrane for respiration."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the role of enzymes in digestion?",
+        "Option A": "To break down complex molecules into simpler ones",
+        "Option B": "To absorb nutrients",
+        "Option C": "To produce glucose",
+        "Option D": "To store fats",
+        "Correct Option": "A",
+        "Explanation": "Enzymes in the digestive system break down food into simpler molecules for absorption."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which of the following is a waste product of photosynthesis in plants?",
+        "Option A": "Water",
+        "Option B": "Oxygen",
+        "Option C": "Carbon dioxide",
+        "Option D": "Glucose",
+        "Correct Option": "B",
+        "Explanation": "Oxygen is released as a waste product during photosynthesis in plants."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What happens to the water absorbed by plants during transpiration?",
+        "Option A": "It is used in photosynthesis",
+        "Option B": "It is released through the roots",
+        "Option C": "It is stored in the stem",
+        "Option D": "It evaporates through the stomata",
+        "Correct Option": "D",
+        "Explanation": "Water absorbed by plants is lost as vapor through the stomata in the process of transpiration."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the main function of the digestive system in humans?",
+        "Option A": "To absorb nutrients",
+        "Option B": "To break down food",
+        "Option C": "To transport blood",
+        "Option D": "To control temperature",
+        "Correct Option": "B",
+        "Explanation": "The digestive system is responsible for breaking down food into absorbable nutrients."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the role of the large intestine in digestion?",
+        "Option A": "To absorb nutrients",
+        "Option B": "To absorb water and form feces",
+        "Option C": "To secrete enzymes",
+        "Option D": "To produce bile",
+        "Correct Option": "B",
+        "Explanation": "The large intestine absorbs water and forms feces for excretion."
+    },
+    {
+        "Q.No": "91",
+        "Question": "How do plants obtain nitrogen for growth?",
+        "Option A": "Through the roots from the soil",
+        "Option B": "Through their leaves",
+        "Option C": "From the atmosphere",
+        "Option D": "Through symbiosis with nitrogen-fixing bacteria",
+        "Correct Option": "D",
+        "Explanation": "Plants obtain nitrogen through symbiosis with nitrogen-fixing bacteria in their roots."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the main form of energy stored in plant cells?",
+        "Option A": "Oxygen",
+        "Option B": "ATP",
+        "Option C": "Glucose",
+        "Option D": "Nitrogen",
+        "Correct Option": "C",
+        "Explanation": "Plants store energy in the form of glucose, produced during photosynthesis."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the role of the human heart in the circulatory system?",
+        "Option A": "To transport oxygen",
+        "Option B": "To regulate temperature",
+        "Option C": "To pump blood",
+        "Option D": "To produce nutrients",
+        "Correct Option": "C",
+        "Explanation": "The heart pumps blood, circulating oxygen, nutrients, and waste products throughout the body."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is the main function of the respiratory system in animals?",
+        "Option A": "To exchange gases between the body and the environment",
+        "Option B": "To digest food",
+        "Option C": "To circulate blood",
+        "Option D": "To filter waste",
+        "Correct Option": "A",
+        "Explanation": "The primary function of the respiratory system is gas exchange, absorbing oxygen and expelling carbon dioxide."
+    },
+    {
+        "Q.No": "95",
+        "Question": "How is carbon dioxide removed from the body during exhalation?",
+        "Option A": "It is absorbed by red blood cells",
+        "Option B": "It diffuses into the lungs and is exhaled",
+        "Option C": "It is transported through the veins",
+        "Option D": "It is excreted through sweat",
+        "Correct Option": "B",
+        "Explanation": "Carbon dioxide diffuses from the blood into the lungs and is exhaled."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the purpose of the human digestive system?",
+        "Option A": "To break down food into simpler molecules",
+        "Option B": "To transport nutrients to the body",
+        "Option C": "To regulate blood sugar levels",
+        "Option D": "To produce energy",
+        "Correct Option": "A",
+        "Explanation": "The digestive system breaks down food into simpler molecules for absorption."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the process by which plants take in water from the soil?",
+        "Option A": "Transpiration",
+        "Option B": "Osmosis",
+        "Option C": "Diffusion",
+        "Option D": "Active transport",
+        "Correct Option": "B",
+        "Explanation": "Water is absorbed by plants through osmosis, especially in the roots."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What happens in the process of glycolysis in cellular respiration?",
+        "Option A": "Glucose is broken down into pyruvate",
+        "Option B": "Oxygen is consumed",
+        "Option C": "Water is produced",
+        "Option D": "ATP is synthesized",
+        "Correct Option": "A",
+        "Explanation": "Glycolysis is the process where glucose is broken down into pyruvate, releasing energy."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the role of oxygen in the process of aerobic respiration?",
+        "Option A": "To break down glucose",
+        "Option B": "To help produce ATP",
+        "Option C": "To transport glucose",
+        "Option D": "To break down carbon dioxide",
+        "Correct Option": "B",
+        "Explanation": "Oxygen acts as the final electron acceptor in aerobic respiration, helping produce ATP."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which part of the plant is primarily responsible for the synthesis of food?",
+        "Option A": "Roots",
+        "Option B": "Stems",
+        "Option C": "Leaves",
+        "Option D": "Flowers",
+        "Correct Option": "C",
+        "Explanation": "The leaves are primarily responsible for the synthesis of food through photosynthesis."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
