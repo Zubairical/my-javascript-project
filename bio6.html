@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is the largest group of animals on Earth?",
+        "Option A": "Mammals",
+        "Option B": "Insects",
+        "Option C": "Reptiles",
+        "Option D": "Birds",
+        "Correct Option": "B",
+        "Explanation": "Insects are the largest group of animals, making up the majority of animal species."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is an example of an invertebrate animal?",
+        "Option A": "Fish",
+        "Option B": "Insect",
+        "Option C": "Bird",
+        "Option D": "Mammal",
+        "Correct Option": "B",
+        "Explanation": "Insects are invertebrates, meaning they lack a backbone."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which of the following animals has an exoskeleton?",
+        "Option A": "Frog",
+        "Option B": "Fish",
+        "Option C": "Ant",
+        "Option D": "Dog",
+        "Correct Option": "C",
+        "Explanation": "Ants have an exoskeleton, unlike vertebrates that have an internal skeleton."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What type of symmetry is seen in animals like starfish?",
+        "Option A": "Bilateral symmetry",
+        "Option B": "Radial symmetry",
+        "Option C": "Asymmetry",
+        "Option D": "Spherical symmetry",
+        "Correct Option": "B",
+        "Explanation": "Starfish have radial symmetry, where their body parts are arranged around a central axis."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following is the main characteristic of mammals?",
+        "Option A": "External skeleton",
+        "Option B": "Warm-blooded",
+        "Option C": "Cold-blooded",
+        "Option D": "Lays eggs",
+        "Correct Option": "B",
+        "Explanation": "Mammals are warm-blooded, meaning they can regulate their body temperature internally."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which animal is known for its ability to regenerate limbs?",
+        "Option A": "Octopus",
+        "Option B": "Frog",
+        "Option C": "Salamander",
+        "Option D": "Elephant",
+        "Correct Option": "C",
+        "Explanation": "Salamanders can regenerate lost limbs, making them unique among vertebrates."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is the primary feature of animals in the phylum Chordata?",
+        "Option A": "Presence of a backbone",
+        "Option B": "Presence of jointed limbs",
+        "Option C": "Bilateral symmetry",
+        "Option D": "Exoskeleton",
+        "Correct Option": "A",
+        "Explanation": "Animals in Chordata have a notochord, which is replaced by a backbone in most species."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following animals is a filter feeder?",
+        "Option A": "Shark",
+        "Option B": "Whale",
+        "Option C": "Dolphin",
+        "Option D": "Sponge",
+        "Correct Option": "D",
+        "Explanation": "Sponges are filter feeders that absorb nutrients from water passing through them."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the main function of the exoskeleton in arthropods?",
+        "Option A": "Support and protection",
+        "Option B": "Movement",
+        "Option C": "Digestion",
+        "Option D": "Circulation",
+        "Correct Option": "A",
+        "Explanation": "The exoskeleton in arthropods provides support and protection for the body."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which of the following animals is a mammal?",
+        "Option A": "Penguin",
+        "Option B": "Whale",
+        "Option C": "Crocodile",
+        "Option D": "Shark",
+        "Correct Option": "B",
+        "Explanation": "Whales are mammals that live in the ocean but breathe air through lungs."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What distinguishes amphibians from reptiles?",
+        "Option A": "Amphibians lay eggs on land",
+        "Option B": "Amphibians have scales",
+        "Option C": "Amphibians can live both on land and in water",
+        "Option D": "Amphibians are cold-blooded",
+        "Correct Option": "C",
+        "Explanation": "Amphibians can live both on land and in water during different stages of their life cycle."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which of the following is a characteristic of reptiles?",
+        "Option A": "Warm-blooded",
+        "Option B": "Skin covered with feathers",
+        "Option C": "Body covered with scales",
+        "Option D": "Lays eggs in water",
+        "Correct Option": "C",
+        "Explanation": "Reptiles have scales on their bodies and are typically cold-blooded."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is the defining characteristic of birds?",
+        "Option A": "Laying eggs",
+        "Option B": "Presence of feathers",
+        "Option C": "Warm-blooded",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Birds lay eggs, have feathers, and are warm-blooded."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is a characteristic of all mammals?",
+        "Option A": "Cold-blooded",
+        "Option B": "Lays eggs",
+        "Option C": "Fur or hair",
+        "Option D": "Have gills",
+        "Correct Option": "C",
+        "Explanation": "Mammals are characterized by having fur or hair and producing milk for their young."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which of the following animals is a marsupial?",
+        "Option A": "Dolphin",
+        "Option B": "Kangaroo",
+        "Option C": "Elephant",
+        "Option D": "Penguin",
+        "Correct Option": "B",
+        "Explanation": "Kangaroos are marsupials, meaning they carry their young in a pouch."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which animal group has the highest number of species?",
+        "Option A": "Birds",
+        "Option B": "Mammals",
+        "Option C": "Fish",
+        "Option D": "Insects",
+        "Correct Option": "D",
+        "Explanation": "Insects make up the majority of animal species, with over a million species identified."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which of the following animals has a cartilaginous skeleton?",
+        "Option A": "Frog",
+        "Option B": "Shark",
+        "Option C": "Lizard",
+        "Option D": "Elephant",
+        "Correct Option": "B",
+        "Explanation": "Sharks have a skeleton made of cartilage instead of bone."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the main characteristic of animals in the phylum Mollusca?",
+        "Option A": "External skeleton",
+        "Option B": "Bilateral symmetry",
+        "Option C": "Soft body with a hard shell",
+        "Option D": "Exoskeleton",
+        "Correct Option": "C",
+        "Explanation": "Mollusks generally have a soft body, often with a hard shell for protection."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which of the following is an example of an echinoderm?",
+        "Option A": "Jellyfish",
+        "Option B": "Sea cucumber",
+        "Option C": "Octopus",
+        "Option D": "Crab",
+        "Correct Option": "B",
+        "Explanation": "Sea cucumbers are echinoderms, which have radial symmetry and a water vascular system."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which animal is an example of an endotherm?",
+        "Option A": "Frog",
+        "Option B": "Lizard",
+        "Option C": "Dolphin",
+        "Option D": "Crocodile",
+        "Correct Option": "C",
+        "Explanation": "Dolphins are endotherms (warm-blooded) and can regulate their internal body temperature."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is the primary function of the swim bladder in fish?",
+        "Option A": "To aid in digestion",
+        "Option B": "To help with buoyancy",
+        "Option C": "To process oxygen",
+        "Option D": "To store food",
+        "Correct Option": "B",
+        "Explanation": "The swim bladder helps fish maintain buoyancy in water."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is the main characteristic of cnidarians?",
+        "Option A": "Bilateral symmetry",
+        "Option B": "Presence of a shell",
+        "Option C": "Stinging cells",
+        "Option D": "Soft body",
+        "Correct Option": "C",
+        "Explanation": "Cnidarians, such as jellyfish, have specialized cells called cnidocytes that contain stingers."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following animals is known for its ability to fly?",
+        "Option A": "Bat",
+        "Option B": "Whale",
+        "Option C": "Snake",
+        "Option D": "Frog",
+        "Correct Option": "A",
+        "Explanation": "Bats are mammals known for their ability to fly using their wings."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the primary characteristic of sponges?",
+        "Option A": "Have jointed limbs",
+        "Option B": "Lack tissues and organs",
+        "Option C": "Have a hard shell",
+        "Option D": "Presence of tentacles",
+        "Correct Option": "B",
+        "Explanation": "Sponges are simple animals that lack tissues and organs."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which of the following is a characteristic of animals in the phylum Arthropoda?",
+        "Option A": "Soft body",
+        "Option B": "Bilateral symmetry",
+        "Option C": "Exoskeleton and jointed limbs",
+        "Option D": "Radial symmetry",
+        "Correct Option": "C",
+        "Explanation": "Arthropods have an exoskeleton and jointed limbs, and they undergo molting."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is the main function of gills in fish?",
+        "Option A": "Respiration",
+        "Option B": "Digestion",
+        "Option C": "Circulation",
+        "Option D": "Buoyancy",
+        "Correct Option": "A",
+        "Explanation": "Gills are used by fish to extract oxygen from water for respiration."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which of the following is a characteristic of all vertebrates?",
+        "Option A": "Lack of a backbone",
+        "Option B": "Presence of a backbone",
+        "Option C": "Exoskeleton",
+        "Option D": "Bilateral symmetry",
+        "Correct Option": "B",
+        "Explanation": "Vertebrates are animals with a backbone or spinal column."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is the primary role of the notochord in early chordates?",
+        "Option A": "Support the body",
+        "Option B": "Digest food",
+        "Option C": "Regulate temperature",
+        "Option D": "Store energy",
+        "Correct Option": "A",
+        "Explanation": "The notochord provides structural support in early chordates, later replaced by the backbone."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which of the following animals is a cold-blooded vertebrate?",
+        "Option A": "Whale",
+        "Option B": "Frog",
+        "Option C": "Bird",
+        "Option D": "Dolphin",
+        "Correct Option": "B",
+        "Explanation": "Frogs are cold-blooded vertebrates that depend on external environmental temperatures to regulate body heat."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following animals has a radial symmetry?",
+        "Option A": "Earthworm",
+        "Option B": "Jellyfish",
+        "Option C": "Bird",
+        "Option D": "Dog",
+        "Correct Option": "B",
+        "Explanation": "Jellyfish have radial symmetry, meaning their body parts are arranged around a central axis."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following organisms is an amphibian?",
+        "Option A": "Lizard",
+        "Option B": "Frog",
+        "Option C": "Turtle",
+        "Option D": "Snake",
+        "Correct Option": "B",
+        "Explanation": "Frogs are amphibians, able to live both on land and in water."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What is a characteristic of the phylum Annelida?",
+        "Option A": "Jointed limbs",
+        "Option B": "Segmented body",
+        "Option C": "Hard exoskeleton",
+        "Option D": "Radial symmetry",
+        "Correct Option": "B",
+        "Explanation": "Annelids, such as earthworms, have a segmented body structure."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What is the primary purpose of the large intestine in mammals?",
+        "Option A": "Digestion",
+        "Option B": "Absorption of water",
+        "Option C": "Circulation",
+        "Option D": "Excretion",
+        "Correct Option": "B",
+        "Explanation": "The large intestine absorbs water and minerals from undigested food."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What type of skeleton do vertebrates have?",
+        "Option A": "Exoskeleton",
+        "Option B": "Endoskeleton",
+        "Option C": "Cartilaginous skeleton",
+        "Option D": "None of the above",
+        "Correct Option": "B",
+        "Explanation": "Vertebrates have an internal skeleton (endoskeleton) made of bone or cartilage."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which of the following is an example of a mammal that lays eggs?",
+        "Option A": "Kangaroo",
+        "Option B": "Platypus",
+        "Option C": "Whale",
+        "Option D": "Bat",
+        "Correct Option": "B",
+        "Explanation": "The platypus is one of the few egg-laying mammals known as monotremes."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which of the following is a characteristic of all arthropods?",
+        "Option A": "Soft body",
+        "Option B": "Segmented body",
+        "Option C": "Lack of jointed legs",
+        "Option D": "Presence of a shell",
+        "Correct Option": "B",
+        "Explanation": "Arthropods, such as insects, have a segmented body and jointed legs."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is the primary function of the tentacles in cephalopods like octopuses?",
+        "Option A": "Movement",
+        "Option B": "Circulation",
+        "Option C": "Feeding and grasping",
+        "Option D": "Respiration",
+        "Correct Option": "C",
+        "Explanation": "Tentacles are used by cephalopods for feeding, grasping objects, and movement."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is the primary purpose of the circulatory system in vertebrates?",
+        "Option A": "Transport nutrients and gases",
+        "Option B": "Digest food",
+        "Option C": "Eliminate waste",
+        "Option D": "Regulate body temperature",
+        "Correct Option": "A",
+        "Explanation": "The circulatory system transports oxygen, nutrients, and waste products throughout the body."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which of the following animals is known for its unique ability to produce silk?",
+        "Option A": "Spider",
+        "Option B": "Snail",
+        "Option C": "Shark",
+        "Option D": "Whale",
+        "Correct Option": "A",
+        "Explanation": "Spiders produce silk used to build webs and capture prey."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following is a key characteristic of amphibians during their lifecycle?",
+        "Option A": "External fertilization",
+        "Option B": "Internal fertilization",
+        "Option C": "Exoskeleton",
+        "Option D": "Presence of gills in adults",
+        "Correct Option": "A",
+        "Explanation": "Amphibians typically undergo external fertilization, especially in aquatic environments."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which animal has the ability to regenerate lost body parts?",
+        "Option A": "Salamander",
+        "Option B": "Dog",
+        "Option C": "Human",
+        "Option D": "Fish",
+        "Correct Option": "A",
+        "Explanation": "Salamanders are known for their regenerative abilities, including limb regrowth."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the primary characteristic of the phylum Cnidaria?",
+        "Option A": "Soft body",
+        "Option B": "Presence of tentacles with stinging cells",
+        "Option C": "Hard skeleton",
+        "Option D": "Jointed limbs",
+        "Correct Option": "B",
+        "Explanation": "Cnidarians like jellyfish have stinging cells (cnidocytes) on their tentacles."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the main function of the brain in vertebrates?",
+        "Option A": "Circulation",
+        "Option B": "Respiration",
+        "Option C": "Coordination of body functions",
+        "Option D": "Movement",
+        "Correct Option": "C",
+        "Explanation": "The brain controls and coordinates sensory input, motor functions, and various body processes."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which of the following is a characteristic of fish?",
+        "Option A": "Lungs for respiration",
+        "Option B": "Cold-blooded",
+        "Option C": "Hair or fur",
+        "Option D": "Internal fertilization",
+        "Correct Option": "B",
+        "Explanation": "Fish are cold-blooded and rely on gills for respiration."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which of the following animals is known for its ability to fly and is a mammal?",
+        "Option A": "Bat",
+        "Option B": "Squirrel",
+        "Option C": "Kangaroo",
+        "Option D": "Elephant",
+        "Correct Option": "A",
+        "Explanation": "Bats are the only mammals capable of true flight."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which of the following animals is a herbivore?",
+        "Option A": "Lion",
+        "Option B": "Elephant",
+        "Option C": "Shark",
+        "Option D": "Wolf",
+        "Correct Option": "B",
+        "Explanation": "Elephants are herbivores that mainly consume plants."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which group of animals is known for having a complex digestive system and segmented bodies?",
+        "Option A": "Mollusks",
+        "Option B": "Echinoderms",
+        "Option C": "Arthropods",
+        "Option D": "Annelids",
+        "Correct Option": "D",
+        "Explanation": "Annelids, such as earthworms, have segmented bodies and a complete digestive system."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following is a major characteristic of amphibians?",
+        "Option A": "Cold-blooded",
+        "Option B": "Lungs and gills",
+        "Option C": "Lay eggs in water",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Amphibians are cold-blooded, can have both lungs and gills, and lay eggs in water."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which type of symmetry do most adult echinoderms display?",
+        "Option A": "Bilateral symmetry",
+        "Option B": "Radial symmetry",
+        "Option C": "Asymmetry",
+        "Option D": "Spherical symmetry",
+        "Correct Option": "B",
+        "Explanation": "Most adult echinoderms, such as starfish, display radial symmetry."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which of the following is an adaptation for flight in birds?",
+        "Option A": "Wings and feathers",
+        "Option B": "Gills",
+        "Option C": "Exoskeleton",
+        "Option D": "Hair and milk production",
+        "Correct Option": "A",
+        "Explanation": "Birds have wings and feathers, which are key adaptations for flight."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the function of the large intestine in mammals?",
+        "Option A": "Absorption of nutrients",
+        "Option B": "Absorption of water",
+        "Option C": "Digestion of food",
+        "Option D": "Circulation",
+        "Correct Option": "B",
+        "Explanation": "The large intestine absorbs water and electrolytes from undigested food."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which of the following animals is a filter feeder?",
+        "Option A": "Whale",
+        "Option B": "Jellyfish",
+        "Option C": "Sponge",
+        "Option D": "Bat",
+        "Correct Option": "C",
+        "Explanation": "Sponges are filter feeders that absorb nutrients from water passing through their bodies."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following is the function of the placenta in mammals?",
+        "Option A": "Exchange nutrients between the mother and fetus",
+        "Option B": "Store oxygen",
+        "Option C": "Produce milk",
+        "Option D": "Produce red blood cells",
+        "Correct Option": "A",
+        "Explanation": "The placenta provides nutrients, oxygen, and waste exchange between the mother and fetus during pregnancy."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the main function of the gills in fish?",
+        "Option A": "Respiration",
+        "Option B": "Digestion",
+        "Option C": "Reproduction",
+        "Option D": "Buoyancy",
+        "Correct Option": "A",
+        "Explanation": "Gills are used by fish to extract oxygen from water and release carbon dioxide."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which animal is an example of a monotreme?",
+        "Option A": "Platypus",
+        "Option B": "Kangaroo",
+        "Option C": "Whale",
+        "Option D": "Penguin",
+        "Correct Option": "A",
+        "Explanation": "The platypus is a monotreme, which is a type of egg-laying mammal."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the main characteristic of animals in the phylum Arthropoda?",
+        "Option A": "Soft bodies",
+        "Option B": "Hard shells",
+        "Option C": "Exoskeleton and jointed limbs",
+        "Option D": "Radial symmetry",
+        "Correct Option": "C",
+        "Explanation": "Arthropods have an exoskeleton and jointed limbs, such as in insects and crustaceans."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is the role of the diaphragm in mammals?",
+        "Option A": "Circulation",
+        "Option B": "Respiration",
+        "Option C": "Digestion",
+        "Option D": "Movement",
+        "Correct Option": "B",
+        "Explanation": "The diaphragm helps with the process of respiration by enabling lung expansion."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which of the following animals has a cartilaginous skeleton?",
+        "Option A": "Frog",
+        "Option B": "Fish",
+        "Option C": "Shark",
+        "Option D": "Dog",
+        "Correct Option": "C",
+        "Explanation": "Sharks have a skeleton made of cartilage instead of bone."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What type of body covering do mammals have?",
+        "Option A": "Feathers",
+        "Option B": "Scales",
+        "Option C": "Hair or fur",
+        "Option D": "Exoskeleton",
+        "Correct Option": "C",
+        "Explanation": "Mammals are characterized by having hair or fur."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What feature distinguishes amphibians from reptiles?",
+        "Option A": "Amphibians have external fertilization",
+        "Option B": "Amphibians have dry, scaly skin",
+        "Option C": "Amphibians lay eggs on land",
+        "Option D": "Amphibians are cold-blooded",
+        "Correct Option": "A",
+        "Explanation": "Most amphibians have external fertilization, especially in aquatic environments."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is a characteristic of fish?",
+        "Option A": "Cold-blooded",
+        "Option B": "Hair or fur",
+        "Option C": "Lungs for respiration",
+        "Option D": "All of the above",
+        "Correct Option": "A",
+        "Explanation": "Fish are cold-blooded and rely on gills for respiration."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What type of circulatory system do most mammals have?",
+        "Option A": "Open circulatory system",
+        "Option B": "Closed circulatory system",
+        "Option C": "No circulatory system",
+        "Option D": "Simple circulatory system",
+        "Correct Option": "B",
+        "Explanation": "Mammals have a closed circulatory system, where blood circulates through vessels."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the primary purpose of feathers in birds?",
+        "Option A": "Insulation and flight",
+        "Option B": "Digestion",
+        "Option C": "Protection from predators",
+        "Option D": "Reproduction",
+        "Correct Option": "A",
+        "Explanation": "Feathers help birds with insulation and enable flight."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What distinguishes amphibians from other vertebrates?",
+        "Option A": "They lay eggs in water",
+        "Option B": "They have scales",
+        "Option C": "They have a backbone",
+        "Option D": "They are warm-blooded",
+        "Correct Option": "A",
+        "Explanation": "Amphibians lay eggs in water, which distinguishes them from other vertebrates."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which of the following is an example of an amphibian?",
+        "Option A": "Frog",
+        "Option B": "Snake",
+        "Option C": "Shark",
+        "Option D": "Turtle",
+        "Correct Option": "A",
+        "Explanation": "Frogs are amphibians, capable of living both in water and on land."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which of the following is a characteristic of mammals?",
+        "Option A": "Lay eggs",
+        "Option B": "Have hair or fur",
+        "Option C": "Cold-blooded",
+        "Option D": "Have gills",
+        "Correct Option": "B",
+        "Explanation": "Mammals have hair or fur and are warm-blooded."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which of the following animals is known for its ability to produce silk?",
+        "Option A": "Spider",
+        "Option B": "Snail",
+        "Option C": "Whale",
+        "Option D": "Shark",
+        "Correct Option": "A",
+        "Explanation": "Spiders produce silk to build webs and capture prey."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the main function of the swim bladder in fish?",
+        "Option A": "Digestion",
+        "Option B": "Buoyancy",
+        "Option C": "Circulation",
+        "Option D": "Excretion",
+        "Correct Option": "B",
+        "Explanation": "The swim bladder helps fish maintain buoyancy and stay afloat in water."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What type of symmetry is most commonly found in animals in the phylum Echinodermata?",
+        "Option A": "Bilateral symmetry",
+        "Option B": "Radial symmetry",
+        "Option C": "Asymmetry",
+        "Option D": "None of the above",
+        "Correct Option": "B",
+        "Explanation": "Echinoderms, such as starfish, exhibit radial symmetry."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the primary function of the tentacles in cephalopods?",
+        "Option A": "Feeding and movement",
+        "Option B": "Reproduction",
+        "Option C": "Communication",
+        "Option D": "Sensory",
+        "Correct Option": "A",
+        "Explanation": "Tentacles in cephalopods like octopuses are used for feeding, grasping, and movement."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the primary purpose of the brain in vertebrates?",
+        "Option A": "Coordination of body functions",
+        "Option B": "Respiration",
+        "Option C": "Digestion",
+        "Option D": "Circulation",
+        "Correct Option": "A",
+        "Explanation": "The brain coordinates sensory input, motor functions, and other vital processes."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which animal group includes species that can fly?",
+        "Option A": "Mammals",
+        "Option B": "Birds",
+        "Option C": "Fish",
+        "Option D": "Reptiles",
+        "Correct Option": "B",
+        "Explanation": "Birds are known for their ability to fly, using wings and feathers."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the function of the placenta in mammals?",
+        "Option A": "Exchange nutrients between the mother and fetus",
+        "Option B": "Produce milk",
+        "Option C": "Digest food",
+        "Option D": "Circulate blood",
+        "Correct Option": "A",
+        "Explanation": "The placenta allows for the exchange of nutrients and gases between the mother and fetus."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which of the following animals is known for its regenerative abilities?",
+        "Option A": "Elephant",
+        "Option B": "Dog",
+        "Option C": "Salamander",
+        "Option D": "Dolphin",
+        "Correct Option": "C",
+        "Explanation": "Salamanders are known for their ability to regenerate lost limbs."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the primary function of gills in fish?",
+        "Option A": "Absorb oxygen",
+        "Option B": "Digestion",
+        "Option C": "Circulation",
+        "Option D": "Buoyancy",
+        "Correct Option": "A",
+        "Explanation": "Gills are responsible for extracting oxygen from water."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which of the following is a key characteristic of arthropods?",
+        "Option A": "Presence of jointed limbs",
+        "Option B": "Presence of tentacles",
+        "Option C": "Exoskeleton",
+        "Option D": "Both A and C",
+        "Correct Option": "D",
+        "Explanation": "Arthropods are characterized by jointed limbs and an exoskeleton."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is the main characteristic of sponges?",
+        "Option A": "Soft body",
+        "Option B": "Lack of tissues and organs",
+        "Option C": "Exoskeleton",
+        "Option D": "Hair or fur",
+        "Correct Option": "B",
+        "Explanation": "Sponges lack tissues and organs and are simple, filter-feeding organisms."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the main purpose of the circulatory system in vertebrates?",
+        "Option A": "Transport of oxygen and nutrients",
+        "Option B": "Reproduction",
+        "Option C": "Sensory input",
+        "Option D": "Immune defense",
+        "Correct Option": "A",
+        "Explanation": "The circulatory system helps in transporting oxygen, nutrients, and waste products."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which animal is an example of an insect?",
+        "Option A": "Spider",
+        "Option B": "Shark",
+        "Option C": "Ant",
+        "Option D": "Dolphin",
+        "Correct Option": "C",
+        "Explanation": "Ants are insects, which are part of the phylum Arthropoda."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which of the following animals is cold-blooded?",
+        "Option A": "Frog",
+        "Option B": "Dog",
+        "Option C": "Cat",
+        "Option D": "Human",
+        "Correct Option": "A",
+        "Explanation": "Frogs are cold-blooded, meaning their body temperature is regulated by the environment."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which of the following is a characteristic of birds?",
+        "Option A": "Have scales",
+        "Option B": "Have feathers",
+        "Option C": "Lay eggs on land",
+        "Option D": "Both B and C",
+        "Correct Option": "D",
+        "Explanation": "Birds have feathers, lay eggs, and are warm-blooded."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which animal is known for its ability to regenerate body parts?",
+        "Option A": "Frog",
+        "Option B": "Snake",
+        "Option C": "Starfish",
+        "Option D": "Whale",
+        "Correct Option": "C",
+        "Explanation": "Starfish can regenerate lost limbs due to their regenerative abilities."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What feature distinguishes amphibians from reptiles?",
+        "Option A": "Amphibians lay eggs on land",
+        "Option B": "Amphibians can breathe through their skin",
+        "Option C": "Amphibians have scales",
+        "Option D": "Amphibians are cold-blooded",
+        "Correct Option": "B",
+        "Explanation": "Amphibians can breathe through their skin, which is not the case for reptiles."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the primary role of the exoskeleton in arthropods?",
+        "Option A": "Provide movement",
+        "Option B": "Protect the body",
+        "Option C": "Aid in digestion",
+        "Option D": "Help with respiration",
+        "Correct Option": "B",
+        "Explanation": "The exoskeleton provides protection and support to arthropods."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which of the following animals has a soft body?",
+        "Option A": "Octopus",
+        "Option B": "Fish",
+        "Option C": "Shark",
+        "Option D": "Crocodile",
+        "Correct Option": "A",
+        "Explanation": "Octopuses have soft bodies without a hard skeleton."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the main characteristic of fish?",
+        "Option A": "Have feathers",
+        "Option B": "Live in water and breathe with gills",
+        "Option C": "Have jointed limbs",
+        "Option D": "Warm-blooded",
+        "Correct Option": "B",
+        "Explanation": "Fish live in water and rely on gills for respiration."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What type of circulatory system do arthropods have?",
+        "Option A": "Closed circulatory system",
+        "Option B": "Open circulatory system",
+        "Option C": "No circulatory system",
+        "Option D": "Simple circulatory system",
+        "Correct Option": "B",
+        "Explanation": "Arthropods have an open circulatory system where blood is pumped into open spaces."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the main feature of mammals that differentiates them from other animals?",
+        "Option A": "Warm-blooded",
+        "Option B": "Presence of lungs",
+        "Option C": "Presence of hair or fur",
+        "Option D": "Lay eggs",
+        "Correct Option": "C",
+        "Explanation": "Mammals have hair or fur and produce milk to feed their young."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which of the following animals is cold-blooded and lays eggs in water?",
+        "Option A": "Fish",
+        "Option B": "Frog",
+        "Option C": "Lizard",
+        "Option D": "Mammal",
+        "Correct Option": "B",
+        "Explanation": "Frogs lay eggs in water and are cold-blooded, making them amphibians."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What feature distinguishes amphibians from reptiles?",
+        "Option A": "Amphibians can breathe through their skin",
+        "Option B": "Amphibians lay eggs on land",
+        "Option C": "Amphibians are cold-blooded",
+        "Option D": "Amphibians have scales",
+        "Correct Option": "A",
+        "Explanation": "Amphibians can absorb oxygen through their skin, a feature reptiles do not have."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the function of the swim bladder in fish?",
+        "Option A": "Buoyancy",
+        "Option B": "Circulation",
+        "Option C": "Respiration",
+        "Option D": "Digestion",
+        "Correct Option": "A",
+        "Explanation": "The swim bladder helps fish maintain buoyancy and stay afloat in water."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the primary purpose of tentacles in cephalopods?",
+        "Option A": "Movement",
+        "Option B": "Grasping and feeding",
+        "Option C": "Digestion",
+        "Option D": "Communication",
+        "Correct Option": "B",
+        "Explanation": "Tentacles are used for feeding and grasping objects in cephalopods."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which of the following animals is known for its ability to produce silk?",
+        "Option A": "Spider",
+        "Option B": "Snail",
+        "Option C": "Whale",
+        "Option D": "Shark",
+        "Correct Option": "A",
+        "Explanation": "Spiders produce silk to make webs and capture prey."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which animal is an example of a cartilaginous fish?",
+        "Option A": "Shark",
+        "Option B": "Dolphin",
+        "Option C": "Whale",
+        "Option D": "Fish",
+        "Correct Option": "A",
+        "Explanation": "Sharks are cartilaginous fish, meaning their skeleton is made of cartilage."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the main characteristic of the phylum Arthropoda?",
+        "Option A": "Lack of limbs",
+        "Option B": "Exoskeleton and jointed limbs",
+        "Option C": "Soft body",
+        "Option D": "Radial symmetry",
+        "Correct Option": "B",
+        "Explanation": "Arthropods have jointed limbs and an exoskeleton for protection and support."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the primary function of the exoskeleton in arthropods?",
+        "Option A": "To protect the body",
+        "Option B": "To regulate body temperature",
+        "Option C": "To aid in digestion",
+        "Option D": "To help with respiration",
+        "Correct Option": "A",
+        "Explanation": "The exoskeleton serves as protection and provides support to the arthropod's body."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the primary role of the diaphragm in mammals?",
+        "Option A": "Movement",
+        "Option B": "Respiration",
+        "Option C": "Digestion",
+        "Option D": "Circulation",
+        "Correct Option": "B",
+        "Explanation": "The diaphragm assists with breathing by allowing the lungs to expand."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is a characteristic feature of all mammals?",
+        "Option A": "Cold-blooded",
+        "Option B": "Presence of scales",
+        "Option C": "Hair or fur",
+        "Option D": "Lay eggs",
+        "Correct Option": "C",
+        "Explanation": "Mammals are characterized by the presence of hair or fur and are warm-blooded."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which of the following is true about amphibians?",
+        "Option A": "They lay eggs in water",
+        "Option B": "They have scales",
+        "Option C": "They are warm-blooded",
+        "Option D": "They have hair",
+        "Correct Option": "A",
+        "Explanation": "Amphibians lay eggs in water and can breathe through their skin."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which of the following is a characteristic of mammals?",
+        "Option A": "Lays eggs",
+        "Option B": "Has scales",
+        "Option C": "Has hair or fur",
+        "Option D": "Has gills",
+        "Correct Option": "C",
+        "Explanation": "Mammals are characterized by having hair or fur and are warm-blooded."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
