@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is an operating system?",
+        "Option A": "Software that manages hardware and software resources",
+        "Option B": "A collection of application programs",
+        "Option C": "A network management tool",
+        "Option D": "A hardware component",
+        "Correct Option": "A",
+        "Explanation": "An operating system (OS) is system software that controls and manages computer hardware and software resources."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is NOT a primary function of an OS?",
+        "Option A": "Process management",
+        "Option B": "Memory management",
+        "Option C": "File system management",
+        "Option D": "Graphic design creation",
+        "Correct Option": "D",
+        "Explanation": "An OS does not design graphics; that is the role of application software."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What does process scheduling in an OS do?",
+        "Option A": "Allocates CPU time to processes",
+        "Option B": "Manages disk storage",
+        "Option C": "Encrypts files",
+        "Option D": "Updates drivers automatically",
+        "Correct Option": "A",
+        "Explanation": "Process scheduling determines which process gets the CPU and when."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which OS function is responsible for organizing files on storage media?",
+        "Option A": "File system management",
+        "Option B": "Process scheduling",
+        "Option C": "Memory allocation",
+        "Option D": "Network configuration",
+        "Correct Option": "A",
+        "Explanation": "File system management organizes, stores, and retrieves files on storage devices."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What technique allows an OS to use disk space as additional memory?",
+        "Option A": "Virtual memory",
+        "Option B": "Paging",
+        "Option C": "Segmentation",
+        "Option D": "Buffering",
+        "Correct Option": "A",
+        "Explanation": "Virtual memory allows the OS to extend RAM by using disk space."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which operating system is developed by Microsoft?",
+        "Option A": "Windows",
+        "Option B": "Linux",
+        "Option C": "macOS",
+        "Option D": "Unix",
+        "Correct Option": "A",
+        "Explanation": "Windows is the OS developed by Microsoft."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which operating system is known for being open-source and widely used on servers?",
+        "Option A": "Linux",
+        "Option B": "Windows",
+        "Option C": "macOS",
+        "Option D": "Solaris",
+        "Correct Option": "A",
+        "Explanation": "Linux is open-source and is popular in server environments."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which operating system is developed by Apple Inc.?",
+        "Option A": "macOS",
+        "Option B": "Linux",
+        "Option C": "Windows",
+        "Option D": "Chrome OS",
+        "Correct Option": "A",
+        "Explanation": "macOS is developed by Apple Inc. for its computers."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the primary role of process management in an OS?",
+        "Option A": "Creating, scheduling, and terminating processes",
+        "Option B": "Organizing file directories",
+        "Option C": "Managing network protocols",
+        "Option D": "Handling user interface themes",
+        "Correct Option": "A",
+        "Explanation": "Process management involves creating, scheduling, and terminating processes."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What does multitasking in an OS refer to?",
+        "Option A": "Running multiple processes concurrently",
+        "Option B": "Running a single process repeatedly",
+        "Option C": "Sequentially running tasks one after the other",
+        "Option D": "Managing multiple file systems",
+        "Correct Option": "A",
+        "Explanation": "Multitasking allows an OS to execute more than one process at the same time."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which component allows the OS to communicate with hardware devices?",
+        "Option A": "Device drivers",
+        "Option B": "Process schedulers",
+        "Option C": "File systems",
+        "Option D": "User interfaces",
+        "Correct Option": "A",
+        "Explanation": "Device drivers enable communication between the OS and hardware devices."
+    },
+    {
+        "Q.No": "12",
+        "Question": "In OS terminology, what is a context switch?",
+        "Option A": "Changing the CPU’s focus from one process to another",
+        "Option B": "Switching from one file system to another",
+        "Option C": "Changing the OS kernel version",
+        "Option D": "Rebooting the system",
+        "Correct Option": "A",
+        "Explanation": "A context switch occurs when the CPU switches from executing one process to another."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which memory management method divides memory into fixed-size blocks?",
+        "Option A": "Paging",
+        "Option B": "Segmentation",
+        "Option C": "Swapping",
+        "Option D": "Caching",
+        "Correct Option": "A",
+        "Explanation": "Paging divides memory into fixed-size pages to manage memory efficiently."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What does the process state \"\"blocked\"\" indicate?",
+        "Option A": "The process is waiting for an event or resource",
+        "Option B": "The process is running on the CPU",
+        "Option C": "The process has completed execution",
+        "Option D": "The process has been terminated",
+        "Correct Option": "A",
+        "Explanation": "A blocked process is waiting for an external event, such as I/O completion."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which file system is commonly used by Windows OS?",
+        "Option A": "NTFS",
+        "Option B": "ext4",
+        "Option C": "HFS+",
+        "Option D": "UFS",
+        "Correct Option": "A",
+        "Explanation": "NTFS (New Technology File System) is commonly used in Windows."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which file system is widely used in Linux distributions?",
+        "Option A": "ext4",
+        "Option B": "NTFS",
+        "Option C": "HFS+",
+        "Option D": "FAT16",
+        "Correct Option": "A",
+        "Explanation": "ext4 is a popular file system used by many Linux distributions."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which file system is native to macOS?",
+        "Option A": "HFS+ (or APFS)",
+        "Option B": "NTFS",
+        "Option C": "ext4",
+        "Option D": "UFS",
+        "Correct Option": "A",
+        "Explanation": "macOS uses HFS+ and, more recently, APFS as its native file system."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What does the term \"\"booting\"\" refer to in an OS?",
+        "Option A": "The process of starting up the computer and loading the OS",
+        "Option B": "Shutting down the computer",
+        "Option C": "Installing new software updates",
+        "Option D": "Running a virus scan",
+        "Correct Option": "A",
+        "Explanation": "Booting is the process of starting up a computer and loading the operating system."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which component is responsible for loading the OS during startup?",
+        "Option A": "Boot loader",
+        "Option B": "Process scheduler",
+        "Option C": "File manager",
+        "Option D": "Memory allocator",
+        "Correct Option": "A",
+        "Explanation": "The boot loader initializes the system and loads the OS kernel into memory."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the kernel in an operating system?",
+        "Option A": "The core component that manages system resources",
+        "Option B": "A user application",
+        "Option C": "A file storage utility",
+        "Option D": "A network protocol suite",
+        "Correct Option": "A",
+        "Explanation": "The kernel is the central part of the OS responsible for resource management."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which user interface is most common in modern operating systems?",
+        "Option A": "Graphical User Interface (GUI)",
+        "Option B": "Command Line Interface (CLI) exclusively",
+        "Option C": "Text-based interface",
+        "Option D": "Voice-controlled interface",
+        "Correct Option": "A",
+        "Explanation": "Modern OSs predominantly use a GUI to enhance user interaction."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What does user isolation in a multi-user OS ensure?",
+        "Option A": "Each user operates in a secure and separate environment",
+        "Option B": "All users share the same process space",
+        "Option C": "Users can modify the kernel",
+        "Option D": "Files are not accessible to any user",
+        "Correct Option": "A",
+        "Explanation": "User isolation keeps each user's processes and data secure from others."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is the role of the shell in an operating system?",
+        "Option A": "Provides an interface for users to interact with the OS",
+        "Option B": "Manages hardware resources directly",
+        "Option C": "Stores system data permanently",
+        "Option D": "Encrypts system files",
+        "Correct Option": "A",
+        "Explanation": "The shell interprets user commands and provides an interface to the OS."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which type of OS guarantees responses within strict time constraints?",
+        "Option A": "Real-Time Operating System (RTOS)",
+        "Option B": "General-Purpose OS",
+        "Option C": "Multi-user OS",
+        "Option D": "Distributed OS",
+        "Correct Option": "A",
+        "Explanation": "An RTOS is designed to respond to events within a predetermined time frame."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which OS is particularly noted for its stability in server and embedded systems?",
+        "Option A": "Linux",
+        "Option B": "Windows",
+        "Option C": "macOS",
+        "Option D": "Chrome OS",
+        "Correct Option": "A",
+        "Explanation": "Linux is known for its stability and is widely used in servers and embedded systems."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is a primary advantage of Linux in server environments?",
+        "Option A": "Open-source flexibility and customization",
+        "Option B": "High licensing fees",
+        "Option C": "Exclusive hardware support",
+        "Option D": "Proprietary development",
+        "Correct Option": "A",
+        "Explanation": "Linux’s open-source nature allows for high flexibility and customization, making it ideal for servers."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which scheduling algorithm is commonly used in modern OSs?",
+        "Option A": "Round-robin scheduling",
+        "Option B": "First-Come, First-Served exclusively",
+        "Option C": "Last-In, First-Out",
+        "Option D": "Random scheduling",
+        "Correct Option": "A",
+        "Explanation": "Round-robin scheduling is widely used to allocate CPU time fairly among processes."
+    },
+    {
+        "Q.No": "28",
+        "Question": "In OS terminology, what is a process?",
+        "Option A": "A running instance of a program",
+        "Option B": "A file stored on disk",
+        "Option C": "A hardware component",
+        "Option D": "A type of system call",
+        "Correct Option": "A",
+        "Explanation": "A process is a program in execution, managed by the OS."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is inter-process communication (IPC)?",
+        "Option A": "A mechanism allowing processes to exchange data",
+        "Option B": "A method for file encryption",
+        "Option C": "A process termination method",
+        "Option D": "A network communication protocol",
+        "Correct Option": "A",
+        "Explanation": "IPC enables processes to communicate and synchronize their actions."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which OS function translates logical addresses to physical addresses?",
+        "Option A": "Memory management via the Memory Management Unit (MMU)",
+        "Option B": "Process scheduling",
+        "Option C": "File system management",
+        "Option D": "Device driver management",
+        "Correct Option": "A",
+        "Explanation": "The MMU handles the translation of logical addresses to physical memory addresses."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is \"\"thrashing\"\" in the context of memory management?",
+        "Option A": "Excessive paging that degrades system performance",
+        "Option B": "A method for disk defragmentation",
+        "Option C": "A type of process scheduling",
+        "Option D": "A technique to speed up virtual memory",
+        "Correct Option": "A",
+        "Explanation": "Thrashing occurs when too much time is spent on paging, slowing down system performance."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What role does the device manager in an OS serve?",
+        "Option A": "It manages and facilitates communication with hardware peripherals",
+        "Option B": "It schedules process execution",
+        "Option C": "It handles file encryption",
+        "Option D": "It allocates virtual memory",
+        "Correct Option": "A",
+        "Explanation": "The device manager, via drivers, ensures that the OS can communicate with hardware devices."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What is an interrupt in the context of device management?",
+        "Option A": "A signal from hardware to the CPU indicating an event",
+        "Option B": "A process termination signal",
+        "Option C": "A file system error notification",
+        "Option D": "A network disconnection alert",
+        "Correct Option": "A",
+        "Explanation": "Interrupts alert the CPU to handle hardware events promptly."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is a system call?",
+        "Option A": "A programmed request from a user application to the OS for a service",
+        "Option B": "A call made by the system administrator",
+        "Option C": "A network protocol for file sharing",
+        "Option D": "A device driver update mechanism",
+        "Correct Option": "A",
+        "Explanation": "A system call is an interface for applications to request services from the OS kernel."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the main purpose of access control in an OS?",
+        "Option A": "To restrict file and resource access to authorized users",
+        "Option B": "To schedule processes effectively",
+        "Option C": "To manage virtual memory exclusively",
+        "Option D": "To handle device interrupts",
+        "Correct Option": "A",
+        "Explanation": "Access control ensures that only authorized users or processes can access specific resources."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What does \"\"kernel mode\"\" mean?",
+        "Option A": "A privileged mode of operation where the OS has unrestricted access to hardware",
+        "Option B": "A mode for running user applications",
+        "Option C": "A mode for low-power operation",
+        "Option D": "A mode exclusively for device drivers",
+        "Correct Option": "A",
+        "Explanation": "Kernel mode provides the OS with full access to hardware and system resources."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which term describes an OS's ability to run multiple threads within a process concurrently?",
+        "Option A": "Multithreading",
+        "Option B": "Multiprocessing",
+        "Option C": "Single-tasking",
+        "Option D": "Context switching",
+        "Correct Option": "A",
+        "Explanation": "Multithreading allows a single process to have multiple threads executing concurrently."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is process isolation?",
+        "Option A": "Preventing one process from interfering with another's execution and data",
+        "Option B": "Combining several processes into one",
+        "Option C": "Merging file systems",
+        "Option D": "Allowing processes to share memory freely",
+        "Correct Option": "A",
+        "Explanation": "Process isolation ensures that processes run independently, enhancing system stability and security."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which OS concept involves grouping files into directories and subdirectories?",
+        "Option A": "Hierarchical file system",
+        "Option B": "Flat file system",
+        "Option C": "Network file system",
+        "Option D": "Encrypted file system",
+        "Correct Option": "A",
+        "Explanation": "A hierarchical file system organizes files into directories and subdirectories."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What role do system calls play in an OS?",
+        "Option A": "They serve as the interface between user applications and the OS kernel",
+        "Option B": "They schedule CPU tasks",
+        "Option C": "They manage physical memory exclusively",
+        "Option D": "They handle graphics rendering",
+        "Correct Option": "A",
+        "Explanation": "System calls allow user applications to request services from the OS kernel."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is a deadlock in process management?",
+        "Option A": "A situation where processes are waiting indefinitely for resources held by each other",
+        "Option B": "A method of scheduling processes",
+        "Option C": "A file system error",
+        "Option D": "A memory allocation technique",
+        "Correct Option": "A",
+        "Explanation": "A deadlock occurs when two or more processes are each waiting for the other to release resources."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which technique can help prevent deadlocks?",
+        "Option A": "Deadlock prevention algorithms",
+        "Option B": "Increased disk space allocation",
+        "Option C": "Enhanced graphics processing",
+        "Option D": "Faster network protocols",
+        "Correct Option": "A",
+        "Explanation": "Deadlock prevention algorithms help the OS avoid situations where processes block each other indefinitely."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the primary purpose of swap space in an OS?",
+        "Option A": "To extend physical memory by temporarily storing data on disk",
+        "Option B": "To permanently store user files",
+        "Option C": "To manage network connections",
+        "Option D": "To compile system applications",
+        "Correct Option": "A",
+        "Explanation": "Swap space acts as an overflow area when physical RAM is insufficient."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What does the term \"\"shell command interpreter\"\" refer to?",
+        "Option A": "A program that interprets and executes user commands entered via a shell",
+        "Option B": "A graphics rendering engine",
+        "Option C": "A file encryption tool",
+        "Option D": "A network protocol analyzer",
+        "Correct Option": "A",
+        "Explanation": "The shell command interpreter processes and executes commands typed by the user."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which OS component enforces security policies and access controls?",
+        "Option A": "The security manager (or security subsystem)",
+        "Option B": "The process scheduler",
+        "Option C": "The file system",
+        "Option D": "The virtual memory manager",
+        "Correct Option": "A",
+        "Explanation": "The security manager enforces policies that control access to resources and system functions."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What does resource allocation in an OS involve?",
+        "Option A": "Distributing hardware and software resources among processes",
+        "Option B": "Formatting the hard drive",
+        "Option C": "Encrypting user files",
+        "Option D": "Managing graphical interfaces",
+        "Correct Option": "A",
+        "Explanation": "Resource allocation is the process of assigning available resources, such as CPU time and memory, to various processes."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which OS is well known for its high customizability and extensive command-line tools?",
+        "Option A": "Linux",
+        "Option B": "Windows",
+        "Option C": "macOS",
+        "Option D": "Chrome OS",
+        "Correct Option": "A",
+        "Explanation": "Linux is renowned for its customizability and robust command-line environment."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What feature allows an OS to run multiple applications simultaneously without interference?",
+        "Option A": "Multitasking",
+        "Option B": "Single-user mode",
+        "Option C": "Monolithic architecture",
+        "Option D": "Exclusive resource locking",
+        "Correct Option": "A",
+        "Explanation": "Multitasking enables the concurrent execution of multiple applications."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is the primary goal of device management in an OS?",
+        "Option A": "To ensure proper communication and operation between hardware and software",
+        "Option B": "To manage user accounts",
+        "Option C": "To encrypt files",
+        "Option D": "To schedule processes",
+        "Correct Option": "A",
+        "Explanation": "Device management handles communication between the OS and hardware devices using drivers and interrupts."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is the purpose of cache memory in an OS?",
+        "Option A": "To provide a small, fast storage area for frequently accessed data",
+        "Option B": "To permanently store files",
+        "Option C": "To manage file systems",
+        "Option D": "To schedule network traffic",
+        "Correct Option": "A",
+        "Explanation": "Cache memory stores frequently accessed data for quick retrieval, thereby speeding up operations."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What does a microkernel architecture emphasize?",
+        "Option A": "Minimal kernel functions with additional services running in user space",
+        "Option B": "All services running within the kernel",
+        "Option C": "Exclusive use of hardware drivers in kernel mode",
+        "Option D": "A flat, non-hierarchical OS structure",
+        "Correct Option": "A",
+        "Explanation": "A microkernel architecture minimizes the functions in kernel space, moving most services to user space for modularity and stability."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which process state indicates that a process is currently executing on the CPU?",
+        "Option A": "Running",
+        "Option B": "Blocked",
+        "Option C": "Ready",
+        "Option D": "Suspended",
+        "Correct Option": "A",
+        "Explanation": "A process in the \"\"running\"\" state is actively executing instructions on the CPU."
+    },
+    {
+        "Q.No": "53",
+        "Question": "In Unix-like systems, what is the purpose of the \"\"init\"\" process?",
+        "Option A": "To start all other processes during system boot",
+        "Option B": "To manage memory allocation",
+        "Option C": "To handle device drivers exclusively",
+        "Option D": "To provide the graphical user interface",
+        "Correct Option": "A",
+        "Explanation": "The \"\"init\"\" process is the first process started by the kernel and is responsible for starting all other processes."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which file operation is typically handled by the OS's file system?",
+        "Option A": "Creating, deleting, and modifying files",
+        "Option B": "Scheduling CPU tasks",
+        "Option C": "Allocating memory for processes",
+        "Option D": "Managing hardware drivers",
+        "Correct Option": "A",
+        "Explanation": "The OS’s file system manages file operations such as creation, deletion, and modification."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which operating system is renowned for its powerful command-line interface?",
+        "Option A": "Linux",
+        "Option B": "Windows only",
+        "Option C": "macOS only",
+        "Option D": "None of the above",
+        "Correct Option": "A",
+        "Explanation": "Linux is widely recognized for its extensive and powerful command-line interface."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the primary purpose of the Windows Registry?",
+        "Option A": "To store configuration settings and options for the OS and applications",
+        "Option B": "To manage file systems",
+        "Option C": "To allocate CPU resources",
+        "Option D": "To schedule system updates",
+        "Correct Option": "A",
+        "Explanation": "The Windows Registry is a database that stores configuration settings for the OS and installed applications."
+    },
+    {
+        "Q.No": "57",
+        "Question": "In Unix-like systems, what is a \"\"daemon\"\"?",
+        "Option A": "A background process that runs continuously without user intervention",
+        "Option B": "A graphical user interface tool",
+        "Option C": "A file encryption program",
+        "Option D": "A type of system call",
+        "Correct Option": "A",
+        "Explanation": "A daemon is a background process that performs specific services without direct user interaction."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which OS component is chiefly responsible for resource allocation among processes?",
+        "Option A": "The scheduler",
+        "Option B": "The file manager",
+        "Option C": "The user interface",
+        "Option D": "The boot loader",
+        "Correct Option": "A",
+        "Explanation": "The scheduler allocates CPU time and other resources to processes."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is the purpose of a Process Control Block (PCB) in an OS?",
+        "Option A": "To store information about a process's state and resource usage",
+        "Option B": "To manage file storage",
+        "Option C": "To handle user logins",
+        "Option D": "To encrypt data",
+        "Correct Option": "A",
+        "Explanation": "The PCB holds vital information about a process, including its state, program counter, registers, and resource usage."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which technique is used by the OS to reduce external fragmentation in memory?",
+        "Option A": "Compaction",
+        "Option B": "Swapping",
+        "Option C": "Paging",
+        "Option D": "Caching",
+        "Correct Option": "A",
+        "Explanation": "Compaction reorganizes memory to reduce fragmentation and consolidate free memory."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the primary function of a device driver?",
+        "Option A": "To enable the OS to interact with hardware devices",
+        "Option B": "To schedule processes",
+        "Option C": "To manage virtual memory",
+        "Option D": "To create file systems",
+        "Correct Option": "A",
+        "Explanation": "Device drivers provide the necessary interface between the OS and hardware devices."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which best describes virtual memory?",
+        "Option A": "A technique that uses disk space to extend the apparent RAM",
+        "Option B": "Physical memory installed on the motherboard",
+        "Option C": "Cache memory for the CPU",
+        "Option D": "A type of file system",
+        "Correct Option": "A",
+        "Explanation": "Virtual memory allows the OS to compensate for physical memory shortages by temporarily transferring data to disk storage."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is a system call?",
+        "Option A": "A mechanism for programs to request services from the OS kernel",
+        "Option B": "A telephone call to technical support",
+        "Option C": "A method for file encryption",
+        "Option D": "A process scheduling algorithm",
+        "Correct Option": "A",
+        "Explanation": "A system call is how a user application requests a service from the OS kernel."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which OS function ensures that users only access files they are authorized to view?",
+        "Option A": "Access control",
+        "Option B": "Process scheduling",
+        "Option C": "Memory management",
+        "Option D": "Device driver updates",
+        "Correct Option": "A",
+        "Explanation": "Access control restricts file and resource access to authorized users."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What does \"\"kernel mode\"\" allow an OS to do?",
+        "Option A": "Execute operations with full hardware privileges",
+        "Option B": "Run only user applications",
+        "Option C": "Limit hardware access",
+        "Option D": "Schedule user tasks exclusively",
+        "Correct Option": "A",
+        "Explanation": "Kernel mode permits the OS to perform operations with unrestricted access to hardware and system resources."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which of the following is NOT typically a function of an operating system?",
+        "Option A": "Direct document editing",
+        "Option B": "Resource management",
+        "Option C": "Process scheduling",
+        "Option D": "Memory management",
+        "Correct Option": "A",
+        "Explanation": "Direct document editing is performed by application software, not the OS."
+    },
+    {
+        "Q.No": "67",
+        "Question": "How does an OS facilitate network communication?",
+        "Option A": "By implementing network protocols and managing network interfaces",
+        "Option B": "By encrypting user files only",
+        "Option C": "By managing local printers exclusively",
+        "Option D": "By handling file system defragmentation",
+        "Correct Option": "A",
+        "Explanation": "The OS uses network protocols and drivers to manage communication between computers."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which component translates logical addresses into physical addresses?",
+        "Option A": "Memory Management Unit (MMU)",
+        "Option B": "Process scheduler",
+        "Option C": "File system manager",
+        "Option D": "Device driver handler",
+        "Correct Option": "A",
+        "Explanation": "The MMU is responsible for mapping logical addresses to physical addresses in memory."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What does the process table in an OS contain?",
+        "Option A": "Information about all active processes",
+        "Option B": "A list of all files on disk",
+        "Option C": "A directory of hardware drivers",
+        "Option D": "Network configuration details",
+        "Correct Option": "A",
+        "Explanation": "The process table stores data about each process currently active in the system."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the primary purpose of a swap file?",
+        "Option A": "To temporarily store data moved from RAM when memory is low",
+        "Option B": "To permanently store user documents",
+        "Option C": "To manage network traffic",
+        "Option D": "To encrypt system files",
+        "Correct Option": "A",
+        "Explanation": "A swap file is used as an extension of RAM, storing data temporarily when physical memory is insufficient."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What defines a preemptive scheduling algorithm?",
+        "Option A": "The OS can interrupt and suspend processes to assign CPU time to others",
+        "Option B": "Processes run until completion without interruption",
+        "Option C": "Processes are scheduled randomly",
+        "Option D": "Only one process can run at a time",
+        "Correct Option": "A",
+        "Explanation": "Preemptive scheduling allows the OS to forcibly suspend a process to run another, enhancing responsiveness."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the purpose of an idle process in an OS?",
+        "Option A": "To run when no other process is using the CPU",
+        "Option B": "To manage file systems",
+        "Option C": "To encrypt data",
+        "Option D": "To compile system updates",
+        "Correct Option": "A",
+        "Explanation": "The idle process runs when the CPU has no other work, ensuring the system remains active."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which OS function tracks the execution state of processes?",
+        "Option A": "Process control",
+        "Option B": "File system monitoring",
+        "Option C": "Memory allocation",
+        "Option D": "Network management",
+        "Correct Option": "A",
+        "Explanation": "Process control keeps track of the state and progress of each process."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What characterizes a monolithic kernel architecture?",
+        "Option A": "Most OS services run in kernel space",
+        "Option B": "Only minimal services run in kernel space",
+        "Option C": "Kernel services run in user space",
+        "Option D": "It uses a microkernel design",
+        "Correct Option": "A",
+        "Explanation": "In a monolithic kernel, most services and drivers run in the privileged kernel space."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is bootstrapping in the context of an OS?",
+        "Option A": "The process of loading the OS into memory during startup",
+        "Option B": "Formatting the hard drive",
+        "Option C": "Installing new drivers",
+        "Option D": "Encrypting system files",
+        "Correct Option": "A",
+        "Explanation": "Bootstrapping is the process by which the OS is loaded and initialized during system startup."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which component handles I/O requests from applications?",
+        "Option A": "I/O subsystem",
+        "Option B": "Memory manager",
+        "Option C": "Process scheduler",
+        "Option D": "File system handler",
+        "Correct Option": "A",
+        "Explanation": "The I/O subsystem manages requests between applications and hardware devices."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What does scheduling latency refer to?",
+        "Option A": "The delay between a process becoming ready and its execution on the CPU",
+        "Option B": "The time taken to boot an OS",
+        "Option C": "The delay in writing data to disk",
+        "Option D": "The time for a network connection to establish",
+        "Correct Option": "A",
+        "Explanation": "Scheduling latency is the waiting time from when a process is ready until it starts executing."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which file system feature improves recovery after crashes?",
+        "Option A": "Journaling",
+        "Option B": "Caching",
+        "Option C": "Partitioning",
+        "Option D": "Defragmentation",
+        "Correct Option": "A",
+        "Explanation": "Journaling helps protect the file system by keeping a log of changes, aiding recovery after a crash."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the primary function of system logs?",
+        "Option A": "To record system events and errors for troubleshooting",
+        "Option B": "To store user documents",
+        "Option C": "To manage file encryption",
+        "Option D": "To schedule background processes",
+        "Correct Option": "A",
+        "Explanation": "System logs document events and errors, which are vital for troubleshooting and system analysis."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which feature helps an OS recover from power failures?",
+        "Option A": "Journaling file systems",
+        "Option B": "Virtual memory",
+        "Option C": "Multitasking",
+        "Option D": "Process scheduling",
+        "Correct Option": "A",
+        "Explanation": "Journaling file systems record changes, aiding in recovery after unexpected shutdowns."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which OS is known for its distinctive \"\"Aqua\"\" user interface?",
+        "Option A": "macOS",
+        "Option B": "Linux",
+        "Option C": "Windows",
+        "Option D": "Android",
+        "Correct Option": "A",
+        "Explanation": "macOS is known for its unique \"\"Aqua\"\" graphical user interface."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the primary difference between 32-bit and 64-bit operating systems?",
+        "Option A": "The maximum amount of memory they can address",
+        "Option B": "The color depth of the display",
+        "Option C": "The file system they use",
+        "Option D": "The speed of the CPU",
+        "Correct Option": "A",
+        "Explanation": "A 64-bit OS can address a significantly larger amount of memory than a 32-bit OS."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What process management feature reduces CPU idle time?",
+        "Option A": "Multitasking with efficient context switching",
+        "Option B": "Disk defragmentation",
+        "Option C": "File compression",
+        "Option D": "Static memory allocation",
+        "Correct Option": "A",
+        "Explanation": "Efficient context switching in multitasking reduces CPU idle time by quickly switching between processes."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the significance of system calls in OS design?",
+        "Option A": "They provide the interface for user applications to request OS services",
+        "Option B": "They encrypt user data",
+        "Option C": "They schedule network communications",
+        "Option D": "They design graphical interfaces",
+        "Correct Option": "A",
+        "Explanation": "System calls are the mechanism through which user applications request services from the OS kernel."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which of the following best describes a lightweight operating system?",
+        "Option A": "An OS designed to use minimal system resources",
+        "Option B": "An OS with extensive multimedia features",
+        "Option C": "An OS for high-end gaming exclusively",
+        "Option D": "An OS that only supports single-user mode",
+        "Correct Option": "A",
+        "Explanation": "Lightweight operating systems are optimized to use minimal resources, ideal for older or limited hardware."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What role does process priority play in an OS scheduler?",
+        "Option A": "It determines the order in which processes are executed",
+        "Option B": "It encrypts process data",
+        "Option C": "It manages disk space allocation",
+        "Option D": "It monitors network traffic",
+        "Correct Option": "A",
+        "Explanation": "Process priority helps the scheduler decide which process should be executed next."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which modern memory management technique loads pages into memory only when needed?",
+        "Option A": "Demand paging",
+        "Option B": "Preloading",
+        "Option C": "Static allocation",
+        "Option D": "Fixed partitioning",
+        "Correct Option": "A",
+        "Explanation": "Demand paging loads pages only when they are referenced, optimizing memory usage."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the function of the system clock in an OS?",
+        "Option A": "Provides timing and synchronization for processes",
+        "Option B": "Encrypts data files",
+        "Option C": "Manages disk access",
+        "Option D": "Updates device drivers",
+        "Correct Option": "A",
+        "Explanation": "The system clock provides timing information essential for process scheduling and synchronization."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What does preemptive multitasking allow an OS to do?",
+        "Option A": "Interrupt a running process to allocate CPU time to another process",
+        "Option B": "Run processes without interruption",
+        "Option C": "Schedule tasks based solely on file size",
+        "Option D": "Limit the number of concurrently running processes",
+        "Correct Option": "A",
+        "Explanation": "Preemptive multitasking allows the OS to interrupt processes to ensure a responsive system."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which advantage does a graphical user interface (GUI) offer in an OS?",
+        "Option A": "Enhanced usability and ease of navigation for users",
+        "Option B": "Faster CPU processing speeds",
+        "Option C": "Direct hardware management",
+        "Option D": "Improved file system encryption",
+        "Correct Option": "A",
+        "Explanation": "GUIs make it easier for users to interact with the OS through visual elements."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the specific function of a bootloader during system startup?",
+        "Option A": "To load the OS kernel into memory",
+        "Option B": "To schedule background processes",
+        "Option C": "To manage user accounts",
+        "Option D": "To update device drivers",
+        "Correct Option": "A",
+        "Explanation": "The bootloader is responsible for loading the operating system kernel into memory during boot-up."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which OS feature allows the execution of multiple virtual machines concurrently?",
+        "Option A": "Virtualization support",
+        "Option B": "File system journaling",
+        "Option C": "Disk caching",
+        "Option D": "Preemptive multitasking",
+        "Correct Option": "A",
+        "Explanation": "Virtualization support enables an OS to run multiple virtual machines simultaneously."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the primary role of the OS scheduler?",
+        "Option A": "To determine which process runs at any given time",
+        "Option B": "To encrypt user files",
+        "Option C": "To manage device drivers exclusively",
+        "Option D": "To update the OS automatically",
+        "Correct Option": "A",
+        "Explanation": "The scheduler is responsible for selecting which process receives CPU time."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which operating system is widely used in enterprise server environments?",
+        "Option A": "Windows Server",
+        "Option B": "macOS",
+        "Option C": "iOS",
+        "Option D": "Android",
+        "Correct Option": "A",
+        "Explanation": "Windows Server is commonly deployed in enterprise environments for server applications."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which memory management feature prevents a process from accessing another process’s memory?",
+        "Option A": "Memory protection",
+        "Option B": "Virtual memory",
+        "Option C": "Disk caching",
+        "Option D": "Process isolation without protection",
+        "Correct Option": "A",
+        "Explanation": "Memory protection prevents processes from interfering with each other’s memory spaces."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What are daemons in Unix-like operating systems?",
+        "Option A": "Background processes that perform system tasks without user intervention",
+        "Option B": "Graphical user interface elements",
+        "Option C": "Memory management routines",
+        "Option D": "File system repair utilities",
+        "Correct Option": "A",
+        "Explanation": "Daemons are background services that handle various system tasks in Unix-like OSs."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which utility in an OS is used to monitor active processes and resource usage?",
+        "Option A": "Task Manager or System Monitor",
+        "Option B": "Disk Defragmenter",
+        "Option C": "File Explorer",
+        "Option D": "Control Panel exclusively",
+        "Correct Option": "A",
+        "Explanation": "Task Manager (Windows) or System Monitor (Linux/macOS) displays active processes and resource usage."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the role of the swap space in an OS?",
+        "Option A": "To serve as an overflow area for data when RAM is full",
+        "Option B": "To permanently store system files",
+        "Option C": "To manage network traffic",
+        "Option D": "To update device drivers",
+        "Correct Option": "A",
+        "Explanation": "Swap space is used as temporary storage when the physical memory (RAM) is insufficient."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which aspect of device management involves handling interrupts from hardware?",
+        "Option A": "Interrupt handling",
+        "Option B": "Process scheduling",
+        "Option C": "Memory allocation",
+        "Option D": "File system monitoring",
+        "Correct Option": "A",
+        "Explanation": "Interrupt handling is a crucial part of device management that allows the OS to respond to hardware events."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is the primary purpose of process synchronization?",
+        "Option A": "To coordinate the execution of processes and avoid race conditions",
+        "Option B": "To increase disk space",
+        "Option C": "To manage network connections",
+        "Option D": "To update system drivers",
+        "Correct Option": "A",
+        "Explanation": "Process synchronization ensures that concurrent processes cooperate correctly and prevents conflicts such as race conditions."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

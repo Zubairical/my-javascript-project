@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which of the following programming languages is typically interpreted rather than compiled?",
+        "Option A": "C",
+        "Option B": "C++",
+        "Option C": "Java",
+        "Option D": "Python",
+        "Correct Option": "D",
+        "Explanation": "Python is generally interpreted, whereas C, C++, and Java are compiled (or compiled to bytecode in Java’s case).",
+        "": ""
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which programming language is widely used for enterprise applications and has strong object-oriented features?",
+        "Option A": "C",
+        "Option B": "C++",
+        "Option C": "Java",
+        "Option D": "Assembly",
+        "Correct Option": "C",
+        "Explanation": "Java is known for its robust object-oriented design and is extensively used in enterprise environments.",
+        "": ""
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which language is considered an extension of C that adds object-oriented features?",
+        "Option A": "C",
+        "Option B": "C++",
+        "Option C": "Python",
+        "Option D": "Fortran",
+        "Correct Option": "B",
+        "Explanation": "C++ builds upon C by adding object-oriented programming features.",
+        "": ""
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which language is renowned for its simplicity and readability, making it a popular choice for beginners?",
+        "Option A": "C",
+        "Option B": "Java",
+        "Option C": "Python",
+        "Option D": "C++",
+        "Correct Option": "C",
+        "Explanation": "Python’s clean syntax and dynamic typing make it highly readable and beginner-friendly.",
+        "": ""
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which of the following is NOT considered a programming language?",
+        "Option A": "HTML",
+        "Option B": "Python",
+        "Option C": "Java",
+        "Option D": "C",
+        "Correct Option": "A",
+        "Explanation": "HTML is a markup language used for structuring web pages, not for programming logic.",
+        "": ""
+    },
+    {
+        "Q.No": "6",
+        "Question": "In C programming, which header file is essential for performing input/output operations?",
+        "Option A": "stdio.h",
+        "Option B": "conio.h",
+        "Option C": "stdlib.h",
+        "Option D": "math.h",
+        "Correct Option": "A",
+        "Explanation": "The header file stdio.h contains declarations for input/output functions such as printf and scanf.",
+        "": ""
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which operator is used to determine the remainder after division in languages like C and Java?",
+        "Option A": "/",
+        "Option B": "%",
+        "Option C": "*",
+        "Option D": "-",
+        "Correct Option": "B",
+        "Explanation": "The modulo operator (%) returns the remainder after division.",
+        "": ""
+    },
+    {
+        "Q.No": "8",
+        "Question": "In programming, what is a variable?",
+        "Option A": "A fixed value",
+        "Option B": "A named storage location in memory",
+        "Option C": "A type of operator",
+        "Option D": "A function",
+        "Correct Option": "B",
+        "Explanation": "A variable is a symbolic name that refers to a storage location in memory.",
+        "": ""
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which data type in C is used to store a single character?",
+        "Option A": "int",
+        "Option B": "char",
+        "Option C": "float",
+        "Option D": "double",
+        "Correct Option": "B",
+        "Explanation": "The 'char' data type is used to store single characters.",
+        "": ""
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which of the following represents a Boolean value in many programming languages?",
+        "Option A": "0",
+        "Option B": "1",
+        "Option C": "true",
+        "Option D": "'t'",
+        "Correct Option": "C",
+        "Explanation": "Boolean values are typically represented as true and false.",
+        "": ""
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which operator is used for logical AND in Java?",
+        "Option A": "&&",
+        "Option B": "&",
+        "Option C": "",
+        "Option D": "",
+        "Correct Option": "",
+        "Explanation": "%",
+        "": ""
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which of the following is a relational operator in C++?",
+        "Option A": "==",
+        "Option B": "=",
+        "Option C": "+=",
+        "Option D": "++",
+        "Correct Option": "A",
+        "Explanation": "'==' is used to test equality between two values.",
+        "": ""
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is the correct way to declare an integer variable named \"\"num\"\" in Java?",
+        "Option A": "int num;",
+        "Option B": "integer num;",
+        "Option C": "var num;",
+        "Option D": "num int;",
+        "Correct Option": "A",
+        "Explanation": "In Java, the proper declaration is \"\"int num;\"\".",
+        "": ""
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which control structure is used to execute a block of code repeatedly while a condition remains true?",
+        "Option A": "if",
+        "Option B": "switch",
+        "Option C": "loop",
+        "Option D": "function",
+        "Correct Option": "C",
+        "Explanation": "Loops are used for repeating a block of code as long as a condition is met.",
+        "": ""
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which of the following is the correct syntax for a for loop in C?",
+        "Option A": "for(int i=0; i<10; i++)",
+        "Option B": "while(i<10)",
+        "Option C": "do-while(i<10)",
+        "Option D": "for(i=0; i<=10; i++)",
+        "Correct Option": "A",
+        "Explanation": "The standard for loop in C is written as for(int i=0; i<10; i++).",
+        "": ""
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which loop guarantees that its body will be executed at least once?",
+        "Option A": "for loop",
+        "Option B": "while loop",
+        "Option C": "do-while loop",
+        "Option D": "if statement",
+        "Correct Option": "C",
+        "Explanation": "A do-while loop executes its body once before checking its condition.",
+        "": ""
+    },
+    {
+        "Q.No": "17",
+        "Question": "In Python, which keyword is used for conditional branching?",
+        "Option A": "if",
+        "Option B": "when",
+        "Option C": "loop",
+        "Option D": "function",
+        "Correct Option": "A",
+        "Explanation": "The \"\"if\"\" keyword in Python is used for making decisions.",
+        "": ""
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which of the following represents a correct if-else statement syntax in Java?",
+        "Option A": "if(x > 0){...} else {...}",
+        "Option B": "if(x > 0) else {...}",
+        "Option C": "if x>0 then else",
+        "Option D": "if(x > 0): else:",
+        "Correct Option": "A",
+        "Explanation": "Java uses braces to denote blocks: if(x > 0){...} else {...}.",
+        "": ""
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is a function in programming?",
+        "Option A": "A block of code designed to perform a specific task",
+        "Option B": "A type of variable",
+        "Option C": "A loop structure",
+        "Option D": "An operator",
+        "Correct Option": "A",
+        "Explanation": "A function is a reusable block of code that performs a specific task.",
+        "": ""
+    },
+    {
+        "Q.No": "20",
+        "Question": "In C, how do you define a function that returns an integer and takes no parameters?",
+        "Option A": "int function() {}",
+        "Option B": "void function() {}",
+        "Option C": "function int() {}",
+        "Option D": "int function;",
+        "Correct Option": "A",
+        "Explanation": "The correct definition is \"\"int function() {}\"\" where the function returns an int.",
+        "": ""
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is recursion in the context of programming?",
+        "Option A": "A function calling itself",
+        "Option B": "A loop inside a function",
+        "Option C": "A conditional statement",
+        "Option D": "A type of operator",
+        "Correct Option": "A",
+        "Explanation": "Recursion is a technique where a function calls itself to solve a problem.",
+        "": ""
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is essential in a recursive function to prevent infinite recursion?",
+        "Option A": "A recursive case only",
+        "Option B": "A base case",
+        "Option C": "A loop",
+        "Option D": "An operator",
+        "Correct Option": "B",
+        "Explanation": "A base case is needed to terminate the recursion.",
+        "": ""
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which data type is typically used for storing floating-point numbers in C?",
+        "Option A": "int",
+        "Option B": "char",
+        "Option C": "float",
+        "Option D": "bool",
+        "Correct Option": "C",
+        "Explanation": "The \"\"float\"\" data type is used to represent real numbers with decimals.",
+        "": ""
+    },
+    {
+        "Q.No": "24",
+        "Question": "In Java, which keyword is used to create a new object instance?",
+        "Option A": "new",
+        "Option B": "create",
+        "Option C": "instantiate",
+        "Option D": "object",
+        "Correct Option": "A",
+        "Explanation": "The \"\"new\"\" keyword is used in Java to instantiate objects.",
+        "": ""
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which operator is commonly used to concatenate strings in Java?",
+        "Option A": "+",
+        "Option B": "&",
+        "Option C": "*",
+        "Option D": "%",
+        "Correct Option": "A",
+        "Explanation": "The plus (+) operator is used for string concatenation in Java.",
+        "": ""
+    },
+    {
+        "Q.No": "26",
+        "Question": "What does the \"\"++\"\" operator do in languages like C++ and Java?",
+        "Option A": "Increments a variable by one",
+        "Option B": "Decrements a variable by one",
+        "Option C": "Multiplies a variable by 2",
+        "Option D": "Divides a variable by 2",
+        "Correct Option": "A",
+        "Explanation": "The \"\"++\"\" operator increases the value of a variable by one.",
+        "": ""
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which symbol is used to write a single-line comment in Python?",
+        "Option A": "//",
+        "Option B": "#",
+        "Option C": "/* */",
+        "Option D": "--",
+        "Correct Option": "B",
+        "Explanation": "In Python, the hash (#) symbol is used for single-line comments.",
+        "": ""
+    },
+    {
+        "Q.No": "28",
+        "Question": "In C, which symbol terminates a statement?",
+        "Option A": ";",
+        "Option B": ":",
+        "Option C": ".",
+        "Option D": ",",
+        "Correct Option": "A",
+        "Explanation": "In C, each statement ends with a semicolon (;).",
+        "": ""
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is the output of the Python expression: print(2 ** 3)?",
+        "Option A": "6",
+        "Option B": "8",
+        "Option C": "9",
+        "Option D": "5",
+        "Correct Option": "B",
+        "Explanation": "The expression computes 2 raised to the power of 3, which equals 8.",
+        "": ""
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following is not a valid data type in Java?",
+        "Option A": "int",
+        "Option B": "String",
+        "Option C": "boolean",
+        "Option D": "real",
+        "Correct Option": "D",
+        "Explanation": "\"\"real\"\" is not a valid Java data type; Java uses float or double for real numbers.",
+        "": ""
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which operator is used to compare inequality between two values in C++?",
+        "Option A": "!=",
+        "Option B": "=!",
+        "Option C": "<>",
+        "Option D": "==",
+        "Correct Option": "A",
+        "Explanation": "The \"\"!=\"\" operator checks whether two values are not equal.",
+        "": ""
+    },
+    {
+        "Q.No": "32",
+        "Question": "In a C function, what is the purpose of the \"\"return\"\" statement?",
+        "Option A": "To exit the function and return a value",
+        "Option B": "To start a loop",
+        "Option C": "To declare a variable",
+        "Option D": "To call another function",
+        "Correct Option": "A",
+        "Explanation": "The \"\"return\"\" statement ends the function and optionally passes a value back to the caller.",
+        "": ""
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which control structure executes a block of code if none of the specified conditions are met?",
+        "Option A": "if",
+        "Option B": "else if",
+        "Option C": "else",
+        "Option D": "for",
+        "Correct Option": "C",
+        "Explanation": "The \"\"else\"\" block is executed when none of the preceding conditions are true.",
+        "": ""
+    },
+    {
+        "Q.No": "34",
+        "Question": "What does the \"\"break\"\" statement do inside a loop?",
+        "Option A": "Exits the loop immediately",
+        "Option B": "Skips the current iteration",
+        "Option C": "Repeats the loop",
+        "Option D": "Starts a new loop",
+        "Correct Option": "A",
+        "Explanation": "\"\"break\"\" is used to exit the loop entirely.",
+        "": ""
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the purpose of the \"\"continue\"\" statement in loop structures?",
+        "Option A": "To skip the current iteration and proceed to the next",
+        "Option B": "To exit the loop entirely",
+        "Option C": "To restart the loop from the beginning",
+        "Option D": "To break out of nested loops",
+        "Correct Option": "A",
+        "Explanation": "\"\"continue\"\" causes the loop to skip the remainder of its body and move to the next iteration.",
+        "": ""
+    },
+    {
+        "Q.No": "36",
+        "Question": "In Java, which method serves as the entry point of a program?",
+        "Option A": "main()",
+        "Option B": "start()",
+        "Option C": "init()",
+        "Option D": "run()",
+        "Correct Option": "A",
+        "Explanation": "The main() method is the entry point for any Java application.",
+        "": ""
+    },
+    {
+        "Q.No": "37",
+        "Question": "What does the \"\"void\"\" keyword indicate in a function declaration?",
+        "Option A": "The function does not return a value",
+        "Option B": "The function returns an integer",
+        "Option C": "The function is recursive",
+        "Option D": "The function requires no parameters",
+        "Correct Option": "A",
+        "Explanation": "\"\"void\"\" specifies that a function does not return any value.",
+        "": ""
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which language uses indentation (whitespace) to define code blocks instead of braces?",
+        "Option A": "C",
+        "Option B": "C++",
+        "Option C": "Java",
+        "Option D": "Python",
+        "Correct Option": "D",
+        "Explanation": "Python uses indentation to denote code blocks rather than curly braces.",
+        "": ""
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the output of the following C code snippet? <br> int a = 5; <br> printf(\"\"%d\"\", a++);",
+        "Option A": "5",
+        "Option B": "6",
+        "Option C": "Error",
+        "Option D": "Undefined",
+        "Correct Option": "A",
+        "Explanation": "The post-increment operator returns the original value before incrementing, so 5 is printed.",
+        "": ""
+    },
+    {
+        "Q.No": "40",
+        "Question": "In programming, what is a constant?",
+        "Option A": "A variable whose value cannot change",
+        "Option B": "A type of loop",
+        "Option C": "A file input method",
+        "Option D": "A function that returns no value",
+        "Correct Option": "A",
+        "Explanation": "Constants store fixed values that cannot be modified after initialization.",
+        "": ""
+    },
+    {
+        "Q.No": "41",
+        "Question": "In Java, which method is used to compare the contents of two strings?",
+        "Option A": "==",
+        "Option B": "equals()",
+        "Option C": "compare()",
+        "Option D": "equal()",
+        "Correct Option": "B",
+        "Explanation": "The equals() method compares the content of strings in Java.",
+        "": ""
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the typical size of an integer (int) in C on most modern systems?",
+        "Option A": "2 bytes",
+        "Option B": "4 bytes",
+        "Option C": "8 bytes",
+        "Option D": "16 bytes",
+        "Correct Option": "B",
+        "Explanation": "On most systems, an int occupies 4 bytes of memory.",
+        "": ""
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which of the following is a valid variable name in Java?",
+        "Option A": "1variable",
+        "Option B": "variable_name",
+        "Option C": "variable-name",
+        "Option D": "variable name",
+        "Correct Option": "B",
+        "Explanation": "\"\"variable_name\"\" is valid; variable names cannot start with a digit, contain hyphens, or spaces.",
+        "": ""
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which operator increments a variable before its value is used in an expression?",
+        "Option A": "i++",
+        "Option B": "++i",
+        "Option C": "--i",
+        "Option D": "i--",
+        "Correct Option": "B",
+        "Explanation": "The pre-increment operator (++i) increments the variable before its value is used.",
+        "": ""
+    },
+    {
+        "Q.No": "45",
+        "Question": "How is recursion best described?",
+        "Option A": "A function calling itself",
+        "Option B": "A loop that iterates indefinitely",
+        "Option C": "A conditional statement",
+        "Option D": "A method of variable declaration",
+        "Correct Option": "A",
+        "Explanation": "Recursion occurs when a function calls itself to solve a smaller instance of a problem.",
+        "": ""
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is a stack overflow in the context of recursion?",
+        "Option A": "When too many recursive calls exhaust the call stack memory",
+        "Option B": "When a loop iterates endlessly",
+        "Option C": "When a function returns an incorrect value",
+        "Option D": "When a variable exceeds its maximum size",
+        "Correct Option": "A",
+        "Explanation": "Excessive recursive calls can exhaust the available stack memory, causing a stack overflow error.",
+        "": ""
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which control structures can be used for decision-making in programming?",
+        "Option A": "if-else only",
+        "Option B": "switch-case only",
+        "Option C": "Both if-else and switch-case",
+        "Option D": "for loops",
+        "Correct Option": "C",
+        "Explanation": "Both if-else and switch-case constructs are used for making decisions based on conditions.",
+        "": ""
+    },
+    {
+        "Q.No": "48",
+        "Question": "In Python, which keyword is used to define a function?",
+        "Option A": "function",
+        "Option B": "def",
+        "Option C": "func",
+        "Option D": "declare",
+        "Correct Option": "B",
+        "Explanation": "\"\"def\"\" is used in Python to define a function.",
+        "": ""
+    },
+    {
+        "Q.No": "49",
+        "Question": "What does the \"\"return\"\" keyword do in a Python function?",
+        "Option A": "Ends the function and optionally returns a value",
+        "Option B": "Calls another function",
+        "Option C": "Initializes a variable",
+        "Option D": "Starts a loop",
+        "Correct Option": "A",
+        "Explanation": "The \"\"return\"\" statement terminates a function and may pass a value back to the caller.",
+        "": ""
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which operator is used for exponentiation in Python?",
+        "Option A": "^",
+        "Option B": "**",
+        "Option C": "exp()",
+        "Option D": "*",
+        "Correct Option": "B",
+        "Explanation": "In Python, the ** operator is used for exponentiation.",
+        "": ""
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the output of the Python expression: print(len(\"\"Hello\"\"))?",
+        "Option A": "4",
+        "Option B": "5",
+        "Option C": "6",
+        "Option D": "Error",
+        "Correct Option": "B",
+        "Explanation": "The len() function returns the number of characters in \"\"Hello\"\", which is 5.",
+        "": ""
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which languages use curly braces {} to denote code blocks?",
+        "Option A": "Python only",
+        "Option B": "C only",
+        "Option C": "Both C and JavaScript",
+        "Option D": "Python and Ruby",
+        "Correct Option": "C",
+        "Explanation": "Both C and JavaScript use curly braces to define code blocks.",
+        "": ""
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is type casting in programming?",
+        "Option A": "Converting one data type to another",
+        "Option B": "Declaring a variable",
+        "Option C": "Looping over an array",
+        "Option D": "Encrypting data",
+        "Correct Option": "A",
+        "Explanation": "Type casting converts a variable from one data type to another.",
+        "": ""
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which of the following is a valid Boolean literal in Python?",
+        "Option A": "true",
+        "Option B": "false",
+        "Option C": "True",
+        "Option D": "FALSE",
+        "Correct Option": "C",
+        "Explanation": "In Python, Boolean literals are capitalized: True and False.",
+        "": ""
+    },
+    {
+        "Q.No": "55",
+        "Question": "In C++, which operator is used to access members of a class through a pointer?",
+        "Option A": ".",
+        "Option B": "->",
+        "Option C": "::",
+        "Option D": "*",
+        "Correct Option": "B",
+        "Explanation": "The -> operator is used to access class members via a pointer.",
+        "": ""
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which statement about functions is true?",
+        "Option A": "Functions promote code reuse and modularity",
+        "Option B": "Functions always return a value",
+        "Option C": "Functions cannot call other functions",
+        "Option D": "Functions are only used in object-oriented programming",
+        "Correct Option": "A",
+        "Explanation": "Functions help in reusing code and breaking programs into modular pieces.",
+        "": ""
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is a parameter in the context of a function?",
+        "Option A": "A variable used to pass data into a function",
+        "Option B": "The value returned by a function",
+        "Option C": "A type of loop variable",
+        "Option D": "An operator used in functions",
+        "Correct Option": "A",
+        "Explanation": "Parameters are variables listed in a function’s definition to accept input values.",
+        "": ""
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which programming language supports both procedural and object-oriented programming paradigms?",
+        "Option A": "C",
+        "Option B": "Java",
+        "Option C": "Python",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Languages like C (procedural), Java (object-oriented), and Python (multi-paradigm) support various styles.",
+        "": ""
+    },
+    {
+        "Q.No": "59",
+        "Question": "In a switch statement in C, what keyword is used to prevent fall-through between cases?",
+        "Option A": "continue",
+        "Option B": "break",
+        "Option C": "exit",
+        "Option D": "stop",
+        "Correct Option": "B",
+        "Explanation": "The break statement is used to exit a switch case to prevent fall-through.",
+        "": ""
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which of the following is not a loop construct?",
+        "Option A": "for",
+        "Option B": "while",
+        "Option C": "do-while",
+        "Option D": "if-else",
+        "Correct Option": "D",
+        "Explanation": "if-else is a conditional statement, not a looping construct.",
+        "": ""
+    },
+    {
+        "Q.No": "61",
+        "Question": "In C, which keyword is used to exit a loop immediately?",
+        "Option A": "exit",
+        "Option B": "break",
+        "Option C": "continue",
+        "Option D": "return",
+        "Correct Option": "B",
+        "Explanation": "The break statement immediately exits the loop in C.",
+        "": ""
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the result of the following C code snippet? <br> int x = 10; <br> x = x + 5; <br> printf(\"\"%d\"\", x);",
+        "Option A": "10",
+        "Option B": "5",
+        "Option C": "15",
+        "Option D": "20",
+        "Correct Option": "C",
+        "Explanation": "The variable x is updated to 15 (10 + 5).",
+        "": ""
+    },
+    {
+        "Q.No": "63",
+        "Question": "What does the \"\"&&\"\" operator do in logical expressions?",
+        "Option A": "Performs logical AND",
+        "Option B": "Performs logical OR",
+        "Option C": "Performs bitwise AND",
+        "Option D": "Performs assignment",
+        "Correct Option": "A",
+        "Explanation": "The \"\"&&\"\" operator is used for logical AND in many programming languages.",
+        "": ""
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which keyword is used in Python to iterate over a sequence?",
+        "Option A": "for",
+        "Option B": "while",
+        "Option C": "loop",
+        "Option D": "iterate",
+        "Correct Option": "A",
+        "Explanation": "The \"\"for\"\" keyword in Python is used to iterate over sequences such as lists.",
+        "": ""
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is an array?",
+        "Option A": "A collection of elements of the same data type stored contiguously",
+        "Option B": "A function that returns multiple values",
+        "Option C": "A type of loop construct",
+        "Option D": "A conditional statement",
+        "Correct Option": "A",
+        "Explanation": "An array is a data structure that holds a fixed number of elements of the same type.",
+        "": ""
+    },
+    {
+        "Q.No": "66",
+        "Question": "In C, which operator is used to obtain the address of a variable?",
+        "Option A": "*",
+        "Option B": "&",
+        "Option C": "%",
+        "Option D": "$",
+        "Correct Option": "B",
+        "Explanation": "The \"\"&\"\" operator is used to get the address of a variable in C.",
+        "": ""
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the difference between \"\"==\"\" and \"\"=\"\" in most programming languages?",
+        "Option A": "\"\"==\"\" compares values; \"\"=\"\" assigns a value",
+        "Option B": "\"\"=\"\" compares values; \"\"==\"\" assigns a value",
+        "Option C": "Both perform the same operation",
+        "Option D": "There is no difference",
+        "Correct Option": "A",
+        "Explanation": "\"\"==\"\" is a comparison operator, whereas \"\"=\"\" is an assignment operator.",
+        "": ""
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which of the following is an example of the ternary conditional operator?",
+        "Option A": "?:",
+        "Option B": "++",
+        "Option C": "--",
+        "Option D": "**",
+        "Correct Option": "A",
+        "Explanation": "The ternary operator \"\"?:\"\", is used for inline conditional expressions.",
+        "": ""
+    },
+    {
+        "Q.No": "69",
+        "Question": "What does the \"\"else if\"\" construct allow you to do?",
+        "Option A": "Check multiple conditions sequentially",
+        "Option B": "Loop through arrays",
+        "Option C": "Define a function",
+        "Option D": "Declare a variable",
+        "Correct Option": "A",
+        "Explanation": "\"\"else if\"\" allows multiple conditions to be tested in sequence.",
+        "": ""
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which statement is true about recursion?",
+        "Option A": "Recursion can lead to a stack overflow if the base case is not defined",
+        "Option B": "Recursion is equivalent to iteration in all cases",
+        "Option C": "Recursion never uses additional memory",
+        "Option D": "Recursion is only used in functional languages",
+        "Correct Option": "A",
+        "Explanation": "Without a proper base case, recursion may continue indefinitely and exhaust the call stack.",
+        "": ""
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is tail recursion?",
+        "Option A": "A form of recursion where the recursive call is the last operation in the function",
+        "Option B": "Recursion that calls itself multiple times before returning",
+        "Option C": "Recursion without a base case",
+        "Option D": "Recursion used only in tail-end processes",
+        "Correct Option": "A",
+        "Explanation": "Tail recursion occurs when the recursive call is the final action in the function, which can help optimize memory usage.",
+        "": ""
+    },
+    {
+        "Q.No": "72",
+        "Question": "In programming, what does the term \"\"scope\"\" refer to?",
+        "Option A": "The region of the program where a variable is accessible",
+        "Option B": "The data type of a variable",
+        "Option C": "The size of a variable in memory",
+        "Option D": "The return type of a function",
+        "Correct Option": "A",
+        "Explanation": "Scope defines the parts of a program where a variable can be accessed.",
+        "": ""
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which data type is used to store Boolean values in C++?",
+        "Option A": "int",
+        "Option B": "bool",
+        "Option C": "char",
+        "Option D": "float",
+        "Correct Option": "B",
+        "Explanation": "The \"\"bool\"\" data type is used to store Boolean values (true or false) in C++.",
+        "": ""
+    },
+    {
+        "Q.No": "74",
+        "Question": "In Java, which keyword is used to extend a class?",
+        "Option A": "inherits",
+        "Option B": "implements",
+        "Option C": "extends",
+        "Option D": "super",
+        "Correct Option": "C",
+        "Explanation": "The \"\"extends\"\" keyword is used to indicate that one class is inheriting from another.",
+        "": ""
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which of the following is a correct way to declare a constant in C?",
+        "Option A": "const int x = 10;",
+        "Option B": "int const x = 10;",
+        "Option C": "Both A and B",
+        "Option D": "Neither A nor B",
+        "Correct Option": "C",
+        "Explanation": "Both \"\"const int x = 10;\"\" and \"\"int const x = 10;\"\" are valid constant declarations in C.",
+        "": ""
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the output of the following Python code? <br> def add(a, b): return a + b <br> print(add(3, 4))",
+        "Option A": "3",
+        "Option B": "4",
+        "Option C": "7",
+        "Option D": "Error",
+        "Correct Option": "C",
+        "Explanation": "The function returns the sum of 3 and 4, which is 7.",
+        "": ""
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is one major benefit of using functions in programming?",
+        "Option A": "Code reuse and modularity",
+        "Option B": "Increased code redundancy",
+        "Option C": "Slower execution",
+        "Option D": "Inability to debug",
+        "Correct Option": "A",
+        "Explanation": "Functions allow code to be reused and make programs easier to maintain and understand.",
+        "": ""
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is a recursive function?",
+        "Option A": "A function that calls itself",
+        "Option B": "A function that loops indefinitely",
+        "Option C": "A function with no parameters",
+        "Option D": "A function that returns void",
+        "Correct Option": "A",
+        "Explanation": "A recursive function is one that calls itself to solve a smaller instance of a problem.",
+        "": ""
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which method is used for exponentiation in JavaScript?",
+        "Option A": "**",
+        "Option B": "^",
+        "Option C": "Math.pow()",
+        "Option D": "exp()",
+        "Correct Option": "C",
+        "Explanation": "JavaScript uses Math.pow() to perform exponentiation.",
+        "": ""
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which of the following languages is statically typed?",
+        "Option A": "Python",
+        "Option B": "Java",
+        "Option C": "JavaScript",
+        "Option D": "PHP",
+        "Correct Option": "B",
+        "Explanation": "Java is statically typed, meaning variable types are known at compile time.",
+        "": ""
+    },
+    {
+        "Q.No": "81",
+        "Question": "In C, what is the result of the expression 10 / 3 using integer division?",
+        "Option A": "3",
+        "Option B": "3.33",
+        "Option C": "4",
+        "Option D": "2",
+        "Correct Option": "A",
+        "Explanation": "Integer division truncates the decimal, so 10/3 evaluates to 3.",
+        "": ""
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the purpose of the default case in a switch statement?",
+        "Option A": "To provide a fallback if no case matches",
+        "Option B": "To end the switch statement",
+        "Option C": "To repeat the last case",
+        "Option D": "To declare a variable",
+        "Correct Option": "A",
+        "Explanation": "The default case executes if none of the specified cases match.",
+        "": ""
+    },
+    {
+        "Q.No": "83",
+        "Question": "In Java, which keyword is used to handle exceptions?",
+        "Option A": "try",
+        "Option B": "catch",
+        "Option C": "throw",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Exception handling in Java involves try, catch, and throw statements.",
+        "": ""
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the purpose of the \"\"import\"\" statement in Python?",
+        "Option A": "To include external modules and libraries",
+        "Option B": "To declare variables",
+        "Option C": "To define functions",
+        "Option D": "To print output",
+        "Correct Option": "A",
+        "Explanation": "The \"\"import\"\" statement allows you to include and use external modules in your Python code.",
+        "": ""
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which keyword is used to create an anonymous function in Python?",
+        "Option A": "def",
+        "Option B": "lambda",
+        "Option C": "func",
+        "Option D": "anon",
+        "Correct Option": "B",
+        "Explanation": "\"\"lambda\"\" is used to define anonymous functions in Python.",
+        "": ""
+    },
+    {
+        "Q.No": "86",
+        "Question": "In C, what does the \"\"static\"\" keyword indicate when used with a variable inside a function?",
+        "Option A": "The variable retains its value between function calls",
+        "Option B": "The variable is accessible globally",
+        "Option C": "The variable cannot be modified",
+        "Option D": "The variable is stored on the heap",
+        "Correct Option": "A",
+        "Explanation": "A static variable inside a function maintains its value between invocations.",
+        "": ""
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which loop construct in programming tests its condition at the end of the loop body?",
+        "Option A": "for loop",
+        "Option B": "while loop",
+        "Option C": "do-while loop",
+        "Option D": "foreach loop",
+        "Correct Option": "C",
+        "Explanation": "The do-while loop evaluates its condition after executing the loop body, ensuring at least one iteration.",
+        "": ""
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is a compiler?",
+        "Option A": "A program that translates source code into machine code",
+        "Option B": "A tool for editing text files",
+        "Option C": "A debugging tool",
+        "Option D": "An operating system component",
+        "Correct Option": "A",
+        "Explanation": "A compiler converts high-level source code into machine code that the computer can execute.",
+        "": ""
+    },
+    {
+        "Q.No": "89",
+        "Question": "What does dynamic typing mean?",
+        "Option A": "Variable types are determined at runtime",
+        "Option B": "Variables must be declared with a type before use",
+        "Option C": "Variables cannot change type",
+        "Option D": "Types are fixed during compilation",
+        "Correct Option": "A",
+        "Explanation": "Dynamic typing allows variables to be assigned without explicit type definitions, determined at runtime.",
+        "": ""
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the purpose of a function prototype in C?",
+        "Option A": "To declare a function's signature before its use",
+        "Option B": "To define the function's body",
+        "Option C": "To call the function",
+        "Option D": "To allocate memory for the function",
+        "Correct Option": "A",
+        "Explanation": "A function prototype informs the compiler about a function’s name, return type, and parameters before its actual definition.",
+        "": ""
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which operator is used to concatenate strings in Python?",
+        "Option A": "+",
+        "Option B": "&",
+        "Option C": "concat()",
+        "Option D": "*",
+        "Correct Option": "A",
+        "Explanation": "The + operator is used to concatenate (join) strings in Python.",
+        "": ""
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which operator represents logical OR in most programming languages?",
+        "Option A": "||",
+        "Option B": "==",
+        "Option C": "!=",
+        "Option D": "&&",
+        "Correct Option": "A",
+        "Explanation": "The operator is used for logical OR.",
+        "": ""
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is a common application of recursion?",
+        "Option A": "Solving problems that can be broken into similar sub-problems",
+        "Option B": "Iterating over arrays only",
+        "Option C": "Handling user input exclusively",
+        "Option D": "Encrypting data",
+        "Correct Option": "A",
+        "Explanation": "Recursion is often used in divide and conquer strategies to solve complex problems by breaking them into simpler sub-problems.",
+        "": ""
+    },
+    {
+        "Q.No": "94",
+        "Question": "In C++, which keyword prevents a method from being overridden in a derived class?",
+        "Option A": "final",
+        "Option B": "static",
+        "Option C": "const",
+        "Option D": "private",
+        "Correct Option": "A",
+        "Explanation": "The \"\"final\"\" keyword in C++ prevents further overriding of a virtual function in derived classes.",
+        "": ""
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is a pointer in C?",
+        "Option A": "A variable that stores a memory address",
+        "Option B": "A function that returns an integer",
+        "Option C": "A type of data structure for arrays",
+        "Option D": "A loop construct",
+        "Correct Option": "A",
+        "Explanation": "A pointer is a variable whose value is the address of another variable.",
+        "": ""
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which operator is used for dynamic memory allocation in C++?",
+        "Option A": "new",
+        "Option B": "malloc",
+        "Option C": "alloc",
+        "Option D": "create",
+        "Correct Option": "A",
+        "Explanation": "In C++, the \"\"new\"\" operator is used to allocate memory dynamically.",
+        "": ""
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the output of the following Java statement? <br> System.out.println(3 + \"\"4\"\");",
+        "Option A": "7",
+        "Option B": "34",
+        "Option C": "12",
+        "Option D": "Error",
+        "Correct Option": "B",
+        "Explanation": "In Java, the + operator concatenates the string when one operand is a string, resulting in \"\"34\"\".",
+        "": ""
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which of the following is a valid loop syntax in Python for iterating over a list named \"\"items\"\"?",
+        "Option A": "for item in items:",
+        "Option B": "while items:",
+        "Option C": "for(i=0; i<items; i++):",
+        "Option D": "loop items:",
+        "Correct Option": "A",
+        "Explanation": "\"\"for item in items:\"\" is the correct Python syntax for iterating over a list.",
+        "": ""
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the purpose of the \"\"pass\"\" statement in Python?",
+        "Option A": "It acts as a placeholder and does nothing",
+        "Option B": "It terminates a loop immediately",
+        "Option C": "It prints a blank line",
+        "Option D": "It returns from a function",
+        "Correct Option": "A",
+        "Explanation": "The \"\"pass\"\" statement is a null operation that is useful as a placeholder when no action is required.",
+        "": ""
+    },
+    {
+        "Q.No": "100",
+        "Question": "What does a function's return type specify?",
+        "Option A": "The data type of the value the function returns",
+        "Option B": "The number of parameters the function accepts",
+        "Option C": "The name of the function",
+        "Option D": "The length of the function's code",
+        "Correct Option": "A",
+        "Explanation": "A function's return type indicates what type of value the function will output upon completion.",
+        "": ""
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

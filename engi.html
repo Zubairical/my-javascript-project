@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What does SDLC stand for?",
+        "Option A": "Software Development Life Cycle",
+        "Option B": "System Design Life Cycle",
+        "Option C": "Software Design Level Cycle",
+        "Option D": "System Development Line of Code",
+        "Correct Option": "A",
+        "Explanation": "SDLC stands for Software Development Life Cycle, which outlines the process of planning, creating, testing, and deploying software."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which phase of the SDLC involves gathering requirements from stakeholders?",
+        "Option A": "Requirement Analysis",
+        "Option B": "Design",
+        "Option C": "Implementation",
+        "Option D": "Maintenance",
+        "Correct Option": "A",
+        "Explanation": "The requirements or analysis phase involves gathering and documenting what the stakeholders need from the system."
+    },
+    {
+        "Q.No": "3",
+        "Question": "In the SDLC, which phase primarily focuses on planning the system architecture and user interface?",
+        "Option A": "Design",
+        "Option B": "Implementation",
+        "Option C": "Testing",
+        "Option D": "Deployment",
+        "Correct Option": "A",
+        "Explanation": "The design phase outlines the architecture, components, interfaces, and data flows of the system."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which SDLC model is characterized by a linear, sequential approach where each phase must be completed before the next begins?",
+        "Option A": "Waterfall",
+        "Option B": "Agile",
+        "Option C": "Spiral",
+        "Option D": "Iterative",
+        "Correct Option": "A",
+        "Explanation": "The Waterfall model follows a sequential design process where one phase must be finished before moving to the next."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What is a key disadvantage of the Waterfall model?",
+        "Option A": "Lack of flexibility to accommodate changes",
+        "Option B": "High customer collaboration",
+        "Option C": "Frequent iterations",
+        "Option D": "Rapid delivery of working software",
+        "Correct Option": "A",
+        "Explanation": "Waterfall is rigid and does not easily accommodate changes once a phase is completed."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which SDLC model is known for its iterative cycles and frequent revisions based on feedback?",
+        "Option A": "Agile",
+        "Option B": "Waterfall",
+        "Option C": "V-Model",
+        "Option D": "Big Bang",
+        "Correct Option": "A",
+        "Explanation": "Agile emphasizes iterative development, continuous feedback, and incremental delivery."
+    },
+    {
+        "Q.No": "7",
+        "Question": "In Agile methodologies, what is a “sprint”?",
+        "Option A": "A time-boxed period during which a team completes a set of work items",
+        "Option B": "A long-term planning phase",
+        "Option C": "A final product release cycle",
+        "Option D": "A meeting to review project scope",
+        "Correct Option": "A",
+        "Explanation": "A sprint is a fixed period (typically 1–4 weeks) during which specific tasks are completed and reviewed."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which Agile framework includes roles such as Scrum Master, Product Owner, and Development Team?",
+        "Option A": "Scrum",
+        "Option B": "Kanban",
+        "Option C": "XP",
+        "Option D": "Lean",
+        "Correct Option": "A",
+        "Explanation": "Scrum is an Agile framework that defines these roles to manage and deliver projects."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is a “user story” in Agile?",
+        "Option A": "A short, simple description of a feature from the end-user’s perspective",
+        "Option B": "A detailed technical specification",
+        "Option C": "A project schedule",
+        "Option D": "A risk analysis report",
+        "Correct Option": "A",
+        "Explanation": "User stories describe desired functionality in simple language from the perspective of the user."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the purpose of a sprint retrospective in Agile?",
+        "Option A": "To reflect on the sprint and identify improvements for the next iteration",
+        "Option B": "To plan the next sprint’s tasks",
+        "Option C": "To assign new roles to team members",
+        "Option D": "To finalize product documentation",
+        "Correct Option": "A",
+        "Explanation": "The retrospective is held at the end of a sprint to discuss what went well and what can be improved."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What is the main goal of version control?",
+        "Option A": "To track and manage changes to source code over time",
+        "Option B": "To compile source code automatically",
+        "Option C": "To design user interfaces",
+        "Option D": "To manage project budgets",
+        "Correct Option": "A",
+        "Explanation": "Version control systems track changes, enable collaboration, and allow reverting to previous code versions."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which version control system is widely used in modern software development?",
+        "Option A": "Git",
+        "Option B": "SVN",
+        "Option C": "Mercurial",
+        "Option D": "CVS",
+        "Correct Option": "A",
+        "Explanation": "Git is the most widely adopted distributed version control system."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is GitHub primarily used for?",
+        "Option A": "Hosting Git repositories and facilitating collaboration",
+        "Option B": "Running continuous integration tests",
+        "Option C": "Managing cloud deployments",
+        "Option D": "Designing website layouts",
+        "Correct Option": "A",
+        "Explanation": "GitHub is a web-based platform for hosting Git repositories and collaborating on code."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which Git command initializes a new repository?",
+        "Option A": "git init",
+        "Option B": "git start",
+        "Option C": "git create",
+        "Option D": "git begin",
+        "Correct Option": "A",
+        "Explanation": "The command `git init` initializes a new Git repository in the current directory."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is the purpose of branching in Git?",
+        "Option A": "To develop features or fixes in isolation from the main codebase",
+        "Option B": "To delete old code permanently",
+        "Option C": "To create backups of the repository",
+        "Option D": "To merge multiple repositories together",
+        "Correct Option": "A",
+        "Explanation": "Branching allows developers to work on features or bug fixes independently from the main branch."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which Git command is used to merge changes from one branch into another?",
+        "Option A": "git merge",
+        "Option B": "git branch",
+        "Option C": "git commit",
+        "Option D": "git combine",
+        "Correct Option": "A",
+        "Explanation": "The `git merge` command integrates changes from one branch into the current branch."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is a pull request on GitHub?",
+        "Option A": "A request to merge changes from one branch into another after review",
+        "Option B": "A command to clone a repository",
+        "Option C": "A way to delete a branch",
+        "Option D": "A tool to revert commits",
+        "Correct Option": "A",
+        "Explanation": "A pull request is used to propose and discuss merging changes from one branch into another."
+    },
+    {
+        "Q.No": "18",
+        "Question": "In the SDLC, which phase involves verifying that the software meets the specified requirements?",
+        "Option A": "Testing",
+        "Option B": "Design",
+        "Option C": "Implementation",
+        "Option D": "Deployment",
+        "Correct Option": "A",
+        "Explanation": "The testing phase is dedicated to verifying that the software functions as intended."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is the main purpose of the maintenance phase in the SDLC?",
+        "Option A": "To fix bugs and update the software after deployment",
+        "Option B": "To design the software architecture",
+        "Option C": "To gather initial requirements",
+        "Option D": "To develop the marketing strategy",
+        "Correct Option": "A",
+        "Explanation": "Maintenance involves fixing issues and making updates once the software is in production."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which SDLC model allows for revisiting earlier phases based on feedback?",
+        "Option A": "Iterative",
+        "Option B": "Waterfall",
+        "Option C": "V-Model",
+        "Option D": "Big Bang",
+        "Correct Option": "A",
+        "Explanation": "Iterative models allow teams to revisit and refine earlier phases based on ongoing feedback."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is a “prototype” in software development?",
+        "Option A": "An early, simplified version of a product used to validate ideas and gather feedback",
+        "Option B": "The final version of the product",
+        "Option C": "A detailed design document",
+        "Option D": "A marketing plan",
+        "Correct Option": "A",
+        "Explanation": "Prototypes are built to test and validate concepts before full-scale development."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which document is typically produced during the requirements analysis phase?",
+        "Option A": "Requirements Specification",
+        "Option B": "User Manual",
+        "Option C": "Test Plan",
+        "Option D": "Release Notes",
+        "Correct Option": "A",
+        "Explanation": "The Requirements Specification document details what the software should do."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is the main focus of the design phase in the SDLC?",
+        "Option A": "Creating a blueprint for the system’s architecture and interfaces",
+        "Option B": "Writing the source code",
+        "Option C": "Testing the software",
+        "Option D": "Deploying the application",
+        "Correct Option": "A",
+        "Explanation": "The design phase creates detailed plans for how the software will be structured and built."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which phase of the SDLC is primarily associated with writing the actual code?",
+        "Option A": "Implementation",
+        "Option B": "Design",
+        "Option C": "Testing",
+        "Option D": "Maintenance",
+        "Correct Option": "A",
+        "Explanation": "The implementation (or development) phase is when the actual coding takes place."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is a “sprint backlog” in Scrum?",
+        "Option A": "A prioritized list of tasks and features to be completed during a sprint",
+        "Option B": "A list of all project requirements",
+        "Option C": "A collection of bug reports",
+        "Option D": "A record of completed work from previous sprints",
+        "Correct Option": "A",
+        "Explanation": "The sprint backlog contains the tasks the team commits to completing during a sprint."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which Agile methodology uses a continuous flow instead of fixed sprints?",
+        "Option A": "Kanban",
+        "Option B": "Scrum",
+        "Option C": "XP",
+        "Option D": "Crystal",
+        "Correct Option": "A",
+        "Explanation": "Kanban emphasizes continuous delivery rather than time-boxed iterations like sprints."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is Continuous Integration (CI) in software development?",
+        "Option A": "The practice of frequently merging code changes into a shared repository and running automated tests",
+        "Option B": "A method of manually merging code once a month",
+        "Option C": "A process for writing code in isolation",
+        "Option D": "A technique for optimizing user interfaces",
+        "Correct Option": "A",
+        "Explanation": "CI involves regularly integrating and testing code changes to detect issues early."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which tool is commonly used for Continuous Integration?",
+        "Option A": "Jenkins",
+        "Option B": "GitHub",
+        "Option C": "Eclipse",
+        "Option D": "Visual Studio Code",
+        "Correct Option": "A",
+        "Explanation": "Jenkins is a popular automation server used to implement continuous integration."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which of the following is a key benefit of using Agile methodologies?",
+        "Option A": "Flexibility to adapt to changing requirements during development",
+        "Option B": "Strict adherence to initial project plans",
+        "Option C": "Extensive upfront documentation",
+        "Option D": "Fixed project scope throughout the lifecycle",
+        "Correct Option": "A",
+        "Explanation": "Agile methodologies are designed to accommodate changes and adapt as the project evolves."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the main goal of a sprint review meeting?",
+        "Option A": "To demonstrate the work completed during the sprint and gather feedback",
+        "Option B": "To plan the next sprint’s tasks in detail",
+        "Option C": "To update the product roadmap",
+        "Option D": "To finalize project documentation",
+        "Correct Option": "A",
+        "Explanation": "A sprint review is held at the end of a sprint to showcase completed work and obtain feedback."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which command in Git is used to check the status of your working directory?",
+        "Option A": "git status",
+        "Option B": "git log",
+        "Option C": "git diff",
+        "Option D": "git branch",
+        "Correct Option": "A",
+        "Explanation": "`git status` shows the state of the working directory and staging area."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What does “forking” a repository on GitHub do?",
+        "Option A": "Creates a personal copy of someone else’s repository for independent development",
+        "Option B": "Merges two repositories into one",
+        "Option C": "Deletes the original repository",
+        "Option D": "Automatically creates a new branch",
+        "Correct Option": "A",
+        "Explanation": "Forking a repository makes a personal copy on your GitHub account, allowing you to modify it without affecting the original."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which SDLC phase involves deploying the software to a production environment?",
+        "Option A": "Deployment",
+        "Option B": "Testing",
+        "Option C": "Implementation",
+        "Option D": "Design",
+        "Correct Option": "A",
+        "Explanation": "The deployment phase is when the software is released and made available to users."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is the purpose of regression testing?",
+        "Option A": "To ensure that recent code changes have not adversely affected existing functionality",
+        "Option B": "To validate new features only",
+        "Option C": "To test the user interface design",
+        "Option D": "To update the documentation",
+        "Correct Option": "A",
+        "Explanation": "Regression testing verifies that updates do not break or degrade existing functionality."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which Agile artifact visualizes the work remaining in a sprint?",
+        "Option A": "Burndown Chart",
+        "Option B": "Gantt Chart",
+        "Option C": "Flowchart",
+        "Option D": "Organizational Chart",
+        "Correct Option": "A",
+        "Explanation": "A burndown chart shows the remaining work versus time in a sprint."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the primary advantage of using version control?",
+        "Option A": "It tracks changes over time and facilitates collaboration among developers",
+        "Option B": "It automatically writes code for developers",
+        "Option C": "It eliminates the need for testing",
+        "Option D": "It replaces the need for documentation",
+        "Correct Option": "A",
+        "Explanation": "Version control systems track changes and enable multiple developers to collaborate efficiently."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which Git command is used to upload your local commits to a remote repository?",
+        "Option A": "git push",
+        "Option B": "git pull",
+        "Option C": "git merge",
+        "Option D": "git commit",
+        "Correct Option": "A",
+        "Explanation": "`git push` sends your local commits to the remote repository."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is a “branch” in Git?",
+        "Option A": "An independent line of development within a repository",
+        "Option B": "A type of commit identifier",
+        "Option C": "A backup of the entire repository",
+        "Option D": "A configuration file for Git settings",
+        "Correct Option": "A",
+        "Explanation": "A branch is a separate line of development that allows parallel work without affecting the main codebase."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which command is used to view the commit history in Git?",
+        "Option A": "git log",
+        "Option B": "git history",
+        "Option C": "git show",
+        "Option D": "git list",
+        "Correct Option": "A",
+        "Explanation": "`git log` displays a history of commits in the repository."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is a merge conflict in Git?",
+        "Option A": "A situation where changes in different branches conflict and require manual resolution",
+        "Option B": "A successful merge of two branches",
+        "Option C": "An error in the commit message",
+        "Option D": "A command to delete conflicting files",
+        "Correct Option": "A",
+        "Explanation": "A merge conflict occurs when Git cannot automatically reconcile differences between branches."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is the main purpose of a pull request?",
+        "Option A": "To propose changes and request a review before merging code into the main branch",
+        "Option B": "To automatically merge two branches without review",
+        "Option C": "To delete obsolete code from the repository",
+        "Option D": "To backup the repository remotely",
+        "Correct Option": "A",
+        "Explanation": "Pull requests allow developers to review and discuss proposed changes before integrating them."
+    },
+    {
+        "Q.No": "42",
+        "Question": "In Agile, what is the term for a prioritized list of work items for the entire project?",
+        "Option A": "Product Backlog",
+        "Option B": "Sprint Backlog",
+        "Option C": "Issue Tracker",
+        "Option D": "Release Notes",
+        "Correct Option": "A",
+        "Explanation": "The product backlog is a prioritized list of all desired work for the project."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which SDLC phase focuses on validating that the product meets the user's needs?",
+        "Option A": "Testing",
+        "Option B": "Design",
+        "Option C": "Implementation",
+        "Option D": "Deployment",
+        "Correct Option": "A",
+        "Explanation": "The testing phase ensures the product meets requirements and works as intended."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the primary purpose of the “analysis” phase in SDLC?",
+        "Option A": "To understand and document the business and technical requirements",
+        "Option B": "To write the actual code",
+        "Option C": "To deploy the application to users",
+        "Option D": "To maintain the system after release",
+        "Correct Option": "A",
+        "Explanation": "The analysis phase focuses on understanding and documenting the requirements for the software."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which SDLC model is characterized by high risk assessment and iterative refinement?",
+        "Option A": "Spiral",
+        "Option B": "Waterfall",
+        "Option C": "V-Model",
+        "Option D": "Prototype",
+        "Correct Option": "A",
+        "Explanation": "The Spiral model combines iterative development with systematic risk assessment."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which Agile framework uses a Kanban board to visualize work in progress?",
+        "Option A": "Kanban",
+        "Option B": "Scrum",
+        "Option C": "XP",
+        "Option D": "Crystal",
+        "Correct Option": "A",
+        "Explanation": "The Kanban framework utilizes a board to visualize and manage work as it moves through stages."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is the purpose of “Continuous Delivery” in software development?",
+        "Option A": "To ensure that software can be reliably released at any time through automated deployments",
+        "Option B": "To design user interfaces automatically",
+        "Option C": "To gather customer requirements",
+        "Option D": "To conduct manual testing frequently",
+        "Correct Option": "A",
+        "Explanation": "Continuous Delivery automates the release process to make software deployable at any moment."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following is NOT a typical phase of the SDLC?",
+        "Option A": "Marketing",
+        "Option B": "Requirement Analysis",
+        "Option C": "Design",
+        "Option D": "Testing",
+        "Correct Option": "A",
+        "Explanation": "Marketing is not a phase in the SDLC; the focus is on planning, design, development, testing, deployment, and maintenance."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is the benefit of using Agile methodologies in a project?",
+        "Option A": "Rapid adaptation to change and iterative improvement",
+        "Option B": "Strict adherence to initial plans without deviation",
+        "Option C": "Complete documentation before any coding begins",
+        "Option D": "Fixed project scope and budget throughout",
+        "Correct Option": "A",
+        "Explanation": "Agile allows teams to adapt quickly to changes and continuously improve the product."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which Git command shows the changes made between commits, commit and working tree, etc.?",
+        "Option A": "git diff",
+        "Option B": "git status",
+        "Option C": "git merge",
+        "Option D": "git log",
+        "Correct Option": "A",
+        "Explanation": "`git diff` displays the differences between various states of the repository."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What does “repository” mean in the context of version control?",
+        "Option A": "A storage location for all the files and their version history",
+        "Option B": "A branch of the code",
+        "Option C": "A compiled version of the application",
+        "Option D": "A testing environment",
+        "Correct Option": "A",
+        "Explanation": "A repository is where the code, along with its history, is stored."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which command is used to check out a specific branch in Git?",
+        "Option A": "git checkout",
+        "Option B": "git branch",
+        "Option C": "git switch",
+        "Option D": "git change",
+        "Correct Option": "A",
+        "Explanation": "`git checkout` (or `git switch` in newer versions) is used to switch between branches."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which practice involves reviewing code changes before merging them into the main branch?",
+        "Option A": "Code review via pull requests",
+        "Option B": "Direct commits to the main branch",
+        "Option C": "Manual testing only",
+        "Option D": "Writing documentation",
+        "Correct Option": "A",
+        "Explanation": "Code reviews, often managed through pull requests, help maintain code quality and share knowledge."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the purpose of tagging in Git?",
+        "Option A": "To mark specific points in the repository’s history, such as releases",
+        "Option B": "To create a new branch automatically",
+        "Option C": "To delete old commits",
+        "Option D": "To generate commit messages automatically",
+        "Correct Option": "A",
+        "Explanation": "Tags mark important milestones in a repository, like release versions."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which metric is often used in Agile to measure the amount of work completed in a sprint?",
+        "Option A": "Velocity",
+        "Option B": "Burndown rate",
+        "Option C": "Cycle time",
+        "Option D": "Lead time",
+        "Correct Option": "A",
+        "Explanation": "Velocity measures how much work (often in story points) a team completes during a sprint."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is “continuous deployment” in the context of SDLC?",
+        "Option A": "Automatically deploying every change that passes tests to production",
+        "Option B": "Manually deploying code once per month",
+        "Option C": "Deploying code without any testing",
+        "Option D": "Delaying deployments until project completion",
+        "Correct Option": "A",
+        "Explanation": "Continuous deployment automates the process of releasing every successful change to production."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which SDLC phase involves planning the rollout and installation of the software?",
+        "Option A": "Deployment",
+        "Option B": "Testing",
+        "Option C": "Design",
+        "Option D": "Maintenance",
+        "Correct Option": "A",
+        "Explanation": "The deployment phase is when the software is released and installed in the production environment."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is a “change log” in software development?",
+        "Option A": "A record of all changes made to the codebase over time",
+        "Option B": "A list of project requirements",
+        "Option C": "A schedule for sprint meetings",
+        "Option D": "A type of version control command",
+        "Correct Option": "A",
+        "Explanation": "A change log documents what changes have been made and when, serving as a historical record."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which of the following is a characteristic of Agile development?",
+        "Option A": "Iterative cycles with frequent reassessment of plans",
+        "Option B": "A single, unchanging project plan",
+        "Option C": "Minimal customer involvement after requirements are set",
+        "Option D": "Rigid phase boundaries with no overlap",
+        "Correct Option": "A",
+        "Explanation": "Agile development is iterative and adapts based on feedback throughout the project."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What does the term “backlog” refer to in Agile?",
+        "Option A": "A prioritized list of tasks or features pending implementation",
+        "Option B": "The final product release notes",
+        "Option C": "A documentation of technical issues",
+        "Option D": "A report on completed work",
+        "Correct Option": "A",
+        "Explanation": "The backlog contains a prioritized list of work items to be addressed by the team."
+    },
+    {
+        "Q.No": "61",
+        "Question": "Which command in Git displays the current branch and staging area status?",
+        "Option A": "git status",
+        "Option B": "git branch",
+        "Option C": "git show",
+        "Option D": "git info",
+        "Correct Option": "A",
+        "Explanation": "`git status` provides the current state of the working directory and staging area."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which Agile practice involves daily short meetings to discuss progress and impediments?",
+        "Option A": "Daily Stand-Up",
+        "Option B": "Sprint Retrospective",
+        "Option C": "Sprint Planning",
+        "Option D": "Backlog Refinement",
+        "Correct Option": "A",
+        "Explanation": "Daily stand-ups (or daily scrums) are brief meetings to synchronize team efforts and identify obstacles."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the primary focus of the “testing” phase in the SDLC?",
+        "Option A": "To verify that the software works as intended and meets requirements",
+        "Option B": "To design the system architecture",
+        "Option C": "To write the source code",
+        "Option D": "To train end users",
+        "Correct Option": "A",
+        "Explanation": "The testing phase aims to validate that the software functions correctly and meets specified requirements."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which term describes a small, focused team that works on a specific set of features during a sprint?",
+        "Option A": "Scrum Team",
+        "Option B": "Project Committee",
+        "Option C": "Development Guild",
+        "Option D": "Task Force",
+        "Correct Option": "A",
+        "Explanation": "A Scrum Team is a cross-functional group that works together to deliver a sprint’s objectives."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What does the term “refactoring” mean in software development?",
+        "Option A": "Improving the internal structure of code without changing its external behavior",
+        "Option B": "Adding new features to the code",
+        "Option C": "Removing comments from the code",
+        "Option D": "Merging two branches in version control",
+        "Correct Option": "A",
+        "Explanation": "Refactoring improves code structure and readability without altering its functionality."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which practice helps ensure that software changes do not introduce new bugs?",
+        "Option A": "Regression Testing",
+        "Option B": "Performance Testing",
+        "Option C": "Load Testing",
+        "Option D": "Usability Testing",
+        "Correct Option": "A",
+        "Explanation": "Regression testing ensures that new changes do not adversely affect existing functionalities."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is a “spike” in Agile development?",
+        "Option A": "A time-boxed research activity to explore a new technology or approach",
+        "Option B": "A large feature delivered over multiple sprints",
+        "Option C": "A bug that needs immediate attention",
+        "Option D": "A documentation review session",
+        "Correct Option": "A",
+        "Explanation": "A spike is an investigation to reduce uncertainty about a technology or solution within a fixed time period."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which version control feature allows developers to work simultaneously without overwriting each other’s changes?",
+        "Option A": "Branching",
+        "Option B": "Tagging",
+        "Option C": "Forking",
+        "Option D": "Cloning",
+        "Correct Option": "A",
+        "Explanation": "Branching allows multiple developers to work on different features or fixes simultaneously."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which command in Git fetches updates from a remote repository without merging them?",
+        "Option A": "git fetch",
+        "Option B": "git pull",
+        "Option C": "git merge",
+        "Option D": "git update",
+        "Correct Option": "A",
+        "Explanation": "`git fetch` downloads updates from the remote repository but does not merge them automatically."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the purpose of a “merge” operation in Git?",
+        "Option A": "To integrate changes from one branch into another",
+        "Option B": "To delete obsolete branches",
+        "Option C": "To create a new repository from existing code",
+        "Option D": "To revert the repository to a previous state",
+        "Correct Option": "A",
+        "Explanation": "Merging combines changes from different branches into a single branch."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which SDLC model is best suited for projects with well-defined and unchanging requirements?",
+        "Option A": "Waterfall",
+        "Option B": "Agile",
+        "Option C": "Spiral",
+        "Option D": "Iterative",
+        "Correct Option": "A",
+        "Explanation": "The Waterfall model is best suited for projects with stable, well-defined requirements."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What does “iterative development” mean?",
+        "Option A": "Developing software in repeated cycles, gradually improving it over time",
+        "Option B": "Building the entire software in one phase and then testing",
+        "Option C": "Creating a detailed design once and never revisiting it",
+        "Option D": "Outsourcing development to multiple teams",
+        "Correct Option": "A",
+        "Explanation": "Iterative development involves cycles of planning, coding, and testing, with improvements at each cycle."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is a “release” in software development?",
+        "Option A": "A specific version of the software that is delivered to users",
+        "Option B": "A development sprint that lasts one week",
+        "Option C": "A branch that is used for testing only",
+        "Option D": "A document outlining future features",
+        "Correct Option": "A",
+        "Explanation": "A release is a version of the software that is distributed to users."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which practice involves merging code changes frequently and running tests to catch integration issues early?",
+        "Option A": "Continuous Integration",
+        "Option B": "Manual Testing",
+        "Option C": "Code Freezing",
+        "Option D": "Waterfall Review",
+        "Correct Option": "A",
+        "Explanation": "Continuous Integration (CI) involves frequent merging and automated testing to detect issues early."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the role of “documentation” in software development?",
+        "Option A": "To provide detailed information on the system’s design, usage, and maintenance",
+        "Option B": "To add extra code to the project",
+        "Option C": "To increase the file size of the project",
+        "Option D": "To automatically generate code",
+        "Correct Option": "A",
+        "Explanation": "Documentation explains how the system works and how to use and maintain it."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which SDLC phase is most associated with identifying and mitigating risks?",
+        "Option A": "Analysis and Planning",
+        "Option B": "Implementation",
+        "Option C": "Testing",
+        "Option D": "Deployment",
+        "Correct Option": "A",
+        "Explanation": "The analysis and planning phase includes risk assessment to mitigate potential issues."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What does “change management” refer to in software engineering?",
+        "Option A": "The process of managing modifications to the software during its lifecycle",
+        "Option B": "The act of coding new features",
+        "Option C": "The technique of refactoring code",
+        "Option D": "The method for tracking user stories",
+        "Correct Option": "A",
+        "Explanation": "Change management is the process of handling changes to the software in a controlled and systematic way."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which Agile principle emphasizes face-to-face communication as the most effective form of communication?",
+        "Option A": "Individuals and interactions over processes and tools",
+        "Option B": "Working software over comprehensive documentation",
+        "Option C": "Customer collaboration over contract negotiation",
+        "Option D": "Responding to change over following a plan",
+        "Correct Option": "A",
+        "Explanation": "Agile emphasizes direct, face-to-face communication for effective collaboration."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is a “waterfall” methodology characterized by?",
+        "Option A": "A sequential design process with distinct, non-overlapping phases",
+        "Option B": "Continuous iteration and customer feedback",
+        "Option C": "Rapid prototyping and flexible scope",
+        "Option D": "Incremental releases with frequent adjustments",
+        "Correct Option": "A",
+        "Explanation": "Waterfall is characterized by a linear, sequential progression through defined phases."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which of the following best describes the “V-Model” in SDLC?",
+        "Option A": "A model that maps development activities to corresponding testing activities in a V-shaped diagram",
+        "Option B": "A linear model with no feedback loops",
+        "Option C": "A purely iterative model with no planning",
+        "Option D": "A model that emphasizes rapid prototyping exclusively",
+        "Correct Option": "A",
+        "Explanation": "The V-Model pairs development phases with corresponding testing phases in a V-shaped process."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which term describes the process of reviewing and integrating code changes from multiple developers?",
+        "Option A": "Code Integration",
+        "Option B": "Code Compilation",
+        "Option C": "Code Refactoring",
+        "Option D": "Code Merging",
+        "Correct Option": "D",
+        "Explanation": "Code merging combines changes from different branches or developers into a single codebase."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which Git command is used to create a copy of a remote repository on your local machine?",
+        "Option A": "git clone",
+        "Option B": "git init",
+        "Option C": "git fork",
+        "Option D": "git copy",
+        "Correct Option": "A",
+        "Explanation": "The `git clone` command creates a local copy of a remote repository."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is the purpose of “rebasing” in Git?",
+        "Option A": "To reapply commits on top of another base tip, creating a linear history",
+        "Option B": "To delete all previous commits",
+        "Option C": "To merge two branches automatically",
+        "Option D": "To create a new repository",
+        "Correct Option": "A",
+        "Explanation": "Rebasing rewrites the commit history by applying changes on top of another branch, resulting in a linear history."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following is a benefit of using version control?",
+        "Option A": "It facilitates collaboration and tracks changes over time",
+        "Option B": "It automatically fixes code errors",
+        "Option C": "It replaces the need for testing",
+        "Option D": "It eliminates the need for project management",
+        "Correct Option": "A",
+        "Explanation": "Version control systems help teams collaborate and provide a history of changes for accountability and rollback."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What does “diff” do in Git?",
+        "Option A": "Compares changes between commits, branches, or files",
+        "Option B": "Deletes untracked files",
+        "Option C": "Shows the commit history",
+        "Option D": "Merges code automatically",
+        "Correct Option": "A",
+        "Explanation": "The `git diff` command displays the differences between various states in the repository."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which methodology emphasizes short development cycles and frequent releases?",
+        "Option A": "Agile",
+        "Option B": "Waterfall",
+        "Option C": "V-Model",
+        "Option D": "Spiral",
+        "Correct Option": "A",
+        "Explanation": "Agile methodologies focus on short iterations and continuous delivery of working software."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is “user acceptance testing” (UAT)?",
+        "Option A": "Testing conducted by end-users to validate that the system meets their needs",
+        "Option B": "A form of automated testing by developers",
+        "Option C": "A process for merging code branches",
+        "Option D": "A type of performance testing",
+        "Correct Option": "A",
+        "Explanation": "UAT is performed by the end-users to ensure the software meets their requirements before full deployment."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which tool is widely used for code hosting and version control collaboration?",
+        "Option A": "GitHub",
+        "Option B": "Jenkins",
+        "Option C": "Eclipse",
+        "Option D": "Trello",
+        "Correct Option": "A",
+        "Explanation": "GitHub is a popular platform for hosting Git repositories and collaborating on code."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is “continuous deployment” (CD)?",
+        "Option A": "The practice of automatically deploying code changes to production after passing tests",
+        "Option B": "A manual process of releasing software updates",
+        "Option C": "A phase in the Waterfall model",
+        "Option D": "A technique for user training",
+        "Correct Option": "A",
+        "Explanation": "Continuous deployment automates the release of new code changes to production environments once tests pass."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which phase of the SDLC typically involves the development of test cases and scripts?",
+        "Option A": "Testing",
+        "Option B": "Design",
+        "Option C": "Implementation",
+        "Option D": "Maintenance",
+        "Correct Option": "A",
+        "Explanation": "The testing phase includes developing test cases and automation scripts to verify software functionality."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which of the following is NOT a typical characteristic of Agile development?",
+        "Option A": "Embracing change during development",
+        "Option B": "Heavy upfront documentation",
+        "Option C": "Iterative progress and frequent feedback",
+        "Option D": "Self-organizing teams",
+        "Correct Option": "B",
+        "Explanation": "Agile methodologies favor minimal, evolving documentation over extensive upfront documentation."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What does “sprint planning” involve in Agile?",
+        "Option A": "Defining the work to be accomplished during the upcoming sprint",
+        "Option B": "Retrospectively reviewing the previous sprint",
+        "Option C": "Merging code branches in version control",
+        "Option D": "Creating a final product release plan",
+        "Correct Option": "A",
+        "Explanation": "Sprint planning sets the agenda and work items for the upcoming sprint."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which practice involves breaking work into small, manageable user stories in Agile?",
+        "Option A": "Backlog grooming",
+        "Option B": "Continuous integration",
+        "Option C": "Code refactoring",
+        "Option D": "Branching strategy",
+        "Correct Option": "A",
+        "Explanation": "Backlog grooming (or refinement) involves breaking down work into user stories that can be tackled in sprints."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which phase in the SDLC is most focused on performance, security, and scalability testing?",
+        "Option A": "Testing",
+        "Option B": "Design",
+        "Option C": "Implementation",
+        "Option D": "Analysis",
+        "Correct Option": "A",
+        "Explanation": "The testing phase includes performance, security, and scalability tests to ensure the software meets quality standards."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What does “change management” ensure in software development?",
+        "Option A": "That modifications to the code are made in a controlled, systematic manner",
+        "Option B": "That the software is released without any changes",
+        "Option C": "That every team member works on the same code simultaneously",
+        "Option D": "That documentation is updated daily",
+        "Correct Option": "A",
+        "Explanation": "Change management involves controlling and tracking modifications to the code and project scope."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which of the following is a benefit of using Git’s distributed model?",
+        "Option A": "Every developer has a full local copy of the repository, enabling offline work",
+        "Option B": "It forces all developers to work on a single server",
+        "Option C": "It eliminates merge conflicts entirely",
+        "Option D": "It requires less disk space than centralized systems",
+        "Correct Option": "A",
+        "Explanation": "Git’s distributed nature allows each developer to work offline with a complete local repository."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the primary purpose of a “README” file in a repository?",
+        "Option A": "To provide an overview and instructions about the project",
+        "Option B": "To store configuration settings",
+        "Option C": "To list all code commits",
+        "Option D": "To compile source code automatically",
+        "Correct Option": "A",
+        "Explanation": "A README file explains the project, how to set it up, and how to contribute."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which command in Git is used to revert the repository to a previous commit?",
+        "Option A": "git revert",
+        "Option B": "git reset",
+        "Option C": "git checkout",
+        "Option D": "git undo",
+        "Correct Option": "A",
+        "Explanation": "`git revert` creates a new commit that undoes changes made by a previous commit."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the advantage of using a distributed version control system like Git over a centralized system?",
+        "Option A": "It provides improved collaboration and resilience by allowing local repositories",
+        "Option B": "It forces all changes to go through a central server",
+        "Option C": "It prevents developers from working offline",
+        "Option D": "It eliminates the need for branching",
+        "Correct Option": "A",
+        "Explanation": "Distributed systems like Git let each developer maintain a local copy, improving collaboration and resilience."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which methodology is best described as a linear process with distinct phases and little iteration?",
+        "Option A": "Waterfall",
+        "Option B": "Agile",
+        "Option C": "Kanban",
+        "Option D": "Scrum",
+        "Correct Option": "A",
+        "Explanation": "The Waterfall methodology is linear and sequential, with each phase completed before moving on."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

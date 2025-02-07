@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What does HTML stand for?",
+        "Option A": "HyperText Markup Language",
+        "Option B": "HighText Machine Language",
+        "Option C": "Hyperlink Markup Language",
+        "Option D": "HomeTool Markup Language",
+        "Correct Option": "A",
+        "Explanation": "HTML stands for HyperText Markup Language, used to structure web content."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which tag is used to define a paragraph in HTML?",
+        "Option A": "<p>",
+        "Option B": "<para>",
+        "Option C": "<paragraph>",
+        "Option D": "<text>",
+        "Correct Option": "A",
+        "Explanation": "The <p> tag is used for paragraphs in HTML."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which tag creates a hyperlink in an HTML document?",
+        "Option A": "<a>",
+        "Option B": "<link>",
+        "Option C": "<href>",
+        "Option D": "<url>",
+        "Correct Option": "A",
+        "Explanation": "The <a> tag is used to define hyperlinks, with the href attribute specifying the link destination."
+    },
+    {
+        "Q.No": "4",
+        "Question": "How do you create a comment in HTML?",
+        "Option A": "<!-- Comment -->",
+        "Option B": "// Comment",
+        "Option C": "**Comment**",
+        "Option D": "%% Comment %%",
+        "Correct Option": "A",
+        "Explanation": "HTML comments are created using <!-- and -->."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which element contains metadata about an HTML document?",
+        "Option A": "<head>",
+        "Option B": "<meta>",
+        "Option C": "<header>",
+        "Option D": "<body>",
+        "Correct Option": "A",
+        "Explanation": "The <head> element contains metadata, scripts, and links to stylesheets."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is the purpose of the <img> tag?",
+        "Option A": "To embed an image",
+        "Option B": "To create a hyperlink",
+        "Option C": "To define a list",
+        "Option D": "To display a video",
+        "Correct Option": "A",
+        "Explanation": "The <img> tag embeds images into an HTML document."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which attribute in the <img> tag specifies the image source?",
+        "Option A": "src",
+        "Option B": "href",
+        "Option C": "link",
+        "Option D": "source",
+        "Correct Option": "A",
+        "Explanation": "The src attribute defines the path to the image file."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which tag is used to create an unordered list in HTML?",
+        "Option A": "<ul>",
+        "Option B": "<ol>",
+        "Option C": "<li>",
+        "Option D": "<list>",
+        "Correct Option": "A",
+        "Explanation": "The <ul> tag creates an unordered list, while <ol> creates an ordered list."
+    },
+    {
+        "Q.No": "9",
+        "Question": "In HTML, which attribute of the <a> tag specifies the destination URL?",
+        "Option A": "href",
+        "Option B": "src",
+        "Option C": "link",
+        "Option D": "target",
+        "Correct Option": "A",
+        "Explanation": "The href attribute specifies the URL the link points to."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the function of the <div> element in HTML?",
+        "Option A": "To define a division or section",
+        "Option B": "To create a hyperlink",
+        "Option C": "To embed media",
+        "Option D": "To format text",
+        "Correct Option": "A",
+        "Explanation": "The <div> element is used as a container to group other HTML elements."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What does CSS stand for?",
+        "Option A": "Cascading Style Sheets",
+        "Option B": "Creative Style Sheets",
+        "Option C": "Computer Style Sheets",
+        "Option D": "Colorful Style Sheets",
+        "Correct Option": "A",
+        "Explanation": "CSS stands for Cascading Style Sheets, used to style HTML elements."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which attribute is used to apply inline CSS styles?",
+        "Option A": "style",
+        "Option B": "class",
+        "Option C": "css",
+        "Option D": "inline",
+        "Correct Option": "A",
+        "Explanation": "The style attribute applies inline CSS to an HTML element."
+    },
+    {
+        "Q.No": "13",
+        "Question": "How do you change the text color of an element to red using CSS?",
+        "Option A": "color: red;",
+        "Option B": "text-color: red;",
+        "Option C": "font-color: red;",
+        "Option D": "background-color: red;",
+        "Correct Option": "A",
+        "Explanation": "The property color: red; sets the text color to red."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which CSS selector selects elements with the class \"\"menu\"\"?",
+        "Option A": ".menu",
+        "Option B": "#menu",
+        "Option C": "menu",
+        "Option D": "*menu",
+        "Correct Option": "A",
+        "Explanation": "The dot (.) denotes a class selector in CSS."
+    },
+    {
+        "Q.No": "15",
+        "Question": "How do you write a comment in CSS?",
+        "Option A": "/* Comment */",
+        "Option B": "// Comment",
+        "Option C": "<!-- Comment -->",
+        "Option D": "## Comment",
+        "Correct Option": "A",
+        "Explanation": "CSS comments are enclosed within /* and */."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which property is used to change an element's background color in CSS?",
+        "Option A": "background-color",
+        "Option B": "color",
+        "Option C": "bg-color",
+        "Option D": "border-color",
+        "Correct Option": "A",
+        "Explanation": "The background-color property sets an element's background color."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is the difference between margin and padding in CSS?",
+        "Option A": "Margin is outside an element; padding is inside",
+        "Option B": "Padding is outside an element; margin is inside",
+        "Option C": "They are identical",
+        "Option D": "Margin adds color; padding adds size",
+        "Correct Option": "A",
+        "Explanation": "Margin creates space outside an element’s border; padding creates space inside it."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which property sets the size of the font in CSS?",
+        "Option A": "font-size",
+        "Option B": "text-size",
+        "Option C": "size",
+        "Option D": "font-weight",
+        "Correct Option": "A",
+        "Explanation": "The font-size property specifies the size of the text."
+    },
+    {
+        "Q.No": "19",
+        "Question": "How do you select an element with the id \"\"header\"\" in CSS?",
+        "Option A": "#header",
+        "Option B": ".header",
+        "Option C": "header",
+        "Option D": "*header",
+        "Correct Option": "A",
+        "Explanation": "The hash (#) symbol selects an element by its id."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is JavaScript primarily used for on web pages?",
+        "Option A": "To add interactivity and dynamic behavior",
+        "Option B": "To structure content",
+        "Option C": "To style pages",
+        "Option D": "To host web pages",
+        "Correct Option": "A",
+        "Explanation": "JavaScript is used to create interactive and dynamic web content."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which tag is used to include JavaScript in an HTML document?",
+        "Option A": "<script>",
+        "Option B": "<js>",
+        "Option C": "<javascript>",
+        "Option D": "<code>",
+        "Correct Option": "A",
+        "Explanation": "The <script> tag embeds JavaScript in an HTML page."
+    },
+    {
+        "Q.No": "22",
+        "Question": "How do you write a single-line comment in JavaScript?",
+        "Option A": "// Comment",
+        "Option B": "<!-- Comment -->",
+        "Option C": "# Comment",
+        "Option D": "** Comment **",
+        "Correct Option": "A",
+        "Explanation": "Single-line comments in JavaScript begin with //."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which keyword declares a variable in modern JavaScript?",
+        "Option A": "let",
+        "Option B": "var",
+        "Option C": "constant",
+        "Option D": "define",
+        "Correct Option": "A",
+        "Explanation": "let is used for block-scoped variable declarations in JavaScript."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which keyword is used to declare a constant in JavaScript?",
+        "Option A": "const",
+        "Option B": "let",
+        "Option C": "var",
+        "Option D": "static",
+        "Correct Option": "A",
+        "Explanation": "const declares a constant whose value cannot be reassigned."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What does DOM stand for?",
+        "Option A": "Document Object Model",
+        "Option B": "Data Object Method",
+        "Option C": "Digital Output Manager",
+        "Option D": "Direct Object Mapping",
+        "Correct Option": "A",
+        "Explanation": "The DOM represents the structure of an HTML document as objects."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which method selects an element by its id in JavaScript?",
+        "Option A": "document.getElementById()",
+        "Option B": "document.querySelector()",
+        "Option C": "document.getElementsByClassName()",
+        "Option D": "document.getElementsByTagName()",
+        "Correct Option": "A",
+        "Explanation": "document.getElementById() returns the element with the specified id."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the purpose of event listeners in JavaScript?",
+        "Option A": "To execute code in response to user actions",
+        "Option B": "To style HTML elements dynamically",
+        "Option C": "To validate CSS rules",
+        "Option D": "To manage server connections",
+        "Correct Option": "A",
+        "Explanation": "Event listeners detect and respond to events like clicks or key presses."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which function outputs messages to the browser console in JavaScript?",
+        "Option A": "console.log()",
+        "Option B": "print()",
+        "Option C": "echo()",
+        "Option D": "log.console()",
+        "Correct Option": "A",
+        "Explanation": "console.log() prints messages to the browser’s console for debugging."
+    },
+    {
+        "Q.No": "29",
+        "Question": "How do you define a function in JavaScript?",
+        "Option A": "function myFunction() {}",
+        "Option B": "def myFunction() {}",
+        "Option C": "function: myFunction() {}",
+        "Option D": "func myFunction() {}",
+        "Correct Option": "A",
+        "Explanation": "The syntax function myFunction() {} defines a function in JavaScript."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the difference between frontend and backend development?",
+        "Option A": "Frontend handles the user interface; backend handles server-side logic",
+        "Option B": "Frontend handles data storage; backend handles styling",
+        "Option C": "Both perform the same tasks",
+        "Option D": "Frontend is for mobile apps; backend is for websites",
+        "Correct Option": "A",
+        "Explanation": "Frontend development involves the client-side UI, while backend development manages server logic and data."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is a frontend technology?",
+        "Option A": "HTML",
+        "Option B": "PHP",
+        "Option C": "SQL",
+        "Option D": "Node.js",
+        "Correct Option": "A",
+        "Explanation": "HTML is a core frontend technology used for structuring web pages."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which language is typically used for backend development?",
+        "Option A": "Python",
+        "Option B": "JavaScript",
+        "Option C": "HTML",
+        "Option D": "CSS",
+        "Correct Option": "A",
+        "Explanation": "Python is commonly used for backend development alongside other languages like Java, Ruby, or PHP."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What does API stand for in web development?",
+        "Option A": "Application Programming Interface",
+        "Option B": "Advanced Programming Integration",
+        "Option C": "Automated Process Instruction",
+        "Option D": "Applied Protocol Interface",
+        "Correct Option": "A",
+        "Explanation": "API stands for Application Programming Interface, enabling communication between software systems."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is REST in the context of web development?",
+        "Option A": "A set of architectural principles for designing networked applications",
+        "Option B": "A CSS framework",
+        "Option C": "A database management system",
+        "Option D": "A type of JavaScript library",
+        "Correct Option": "A",
+        "Explanation": "REST defines constraints for designing scalable web services using standard HTTP methods."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which of the following best describes client-server architecture?",
+        "Option A": "Clients request services, and servers provide them",
+        "Option B": "Servers request data from clients",
+        "Option C": "All devices are equal peers",
+        "Option D": "Data is stored on the client only",
+        "Correct Option": "A",
+        "Explanation": "In client-server architecture, clients make requests while servers deliver resources or services."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which of the following is an example of a backend language?",
+        "Option A": "Ruby",
+        "Option B": "HTML",
+        "Option C": "CSS",
+        "Option D": "JavaScript (in the browser)",
+        "Correct Option": "A",
+        "Explanation": "Ruby is used for backend development (e.g., with Ruby on Rails)."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What does AJAX stand for?",
+        "Option A": "Asynchronous JavaScript and XML",
+        "Option B": "Advanced Java And XSL",
+        "Option C": "Asynchronous JSON and XHTML",
+        "Option D": "Automated Java Application eXchange",
+        "Correct Option": "A",
+        "Explanation": "AJAX enables asynchronous data exchange between a client and server without reloading the page."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is web hosting?",
+        "Option A": "A service that makes websites accessible over the internet",
+        "Option B": "A programming language for building websites",
+        "Option C": "A type of CSS framework",
+        "Option D": "A protocol for secure communication",
+        "Correct Option": "A",
+        "Explanation": "Web hosting provides the infrastructure needed for websites to be accessed online."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is a domain name?",
+        "Option A": "A human-readable address for a website",
+        "Option B": "The physical location of a server",
+        "Option C": "A type of internet protocol",
+        "Option D": "A network management tool",
+        "Correct Option": "A",
+        "Explanation": "A domain name is the address (e.g., example.com) that users type into their browsers."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which protocol is primarily used to transfer web pages?",
+        "Option A": "HTTP",
+        "Option B": "FTP",
+        "Option C": "SMTP",
+        "Option D": "SNMP",
+        "Correct Option": "A",
+        "Explanation": "HTTP (HyperText Transfer Protocol) is used for transmitting web pages over the Internet."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What does DNS stand for?",
+        "Option A": "Domain Name System",
+        "Option B": "Digital Network Service",
+        "Option C": "Data Name Server",
+        "Option D": "Domain Navigation System",
+        "Correct Option": "A",
+        "Explanation": "DNS stands for Domain Name System, which translates domain names to IP addresses."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the role of a DNS server?",
+        "Option A": "To translate domain names into IP addresses",
+        "Option B": "To host websites",
+        "Option C": "To secure data transmissions",
+        "Option D": "To store website content",
+        "Correct Option": "A",
+        "Explanation": "A DNS server converts domain names into the corresponding IP addresses."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is shared hosting?",
+        "Option A": "A type of hosting where multiple websites share the same server resources",
+        "Option B": "A hosting service exclusively for shared files",
+        "Option C": "A dedicated server for one website",
+        "Option D": "A cloud-based hosting model",
+        "Correct Option": "A",
+        "Explanation": "In shared hosting, many websites reside on a single server and share its resources."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is VPS hosting?",
+        "Option A": "Virtual Private Server hosting, where a physical server is divided into virtual servers",
+        "Option B": "Virtual Public Service hosting",
+        "Option C": "Very Private Server hosting",
+        "Option D": "Virtual Process System hosting",
+        "Correct Option": "A",
+        "Explanation": "VPS hosting divides a physical server into multiple virtual servers, each acting as an independent server."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is the difference between a domain name and a URL?",
+        "Option A": "A domain name is the address; a URL includes the protocol and path",
+        "Option B": "They are the same",
+        "Option C": "A URL is only used for email addresses",
+        "Option D": "A domain name includes file paths",
+        "Correct Option": "A",
+        "Explanation": "A URL (Uniform Resource Locator) includes the protocol, domain name, and specific resource path."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is a top-level domain (TLD)?",
+        "Option A": "The last segment of a domain name, such as .com or .org",
+        "Option B": "A subdomain of a website",
+        "Option C": "The main part of a URL",
+        "Option D": "A domain that hosts multiple websites",
+        "Correct Option": "A",
+        "Explanation": "A TLD is the last part of a domain name (e.g., .com, .net, .edu)."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is SSL used for on websites?",
+        "Option A": "To encrypt data transmitted between a browser and server",
+        "Option B": "To speed up webpage loading",
+        "Option C": "To host dynamic content",
+        "Option D": "To create responsive designs",
+        "Correct Option": "A",
+        "Explanation": "SSL (Secure Sockets Layer) encrypts data for secure communication over the internet."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following is an example of a TLD?",
+        "Option A": ".org",
+        "Option B": ".html",
+        "Option C": ".css",
+        "Option D": ".js",
+        "Correct Option": "A",
+        "Explanation": ".org is a top-level domain commonly used by organizations."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is a web hosting control panel?",
+        "Option A": "A web-based interface to manage hosting settings and services",
+        "Option B": "A tool for designing web pages",
+        "Option C": "A software for coding websites",
+        "Option D": "A browser extension for security",
+        "Correct Option": "A",
+        "Explanation": "A control panel (like cPanel) allows users to manage hosting settings, files, and databases."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is FTP used for?",
+        "Option A": "To transfer files between a client and server",
+        "Option B": "To secure websites",
+        "Option C": "To manage email accounts",
+        "Option D": "To update DNS records",
+        "Correct Option": "A",
+        "Explanation": "FTP (File Transfer Protocol) is used for transferring files between computers over a network."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What does cPanel refer to?",
+        "Option A": "A popular web hosting control panel",
+        "Option B": "A coding language for the web",
+        "Option C": "A type of database management system",
+        "Option D": "A CSS framework",
+        "Correct Option": "A",
+        "Explanation": "cPanel is a widely used control panel for managing web hosting accounts."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is a dedicated server?",
+        "Option A": "A server reserved exclusively for one client or website",
+        "Option B": "A server that hosts multiple websites",
+        "Option C": "A cloud-based server",
+        "Option D": "A virtual server shared among users",
+        "Correct Option": "A",
+        "Explanation": "A dedicated server provides all its resources to a single client, offering high performance and control."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is cloud hosting?",
+        "Option A": "Hosting services provided through a network of virtual servers in the cloud",
+        "Option B": "Hosting on a single physical machine",
+        "Option C": "Hosting that requires no internet connection",
+        "Option D": "A type of shared hosting",
+        "Correct Option": "A",
+        "Explanation": "Cloud hosting utilizes multiple virtual servers to host websites, offering scalability and reliability."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What does it mean to \"\"launch\"\" a website?",
+        "Option A": "To make a website publicly accessible on the internet",
+        "Option B": "To design the website layout",
+        "Option C": "To develop website code",
+        "Option D": "To register a domain name",
+        "Correct Option": "A",
+        "Explanation": "Launching a website means making it live and accessible to users online."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is a subdomain?",
+        "Option A": "A domain that is part of a larger domain (e.g., blog.example.com)",
+        "Option B": "A top-level domain",
+        "Option C": "A domain used for email only",
+        "Option D": "A secondary URL",
+        "Correct Option": "A",
+        "Explanation": "A subdomain is a subset of a larger domain, used to organize website sections."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is domain registration?",
+        "Option A": "The process of acquiring a domain name from a registrar",
+        "Option B": "The creation of a website's content",
+        "Option C": "The setup of a web hosting account",
+        "Option D": "The installation of a CMS",
+        "Correct Option": "A",
+        "Explanation": "Domain registration is the process of reserving a domain name for your website."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which web framework is based on JavaScript and used for building user interfaces?",
+        "Option A": "React",
+        "Option B": "Django",
+        "Option C": "Laravel",
+        "Option D": "Ruby on Rails",
+        "Correct Option": "A",
+        "Explanation": "React is a popular JavaScript library for building interactive UIs."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is React primarily used for?",
+        "Option A": "Building dynamic and responsive frontend applications",
+        "Option B": "Managing databases",
+        "Option C": "Handling server-side logic",
+        "Option D": "Styling web pages",
+        "Correct Option": "A",
+        "Explanation": "React is used to create interactive and dynamic user interfaces on the frontend."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which company developed React?",
+        "Option A": "Facebook",
+        "Option B": "Google",
+        "Option C": "Microsoft",
+        "Option D": "Apple",
+        "Correct Option": "A",
+        "Explanation": "React was developed and is maintained by Facebook."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is JSX in React?",
+        "Option A": "A syntax extension that allows writing HTML-like code in JavaScript",
+        "Option B": "A type of CSS used in React",
+        "Option C": "A backend language",
+        "Option D": "A database query language",
+        "Correct Option": "A",
+        "Explanation": "JSX allows developers to write HTML-like code within JavaScript for React components."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the virtual DOM in React?",
+        "Option A": "A lightweight in-memory representation of the actual DOM",
+        "Option B": "A copy of the server database",
+        "Option C": "A type of CSS framework",
+        "Option D": "A networking protocol",
+        "Correct Option": "A",
+        "Explanation": "The virtual DOM is an abstraction of the actual DOM that improves performance by minimizing direct updates."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is a component in React?",
+        "Option A": "A reusable piece of UI that encapsulates structure, style, and behavior",
+        "Option B": "A type of HTML tag",
+        "Option C": "A CSS class",
+        "Option D": "A server endpoint",
+        "Correct Option": "A",
+        "Explanation": "Components are the building blocks of a React application, encapsulating functionality and UI."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is state in React?",
+        "Option A": "An object that holds data that may change over the lifetime of a component",
+        "Option B": "A global variable for the application",
+        "Option C": "A static HTML element",
+        "Option D": "A CSS property",
+        "Correct Option": "A",
+        "Explanation": "State is used to store dynamic data within a React component."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What are props in React?",
+        "Option A": "Read-only properties passed from a parent component to a child component",
+        "Option B": "Variables declared inside a function",
+        "Option C": "Global configuration settings",
+        "Option D": "CSS styles",
+        "Correct Option": "A",
+        "Explanation": "Props are inputs to React components that allow data to be passed from parent to child."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is a hook in React?",
+        "Option A": "A function that lets you use state and other React features in functional components",
+        "Option B": "A type of CSS property",
+        "Option C": "A backend framework feature",
+        "Option D": "A database connection method",
+        "Correct Option": "A",
+        "Explanation": "Hooks allow functional components to have state and other React features without using classes."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is Redux in the context of React applications?",
+        "Option A": "A state management library for JavaScript apps",
+        "Option B": "A CSS preprocessor",
+        "Option C": "A routing library",
+        "Option D": "A testing framework",
+        "Correct Option": "A",
+        "Explanation": "Redux is used for managing and centralizing application state in React."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which web framework is based on Python?",
+        "Option A": "Django",
+        "Option B": "React",
+        "Option C": "Laravel",
+        "Option D": "Express",
+        "Correct Option": "A",
+        "Explanation": "Django is a high-level Python web framework for rapid development."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is Django best known for?",
+        "Option A": "Rapid development and a built‑in admin interface",
+        "Option B": "Creating interactive frontend UIs",
+        "Option C": "Managing databases exclusively",
+        "Option D": "Serving as a static site generator",
+        "Correct Option": "A",
+        "Explanation": "Django emphasizes rapid development and comes with many built‑in features including an admin interface."
+    },
+    {
+        "Q.No": "69",
+        "Question": "In which language is Django written?",
+        "Option A": "Python",
+        "Option B": "JavaScript",
+        "Option C": "PHP",
+        "Option D": "Ruby",
+        "Correct Option": "A",
+        "Explanation": "Django is written in Python."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which architectural pattern does Django follow?",
+        "Option A": "Model-View-Template (MVT)",
+        "Option B": "Model-View-Controller (MVC)",
+        "Option C": "Component-Based Architecture",
+        "Option D": "Event-Driven Architecture",
+        "Correct Option": "A",
+        "Explanation": "Django follows the Model-View-Template (MVT) architectural pattern."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the Django ORM used for?",
+        "Option A": "Interacting with the database using Python objects",
+        "Option B": "Styling HTML pages",
+        "Option C": "Managing server configurations",
+        "Option D": "Handling user authentication exclusively",
+        "Correct Option": "A",
+        "Explanation": "The Django ORM (Object-Relational Mapping) allows developers to interact with databases using Python code."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is a Django template?",
+        "Option A": "A text file that defines the structure and layout of a web page",
+        "Option B": "A Python module for handling requests",
+        "Option C": "A database model",
+        "Option D": "A configuration file for the server",
+        "Correct Option": "A",
+        "Explanation": "Django templates are used to dynamically generate HTML pages by combining static elements with dynamic data."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which file in a Django project is primarily used to define URL patterns?",
+        "Option A": "urls.py",
+        "Option B": "models.py",
+        "Option C": "views.py",
+        "Option D": "settings.py",
+        "Correct Option": "A",
+        "Explanation": "The urls.py file maps URL routes to corresponding views in a Django project."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is the purpose of Django's admin interface?",
+        "Option A": "To provide a built‑in tool for managing application data",
+        "Option B": "To serve as the frontend of the website",
+        "Option C": "To compile Python code",
+        "Option D": "To optimize database queries",
+        "Correct Option": "A",
+        "Explanation": "Django’s admin interface offers a ready-to-use management interface for application data."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which web framework is built on PHP and known for its elegant syntax?",
+        "Option A": "Laravel",
+        "Option B": "Django",
+        "Option C": "Express",
+        "Option D": "Ruby on Rails",
+        "Correct Option": "A",
+        "Explanation": "Laravel is a modern PHP web framework known for its elegant and expressive syntax."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What language is Laravel built on?",
+        "Option A": "PHP",
+        "Option B": "JavaScript",
+        "Option C": "Python",
+        "Option D": "Ruby",
+        "Correct Option": "A",
+        "Explanation": "Laravel is built on PHP."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is one key benefit of using a web framework like Laravel?",
+        "Option A": "Rapid development through built‑in features and conventions",
+        "Option B": "Manual memory management",
+        "Option C": "Direct hardware control",
+        "Option D": "Minimal code reuse",
+        "Correct Option": "A",
+        "Explanation": "Web frameworks like Laravel streamline development with built‑in tools and standardized conventions."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the main difference between frontend and backend development?",
+        "Option A": "Frontend deals with client-side interfaces; backend handles server‑side logic",
+        "Option B": "Frontend manages databases; backend handles styling",
+        "Option C": "They are identical",
+        "Option D": "Frontend only uses HTML; backend only uses CSS",
+        "Correct Option": "A",
+        "Explanation": "Frontend development focuses on the user interface, while backend development manages server‑side operations."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following is a client‑side scripting language?",
+        "Option A": "JavaScript",
+        "Option B": "PHP",
+        "Option C": "Python",
+        "Option D": "Ruby",
+        "Correct Option": "A",
+        "Explanation": "JavaScript is executed on the client side in web browsers."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which term describes the process of converting code into a visual interface on a website?",
+        "Option A": "Rendering",
+        "Option B": "Compiling",
+        "Option C": "Hosting",
+        "Option D": "Indexing",
+        "Correct Option": "A",
+        "Explanation": "Rendering is the process by which a browser converts HTML, CSS, and JavaScript into a visual web page."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which HTML tag is used to define the document's title that appears in the browser tab?",
+        "Option A": "<title>",
+        "Option B": "<header>",
+        "Option C": "<meta>",
+        "Option D": "<h1>",
+        "Correct Option": "A",
+        "Explanation": "The <title> tag sets the title of the document displayed in the browser tab."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What does CSS specificity determine?",
+        "Option A": "Which style rules override others when multiple rules apply",
+        "Option B": "The order of HTML elements",
+        "Option C": "The functionality of JavaScript",
+        "Option D": "The file structure of the website",
+        "Correct Option": "A",
+        "Explanation": "Specificity determines which CSS rules are applied based on the selectors' weight."
+    },
+    {
+        "Q.No": "83",
+        "Question": "In JavaScript, which method converts a JSON string into an object?",
+        "Option A": "JSON.parse()",
+        "Option B": "JSON.stringify()",
+        "Option C": "JSON.object()",
+        "Option D": "JSON.convert()",
+        "Correct Option": "A",
+        "Explanation": "JSON.parse() converts a JSON string into a JavaScript object."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which HTML element is used to embed a video?",
+        "Option A": "<video>",
+        "Option B": "<media>",
+        "Option C": "<iframe>",
+        "Option D": "<embed>",
+        "Correct Option": "A",
+        "Explanation": "The <video> element is used to embed video content on web pages."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is the main purpose of CSS media queries?",
+        "Option A": "To apply styles based on device characteristics",
+        "Option B": "To create animations",
+        "Option C": "To manage HTML content dynamically",
+        "Option D": "To validate form inputs",
+        "Correct Option": "A",
+        "Explanation": "Media queries allow CSS to adapt styles based on device features like screen width."
+    },
+    {
+        "Q.No": "86",
+        "Question": "In web development, what does SEO stand for?",
+        "Option A": "Search Engine Optimization",
+        "Option B": "Software Engineering Operation",
+        "Option C": "Systematic Element Organization",
+        "Option D": "Secure Email Operations",
+        "Correct Option": "A",
+        "Explanation": "SEO stands for Search Engine Optimization, which improves a website's visibility on search engines."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which attribute in an HTML form specifies the destination URL for form submission?",
+        "Option A": "action",
+        "Option B": "method",
+        "Option C": "enctype",
+        "Option D": "target",
+        "Correct Option": "A",
+        "Explanation": "The action attribute sets the URL where the form data will be sent upon submission."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the primary difference between GET and POST HTTP methods?",
+        "Option A": "GET appends data to the URL; POST sends data in the request body",
+        "Option B": "GET sends data in the request body; POST appends data to the URL",
+        "Option C": "They are functionally identical",
+        "Option D": "GET is secure while POST is not",
+        "Correct Option": "A",
+        "Explanation": "GET includes data in the URL query string; POST includes data in the request body."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which HTML tag is used to create a table?",
+        "Option A": "<table>",
+        "Option B": "<div>",
+        "Option C": "<form>",
+        "Option D": "<list>",
+        "Correct Option": "A",
+        "Explanation": "The <table> tag is used to create tables in HTML."
+    },
+    {
+        "Q.No": "90",
+        "Question": "In CSS, which property changes the text color?",
+        "Option A": "color",
+        "Option B": "font-color",
+        "Option C": "text-color",
+        "Option D": "style-color",
+        "Correct Option": "A",
+        "Explanation": "The color property sets the text color in CSS."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which JavaScript method adds an element to the end of an array?",
+        "Option A": "push()",
+        "Option B": "pop()",
+        "Option C": "shift()",
+        "Option D": "unshift()",
+        "Correct Option": "A",
+        "Explanation": "The push() method adds one or more elements to the end of an array."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What does the DOM stand for?",
+        "Option A": "Document Object Model",
+        "Option B": "Data Object Management",
+        "Option C": "Digital Output Module",
+        "Option D": "Direct Object Mapping",
+        "Correct Option": "A",
+        "Explanation": "The DOM is a programming interface for HTML and XML documents."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which HTTP method is typically used to update an existing resource?",
+        "Option A": "PUT",
+        "Option B": "GET",
+        "Option C": "POST",
+        "Option D": "DELETE",
+        "Correct Option": "A",
+        "Explanation": "PUT is commonly used for updating resources on a server."
+    },
+    {
+        "Q.No": "94",
+        "Question": "In React, what is the purpose of the useEffect hook?",
+        "Option A": "To handle side effects in functional components",
+        "Option B": "To manage component state",
+        "Option C": "To create CSS styles",
+        "Option D": "To define component structure",
+        "Correct Option": "A",
+        "Explanation": "useEffect manages side effects like data fetching or subscriptions in React."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What does RESTful API mean?",
+        "Option A": "An API that follows REST architectural principles",
+        "Option B": "A real-time streaming API",
+        "Option C": "A remote execution service",
+        "Option D": "A database query language",
+        "Correct Option": "A",
+        "Explanation": "RESTful APIs adhere to the REST constraints, using HTTP methods for operations."
+    },
+    {
+        "Q.No": "96",
+        "Question": "In Django, which file is used to define URL routes?",
+        "Option A": "urls.py",
+        "Option B": "models.py",
+        "Option C": "views.py",
+        "Option D": "settings.py",
+        "Correct Option": "A",
+        "Explanation": "The urls.py file maps URL patterns to views in a Django project."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which Laravel component handles routing?",
+        "Option A": "Route",
+        "Option B": "Controller",
+        "Option C": "Model",
+        "Option D": "View",
+        "Correct Option": "A",
+        "Explanation": "Laravel uses the Route component to define and manage application routes."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the role of middleware in web frameworks like Django or Laravel?",
+        "Option A": "To process requests and responses between the client and server",
+        "Option B": "To define database models",
+        "Option C": "To compile source code",
+        "Option D": "To manage static assets",
+        "Correct Option": "A",
+        "Explanation": "Middleware intercepts and processes requests/responses for functions like authentication or logging."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which of the following best describes frontend development?",
+        "Option A": "Building the client‑side interface and user experience",
+        "Option B": "Managing server‑side databases and logic",
+        "Option C": "Configuring network hardware",
+        "Option D": "Developing operating systems",
+        "Correct Option": "A",
+        "Explanation": "Frontend development focuses on the client side, including design, layout, and interactivity."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which best describes backend development?",
+        "Option A": "Building and managing the server‑side logic and databases",
+        "Option B": "Designing website layouts and graphics",
+        "Option C": "Writing HTML and CSS only",
+        "Option D": "Creating static content exclusively",
+        "Correct Option": "A",
+        "Explanation": "Backend development involves server‑side programming, database management, and application logic."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

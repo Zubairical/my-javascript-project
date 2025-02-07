@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is an array?",
+        "Option A": "A collection of elements stored in contiguous memory",
+        "Option B": "A non-contiguous collection of elements",
+        "Option C": "A dynamic linked data structure",
+        "Option D": "A type of tree structure",
+        "Correct Option": "A",
+        "Explanation": "An array stores elements contiguously, allowing direct access via indices."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is the time complexity for accessing an element in an array by index?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "A",
+        "Explanation": "Accessing an element by index in an array takes constant time, O(1)."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which data structure consists of nodes where each node points to the next node?",
+        "Option A": "Array",
+        "Option B": "Linked List",
+        "Option C": "Stack",
+        "Option D": "Queue",
+        "Correct Option": "B",
+        "Explanation": "A linked list is made up of nodes connected by pointers."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is a primary advantage of using a linked list over an array?",
+        "Option A": "Constant-time random access",
+        "Option B": "Dynamic size and efficient insertions/deletions",
+        "Option C": "Better cache performance",
+        "Option D": "Lower memory usage",
+        "Correct Option": "B",
+        "Explanation": "Linked lists allow dynamic memory allocation and efficient insertions/deletions without shifting elements."
+    },
+    {
+        "Q.No": "5",
+        "Question": "In a singly linked list, what is the time complexity for inserting an element at the beginning?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "A",
+        "Explanation": "Insertion at the beginning of a linked list is O(1) since only pointer updates are needed."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which data structure follows the Last In, First Out (LIFO) principle?",
+        "Option A": "Queue",
+        "Option B": "Stack",
+        "Option C": "Array",
+        "Option D": "Tree",
+        "Correct Option": "B",
+        "Explanation": "A stack is a LIFO structure where the last element pushed is the first to be popped."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What does the 'pop' operation do in a stack?",
+        "Option A": "Adds an element to the top",
+        "Option B": "Removes the top element",
+        "Option C": "Returns the bottom element",
+        "Option D": "Clears the stack",
+        "Correct Option": "B",
+        "Explanation": "The pop operation removes the element at the top of the stack."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which data structure implements the First In, First Out (FIFO) principle?",
+        "Option A": "Stack",
+        "Option B": "Queue",
+        "Option C": "Tree",
+        "Option D": "Graph",
+        "Correct Option": "B",
+        "Explanation": "A queue is a FIFO structure where the first element enqueued is the first to be dequeued."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the name of the operation that adds an element to the rear of a queue?",
+        "Option A": "Pop",
+        "Option B": "Push",
+        "Option C": "Enqueue",
+        "Option D": "Dequeue",
+        "Correct Option": "C",
+        "Explanation": "Enqueue is the operation used to add an element at the end of a queue."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the time complexity to append an element to a dynamic array (amortized)?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "A",
+        "Explanation": "Appending to a dynamic array is O(1) amortized, even if occasional resizing occurs."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which data structure is used to implement recursion naturally?",
+        "Option A": "Queue",
+        "Option B": "Stack",
+        "Option C": "Linked List",
+        "Option D": "Array",
+        "Correct Option": "B",
+        "Explanation": "Recursion relies on the call stack, which follows a LIFO order."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is a binary tree?",
+        "Option A": "A tree where each node has exactly one child",
+        "Option B": "A tree where each node has at most two children",
+        "Option C": "A tree that is always balanced",
+        "Option D": "A linked list variant",
+        "Correct Option": "B",
+        "Explanation": "A binary tree is defined as a tree in which each node has at most two children."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which tree traversal visits the root node before its subtrees?",
+        "Option A": "In-order",
+        "Option B": "Post-order",
+        "Option C": "Pre-order",
+        "Option D": "Level-order",
+        "Correct Option": "C",
+        "Explanation": "Pre-order traversal visits the root first, then the left and right subtrees."
+    },
+    {
+        "Q.No": "14",
+        "Question": "In a binary search tree (BST), which traversal method returns the nodes in sorted order?",
+        "Option A": "Pre-order",
+        "Option B": "In-order",
+        "Option C": "Post-order",
+        "Option D": "Level-order",
+        "Correct Option": "B",
+        "Explanation": "In-order traversal of a BST returns the nodes in ascending sorted order."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is a graph?",
+        "Option A": "A hierarchical structure with a single root",
+        "Option B": "A collection of nodes (vertices) connected by edges",
+        "Option C": "A linear data structure",
+        "Option D": "A type of binary tree",
+        "Correct Option": "B",
+        "Explanation": "A graph consists of vertices (nodes) and edges connecting them."
+    },
+    {
+        "Q.No": "16",
+        "Question": "How does a directed graph differ from an undirected graph?",
+        "Option A": "Directed graphs have cycles only",
+        "Option B": "Directed graphs have edges with a specific direction",
+        "Option C": "Directed graphs are always weighted",
+        "Option D": "Directed graphs contain no vertices",
+        "Correct Option": "B",
+        "Explanation": "In directed graphs, each edge has an associated direction."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which algorithm is best for searching a value in a sorted array?",
+        "Option A": "Linear Search",
+        "Option B": "Binary Search",
+        "Option C": "Depth-first Search",
+        "Option D": "Breadth-first Search",
+        "Correct Option": "B",
+        "Explanation": "Binary search efficiently finds an element in a sorted array by repeatedly dividing the search interval in half."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the time complexity of binary search?",
+        "Option A": "O(n)",
+        "Option B": "O(log n)",
+        "Option C": "O(n log n)",
+        "Option D": "O(1)",
+        "Correct Option": "B",
+        "Explanation": "Binary search operates in O(log n) time on sorted arrays."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which sorting algorithm uses a pivot to partition the array?",
+        "Option A": "Merge Sort",
+        "Option B": "Quick Sort",
+        "Option C": "Bubble Sort",
+        "Option D": "Insertion Sort",
+        "Correct Option": "B",
+        "Explanation": "Quick sort partitions the array around a pivot element."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the average-case time complexity of Quick Sort?",
+        "Option A": "O(n²)",
+        "Option B": "O(n log n)",
+        "Option C": "O(n)",
+        "Option D": "O(log n)",
+        "Correct Option": "B",
+        "Explanation": "Quick sort has an average-case time complexity of O(n log n)."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which sorting algorithm divides the array into halves, sorts, and then merges them?",
+        "Option A": "Quick Sort",
+        "Option B": "Bubble Sort",
+        "Option C": "Merge Sort",
+        "Option D": "Selection Sort",
+        "Correct Option": "C",
+        "Explanation": "Merge sort divides the array, recursively sorts the halves, and then merges them."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is the worst-case time complexity of Merge Sort?",
+        "Option A": "O(n log n)",
+        "Option B": "O(n²)",
+        "Option C": "O(n)",
+        "Option D": "O(1)",
+        "Correct Option": "A",
+        "Explanation": "Merge sort consistently runs in O(n log n) time, regardless of input."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What does Big-O notation describe?",
+        "Option A": "The exact running time of an algorithm",
+        "Option B": "The upper bound on the growth rate of an algorithm's running time",
+        "Option C": "The best-case performance only",
+        "Option D": "The space used by an algorithm",
+        "Correct Option": "B",
+        "Explanation": "Big-O notation gives an upper bound on the time or space complexity, describing worst-case scenarios."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What does space complexity measure?",
+        "Option A": "The total time an algorithm takes",
+        "Option B": "The extra memory an algorithm requires",
+        "Option C": "The number of CPU cycles",
+        "Option D": "The number of lines of code",
+        "Correct Option": "B",
+        "Explanation": "Space complexity measures the additional memory used by an algorithm relative to input size."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which structure uses nodes containing data and a pointer to the next node?",
+        "Option A": "Array",
+        "Option B": "Linked List",
+        "Option C": "Stack",
+        "Option D": "Queue",
+        "Correct Option": "B",
+        "Explanation": "A linked list is composed of nodes that each store data and a pointer to the next node."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is the worst-case time complexity of searching in an unsorted array?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "B",
+        "Explanation": "In an unsorted array, you may need to check every element, making it O(n)."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the time complexity to insert an element at the head of a singly linked list?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "A",
+        "Explanation": "Insertion at the beginning of a linked list is a constant-time operation, O(1)."
+    },
+    {
+        "Q.No": "28",
+        "Question": "In a doubly linked list, each node contains pointers to:",
+        "Option A": "Only the next node",
+        "Option B": "Only the previous node",
+        "Option C": "Both the next and previous nodes",
+        "Option D": "Neither, only data is stored",
+        "Correct Option": "C",
+        "Explanation": "A doubly linked list node has two pointers: one to the next node and one to the previous node."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is a major disadvantage of arrays compared to linked lists?",
+        "Option A": "They allow constant-time random access",
+        "Option B": "They require contiguous memory and fixed size",
+        "Option C": "They are faster in search operations",
+        "Option D": "They are dynamic in size",
+        "Correct Option": "B",
+        "Explanation": "Arrays require contiguous memory and have a fixed size, which limits dynamic operations."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which algorithm finds the shortest path in a weighted graph?",
+        "Option A": "Depth-first Search",
+        "Option B": "Breadth-first Search",
+        "Option C": "Dijkstra's Algorithm",
+        "Option D": "Quick Sort",
+        "Correct Option": "C",
+        "Explanation": "Dijkstra's algorithm is designed to find the shortest path in weighted graphs."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What characterizes a balanced binary search tree?",
+        "Option A": "One subtree is significantly deeper than the other",
+        "Option B": "Both subtrees of any node have approximately the same height",
+        "Option C": "It contains only one node per level",
+        "Option D": "It is equivalent to a linked list",
+        "Correct Option": "B",
+        "Explanation": "A balanced BST ensures that the heights of the two subtrees of any node differ by at most one, optimizing search time."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which of the following is not a self-balancing binary search tree?",
+        "Option A": "AVL Tree",
+        "Option B": "Red-Black Tree",
+        "Option C": "B-Tree",
+        "Option D": "Unbalanced Binary Search Tree",
+        "Correct Option": "D",
+        "Explanation": "A standard binary search tree without self-balancing is not considered a self-balancing tree."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which method can be used to perform an in-order traversal of a binary tree?",
+        "Option A": "Recursion",
+        "Option B": "Iteration with a stack",
+        "Option C": "Both A and B",
+        "Option D": "None of the above",
+        "Correct Option": "C",
+        "Explanation": "In-order traversal can be implemented recursively or iteratively using a stack."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is a heap primarily used for?",
+        "Option A": "Implementing a binary search tree",
+        "Option B": "Sorting using bubble sort",
+        "Option C": "Implementing a priority queue",
+        "Option D": "Managing linked lists",
+        "Correct Option": "C",
+        "Explanation": "Heaps are often used to implement priority queues because they efficiently retrieve the highest or lowest element."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What best describes a circular queue?",
+        "Option A": "A queue that never ends",
+        "Option B": "A queue where the end connects back to the front",
+        "Option C": "A stack used as a queue",
+        "Option D": "A priority queue implementation",
+        "Correct Option": "B",
+        "Explanation": "In a circular queue, the rear end wraps around to the front to efficiently use available space."
+    },
+    {
+        "Q.No": "36",
+        "Question": "In a stack, which operation returns the top element without removing it?",
+        "Option A": "pop",
+        "Option B": "push",
+        "Option C": "peek",
+        "Option D": "enqueue",
+        "Correct Option": "C",
+        "Explanation": "The peek operation retrieves the top element of a stack without modifying it."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which search algorithm is most suitable for an unsorted linked list?",
+        "Option A": "Binary Search",
+        "Option B": "Linear Search",
+        "Option C": "Quick Search",
+        "Option D": "Merge Search",
+        "Correct Option": "B",
+        "Explanation": "Linear search is used for unsorted data structures like linked lists."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What does a stable sorting algorithm guarantee?",
+        "Option A": "It sorts data in constant time",
+        "Option B": "It maintains the relative order of equal elements",
+        "Option C": "It uses no extra space",
+        "Option D": "It always runs in O(n log n) time",
+        "Correct Option": "B",
+        "Explanation": "A stable sorting algorithm preserves the relative order of records with equal keys."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which sorting algorithm is generally in-place but unstable?",
+        "Option A": "Merge Sort",
+        "Option B": "Quick Sort",
+        "Option C": "Bubble Sort",
+        "Option D": "Insertion Sort",
+        "Correct Option": "B",
+        "Explanation": "Quick sort is in-place but not stable by default."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is the best-case time complexity of Bubble Sort if the list is already sorted?",
+        "Option A": "O(n)",
+        "Option B": "O(n²)",
+        "Option C": "O(log n)",
+        "Option D": "O(1)",
+        "Correct Option": "A",
+        "Explanation": "With an optimized implementation, bubble sort can run in O(n) time when the list is already sorted."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What strategy divides a problem into smaller subproblems, solves them, and then combines the results?",
+        "Option A": "Greedy algorithm",
+        "Option B": "Divide and Conquer",
+        "Option C": "Dynamic programming",
+        "Option D": "Backtracking",
+        "Correct Option": "B",
+        "Explanation": "Divide and conquer breaks problems into smaller parts, solves them independently, and merges the results (e.g., merge sort)."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the extra space requirement of Merge Sort?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "B",
+        "Explanation": "Merge sort requires O(n) extra space to merge sorted subarrays."
+    },
+    {
+        "Q.No": "43",
+        "Question": "In Big-O notation, which grows faster for large inputs: O(n) or O(n log n)?",
+        "Option A": "O(n)",
+        "Option B": "O(n log n)",
+        "Option C": "They grow equally",
+        "Option D": "It depends on constants",
+        "Correct Option": "B",
+        "Explanation": "O(n log n) grows faster than O(n) as n increases."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which data structure supports both stack and queue operations when used as a deque?",
+        "Option A": "Stack",
+        "Option B": "Queue",
+        "Option C": "Deque",
+        "Option D": "Tree",
+        "Correct Option": "C",
+        "Explanation": "A deque (double-ended queue) allows insertion and deletion at both ends, supporting both LIFO and FIFO behaviors."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is a sparse matrix?",
+        "Option A": "A matrix with few zero values",
+        "Option B": "A matrix with mostly zero values",
+        "Option C": "A dense, fully populated matrix",
+        "Option D": "A matrix stored as a binary tree",
+        "Correct Option": "B",
+        "Explanation": "A sparse matrix is one in which most of the elements are zero."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which graph traversal algorithm uses a queue?",
+        "Option A": "Depth-First Search",
+        "Option B": "Breadth-First Search",
+        "Option C": "Dijkstra's Algorithm",
+        "Option D": "Kruskal's Algorithm",
+        "Correct Option": "B",
+        "Explanation": "Breadth-first search (BFS) uses a queue to traverse graph levels systematically."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which sorting algorithm uses recursion with partitioning?",
+        "Option A": "Bubble Sort",
+        "Option B": "Quick Sort",
+        "Option C": "Insertion Sort",
+        "Option D": "Selection Sort",
+        "Correct Option": "B",
+        "Explanation": "Quick sort employs recursion to partition the array into subarrays."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What does an in-place algorithm require?",
+        "Option A": "Extra memory proportional to input size",
+        "Option B": "Only a constant amount of extra space",
+        "Option C": "No memory at all",
+        "Option D": "A temporary file on disk",
+        "Correct Option": "B",
+        "Explanation": "An in-place algorithm requires only a constant amount of additional space (O(1))."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which searching technique is efficient in a balanced binary search tree?",
+        "Option A": "Linear Search",
+        "Option B": "Binary Search",
+        "Option C": "Jump Search",
+        "Option D": "Exponential Search",
+        "Correct Option": "B",
+        "Explanation": "Binary search in a balanced BST operates in O(log n) time."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is a hash table?",
+        "Option A": "A tree that stores keys and values",
+        "Option B": "A data structure that maps keys to values using a hash function",
+        "Option C": "A type of linked list",
+        "Option D": "A sorted array",
+        "Correct Option": "B",
+        "Explanation": "A hash table maps keys to values using a hash function to compute an index."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the average-case time complexity for search operations in a hash table?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "A",
+        "Explanation": "Hash table searches are O(1) on average due to direct indexing via the hash function."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is collision resolution in a hash table?",
+        "Option A": "Handling keys that hash to the same index",
+        "Option B": "Encrypting keys before storage",
+        "Option C": "Sorting keys in an array",
+        "Option D": "Removing duplicate keys automatically",
+        "Correct Option": "A",
+        "Explanation": "Collision resolution deals with multiple keys mapping to the same index, using methods such as chaining or open addressing."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which data structure is particularly useful for backtracking algorithms?",
+        "Option A": "Queue",
+        "Option B": "Stack",
+        "Option C": "Array",
+        "Option D": "Graph",
+        "Correct Option": "B",
+        "Explanation": "Stacks are ideal for backtracking because they allow you to push and pop states in LIFO order."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which sorting algorithm is often preferred for external sorting (sorting large datasets)?",
+        "Option A": "Quick Sort",
+        "Option B": "Merge Sort",
+        "Option C": "Bubble Sort",
+        "Option D": "Insertion Sort",
+        "Correct Option": "B",
+        "Explanation": "Merge sort is favored for external sorting because it can handle data that does not fit in memory."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What does amortized analysis provide?",
+        "Option A": "The worst-case time for a single operation",
+        "Option B": "The average cost per operation over a sequence of operations",
+        "Option C": "The best-case scenario only",
+        "Option D": "The exact number of CPU cycles used",
+        "Correct Option": "B",
+        "Explanation": "Amortized analysis averages the cost of operations over a sequence, providing a more realistic performance measure."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which data structure is most appropriate for implementing breadth-first search in a graph?",
+        "Option A": "Stack",
+        "Option B": "Queue",
+        "Option C": "Heap",
+        "Option D": "Linked List",
+        "Correct Option": "B",
+        "Explanation": "Breadth-first search uses a queue to process nodes in the order they are discovered."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is one advantage of using recursion?",
+        "Option A": "It always uses less memory than iteration",
+        "Option B": "It can simplify the code for naturally recursive problems",
+        "Option C": "It avoids the use of any loops",
+        "Option D": "It is always faster than iterative solutions",
+        "Correct Option": "B",
+        "Explanation": "Recursion can lead to simpler and more elegant solutions for problems that have a natural recursive structure."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which sorting algorithm is stable by default?",
+        "Option A": "Quick Sort",
+        "Option B": "Merge Sort",
+        "Option C": "Heap Sort",
+        "Option D": "Shell Sort",
+        "Correct Option": "B",
+        "Explanation": "Merge sort is stable, meaning that equal elements retain their original order after sorting."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is the worst-case time complexity of Bubble Sort?",
+        "Option A": "O(n)",
+        "Option B": "O(n log n)",
+        "Option C": "O(n²)",
+        "Option D": "O(log n)",
+        "Correct Option": "C",
+        "Explanation": "In the worst case, bubble sort performs O(n²) comparisons and swaps."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which data structure is typically used to implement a priority queue?",
+        "Option A": "Array",
+        "Option B": "Stack",
+        "Option C": "Heap",
+        "Option D": "Linked List",
+        "Correct Option": "C",
+        "Explanation": "A heap, specifically a binary heap, is commonly used to implement a priority queue."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What types of trees support fast lookup, insertion, and deletion operations?",
+        "Option A": "Binary Search Trees only",
+        "Option B": "AVL Trees only",
+        "Option C": "Red-Black Trees only",
+        "Option D": "Various balanced trees (e.g., BST, AVL, Red-Black)",
+        "Correct Option": "D",
+        "Explanation": "Balanced trees such as BSTs, AVL trees, and Red-Black trees all support these efficient operations."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the height of a balanced binary tree with n nodes?",
+        "Option A": "O(n)",
+        "Option B": "O(log n)",
+        "Option C": "O(1)",
+        "Option D": "O(n log n)",
+        "Correct Option": "B",
+        "Explanation": "A balanced binary tree has a height of O(log n), ensuring efficient operations."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which sorting algorithm repeatedly selects the smallest element and swaps it into place?",
+        "Option A": "Insertion Sort",
+        "Option B": "Selection Sort",
+        "Option C": "Merge Sort",
+        "Option D": "Quick Sort",
+        "Correct Option": "B",
+        "Explanation": "Selection sort repeatedly finds the minimum element and places it in its proper position."
+    },
+    {
+        "Q.No": "64",
+        "Question": "In Big-O notation, what does the 'O' stand for?",
+        "Option A": "Order",
+        "Option B": "Operation",
+        "Option C": "Overhead",
+        "Option D": "Outcome",
+        "Correct Option": "A",
+        "Explanation": "The 'O' in Big-O notation stands for \"\"order of growth,\"\" indicating how the running time scales with input size."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the typical time complexity for inserting an element into a balanced BST?",
+        "Option A": "O(1)",
+        "Option B": "O(log n)",
+        "Option C": "O(n)",
+        "Option D": "O(n log n)",
+        "Correct Option": "B",
+        "Explanation": "Inserting into a balanced BST is O(log n) on average."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which data structure is best suited for implementing an \"\"undo\"\" feature?",
+        "Option A": "Queue",
+        "Option B": "Stack",
+        "Option C": "Tree",
+        "Option D": "Graph",
+        "Correct Option": "B",
+        "Explanation": "Stacks are ideal for implementing undo functionality because they allow reversal of the most recent actions (LIFO)."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What does space complexity measure in an algorithm?",
+        "Option A": "The total execution time",
+        "Option B": "The amount of extra memory required",
+        "Option C": "The number of lines of code",
+        "Option D": "The speed of input/output operations",
+        "Correct Option": "B",
+        "Explanation": "Space complexity measures the extra memory (auxiliary space) that an algorithm uses relative to its input size."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which sorting algorithm works particularly well on nearly sorted data?",
+        "Option A": "Insertion Sort",
+        "Option B": "Quick Sort",
+        "Option C": "Merge Sort",
+        "Option D": "Heap Sort",
+        "Correct Option": "A",
+        "Explanation": "Insertion sort performs very efficiently on nearly sorted data, with a best-case time complexity of O(n)."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What type of algorithm makes the locally optimal choice at each step?",
+        "Option A": "Divide and Conquer",
+        "Option B": "Dynamic Programming",
+        "Option C": "Greedy Algorithm",
+        "Option D": "Backtracking",
+        "Correct Option": "C",
+        "Explanation": "Greedy algorithms choose the best option at each step, hoping to find a global optimum."
+    },
+    {
+        "Q.No": "70",
+        "Question": "In Quick Sort, what role does recursion play?",
+        "Option A": "It allows dividing the array into subarrays that are sorted independently",
+        "Option B": "It eliminates the need for partitioning",
+        "Option C": "It guarantees O(n) time complexity",
+        "Option D": "It is used only for merging sorted arrays",
+        "Correct Option": "A",
+        "Explanation": "Recursion in Quick Sort divides the array into smaller subarrays, which are then sorted independently."
+    },
+    {
+        "Q.No": "71",
+        "Question": "In Big-O notation, what does O(n!) represent?",
+        "Option A": "Exponential time",
+        "Option B": "Factorial time",
+        "Option C": "Polynomial time",
+        "Option D": "Logarithmic time",
+        "Correct Option": "B",
+        "Explanation": "O(n!) represents factorial time complexity, which grows extremely fast and is generally impractical for large n."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which of the following is not a feature of a linked list?",
+        "Option A": "Dynamic size",
+        "Option B": "Efficient insertion and deletion",
+        "Option C": "Constant-time random access",
+        "Option D": "Sequential access",
+        "Correct Option": "C",
+        "Explanation": "Linked lists do not allow constant-time random access because elements must be accessed sequentially."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is a key advantage of a dynamic array over a linked list?",
+        "Option A": "Constant-time random access",
+        "Option B": "More efficient insertions at the beginning",
+        "Option C": "Lower memory overhead per element",
+        "Option D": "Easier deletion from the middle",
+        "Correct Option": "A",
+        "Explanation": "Dynamic arrays provide constant-time random access to elements."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which sorting algorithm can achieve O(n) best-case performance on nearly sorted data?",
+        "Option A": "Quick Sort",
+        "Option B": "Merge Sort",
+        "Option C": "Insertion Sort",
+        "Option D": "Heap Sort",
+        "Correct Option": "C",
+        "Explanation": "Insertion sort can run in O(n) time in the best case when the input data is nearly sorted."
+    },
+    {
+        "Q.No": "75",
+        "Question": "In graph theory, what is a cycle?",
+        "Option A": "A path that starts and ends at the same vertex without repeating edges or vertices",
+        "Option B": "A path with repeated vertices",
+        "Option C": "A tree with only one branch",
+        "Option D": "A disconnected subgraph",
+        "Correct Option": "A",
+        "Explanation": "A cycle is a path that begins and ends at the same vertex and does not repeat any edges or vertices."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What does DFS stand for in graph algorithms?",
+        "Option A": "Data-Focused Search",
+        "Option B": "Depth-First Search",
+        "Option C": "Dynamic File Search",
+        "Option D": "Distributed File System",
+        "Correct Option": "B",
+        "Explanation": "DFS stands for Depth-First Search, a graph traversal technique that explores as far as possible along each branch."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which implementation method can be used for Depth-First Search?",
+        "Option A": "Recursion only",
+        "Option B": "Iteration using a stack only",
+        "Option C": "Both recursion and iteration using a stack",
+        "Option D": "Iteration using a queue only",
+        "Correct Option": "C",
+        "Explanation": "DFS can be implemented either recursively or iteratively using an explicit stack."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which algorithm finds the minimum spanning tree in a graph?",
+        "Option A": "Dijkstra's Algorithm",
+        "Option B": "Prim's Algorithm",
+        "Option C": "Kruskal's Algorithm",
+        "Option D": "Bellman-Ford Algorithm",
+        "Correct Option": "C",
+        "Explanation": "Kruskal's algorithm is a popular method for finding the minimum spanning tree of a graph."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the primary purpose of a hash function in a hash table?",
+        "Option A": "To sort keys in order",
+        "Option B": "To compute an index for a key in the hash table",
+        "Option C": "To balance a binary search tree",
+        "Option D": "To traverse a linked list",
+        "Correct Option": "B",
+        "Explanation": "A hash function maps a key to an index in the hash table, enabling fast lookups."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What does O(1) time complexity indicate?",
+        "Option A": "Constant time regardless of input size",
+        "Option B": "Linear time relative to input size",
+        "Option C": "Logarithmic time relative to input size",
+        "Option D": "Exponential time relative to input size",
+        "Correct Option": "A",
+        "Explanation": "O(1) means that the algorithm’s running time does not change with the size of the input."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which search algorithm is best for an unsorted array?",
+        "Option A": "Binary Search",
+        "Option B": "Linear Search",
+        "Option C": "Jump Search",
+        "Option D": "Exponential Search",
+        "Correct Option": "B",
+        "Explanation": "Linear search checks each element sequentially and is appropriate for unsorted arrays."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the key idea behind dynamic programming?",
+        "Option A": "Solving non-overlapping subproblems independently",
+        "Option B": "Solving overlapping subproblems by caching results",
+        "Option C": "Recursion without memoization",
+        "Option D": "Greedy choices at every step",
+        "Correct Option": "B",
+        "Explanation": "Dynamic programming solves problems by caching solutions to overlapping subproblems, reducing redundant computations."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which algorithm is most suitable for finding the shortest path in an unweighted graph?",
+        "Option A": "Depth-First Search",
+        "Option B": "Breadth-First Search",
+        "Option C": "Dijkstra's Algorithm",
+        "Option D": "A* Search",
+        "Correct Option": "B",
+        "Explanation": "Breadth-first search is ideal for finding the shortest path in unweighted graphs."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the amortized time complexity for insertion in a hash table?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n log n)",
+        "Correct Option": "A",
+        "Explanation": "Insertion in a hash table is O(1) on average when considered over many operations (amortized)."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which data structure uses a binary heap to implement a priority queue?",
+        "Option A": "Array",
+        "Option B": "Linked List",
+        "Option C": "Heap",
+        "Option D": "Stack",
+        "Correct Option": "C",
+        "Explanation": "A binary heap is commonly used to implement a priority queue due to its efficient extraction of the minimum or maximum element."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the primary disadvantage of Quick Sort in its worst-case scenario?",
+        "Option A": "O(n log n) time complexity",
+        "Option B": "O(n²) time complexity",
+        "Option C": "High memory usage",
+        "Option D": "Lack of in-place sorting",
+        "Correct Option": "B",
+        "Explanation": "Quick sort can degrade to O(n²) time complexity in the worst-case scenario, such as when the pivot selection is poor."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which sorting algorithm is stable and guarantees that equal elements maintain their original order?",
+        "Option A": "Quick Sort",
+        "Option B": "Merge Sort",
+        "Option C": "Heap Sort",
+        "Option D": "Selection Sort",
+        "Correct Option": "B",
+        "Explanation": "Merge sort is stable, preserving the order of equal elements during sorting."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the space complexity of an iterative binary search on an array?",
+        "Option A": "O(1)",
+        "Option B": "O(n)",
+        "Option C": "O(log n)",
+        "Option D": "O(n²)",
+        "Correct Option": "A",
+        "Explanation": "Iterative binary search uses only a constant amount of extra space, O(1)."
+    },
+    {
+        "Q.No": "89",
+        "Question": "In Big-O notation, what does O(n²) indicate about an algorithm's growth?",
+        "Option A": "Linear growth",
+        "Option B": "Quadratic growth",
+        "Option C": "Logarithmic growth",
+        "Option D": "Exponential growth",
+        "Correct Option": "B",
+        "Explanation": "O(n²) indicates quadratic growth, meaning the running time increases proportional to the square of the input size."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which data structure is designed to support LIFO operations?",
+        "Option A": "Queue",
+        "Option B": "Stack",
+        "Option C": "Linked List",
+        "Option D": "Tree",
+        "Correct Option": "B",
+        "Explanation": "A stack supports Last In, First Out (LIFO) operations."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the main idea behind the divide and conquer strategy?",
+        "Option A": "Solving a problem by iterating over all elements",
+        "Option B": "Breaking a problem into independent subproblems, solving them, and merging the results",
+        "Option C": "Using a greedy approach at every step",
+        "Option D": "Backtracking to explore all possibilities",
+        "Correct Option": "B",
+        "Explanation": "Divide and conquer involves breaking a problem into smaller, independent subproblems, solving them recursively, and combining their solutions."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which search method is applicable to both arrays and linked lists without prior sorting?",
+        "Option A": "Binary Search",
+        "Option B": "Linear Search",
+        "Option C": "Jump Search",
+        "Option D": "Exponential Search",
+        "Correct Option": "B",
+        "Explanation": "Linear search works on unsorted data structures like arrays and linked lists."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is a degenerate tree?",
+        "Option A": "A tree that is completely balanced",
+        "Option B": "A tree where each parent has only one child, resembling a linked list",
+        "Option C": "A tree with no internal nodes",
+        "Option D": "A tree with duplicate values only",
+        "Correct Option": "B",
+        "Explanation": "A degenerate tree is one in which each parent node has only one child, making it effectively similar to a linked list."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What does amortized analysis consider?",
+        "Option A": "The worst-case cost of a single operation",
+        "Option B": "The average cost per operation over a sequence of operations",
+        "Option C": "Only the best-case scenario",
+        "Option D": "The exact cost of every operation",
+        "Correct Option": "B",
+        "Explanation": "Amortized analysis averages the cost of operations over a sequence, smoothing out expensive operations."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which sorting algorithm is particularly well-suited for sorting linked lists?",
+        "Option A": "Quick Sort",
+        "Option B": "Merge Sort",
+        "Option C": "Bubble Sort",
+        "Option D": "Selection Sort",
+        "Correct Option": "B",
+        "Explanation": "Merge sort is well-suited for linked lists because it does not require random access and can be implemented efficiently."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the main challenge of performing binary search on a linked list?",
+        "Option A": "Linked lists are always sorted",
+        "Option B": "Linked lists do not allow constant-time random access",
+        "Option C": "Linked lists require extra memory for binary search",
+        "Option D": "Linked lists cannot be traversed sequentially",
+        "Correct Option": "B",
+        "Explanation": "Binary search relies on constant-time random access, which linked lists do not provide, making it inefficient on linked lists."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which sorting algorithm works by repeatedly swapping adjacent elements?",
+        "Option A": "Quick Sort",
+        "Option B": "Bubble Sort",
+        "Option C": "Merge Sort",
+        "Option D": "Heap Sort",
+        "Correct Option": "B",
+        "Explanation": "Bubble sort repeatedly swaps adjacent elements if they are in the wrong order."
+    },
+    {
+        "Q.No": "98",
+        "Question": "In Big-O notation, what does O(n!) represent?",
+        "Option A": "Exponential time complexity",
+        "Option B": "Factorial time complexity",
+        "Option C": "Polynomial time complexity",
+        "Option D": "Linear time complexity",
+        "Correct Option": "B",
+        "Explanation": "O(n!) denotes factorial time complexity, which grows extremely fast and is generally impractical for large inputs."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which data structure is typically used to implement Depth-First Search in graphs?",
+        "Option A": "Queue",
+        "Option B": "Stack",
+        "Option C": "Array",
+        "Option D": "Hash Table",
+        "Correct Option": "B",
+        "Explanation": "Depth-first search (DFS) is commonly implemented using a stack, either explicitly or via recursion."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is the primary difference between Merge Sort and Quick Sort?",
+        "Option A": "Merge Sort is stable and requires extra space; Quick Sort is in-place but can be unstable",
+        "Option B": "Merge Sort is in-place and unstable; Quick Sort requires extra space and is stable",
+        "Option C": "They are identical in both performance and stability",
+        "Option D": "Quick Sort always outperforms Merge Sort in every scenario",
+        "Correct Option": "A",
+        "Explanation": "Merge Sort is stable and requires O(n) extra space, whereas Quick Sort is in-place but may be unstable depending on the implementation."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

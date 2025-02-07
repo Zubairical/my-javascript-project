@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What does LAN stand for?",
+        "Option A": "Local Area Network",
+        "Option B": "Large Area Network",
+        "Option C": "Logical Access Network",
+        "Option D": "Long-range Area Network",
+        "Correct Option": "A",
+        "Explanation": "LAN stands for Local Area Network, used for connecting devices in a limited area."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which network type typically covers a single building or campus?",
+        "Option A": "WAN",
+        "Option B": "MAN",
+        "Option C": "LAN",
+        "Option D": "PAN",
+        "Correct Option": "C",
+        "Explanation": "A LAN covers a small geographic area, such as a building or campus."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which network type spans a large geographical area, such as cities or countries?",
+        "Option A": "LAN",
+        "Option B": "MAN",
+        "Option C": "WAN",
+        "Option D": "PAN",
+        "Correct Option": "C",
+        "Explanation": "WAN stands for Wide Area Network, connecting networks over long distances."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What does MAN stand for?",
+        "Option A": "Metropolitan Area Network",
+        "Option B": "Medium Area Network",
+        "Option C": "Main Access Network",
+        "Option D": "Modular Area Network",
+        "Correct Option": "A",
+        "Explanation": "MAN stands for Metropolitan Area Network, used for connecting networks within a city."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which network type is designed for personal devices in close proximity?",
+        "Option A": "LAN",
+        "Option B": "WAN",
+        "Option C": "PAN",
+        "Option D": "MAN",
+        "Correct Option": "C",
+        "Explanation": "PAN stands for Personal Area Network, typically used for personal devices like smartphones."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which of the following is a key advantage of LANs?",
+        "Option A": "High-speed connectivity over short distances",
+        "Option B": "Long-distance coverage",
+        "Option C": "Global access",
+        "Option D": "Inherent wireless encryption",
+        "Correct Option": "A",
+        "Explanation": "LANs offer high-speed connectivity within a limited area."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What kind of network typically uses leased telecommunication lines?",
+        "Option A": "LAN",
+        "Option B": "WAN",
+        "Option C": "MAN",
+        "Option D": "PAN",
+        "Correct Option": "B",
+        "Explanation": "WANs often use leased lines to connect geographically distant networks."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which technology is commonly used in LANs?",
+        "Option A": "Ethernet",
+        "Option B": "Bluetooth",
+        "Option C": "Satellite",
+        "Option D": "Microwave",
+        "Correct Option": "A",
+        "Explanation": "Ethernet is the dominant technology used in wired LANs."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What does TCP stand for?",
+        "Option A": "Transmission Control Protocol",
+        "Option B": "Transfer Communication Protocol",
+        "Option C": "Total Connection Protocol",
+        "Option D": "Terminal Control Protocol",
+        "Correct Option": "A",
+        "Explanation": "TCP stands for Transmission Control Protocol, ensuring reliable data delivery."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is the main role of the IP protocol?",
+        "Option A": "To provide addressing and routing of packets",
+        "Option B": "To secure data transmission",
+        "Option C": "To encrypt email messages",
+        "Option D": "To manage DNS queries",
+        "Correct Option": "A",
+        "Explanation": "IP (Internet Protocol) handles addressing and routing of data packets across networks."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which protocol is used to deliver web pages?",
+        "Option A": "HTTP",
+        "Option B": "FTP",
+        "Option C": "SMTP",
+        "Option D": "SNMP",
+        "Correct Option": "A",
+        "Explanation": "HTTP (HyperText Transfer Protocol) is used for transmitting web pages."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What does FTP stand for?",
+        "Option A": "File Transfer Protocol",
+        "Option B": "Fast Transmission Protocol",
+        "Option C": "File Transaction Process",
+        "Option D": "File Transfer Procedure",
+        "Correct Option": "A",
+        "Explanation": "FTP stands for File Transfer Protocol, used to transfer files over networks."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which protocol secures web communications by encrypting data?",
+        "Option A": "HTTP",
+        "Option B": "HTTPS",
+        "Option C": "FTP",
+        "Option D": "SMTP",
+        "Correct Option": "B",
+        "Explanation": "HTTPS uses encryption (TLS/SSL) to secure communications between browsers and servers."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is the primary purpose of DNS?",
+        "Option A": "To translate domain names into IP addresses",
+        "Option B": "To filter spam emails",
+        "Option C": "To encrypt data packets",
+        "Option D": "To assign MAC addresses",
+        "Correct Option": "A",
+        "Explanation": "DNS (Domain Name System) maps human-friendly domain names to IP addresses."
+    },
+    {
+        "Q.No": "15",
+        "Question": "In which layer of the OSI model does TCP operate?",
+        "Option A": "Application",
+        "Option B": "Network",
+        "Option C": "Transport",
+        "Option D": "Data Link",
+        "Correct Option": "C",
+        "Explanation": "TCP operates in the Transport layer, managing reliable communication."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which protocol is used for retrieving emails from a server?",
+        "Option A": "SMTP",
+        "Option B": "POP3",
+        "Option C": "HTTP",
+        "Option D": "SNMP",
+        "Correct Option": "B",
+        "Explanation": "POP3 (Post Office Protocol 3) is used to retrieve emails from a server."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which device routes data between different networks?",
+        "Option A": "Switch",
+        "Option B": "Hub",
+        "Option C": "Router",
+        "Option D": "Bridge",
+        "Correct Option": "C",
+        "Explanation": "Routers connect and route data between different networks."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the main function of a network switch?",
+        "Option A": "To connect devices within the same network segment",
+        "Option B": "To connect different networks",
+        "Option C": "To amplify signals over long distances",
+        "Option D": "To filter data based on IP addresses",
+        "Correct Option": "A",
+        "Explanation": "Switches connect devices on the same LAN and forward data based on MAC addresses."
+    },
+    {
+        "Q.No": "19",
+        "Question": "How does a hub differ from a switch?",
+        "Option A": "A hub directs data to specific devices; a switch broadcasts data to all devices.",
+        "Option B": "A hub broadcasts data to all ports; a switch sends data only to the intended port.",
+        "Option C": "A hub encrypts data; a switch does not.",
+        "Option D": "There is no difference.",
+        "Correct Option": "B",
+        "Explanation": "A hub broadcasts data to all connected devices, while a switch forwards data to the specific destination."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What device extends the range of a wireless network by regenerating signals?",
+        "Option A": "Router",
+        "Option B": "Repeater",
+        "Option C": "Switch",
+        "Option D": "Bridge",
+        "Correct Option": "B",
+        "Explanation": "A repeater amplifies and extends the wireless signal range."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which device converts digital signals into analog signals for transmission?",
+        "Option A": "Modem",
+        "Option B": "Router",
+        "Option C": "Switch",
+        "Option D": "Firewall",
+        "Correct Option": "A",
+        "Explanation": "A modem modulates and demodulates signals for analog transmission."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which topology connects all devices in a closed loop?",
+        "Option A": "Star",
+        "Option B": "Ring",
+        "Option C": "Bus",
+        "Option D": "Mesh",
+        "Correct Option": "B",
+        "Explanation": "A ring topology connects devices in a circular loop."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is the primary feature of a star topology?",
+        "Option A": "Every device is connected to every other device.",
+        "Option B": "All devices are connected to a central hub or switch.",
+        "Option C": "Devices are connected in a continuous line.",
+        "Option D": "Devices are arranged in a circle.",
+        "Correct Option": "B",
+        "Explanation": "In a star topology, all devices connect to a central device, such as a hub or switch."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which topology provides the highest fault tolerance?",
+        "Option A": "Bus",
+        "Option B": "Star",
+        "Option C": "Ring",
+        "Option D": "Mesh",
+        "Correct Option": "D",
+        "Explanation": "A mesh topology provides high fault tolerance because each device is connected to several others."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is the role of a network bridge?",
+        "Option A": "To connect two separate networks and filter traffic",
+        "Option B": "To route data between LAN and WAN",
+        "Option C": "To provide wireless connectivity",
+        "Option D": "To amplify signals",
+        "Correct Option": "A",
+        "Explanation": "A bridge connects and filters traffic between two network segments."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is the Internet?",
+        "Option A": "A global network of interconnected computer networks",
+        "Option B": "A local network in a home",
+        "Option C": "A type of wireless protocol",
+        "Option D": "A dedicated government network",
+        "Correct Option": "A",
+        "Explanation": "The Internet is a global system of interconnected computer networks."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is an IP address?",
+        "Option A": "A unique numerical label assigned to each device on a network",
+        "Option B": "A type of network cable",
+        "Option C": "A domain name",
+        "Option D": "A MAC address alternative",
+        "Correct Option": "A",
+        "Explanation": "An IP address uniquely identifies a device on a network."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which IPv4 class is most commonly used for small private networks?",
+        "Option A": "Class A",
+        "Option B": "Class B",
+        "Option C": "Class C",
+        "Option D": "Class D",
+        "Correct Option": "C",
+        "Explanation": "Class C addresses are commonly used for small private networks."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is the purpose of subnetting?",
+        "Option A": "To divide a network into smaller, manageable segments",
+        "Option B": "To encrypt data on the network",
+        "Option C": "To merge multiple networks into one",
+        "Option D": "To speed up wireless signals",
+        "Correct Option": "A",
+        "Explanation": "Subnetting divides a network into smaller segments, improving management and efficiency."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which protocol secures data transmission over the Internet?",
+        "Option A": "HTTP",
+        "Option B": "TLS/SSL",
+        "Option C": "FTP",
+        "Option D": "SNMP",
+        "Correct Option": "B",
+        "Explanation": "TLS/SSL protocols secure data transmission by encrypting communications."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which port is typically used by HTTP?",
+        "Option A": "80",
+        "Option B": "21",
+        "Option C": "443",
+        "Option D": "25",
+        "Correct Option": "A",
+        "Explanation": "HTTP typically uses port 80 for web traffic."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which port is standard for HTTPS traffic?",
+        "Option A": "80",
+        "Option B": "21",
+        "Option C": "443",
+        "Option D": "25",
+        "Correct Option": "C",
+        "Explanation": "HTTPS traffic usually uses port 443."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What does SNMP stand for?",
+        "Option A": "Simple Network Management Protocol",
+        "Option B": "Secure Network Management Process",
+        "Option C": "Standard Network Messaging Protocol",
+        "Option D": "Simple Network Messaging Protocol",
+        "Correct Option": "A",
+        "Explanation": "SNMP is used for network management and monitoring."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which device connects a computer to a network using a cable?",
+        "Option A": "Modem",
+        "Option B": "Network Interface Card (NIC)",
+        "Option C": "Router",
+        "Option D": "Repeater",
+        "Correct Option": "B",
+        "Explanation": "A NIC allows a computer to connect to a network via a cable."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which device performs packet switching within a LAN?",
+        "Option A": "Router",
+        "Option B": "Switch",
+        "Option C": "Hub",
+        "Option D": "Modem",
+        "Correct Option": "B",
+        "Explanation": "A switch performs packet switching within a local network by directing traffic based on MAC addresses."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the function of NAT?",
+        "Option A": "To translate private IP addresses to public IP addresses",
+        "Option B": "To encrypt data packets",
+        "Option C": "To route data between subnets",
+        "Option D": "To manage domain names",
+        "Correct Option": "A",
+        "Explanation": "NAT translates private IP addresses to a public IP, allowing multiple devices to share one public address."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which cybersecurity device is designed to monitor and filter incoming and outgoing network traffic?",
+        "Option A": "Router",
+        "Option B": "Switch",
+        "Option C": "Firewall",
+        "Option D": "Hub",
+        "Correct Option": "C",
+        "Explanation": "A firewall monitors and filters network traffic based on security rules."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is a DMZ in networking?",
+        "Option A": "A demilitarized zone that adds an extra layer of security",
+        "Option B": "A type of network topology",
+        "Option C": "A protocol for data encryption",
+        "Option D": "A device that amplifies signals",
+        "Correct Option": "A",
+        "Explanation": "A DMZ is a subnet that adds an extra layer of security between an internal network and the internet."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What does VPN stand for?",
+        "Option A": "Virtual Private Network",
+        "Option B": "Virtual Public Network",
+        "Option C": "Verified Private Network",
+        "Option D": "Virtual Protocol Network",
+        "Correct Option": "A",
+        "Explanation": "VPN creates a secure, encrypted connection over a public network."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which protocol is used for secure remote login?",
+        "Option A": "Telnet",
+        "Option B": "SSH",
+        "Option C": "FTP",
+        "Option D": "HTTP",
+        "Correct Option": "B",
+        "Explanation": "SSH (Secure Shell) provides secure remote login and command execution."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which of the following is a method of network authentication?",
+        "Option A": "Password-based authentication",
+        "Option B": "Token-based authentication",
+        "Option C": "Biometric authentication",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "All these methods are used to authenticate users on a network."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the role of a proxy server?",
+        "Option A": "To act as an intermediary between clients and servers",
+        "Option B": "To store backup data",
+        "Option C": "To increase network bandwidth",
+        "Option D": "To encrypt database records",
+        "Correct Option": "A",
+        "Explanation": "A proxy server acts as an intermediary to improve security and performance."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which topology is characterized by all devices being connected to a single backbone?",
+        "Option A": "Star",
+        "Option B": "Bus",
+        "Option C": "Ring",
+        "Option D": "Mesh",
+        "Correct Option": "B",
+        "Explanation": "In a bus topology, all devices share a common backbone cable."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the main purpose of a router?",
+        "Option A": "To connect multiple networks and forward data packets",
+        "Option B": "To connect devices within the same network",
+        "Option C": "To amplify wireless signals",
+        "Option D": "To store web pages",
+        "Correct Option": "A",
+        "Explanation": "Routers connect different networks and route data based on IP addresses."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which network device is primarily used for segmenting a LAN?",
+        "Option A": "Router",
+        "Option B": "Switch",
+        "Option C": "Hub",
+        "Option D": "Modem",
+        "Correct Option": "B",
+        "Explanation": "Switches segment a LAN by creating separate collision domains for each port."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which protocol is primarily used for sending error messages and operational information?",
+        "Option A": "ICMP",
+        "Option B": "TCP",
+        "Option C": "HTTP",
+        "Option D": "FTP",
+        "Correct Option": "A",
+        "Explanation": "ICMP (Internet Control Message Protocol) sends error and diagnostic messages."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is the purpose of ARP in networking?",
+        "Option A": "To map IP addresses to MAC addresses",
+        "Option B": "To encrypt data packets",
+        "Option C": "To route data packets",
+        "Option D": "To manage domain names",
+        "Correct Option": "A",
+        "Explanation": "ARP (Address Resolution Protocol) maps IP addresses to their corresponding MAC addresses."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which port is used for FTP command control?",
+        "Option A": "20",
+        "Option B": "21",
+        "Option C": "22",
+        "Option D": "23",
+        "Correct Option": "B",
+        "Explanation": "FTP uses port 21 for control commands and port 20 for data transfer."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which protocol is used for remote file transfer securely?",
+        "Option A": "FTP",
+        "Option B": "TFTP",
+        "Option C": "SFTP",
+        "Option D": "SMTP",
+        "Correct Option": "C",
+        "Explanation": "SFTP (Secure File Transfer Protocol) transfers files securely over SSH."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What does DHCP stand for?",
+        "Option A": "Dynamic Host Configuration Protocol",
+        "Option B": "Direct Host Control Protocol",
+        "Option C": "Digital Home Connection Protocol",
+        "Option D": "Dynamic Hypertext Configuration Protocol",
+        "Correct Option": "A",
+        "Explanation": "DHCP automatically assigns IP addresses to devices on a network."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which cybersecurity threat floods a network with excessive traffic?",
+        "Option A": "Phishing",
+        "Option B": "DDoS attack",
+        "Option C": "Spoofing",
+        "Option D": "Man-in-the-middle",
+        "Correct Option": "B",
+        "Explanation": "DDoS (Distributed Denial of Service) attacks overwhelm a network with traffic."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is a honeypot in cybersecurity?",
+        "Option A": "A decoy system designed to attract attackers",
+        "Option B": "A method of encrypting data",
+        "Option C": "A network monitoring tool",
+        "Option D": "A type of firewall",
+        "Correct Option": "A",
+        "Explanation": "A honeypot is a decoy system used to lure and analyze attackers."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which wireless standard is defined by IEEE 802.11?",
+        "Option A": "Ethernet",
+        "Option B": "Wi-Fi",
+        "Option C": "Bluetooth",
+        "Option D": "Zigbee",
+        "Correct Option": "B",
+        "Explanation": "IEEE 802.11 is the standard for wireless LAN (Wi-Fi)."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What does bandwidth refer to in networking?",
+        "Option A": "The maximum rate of data transfer across a network connection",
+        "Option B": "The physical length of a cable",
+        "Option C": "The number of connected devices",
+        "Option D": "The delay in data transmission",
+        "Correct Option": "A",
+        "Explanation": "Bandwidth is the maximum data transfer rate of a network connection."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which technology allows the creation of separate virtual networks on the same physical infrastructure?",
+        "Option A": "VPN",
+        "Option B": "VLAN",
+        "Option C": "NAT",
+        "Option D": "DNS",
+        "Correct Option": "B",
+        "Explanation": "VLANs (Virtual LANs) allow segmentation of a physical network into multiple logical networks."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What does the term \"\"latency\"\" mean in networking?",
+        "Option A": "The delay between sending and receiving data",
+        "Option B": "The speed at which data is transferred",
+        "Option C": "The amount of data transferred per second",
+        "Option D": "The number of packets lost",
+        "Correct Option": "A",
+        "Explanation": "Latency is the time delay between a request and a response in a network."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which tool is widely used for network traffic analysis?",
+        "Option A": "Wireshark",
+        "Option B": "Photoshop",
+        "Option C": "Excel",
+        "Option D": "Notepad",
+        "Correct Option": "A",
+        "Explanation": "Wireshark is a network protocol analyzer used to capture and analyze network traffic."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is the purpose of the ICMP protocol?",
+        "Option A": "To report error messages and operational information",
+        "Option B": "To encrypt data packets",
+        "Option C": "To route data between networks",
+        "Option D": "To assign IP addresses dynamically",
+        "Correct Option": "A",
+        "Explanation": "ICMP is used for error reporting and diagnostics in network communications."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which port is commonly used for secure web traffic?",
+        "Option A": "80",
+        "Option B": "443",
+        "Option C": "21",
+        "Option D": "25",
+        "Correct Option": "B",
+        "Explanation": "Port 443 is used for HTTPS, the secure version of HTTP."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What does a firewall do?",
+        "Option A": "Monitors and controls incoming and outgoing network traffic based on security rules",
+        "Option B": "Routes packets between networks",
+        "Option C": "Increases the speed of the network",
+        "Option D": "Provides IP addresses to devices",
+        "Correct Option": "A",
+        "Explanation": "Firewalls filter network traffic according to predefined security policies."
+    },
+    {
+        "Q.No": "61",
+        "Question": "Which protocol is used for sending emails from a client to a server?",
+        "Option A": "POP3",
+        "Option B": "IMAP",
+        "Option C": "SMTP",
+        "Option D": "SNMP",
+        "Correct Option": "C",
+        "Explanation": "SMTP (Simple Mail Transfer Protocol) is used for sending emails."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which protocol is used to retrieve emails from a server?",
+        "Option A": "SMTP",
+        "Option B": "POP3",
+        "Option C": "FTP",
+        "Option D": "HTTP",
+        "Correct Option": "B",
+        "Explanation": "POP3 (Post Office Protocol) is used to retrieve emails from a server."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which network attack involves intercepting and altering communications between two parties?",
+        "Option A": "Phishing",
+        "Option B": "Man-in-the-middle",
+        "Option C": "DDoS",
+        "Option D": "Brute force",
+        "Correct Option": "B",
+        "Explanation": "A man-in-the-middle attack intercepts and can alter communications between parties without their knowledge."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What does VPN technology primarily provide?",
+        "Option A": "Secure, encrypted connections over public networks",
+        "Option B": "Increased network speed",
+        "Option C": "Expanded IP address space",
+        "Option D": "Direct device-to-device communication",
+        "Correct Option": "A",
+        "Explanation": "VPNs create secure, encrypted tunnels over public networks."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which device often integrates the functions of a router, switch, and wireless access point?",
+        "Option A": "Modem",
+        "Option B": "Gateway",
+        "Option C": "Hub",
+        "Option D": "Repeater",
+        "Correct Option": "B",
+        "Explanation": "A gateway typically integrates multiple functions, including routing, switching, and wireless access."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What does NAT do?",
+        "Option A": "Translates private IP addresses to public IP addresses",
+        "Option B": "Encrypts data packets",
+        "Option C": "Assigns MAC addresses",
+        "Option D": "Filters spam emails",
+        "Correct Option": "A",
+        "Explanation": "NAT (Network Address Translation) maps private IPs to a public IP for internet communication."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which OSI layer is responsible for physical transmission of data?",
+        "Option A": "Data Link",
+        "Option B": "Network",
+        "Option C": "Physical",
+        "Option D": "Transport",
+        "Correct Option": "C",
+        "Explanation": "The Physical layer deals with the transmission of raw bitstreams over a medium."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which layer of the OSI model handles end-to-end communication and error recovery?",
+        "Option A": "Application",
+        "Option B": "Transport",
+        "Option C": "Network",
+        "Option D": "Data Link",
+        "Correct Option": "B",
+        "Explanation": "The Transport layer manages end-to-end communication and provides error recovery."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What is the function of a network load balancer?",
+        "Option A": "To distribute incoming traffic evenly across multiple servers",
+        "Option B": "To encrypt data packets",
+        "Option C": "To store backup data",
+        "Option D": "To assign IP addresses dynamically",
+        "Correct Option": "A",
+        "Explanation": "Load balancers distribute network traffic to optimize resource usage and prevent overload on any one server."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which cybersecurity practice involves using two independent forms of verification?",
+        "Option A": "Single sign-on",
+        "Option B": "Two-factor authentication",
+        "Option C": "Biometric scanning only",
+        "Option D": "Password rotation",
+        "Correct Option": "B",
+        "Explanation": "Two-factor authentication (2FA) uses two methods to verify a user’s identity for enhanced security."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which device is most likely used to extend a wireless network’s coverage?",
+        "Option A": "Router",
+        "Option B": "Wireless repeater",
+        "Option C": "Switch",
+        "Option D": "Firewall",
+        "Correct Option": "B",
+        "Explanation": "A wireless repeater extends the coverage of a wireless network by amplifying the signal."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which protocol is used by web browsers to securely load web pages?",
+        "Option A": "HTTP",
+        "Option B": "FTP",
+        "Option C": "HTTPS",
+        "Option D": "SMTP",
+        "Correct Option": "C",
+        "Explanation": "HTTPS is used to securely load web pages by encrypting data between the browser and server."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which type of attack involves overwhelming a network with excessive traffic?",
+        "Option A": "Phishing",
+        "Option B": "DDoS",
+        "Option C": "Spoofing",
+        "Option D": "Ransomware",
+        "Correct Option": "B",
+        "Explanation": "DDoS (Distributed Denial of Service) attacks overwhelm a network to disrupt service."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is the purpose of port forwarding?",
+        "Option A": "To direct incoming traffic to a specific device on a private network",
+        "Option B": "To encrypt outgoing data",
+        "Option C": "To assign dynamic IP addresses",
+        "Option D": "To filter incoming traffic by protocol",
+        "Correct Option": "A",
+        "Explanation": "Port forwarding directs incoming traffic on a specific port to a designated device on a private network."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is Quality of Service (QoS) used for?",
+        "Option A": "Prioritizing certain types of network traffic",
+        "Option B": "Encrypting network communications",
+        "Option C": "Expanding network bandwidth",
+        "Option D": "Managing network hardware",
+        "Correct Option": "A",
+        "Explanation": "QoS prioritizes traffic to ensure critical services receive the necessary bandwidth."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which of the following is an example of a wired network technology?",
+        "Option A": "Wi-Fi",
+        "Option B": "Bluetooth",
+        "Option C": "Ethernet",
+        "Option D": "Infrared",
+        "Correct Option": "C",
+        "Explanation": "Ethernet is a common wired networking technology."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What does \"\"throughput\"\" measure in a network?",
+        "Option A": "The amount of data successfully transferred per unit time",
+        "Option B": "The delay between data packets",
+        "Option C": "The encryption strength of a connection",
+        "Option D": "The number of active network devices",
+        "Correct Option": "A",
+        "Explanation": "Throughput measures the data transfer rate over a network connection."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which technology is used to create virtual networks on top of physical hardware?",
+        "Option A": "Virtualization",
+        "Option B": "Caching",
+        "Option C": "Load balancing",
+        "Option D": "Tunneling",
+        "Correct Option": "A",
+        "Explanation": "Virtualization enables the creation of virtual networks on physical infrastructure."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the primary purpose of network monitoring?",
+        "Option A": "To continuously analyze network traffic for performance and security issues",
+        "Option B": "To update router firmware",
+        "Option C": "To assign IP addresses automatically",
+        "Option D": "To encrypt email communications",
+        "Correct Option": "A",
+        "Explanation": "Network monitoring analyzes traffic to identify performance bottlenecks and security threats."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which protocol is used for network time synchronization?",
+        "Option A": "NTP",
+        "Option B": "SNMP",
+        "Option C": "FTP",
+        "Option D": "HTTP",
+        "Correct Option": "A",
+        "Explanation": "NTP (Network Time Protocol) synchronizes clocks across devices on a network."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is the function of a wireless access point (WAP)?",
+        "Option A": "To allow wireless devices to connect to a wired network",
+        "Option B": "To route data between networks",
+        "Option C": "To amplify wired signals",
+        "Option D": "To filter network traffic",
+        "Correct Option": "A",
+        "Explanation": "A WAP provides wireless connectivity to devices, connecting them to a wired network."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which cybersecurity practice involves regularly updating software to fix vulnerabilities?",
+        "Option A": "Patching",
+        "Option B": "Spoofing",
+        "Option C": "Phishing",
+        "Option D": "Social engineering",
+        "Correct Option": "A",
+        "Explanation": "Patching involves updating software to close security vulnerabilities."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following describes a brute-force attack?",
+        "Option A": "An attack that systematically tries all possible passwords until the correct one is found",
+        "Option B": "An attack that intercepts communications between two parties",
+        "Option C": "An attack that floods a network with traffic",
+        "Option D": "An attack that exploits software vulnerabilities",
+        "Correct Option": "A",
+        "Explanation": "A brute-force attack tries all possible combinations to crack a password or encryption."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which technology is used to secure data over wireless networks?",
+        "Option A": "WEP",
+        "Option B": "WPA2",
+        "Option C": "Bluetooth",
+        "Option D": "Ethernet",
+        "Correct Option": "B",
+        "Explanation": "WPA2 (Wi-Fi Protected Access 2) is widely used to secure wireless networks."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which term describes unauthorized access to computer systems or networks?",
+        "Option A": "Hacking",
+        "Option B": "Routing",
+        "Option C": "Switching",
+        "Option D": "Bridging",
+        "Correct Option": "A",
+        "Explanation": "Hacking refers to unauthorized access or intrusions into computer systems or networks."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the primary goal of cybersecurity?",
+        "Option A": "To protect systems, networks, and data from digital attacks",
+        "Option B": "To improve system performance",
+        "Option C": "To expand network bandwidth",
+        "Option D": "To create virtual networks",
+        "Correct Option": "A",
+        "Explanation": "Cybersecurity aims to protect digital assets from unauthorized access, damage, or disruption."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which of the following is a common form of social engineering?",
+        "Option A": "Phishing",
+        "Option B": "DDoS",
+        "Option C": "SQL Injection",
+        "Option D": "Malware",
+        "Correct Option": "A",
+        "Explanation": "Phishing is a social engineering attack that tricks users into revealing sensitive information."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which device is often used as the central point of connectivity in a small office network?",
+        "Option A": "Router",
+        "Option B": "Hub",
+        "Option C": "Repeater",
+        "Option D": "Bridge",
+        "Correct Option": "A",
+        "Explanation": "Routers typically serve as the central device in small office networks, connecting local devices to the Internet."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What does the OSI model stand for?",
+        "Option A": "Open Systems Interconnection",
+        "Option B": "Operational Systems Internet",
+        "Option C": "Optical Signal Integration",
+        "Option D": "Online Systems Interchange",
+        "Correct Option": "A",
+        "Explanation": "The OSI model stands for Open Systems Interconnection, a framework for network protocols."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which layer of the OSI model is responsible for routing and forwarding packets?",
+        "Option A": "Physical",
+        "Option B": "Data Link",
+        "Option C": "Network",
+        "Option D": "Transport",
+        "Correct Option": "C",
+        "Explanation": "The Network layer is responsible for routing and forwarding packets based on logical addressing."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the function of a network analyzer?",
+        "Option A": "To capture and analyze network traffic",
+        "Option B": "To assign IP addresses dynamically",
+        "Option C": "To encrypt network data",
+        "Option D": "To connect devices wirelessly",
+        "Correct Option": "A",
+        "Explanation": "Network analyzers capture and inspect network packets to diagnose issues and monitor traffic."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which of the following is an example of a denial-of-service (DoS) attack?",
+        "Option A": "Overloading a server with traffic to make it unavailable",
+        "Option B": "Encrypting data to protect it from hackers",
+        "Option C": "Using a firewall to block malicious traffic",
+        "Option D": "Updating software to fix vulnerabilities",
+        "Correct Option": "A",
+        "Explanation": "A DoS attack overwhelms a server with traffic, rendering it unavailable to legitimate users."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What does the term \"\"spoofing\"\" refer to in network security?",
+        "Option A": "Falsifying data to masquerade as a trusted source",
+        "Option B": "Encrypting data to secure it from hackers",
+        "Option C": "Fragmenting packets for efficient transmission",
+        "Option D": "Scanning networks for vulnerabilities",
+        "Correct Option": "A",
+        "Explanation": "Spoofing involves impersonating a trusted device or user to gain unauthorized access."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which of the following best describes a wireless mesh network?",
+        "Option A": "A network where each node cooperatively relays data for the network",
+        "Option B": "A network with a single central hub",
+        "Option C": "A network limited to wired connections",
+        "Option D": "A network that uses only satellite links",
+        "Correct Option": "A",
+        "Explanation": "In a mesh network, nodes interconnect to relay data, providing redundancy and reliability."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the purpose of Quality of Service (QoS) in a network?",
+        "Option A": "To prioritize certain types of traffic to ensure optimal performance",
+        "Option B": "To increase overall network bandwidth",
+        "Option C": "To encrypt sensitive data transmissions",
+        "Option D": "To assign IP addresses to devices automatically",
+        "Correct Option": "A",
+        "Explanation": "QoS prioritizes traffic to ensure that critical applications receive the necessary bandwidth."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which protocol is commonly used for remote desktop connections?",
+        "Option A": "RDP",
+        "Option B": "HTTP",
+        "Option C": "FTP",
+        "Option D": "SMTP",
+        "Correct Option": "A",
+        "Explanation": "RDP (Remote Desktop Protocol) is used for connecting remotely to another computer’s desktop."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the primary function of a gateway?",
+        "Option A": "To connect networks that use different protocols",
+        "Option B": "To switch packets within a LAN",
+        "Option C": "To amplify wireless signals",
+        "Option D": "To assign dynamic IP addresses",
+        "Correct Option": "A",
+        "Explanation": "A gateway connects networks that use different protocols, enabling communication between them."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which security measure helps protect against unauthorized remote access?",
+        "Option A": "Two-factor authentication",
+        "Option B": "Disk defragmentation",
+        "Option C": "Data compression",
+        "Option D": "VLAN segmentation",
+        "Correct Option": "A",
+        "Explanation": "Two-factor authentication adds an extra layer of security for remote access."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What does network segmentation help achieve?",
+        "Option A": "Improved performance and enhanced security by dividing a network into smaller parts",
+        "Option B": "Increased wireless range",
+        "Option C": "Faster data encryption",
+        "Option D": "Automatic IP address assignment",
+        "Correct Option": "A",
+        "Explanation": "Network segmentation divides a network into segments to improve performance and security."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which practice involves analyzing network traffic to detect anomalies that might indicate an attack?",
+        "Option A": "Network monitoring",
+        "Option B": "Port forwarding",
+        "Option C": "IP spoofing",
+        "Option D": "DNS tunneling",
+        "Correct Option": "A",
+        "Explanation": "Network monitoring involves continuously analyzing traffic to detect potential security breaches."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

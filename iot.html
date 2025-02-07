@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What does IoT stand for?",
+        "Option A": "Internet of Things",
+        "Option B": "International of Technology",
+        "Option C": "Integrated of Things",
+        "Option D": "Internet of Technology",
+        "Correct Option": "A",
+        "Explanation": "IoT stands for Internet of Things, referring to the network of interconnected physical devices."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following best describes IoT?",
+        "Option A": "A network of interconnected devices that communicate and exchange data",
+        "Option B": "A social media network for sharing photos",
+        "Option C": "A type of cloud computing service",
+        "Option D": "A programming language for web development",
+        "Correct Option": "A",
+        "Explanation": "IoT is a network of physical objects embedded with sensors, software, and connectivity."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which component is essential for an IoT device to collect data from its environment?",
+        "Option A": "Sensor",
+        "Option B": "Actuator",
+        "Option C": "Display",
+        "Option D": "Battery",
+        "Correct Option": "A",
+        "Explanation": "Sensors are used to detect and measure physical properties like temperature or motion."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is the primary function of an actuator in IoT systems?",
+        "Option A": "To perform physical actions based on commands",
+        "Option B": "To sense environmental data",
+        "Option C": "To store data locally",
+        "Option D": "To provide network connectivity",
+        "Correct Option": "A",
+        "Explanation": "Actuators convert electrical signals into physical actions (e.g., opening a valve)."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which protocol is designed for low-power, short-range wireless communication in IoT?",
+        "Option A": "Zigbee",
+        "Option B": "FTP",
+        "Option C": "HTTP",
+        "Option D": "SMTP",
+        "Correct Option": "A",
+        "Explanation": "Zigbee is a low-power, wireless mesh networking standard ideal for IoT devices."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is Bluetooth Low Energy (BLE) primarily used for in IoT?",
+        "Option A": "Short-range communication with minimal power consumption",
+        "Option B": "High-speed data transfer over long distances",
+        "Option C": "Wired network connections",
+        "Option D": "Video streaming",
+        "Correct Option": "A",
+        "Explanation": "BLE is designed for short-range wireless communication with low energy requirements."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which device typically acts as a bridge between IoT sensors and the cloud?",
+        "Option A": "Gateway",
+        "Option B": "Printer",
+        "Option C": "Monitor",
+        "Option D": "Keyboard",
+        "Correct Option": "A",
+        "Explanation": "A gateway aggregates data from IoT devices and transmits it to cloud platforms for processing."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which term describes processing data near the source rather than sending it all to a central cloud?",
+        "Option A": "Edge computing",
+        "Option B": "Cloud computing",
+        "Option C": "Fog computing",
+        "Option D": "On-premises computing",
+        "Correct Option": "A",
+        "Explanation": "Edge computing processes data at or near the data source, reducing latency."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is one key advantage of using edge computing in IoT?",
+        "Option A": "Reduced latency and bandwidth usage",
+        "Option B": "Increased central server load",
+        "Option C": "Higher data transmission costs",
+        "Option D": "More complex hardware requirements",
+        "Correct Option": "A",
+        "Explanation": "Edge computing reduces the need to send all data to the cloud, lowering latency and bandwidth use."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which layer in a typical IoT architecture is responsible for sensing and data collection?",
+        "Option A": "Perception layer",
+        "Option B": "Network layer",
+        "Option C": "Application layer",
+        "Option D": "Middleware layer",
+        "Correct Option": "A",
+        "Explanation": "The perception layer is where sensors and actuators collect and interact with physical data."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which of the following is an example of an IoT application in smart homes?",
+        "Option A": "Smart thermostats",
+        "Option B": "Desktop publishing software",
+        "Option C": "Traditional wired telephones",
+        "Option D": "Physical newspapers",
+        "Correct Option": "A",
+        "Explanation": "Smart thermostats use IoT technology to automatically control home heating and cooling."
+    },
+    {
+        "Q.No": "12",
+        "Question": "In healthcare, IoT devices are often used for:",
+        "Option A": "Remote patient monitoring",
+        "Option B": "Manual record-keeping",
+        "Option C": "Traditional X-rays only",
+        "Option D": "In-person consultations exclusively",
+        "Correct Option": "A",
+        "Explanation": "IoT devices in healthcare enable remote monitoring of vital signs and patient conditions."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which industry benefits from IoT-based predictive maintenance?",
+        "Option A": "Manufacturing",
+        "Option B": "Fashion",
+        "Option C": "Education",
+        "Option D": "Entertainment",
+        "Correct Option": "A",
+        "Explanation": "Manufacturing uses IoT sensors to predict equipment failures and schedule maintenance."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is a wearable IoT device?",
+        "Option A": "A device worn on the body that collects data, such as a fitness tracker",
+        "Option B": "A stationary home appliance",
+        "Option C": "A desktop computer accessory",
+        "Option D": "A traditional analog clock",
+        "Correct Option": "A",
+        "Explanation": "Wearable IoT devices like fitness trackers monitor health and activity data."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which IoT application is commonly used in smart cities?",
+        "Option A": "Traffic management systems",
+        "Option B": "Print media production",
+        "Option C": "Manual water billing",
+        "Option D": "Offline telephone networks",
+        "Correct Option": "A",
+        "Explanation": "Smart city applications often include IoT-based traffic management to optimize urban flow."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which sensor is used to measure ambient temperature in IoT devices?",
+        "Option A": "Thermistor",
+        "Option B": "Accelerometer",
+        "Option C": "Gyroscope",
+        "Option D": "Proximity sensor",
+        "Correct Option": "A",
+        "Explanation": "Thermistors are commonly used to measure temperature in various IoT applications."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which sensor in IoT devices is typically used for motion detection?",
+        "Option A": "Accelerometer",
+        "Option B": "Barometer",
+        "Option C": "Light sensor",
+        "Option D": "Humidity sensor",
+        "Correct Option": "A",
+        "Explanation": "Accelerometers detect motion and orientation, making them key components in many IoT devices."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What does a smart meter in IoT do?",
+        "Option A": "Monitors and reports energy consumption",
+        "Option B": "Displays television channels",
+        "Option C": "Processes web transactions",
+        "Option D": "Provides GPS navigation",
+        "Correct Option": "A",
+        "Explanation": "Smart meters collect and transmit energy usage data to utility companies."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which communication protocol is often used for IoT in industrial applications?",
+        "Option A": "MQTT",
+        "Option B": "SMTP",
+        "Option C": "POP3",
+        "Option D": "IMAP",
+        "Correct Option": "A",
+        "Explanation": "MQTT is a lightweight messaging protocol designed for constrained networks, ideal for industrial IoT."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is Narrowband IoT (NB-IoT) primarily used for?",
+        "Option A": "Low-power, wide-area network connectivity for IoT devices",
+        "Option B": "High-speed video streaming",
+        "Option C": "Local area network connectivity",
+        "Option D": "Direct fiber-optic connections",
+        "Correct Option": "A",
+        "Explanation": "NB-IoT is designed for long-range communications with low power consumption in IoT applications."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which of the following best describes a smart city IoT application?",
+        "Option A": "Systems that optimize urban services like lighting and waste management",
+        "Option B": "Traditional postal services",
+        "Option C": "Manual traffic control",
+        "Option D": "Paper-based utility billing",
+        "Correct Option": "A",
+        "Explanation": "Smart city IoT applications improve efficiency in urban services using connected devices."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What role does cloud computing play in IoT?",
+        "Option A": "It provides scalable storage and processing for large amounts of sensor data",
+        "Option B": "It replaces the need for sensors",
+        "Option C": "It eliminates all security concerns",
+        "Option D": "It is used only for backup purposes",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing handles the vast data generated by IoT devices, enabling analysis and storage."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which is a common challenge when deploying IoT solutions?",
+        "Option A": "Ensuring interoperability among diverse devices",
+        "Option B": "Guaranteeing all devices are identical",
+        "Option C": "Avoiding any data collection",
+        "Option D": "Eliminating the need for wireless networks",
+        "Correct Option": "A",
+        "Explanation": "Interoperability is a major challenge due to the diversity of devices and communication protocols."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is a major security risk associated with IoT devices?",
+        "Option A": "Default credentials and lack of firmware updates",
+        "Option B": "Excessively powerful encryption",
+        "Option C": "Overly complex hardware designs",
+        "Option D": "Too many integrated security features",
+        "Correct Option": "A",
+        "Explanation": "Many IoT devices use default credentials and rarely update firmware, leaving them vulnerable."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What does 'end-to-end encryption' in IoT ensure?",
+        "Option A": "Data is encrypted from the device to the cloud and vice versa",
+        "Option B": "Only the cloud data is encrypted",
+        "Option C": "Only the device data is encrypted",
+        "Option D": "Encryption is applied only during storage",
+        "Correct Option": "A",
+        "Explanation": "End-to-end encryption secures data throughout its journey from the device to the final destination."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which method is commonly used to secure IoT devices?",
+        "Option A": "Regular firmware updates and strong authentication",
+        "Option B": "Using default passwords",
+        "Option C": "Disabling encryption to save power",
+        "Option D": "Avoiding network connectivity",
+        "Correct Option": "A",
+        "Explanation": "Regular updates and robust authentication practices help secure IoT devices against attacks."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the significance of a digital certificate in IoT security?",
+        "Option A": "It verifies the identity of a device and secures communications",
+        "Option B": "It increases device battery life",
+        "Option C": "It stores sensor data locally",
+        "Option D": "It optimizes device performance",
+        "Correct Option": "A",
+        "Explanation": "Digital certificates authenticate devices and enable secure communications in IoT environments."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which term describes the unauthorized interception of IoT device communications?",
+        "Option A": "Eavesdropping",
+        "Option B": "Overclocking",
+        "Option C": "Load balancing",
+        "Option D": "Data aggregation",
+        "Correct Option": "A",
+        "Explanation": "Eavesdropping is the unauthorized listening or interception of communications between IoT devices."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is a common attack vector for IoT devices?",
+        "Option A": "Exploiting weak or default passwords",
+        "Option B": "Overloading the device with legitimate requests",
+        "Option C": "Upgrading firmware regularly",
+        "Option D": "Using encryption algorithms",
+        "Correct Option": "A",
+        "Explanation": "Attackers often exploit weak or unchanged default passwords to compromise IoT devices."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following best describes the concept of \"\"device heterogeneity\"\" in IoT?",
+        "Option A": "The use of a diverse range of devices with varying capabilities in a network",
+        "Option B": "All devices in the network are identical",
+        "Option C": "Devices are limited to one manufacturer",
+        "Option D": "Devices are physically connected by cables only",
+        "Correct Option": "A",
+        "Explanation": "Device heterogeneity means an IoT ecosystem comprises various devices with different specifications and protocols."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is the purpose of an IoT management platform?",
+        "Option A": "To monitor, update, and manage a fleet of IoT devices remotely",
+        "Option B": "To manufacture IoT sensors",
+        "Option C": "To design websites",
+        "Option D": "To develop mobile apps only",
+        "Correct Option": "A",
+        "Explanation": "IoT management platforms provide centralized tools for monitoring, updating, and managing devices."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which IoT application is commonly used in agriculture?",
+        "Option A": "Precision farming with soil and moisture sensors",
+        "Option B": "Traditional plowing techniques",
+        "Option C": "Manual crop counting",
+        "Option D": "Paper-based irrigation scheduling",
+        "Correct Option": "A",
+        "Explanation": "Precision farming uses IoT sensors to optimize irrigation and monitor crop conditions."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What does \"\"latency\"\" refer to in IoT communications?",
+        "Option A": "The time delay between sending and receiving data",
+        "Option B": "The total data throughput",
+        "Option C": "The power consumption of a device",
+        "Option D": "The cost of connectivity",
+        "Correct Option": "A",
+        "Explanation": "Latency is the time delay experienced in the communication process between devices."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which connectivity option is best for devices that require long battery life and infrequent data transmission?",
+        "Option A": "LPWAN (Low-Power Wide-Area Network)",
+        "Option B": "Wi-Fi",
+        "Option C": "Bluetooth Classic",
+        "Option D": "Ethernet",
+        "Correct Option": "A",
+        "Explanation": "LPWAN technologies are designed for long battery life and infrequent, low-data-rate communication."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is an example of a smart wearable IoT device?",
+        "Option A": "A fitness tracker monitoring physical activity",
+        "Option B": "A traditional wristwatch without connectivity",
+        "Option C": "A desktop computer peripheral",
+        "Option D": "A wired landline phone",
+        "Correct Option": "A",
+        "Explanation": "Fitness trackers are wearable IoT devices that monitor health metrics and activity levels."
+    },
+    {
+        "Q.No": "36",
+        "Question": "How do IoT devices typically share data with cloud platforms?",
+        "Option A": "Through wireless communication protocols such as Wi-Fi, cellular, or LPWAN",
+        "Option B": "By manual data entry only",
+        "Option C": "Using analog signals over telephone lines",
+        "Option D": "By physical data transfer via USB exclusively",
+        "Correct Option": "A",
+        "Explanation": "IoT devices use wireless protocols to send data to cloud platforms for processing."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which term describes the method of processing data at or near the source in an IoT system?",
+        "Option A": "Edge computing",
+        "Option B": "Cloud computing",
+        "Option C": "Mainframe computing",
+        "Option D": "Distributed computing",
+        "Correct Option": "A",
+        "Explanation": "Edge computing processes data close to the source, reducing latency and bandwidth usage."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is the main advantage of using a mesh network topology in IoT?",
+        "Option A": "Increased network resilience and self-healing capabilities",
+        "Option B": "Simplified wired connections",
+        "Option C": "Reduced energy consumption compared to star topology",
+        "Option D": "Mandatory central coordination",
+        "Correct Option": "A",
+        "Explanation": "Mesh networks allow devices to relay data through multiple paths, enhancing network reliability."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which industry uses IoT for smart logistics and supply chain management?",
+        "Option A": "Transportation and logistics",
+        "Option B": "Fashion design",
+        "Option C": "Book publishing",
+        "Option D": "Traditional agriculture exclusively",
+        "Correct Option": "A",
+        "Explanation": "IoT is used in logistics to track shipments, optimize routes, and manage inventory in real time."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What does \"\"data aggregation\"\" mean in the context of IoT?",
+        "Option A": "Combining data from multiple devices to generate a comprehensive view",
+        "Option B": "Separating data into individual, isolated streams",
+        "Option C": "Discarding duplicate sensor data without processing",
+        "Option D": "Encrypting data for secure transmission only",
+        "Correct Option": "A",
+        "Explanation": "Data aggregation involves collecting and combining data from various sources for analysis."
+    },
+    {
+        "Q.No": "41",
+        "Question": "Which IoT application is most common in the energy sector?",
+        "Option A": "Smart grid technologies that monitor and control electricity usage",
+        "Option B": "Manual energy meter reading",
+        "Option C": "Traditional power plant control without automation",
+        "Option D": "Paper-based billing systems",
+        "Correct Option": "A",
+        "Explanation": "IoT in the energy sector enables smart grids that monitor usage and optimize energy distribution."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is a digital twin in IoT?",
+        "Option A": "A virtual model that simulates the behavior of a physical object or system",
+        "Option B": "A duplicate physical sensor installed in a separate location",
+        "Option C": "A backup device used for redundancy",
+        "Option D": "A method of data encryption",
+        "Correct Option": "A",
+        "Explanation": "A digital twin is a virtual replica used for simulation, analysis, and monitoring of real-world systems."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which of the following best describes \"\"ubiquitous computing\"\" in IoT?",
+        "Option A": "Embedding computing capability into everyday objects to enable pervasive connectivity",
+        "Option B": "Limiting computing to desktop systems only",
+        "Option C": "Centralizing all computing resources in one location",
+        "Option D": "Isolating computing to data centers exclusively",
+        "Correct Option": "A",
+        "Explanation": "Ubiquitous computing integrates computing into everyday objects, making technology available everywhere."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which IoT technology is particularly suited for environmental monitoring in remote areas?",
+        "Option A": "Satellite communication combined with low-power sensors",
+        "Option B": "High-speed fiber-optic cables",
+        "Option C": "Bluetooth connectivity exclusively",
+        "Option D": "Wired Ethernet connections",
+        "Correct Option": "A",
+        "Explanation": "Satellite communication paired with low-power sensors can monitor remote areas where terrestrial networks are unavailable."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is the primary purpose of an IoT sensor node?",
+        "Option A": "To collect and transmit data from its environment",
+        "Option B": "To provide user interfaces for applications",
+        "Option C": "To serve as a centralized data storage unit",
+        "Option D": "To run full-scale web applications",
+        "Correct Option": "A",
+        "Explanation": "IoT sensor nodes gather data (e.g., temperature, motion) and transmit it for processing."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which IoT application can improve urban transportation systems?",
+        "Option A": "Real-time traffic monitoring and smart signaling systems",
+        "Option B": "Traditional paper maps",
+        "Option C": "Manual traffic police management only",
+        "Option D": "Physical road maintenance without sensors",
+        "Correct Option": "A",
+        "Explanation": "IoT-based traffic monitoring systems help manage and optimize urban transportation."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is one key benefit of IoT in industrial settings?",
+        "Option A": "Predictive maintenance through continuous equipment monitoring",
+        "Option B": "Increased manual labor for maintenance tasks",
+        "Option C": "Higher operational costs with no efficiency gains",
+        "Option D": "Reduced data collection capabilities",
+        "Correct Option": "A",
+        "Explanation": "IoT sensors enable predictive maintenance by continuously monitoring equipment conditions."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which of the following is a challenge specific to IoT security?",
+        "Option A": "Securing resource-constrained devices that cannot run robust security software",
+        "Option B": "Overabundance of processing power for security tasks",
+        "Option C": "Excessively high data encryption that slows down networks",
+        "Option D": "Complete immunity to cyberattacks due to physical isolation",
+        "Correct Option": "A",
+        "Explanation": "Many IoT devices have limited resources, making it difficult to implement strong security measures."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is the risk of using default credentials in IoT devices?",
+        "Option A": "They can be easily exploited by attackers, compromising the device and network",
+        "Option B": "They provide robust security out of the box",
+        "Option C": "They prevent any unauthorized access automatically",
+        "Option D": "They encrypt the device’s data by default",
+        "Correct Option": "A",
+        "Explanation": "Default credentials are a common vulnerability that attackers can exploit if not changed."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which concept refers to ensuring that IoT devices use secure methods for data transmission?",
+        "Option A": "Secure communication protocols",
+        "Option B": "Open data sharing policies",
+        "Option C": "Manual configuration of network settings",
+        "Option D": "Disabling wireless features",
+        "Correct Option": "A",
+        "Explanation": "Secure communication protocols (e.g., TLS, DTLS) help ensure that data transmitted by IoT devices is protected."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the function of an IoT hub?",
+        "Option A": "To aggregate data from multiple IoT devices and forward it to the cloud or other systems",
+        "Option B": "To manufacture sensors",
+        "Option C": "To act as a standalone processing unit without connectivity",
+        "Option D": "To display real-time data on local screens only",
+        "Correct Option": "A",
+        "Explanation": "An IoT hub collects data from connected devices and facilitates its transmission to centralized systems."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which challenge is related to the scalability of IoT systems?",
+        "Option A": "Handling massive volumes of data generated by countless devices",
+        "Option B": "Limited device connectivity in small networks",
+        "Option C": "Reduced battery life in single devices only",
+        "Option D": "Increased manual monitoring requirements exclusively",
+        "Correct Option": "A",
+        "Explanation": "Scaling IoT systems involves managing and processing large amounts of data from many devices."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What does \"\"interoperability\"\" mean in IoT?",
+        "Option A": "The ability of different IoT devices and systems to work together seamlessly",
+        "Option B": "The exclusive use of a single device type in a network",
+        "Option C": "The isolation of IoT devices from one another",
+        "Option D": "The inability to communicate between different vendors' devices",
+        "Correct Option": "A",
+        "Explanation": "Interoperability ensures that diverse IoT devices can communicate and function together effectively."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which of the following is a common use of IoT in retail?",
+        "Option A": "Inventory management and customer behavior analysis through sensor data",
+        "Option B": "Manual cash register operations",
+        "Option C": "Traditional paper-based stocktaking",
+        "Option D": "In-person customer service only",
+        "Correct Option": "A",
+        "Explanation": "IoT enables real-time inventory tracking and analysis of customer interactions in retail settings."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What does \"\"firmware\"\" in IoT devices refer to?",
+        "Option A": "The low-level software programmed into hardware that controls its functions",
+        "Option B": "The user interface of an IoT application",
+        "Option C": "Cloud-based software used to manage devices",
+        "Option D": "Data stored in the cloud for analytics",
+        "Correct Option": "A",
+        "Explanation": "Firmware is embedded software that directly controls the device’s hardware functions."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Why is regular firmware updating critical in IoT devices?",
+        "Option A": "It helps patch vulnerabilities and enhance device security",
+        "Option B": "It increases the physical size of the device",
+        "Option C": "It slows down device performance deliberately",
+        "Option D": "It is not critical at all",
+        "Correct Option": "A",
+        "Explanation": "Updating firmware fixes security vulnerabilities and improves device performance."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is the purpose of using encryption in IoT communications?",
+        "Option A": "To protect data from unauthorized access during transmission",
+        "Option B": "To slow down the data transfer process",
+        "Option C": "To increase battery consumption",
+        "Option D": "To remove data redundancy",
+        "Correct Option": "A",
+        "Explanation": "Encryption secures data transmitted between IoT devices and networks by making it unreadable to unauthorized parties."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which factor contributes to the security challenge in IoT due to device diversity?",
+        "Option A": "Device heterogeneity, where many different devices with varying security standards are connected",
+        "Option B": "Uniform security protocols across all devices",
+        "Option C": "Standardized hardware in all IoT devices",
+        "Option D": "Centralized control over every device",
+        "Correct Option": "A",
+        "Explanation": "The diversity in hardware and software across IoT devices makes it challenging to implement uniform security measures."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is a common method to protect IoT data stored on a device?",
+        "Option A": "Encrypting the data at rest",
+        "Option B": "Leaving the data unencrypted",
+        "Option C": "Sharing the data publicly for transparency",
+        "Option D": "Disabling all encryption to speed up access",
+        "Correct Option": "A",
+        "Explanation": "Encrypting data at rest protects stored information from unauthorized access if the device is compromised."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What does \"\"physical security\"\" mean in the context of IoT?",
+        "Option A": "Protecting the devices from tampering or theft through secure hardware design and controlled access",
+        "Option B": "Only using digital firewalls",
+        "Option C": "Encrypting all transmitted data",
+        "Option D": "Automatically updating software remotely",
+        "Correct Option": "A",
+        "Explanation": "Physical security involves safeguarding the actual hardware components of IoT devices."
+    },
+    {
+        "Q.No": "61",
+        "Question": "Which IoT application is used in smart agriculture?",
+        "Option A": "Automated irrigation systems based on soil moisture sensor data",
+        "Option B": "Traditional manual plowing methods",
+        "Option C": "Paper-based crop monitoring",
+        "Option D": "Analog weather forecasting",
+        "Correct Option": "A",
+        "Explanation": "IoT in agriculture uses sensor data to automate processes like irrigation, optimizing water usage."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is a \"\"smart appliance\"\" in IoT?",
+        "Option A": "A household device with embedded connectivity and automation features",
+        "Option B": "A regular appliance with no connectivity",
+        "Option C": "A device used only for industrial purposes",
+        "Option D": "A manual kitchen tool",
+        "Correct Option": "A",
+        "Explanation": "Smart appliances are household devices that can connect to the Internet and be controlled remotely."
+    },
+    {
+        "Q.No": "63",
+        "Question": "How does IoT improve energy efficiency in buildings?",
+        "Option A": "Through smart sensors and automated controls for lighting and HVAC systems",
+        "Option B": "By using only traditional switches",
+        "Option C": "By increasing manual intervention in energy management",
+        "Option D": "By disabling remote access to devices",
+        "Correct Option": "A",
+        "Explanation": "IoT systems can automatically adjust lighting, heating, and cooling to optimize energy consumption."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which type of IoT device is typically used for asset tracking?",
+        "Option A": "RFID tags or GPS-enabled devices",
+        "Option B": "Traditional barcodes only",
+        "Option C": "Manual logs maintained by employees",
+        "Option D": "Static signage with no connectivity",
+        "Correct Option": "A",
+        "Explanation": "RFID and GPS-enabled devices are commonly used in IoT for real-time asset tracking."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the primary function of IoT analytics?",
+        "Option A": "To process and analyze data collected from IoT devices for actionable insights",
+        "Option B": "To increase the data storage size",
+        "Option C": "To convert analog signals to digital format",
+        "Option D": "To serve as a replacement for cloud computing",
+        "Correct Option": "A",
+        "Explanation": "IoT analytics extracts valuable insights from sensor data to inform decisions and optimize processes."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which factor is crucial for ensuring reliable connectivity in IoT systems?",
+        "Option A": "Robust network infrastructure and protocol support",
+        "Option B": "Using only wired connections",
+        "Option C": "Disabling all wireless features",
+        "Option D": "Relying solely on Bluetooth for long distances",
+        "Correct Option": "A",
+        "Explanation": "A robust network infrastructure ensures consistent connectivity for IoT devices."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the significance of \"\"battery life\"\" in IoT devices?",
+        "Option A": "Long battery life ensures that devices can operate for extended periods without frequent recharging",
+        "Option B": "It is not important in IoT devices",
+        "Option C": "It only matters for devices connected to power outlets",
+        "Option D": "It determines the device's processing speed",
+        "Correct Option": "A",
+        "Explanation": "Many IoT devices are battery-powered, so efficient power usage is critical for prolonged operation."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which application of IoT is prevalent in smart transportation?",
+        "Option A": "Vehicle tracking and fleet management systems",
+        "Option B": "Traditional paper maps",
+        "Option C": "Manual toll collection",
+        "Option D": "Analog radio communication",
+        "Correct Option": "A",
+        "Explanation": "IoT enables real-time tracking and management of vehicles in transportation systems."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What does \"\"remote monitoring\"\" in IoT allow organizations to do?",
+        "Option A": "Continuously observe and manage devices and systems from a distance",
+        "Option B": "Physically inspect each device regularly",
+        "Option C": "Manually input data into every device",
+        "Option D": "Rely solely on on-site personnel",
+        "Correct Option": "A",
+        "Explanation": "Remote monitoring allows organizations to oversee IoT devices and systems without being physically present."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the purpose of using secure boot in IoT devices?",
+        "Option A": "To ensure that only trusted software is executed during the device startup process",
+        "Option B": "To speed up the boot process only",
+        "Option C": "To disable the operating system",
+        "Option D": "To allow any software to run without restrictions",
+        "Correct Option": "A",
+        "Explanation": "Secure boot ensures that devices start only with verified and trusted software, protecting against tampering."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which challenge in IoT security is exacerbated by the scale of deployments?",
+        "Option A": "The increased attack surface due to millions of connected devices",
+        "Option B": "The abundance of computational power in each device",
+        "Option C": "The reduced need for encryption",
+        "Option D": "The uniformity of device hardware",
+        "Correct Option": "A",
+        "Explanation": "A large number of devices increases the potential vulnerabilities, creating a broader attack surface."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What does \"\"firmware integrity\"\" ensure in an IoT device?",
+        "Option A": "That the firmware has not been tampered with and is authentic",
+        "Option B": "That the device is physically secure",
+        "Option C": "That the device has unlimited storage",
+        "Option D": "That the sensor data is unencrypted",
+        "Correct Option": "A",
+        "Explanation": "Ensuring firmware integrity means verifying that the device’s firmware is genuine and unaltered."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which method is used to detect anomalies in IoT data?",
+        "Option A": "Machine learning-based anomaly detection",
+        "Option B": "Manual data entry checks only",
+        "Option C": "Ignoring outlier values completely",
+        "Option D": "Increasing sensor sensitivity arbitrarily",
+        "Correct Option": "A",
+        "Explanation": "Machine learning techniques can identify unusual patterns in IoT data, signaling potential issues."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is \"\"context awareness\"\" in IoT?",
+        "Option A": "The ability of devices to sense and respond based on environmental and situational data",
+        "Option B": "Devices operating without any sensors",
+        "Option C": "Preprogrammed static responses only",
+        "Option D": "Ignoring environmental factors",
+        "Correct Option": "A",
+        "Explanation": "Context awareness allows IoT devices to adjust their behavior based on real-world conditions."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which IoT application is used for smart parking systems?",
+        "Option A": "Sensors and cameras that monitor parking space availability",
+        "Option B": "Traditional ticket dispensers only",
+        "Option C": "Manual parking attendants exclusively",
+        "Option D": "Paper-based parking logs",
+        "Correct Option": "A",
+        "Explanation": "Smart parking systems use IoT sensors and cameras to monitor and manage parking space usage in real time."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the role of cloud platforms in IoT solutions?",
+        "Option A": "To store and analyze the vast amounts of data generated by IoT devices",
+        "Option B": "To replace IoT devices with virtual ones",
+        "Option C": "To ensure that no data is transmitted over the network",
+        "Option D": "To eliminate the need for device management",
+        "Correct Option": "A",
+        "Explanation": "Cloud platforms provide scalable storage and powerful analytics for processing IoT data."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which communication model is commonly used for IoT messaging?",
+        "Option A": "Publish/Subscribe",
+        "Option B": "Client/Server exclusively",
+        "Option C": "Peer-to-peer only",
+        "Option D": "Broadcast-only",
+        "Correct Option": "A",
+        "Explanation": "The publish/subscribe model decouples message producers and consumers, making it ideal for IoT."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What does \"\"OTA update\"\" mean in the context of IoT?",
+        "Option A": "Over-The-Air update, which allows remote firmware upgrades",
+        "Option B": "Over-Time Analysis update",
+        "Option C": "On-The-Account update",
+        "Option D": "Offline Transfer Automation update",
+        "Correct Option": "A",
+        "Explanation": "OTA updates enable remote, wireless updating of device firmware and software."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which aspect of IoT raises significant privacy concerns?",
+        "Option A": "The continuous collection and transmission of personal data",
+        "Option B": "The exclusive use of anonymous data",
+        "Option C": "The limited connectivity of devices",
+        "Option D": "The absence of any data sharing",
+        "Correct Option": "A",
+        "Explanation": "Continuous data collection by IoT devices can infringe on user privacy if not properly managed."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is a common security measure for protecting IoT data in transit?",
+        "Option A": "Encrypting data using protocols like TLS or DTLS",
+        "Option B": "Transmitting data in plaintext",
+        "Option C": "Relying on physical isolation alone",
+        "Option D": "Disabling data transmission entirely",
+        "Correct Option": "A",
+        "Explanation": "Encrypting data in transit is critical for protecting IoT communications from interception."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which technology is often used to extend the battery life of IoT devices?",
+        "Option A": "Low-power communication protocols like BLE and NB-IoT",
+        "Option B": "High-power Wi-Fi standards",
+        "Option C": "Constant GPS tracking",
+        "Option D": "Frequent data transmission without sleep modes",
+        "Correct Option": "A",
+        "Explanation": "Low-power protocols help conserve energy, extending the battery life of IoT devices."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the purpose of a \"\"gateway\"\" in an IoT network?",
+        "Option A": "To aggregate, process, and forward data from edge devices to the cloud",
+        "Option B": "To act as a simple sensor",
+        "Option C": "To provide only power to devices",
+        "Option D": "To serve solely as a display unit",
+        "Correct Option": "A",
+        "Explanation": "Gateways serve as intermediaries, collecting data from devices and transmitting it to cloud services."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which challenge in IoT deployments is related to the diversity of device types and protocols?",
+        "Option A": "Interoperability challenges",
+        "Option B": "Excessive data uniformity",
+        "Option C": "Over-standardization of devices",
+        "Option D": "Complete homogeneity",
+        "Correct Option": "A",
+        "Explanation": "Interoperability is a challenge due to varied hardware, software, and communication protocols among devices."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is meant by \"\"device provisioning\"\" in IoT?",
+        "Option A": "The process of configuring and connecting a new IoT device to a network",
+        "Option B": "Physically manufacturing the device",
+        "Option C": "Encrypting the device's firmware",
+        "Option D": "Decommissioning outdated devices",
+        "Correct Option": "A",
+        "Explanation": "Device provisioning involves setting up and configuring an IoT device so that it can operate securely on the network."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which term describes the secure exchange of cryptographic keys between IoT devices?",
+        "Option A": "Key management",
+        "Option B": "Data aggregation",
+        "Option C": "Signal processing",
+        "Option D": "Device pairing",
+        "Correct Option": "A",
+        "Explanation": "Key management is critical for establishing secure communications between IoT devices."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the impact of insufficient security measures on IoT ecosystems?",
+        "Option A": "Increased vulnerability to cyberattacks and data breaches",
+        "Option B": "Improved device performance",
+        "Option C": "Reduced need for connectivity",
+        "Option D": "Lower maintenance costs",
+        "Correct Option": "A",
+        "Explanation": "Weak security in IoT can lead to successful cyberattacks and compromise sensitive data."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which IoT application is used in smart retail?",
+        "Option A": "In-store asset tracking and customer behavior analysis",
+        "Option B": "Traditional cash registers only",
+        "Option C": "Paper-based inventory management",
+        "Option D": "Manual price tagging exclusively",
+        "Correct Option": "A",
+        "Explanation": "Smart retail utilizes IoT for real-time tracking of inventory and understanding customer patterns."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What does \"\"data integrity\"\" mean in the context of IoT?",
+        "Option A": "Ensuring that data is accurate, consistent, and unaltered during transmission and storage",
+        "Option B": "The complete elimination of data",
+        "Option C": "Random data modification for testing",
+        "Option D": "Limiting data collection to small volumes",
+        "Correct Option": "A",
+        "Explanation": "Data integrity ensures that the information remains correct and unaltered throughout its lifecycle."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which IoT application is common in smart healthcare?",
+        "Option A": "Remote monitoring of patients using wearable sensors",
+        "Option B": "Traditional in-person doctor visits exclusively",
+        "Option C": "Paper-based patient records only",
+        "Option D": "Manual blood pressure monitoring without sensors",
+        "Correct Option": "A",
+        "Explanation": "IoT in healthcare includes wearable devices for continuous, remote patient monitoring."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the role of \"\"context-aware computing\"\" in IoT?",
+        "Option A": "To enable devices to adapt their behavior based on environmental conditions",
+        "Option B": "To ignore external data inputs",
+        "Option C": "To restrict device functionality",
+        "Option D": "To operate devices without sensors",
+        "Correct Option": "A",
+        "Explanation": "Context-aware computing allows IoT devices to adjust operations based on real-time environmental data."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which of the following best describes a \"\"smart grid\"\"?",
+        "Option A": "An electricity network that uses IoT for real-time monitoring and management",
+        "Option B": "A traditional power grid with no digital control",
+        "Option C": "A grid used only for data centers",
+        "Option D": "A manual system for billing utilities",
+        "Correct Option": "A",
+        "Explanation": "Smart grids use IoT to optimize electricity distribution and monitor energy consumption."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What does \"\"device interoperability\"\" ensure in an IoT ecosystem?",
+        "Option A": "That devices from different manufacturers can communicate and work together",
+        "Option B": "That only devices from the same vendor can connect",
+        "Option C": "That devices operate in isolation",
+        "Option D": "That each device uses a proprietary protocol exclusively",
+        "Correct Option": "A",
+        "Explanation": "Interoperability allows diverse IoT devices to share data and function collectively."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which security mechanism is critical for ensuring that only authorized devices join an IoT network?",
+        "Option A": "Mutual authentication",
+        "Option B": "Open network access",
+        "Option C": "Default credentials",
+        "Option D": "Unencrypted communication",
+        "Correct Option": "A",
+        "Explanation": "Mutual authentication ensures that both the device and the network verify each other’s identity before communication."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is \"\"lightweight cryptography\"\" in IoT?",
+        "Option A": "Encryption algorithms designed to operate on resource-constrained devices",
+        "Option B": "Traditional encryption methods used for desktop computers",
+        "Option C": "A non-encryption method for IoT",
+        "Option D": "A technique to reduce network latency",
+        "Correct Option": "A",
+        "Explanation": "Lightweight cryptography is optimized for devices with limited processing power and memory."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What does \"\"over-the-air (OTA) update\"\" mean for IoT devices?",
+        "Option A": "Updating device firmware remotely via wireless communication",
+        "Option B": "Manually updating devices using a USB connection",
+        "Option C": "Installing updates from physical media",
+        "Option D": "Using local technicians to update devices",
+        "Correct Option": "A",
+        "Explanation": "OTA updates allow firmware and software to be updated remotely, which is essential for IoT device maintenance."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which of the following is an IoT application in the transportation sector?",
+        "Option A": "Fleet management systems that monitor vehicle location and performance",
+        "Option B": "Traditional paper maps for route planning",
+        "Option C": "Manual vehicle maintenance logs",
+        "Option D": "In-person ticket sales only",
+        "Correct Option": "A",
+        "Explanation": "IoT is used in transportation for real-time tracking and management of vehicle fleets."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is \"\"battery management\"\" in IoT devices?",
+        "Option A": "Techniques to monitor and optimize battery usage to extend device life",
+        "Option B": "Disabling power-saving modes to boost performance",
+        "Option C": "Increasing the battery size indefinitely",
+        "Option D": "Removing battery monitoring for simplicity",
+        "Correct Option": "A",
+        "Explanation": "Effective battery management extends device life by optimizing energy use."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which aspect is a primary focus for IoT security frameworks?",
+        "Option A": "Ensuring confidentiality, integrity, and availability of data and devices",
+        "Option B": "Maximizing data exposure for research",
+        "Option C": "Reducing the number of connected devices",
+        "Option D": "Removing encryption protocols",
+        "Correct Option": "A",
+        "Explanation": "Security frameworks aim to protect data and devices by ensuring confidentiality, integrity, and availability (CIA)."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the significance of \"\"real-time monitoring\"\" in IoT?",
+        "Option A": "It enables immediate detection and response to changes in the environment or device status",
+        "Option B": "It delays data processing until the next day",
+        "Option C": "It requires manual data entry at scheduled intervals",
+        "Option D": "It only applies to offline systems",
+        "Correct Option": "A",
+        "Explanation": "Real-time monitoring allows for swift action when changes or anomalies are detected in an IoT system."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which of the following best summarizes the main goal of IoT?",
+        "Option A": "To interconnect physical devices to collect, exchange, and analyze data for improved decision-making",
+        "Option B": "To replace human labor entirely",
+        "Option C": "To increase the complexity of networks without benefits",
+        "Option D": "To limit data flow between devices",
+        "Correct Option": "A",
+        "Explanation": "The primary goal of IoT is to create a connected ecosystem where devices communicate to enhance efficiency and decision-making."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

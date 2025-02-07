@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is cloud computing?",
+        "Option A": "The delivery of computing resources over the Internet on an on-demand basis",
+        "Option B": "The process of storing data on local hard drives",
+        "Option C": "A method of designing websites",
+        "Option D": "A new programming language",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing delivers computing services—servers, storage, databases, networking, software, etc.—over the Internet."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is a key characteristic of cloud computing?",
+        "Option A": "On-demand self-service",
+        "Option B": "Manual resource provisioning",
+        "Option C": "Local hardware dependency",
+        "Option D": "Fixed capacity",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing allows users to provision computing resources as needed without human interaction."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What does 'resource pooling' in cloud computing refer to?",
+        "Option A": "Sharing computing resources among multiple users",
+        "Option B": "Isolating hardware for individual users",
+        "Option C": "Allocating fixed resources per user",
+        "Option D": "Dedicated hardware for each client",
+        "Correct Option": "A",
+        "Explanation": "Resource pooling allows providers to serve multiple customers from the same physical resources."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What does 'rapid elasticity' mean in the context of cloud computing?",
+        "Option A": "The ability to scale resources quickly to meet demand",
+        "Option B": "The slow adjustment of computing resources",
+        "Option C": "The fixed allocation of resources",
+        "Option D": "The inability to scale resources",
+        "Correct Option": "A",
+        "Explanation": "Rapid elasticity allows cloud services to quickly scale up or down based on workload demands."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which deployment model describes cloud services offered to the general public?",
+        "Option A": "Public cloud",
+        "Option B": "Private cloud",
+        "Option C": "Hybrid cloud",
+        "Option D": "Community cloud",
+        "Correct Option": "A",
+        "Explanation": "Public clouds are available to the general public and are typically owned by third-party providers."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is a private cloud?",
+        "Option A": "A cloud infrastructure operated solely for a single organization",
+        "Option B": "A cloud service accessible to everyone",
+        "Option C": "A cloud that offers free services",
+        "Option D": "A type of on-premises software",
+        "Correct Option": "A",
+        "Explanation": "A private cloud is dedicated to one organization, offering greater control and security."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which deployment model combines both public and private clouds?",
+        "Option A": "Hybrid cloud",
+        "Option B": "Community cloud",
+        "Option C": "Distributed cloud",
+        "Option D": "Virtual cloud",
+        "Correct Option": "A",
+        "Explanation": "A hybrid cloud integrates public and private cloud environments to leverage the benefits of both."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What does IaaS stand for?",
+        "Option A": "Infrastructure as a Service",
+        "Option B": "Internet as a Service",
+        "Option C": "Integration as a Service",
+        "Option D": "Information as a Service",
+        "Correct Option": "A",
+        "Explanation": "IaaS provides virtualized computing resources over the Internet, such as virtual machines, storage, and networks."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which of the following is an example of an IaaS offering?",
+        "Option A": "Amazon EC2",
+        "Option B": "Google App Engine",
+        "Option C": "Salesforce",
+        "Option D": "Microsoft Office 365",
+        "Correct Option": "A",
+        "Explanation": "Amazon EC2 is an IaaS service that offers scalable virtual servers."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What does PaaS stand for?",
+        "Option A": "Platform as a Service",
+        "Option B": "Product as a Service",
+        "Option C": "Protocol as a Service",
+        "Option D": "Program as a Service",
+        "Correct Option": "A",
+        "Explanation": "PaaS provides a platform allowing customers to develop, run, and manage applications without dealing with underlying infrastructure."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which service is an example of PaaS?",
+        "Option A": "Google App Engine",
+        "Option B": "Amazon S3",
+        "Option C": "Office 365",
+        "Option D": "Dropbox",
+        "Correct Option": "A",
+        "Explanation": "Google App Engine is a PaaS offering that enables developers to build and deploy applications on Google’s infrastructure."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What does SaaS stand for?",
+        "Option A": "Software as a Service",
+        "Option B": "Storage as a Service",
+        "Option C": "Security as a Service",
+        "Option D": "Server as a Service",
+        "Correct Option": "A",
+        "Explanation": "SaaS delivers complete software applications over the Internet, eliminating the need for local installations."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which of the following is an example of a SaaS application?",
+        "Option A": "Microsoft Office 365",
+        "Option B": "Amazon EC2",
+        "Option C": "Google App Engine",
+        "Option D": "Azure Virtual Machines",
+        "Correct Option": "A",
+        "Explanation": "Microsoft Office 365 is a SaaS offering that provides productivity software over the Internet."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which cloud service model provides the most control over the underlying infrastructure?",
+        "Option A": "IaaS",
+        "Option B": "PaaS",
+        "Option C": "SaaS",
+        "Option D": "None of the above",
+        "Correct Option": "A",
+        "Explanation": "IaaS gives users control over virtualized hardware, enabling them to manage operating systems, storage, and deployed applications."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which cloud service model abstracts the most details from the user?",
+        "Option A": "SaaS",
+        "Option B": "IaaS",
+        "Option C": "PaaS",
+        "Option D": "DaaS",
+        "Correct Option": "A",
+        "Explanation": "SaaS provides fully functional software applications, abstracting all underlying infrastructure details."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What is a key benefit of the pay-as-you-go pricing model?",
+        "Option A": "Users are billed based on actual resource usage, reducing upfront costs",
+        "Option B": "Users pay a fixed fee regardless of usage",
+        "Option C": "It requires long-term contracts",
+        "Option D": "It increases hardware investments",
+        "Correct Option": "A",
+        "Explanation": "Pay-as-you-go pricing ensures that customers only pay for the resources they consume, reducing initial capital expenditure."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is serverless computing?",
+        "Option A": "An execution model where the cloud provider dynamically manages resource allocation and server management",
+        "Option B": "A type of computing with no servers involved",
+        "Option C": "A method of running software on local machines only",
+        "Option D": "A cloud service that eliminates networking",
+        "Correct Option": "A",
+        "Explanation": "Serverless computing abstracts server management, allowing developers to focus solely on writing code."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What does the term 'elastic compute' refer to?",
+        "Option A": "The ability to automatically adjust computing resources based on demand",
+        "Option B": "A fixed allocation of computing resources",
+        "Option C": "A type of network storage",
+        "Option D": "A method of manual resource scaling",
+        "Correct Option": "A",
+        "Explanation": "Elastic compute means that the computing capacity can scale up or down automatically with changing demands."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is the primary purpose of a Virtual Private Cloud (VPC)?",
+        "Option A": "To provide an isolated section of a public cloud for enhanced security and control",
+        "Option B": "To enable sharing of resources among all customers",
+        "Option C": "To allow multiple cloud providers to merge services",
+        "Option D": "To provide public access to all cloud services",
+        "Correct Option": "A",
+        "Explanation": "A VPC creates a logically isolated network within a public cloud, enhancing security and customization."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which term best describes a cloud strategy that uses services from multiple providers?",
+        "Option A": "Multi-cloud",
+        "Option B": "Single-cloud",
+        "Option C": "Hybrid cloud",
+        "Option D": "Private cloud",
+        "Correct Option": "A",
+        "Explanation": "A multi-cloud strategy involves leveraging services from more than one cloud provider to optimize performance and reduce dependency."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which cloud deployment model is shared by multiple organizations with similar requirements?",
+        "Option A": "Community cloud",
+        "Option B": "Public cloud",
+        "Option C": "Private cloud",
+        "Option D": "Hybrid cloud",
+        "Correct Option": "A",
+        "Explanation": "A community cloud is shared among organizations with common concerns, such as security requirements or compliance standards."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is the primary advantage of cloud computing for businesses?",
+        "Option A": "Flexibility and scalability in resource usage",
+        "Option B": "The need to invest heavily in local hardware",
+        "Option C": "Limited geographic reach",
+        "Option D": "Inflexible service options",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing allows businesses to scale resources based on demand and reduces the need for large capital expenditures."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following is a benefit of using cloud platforms?",
+        "Option A": "High availability and disaster recovery options",
+        "Option B": "Increased physical maintenance of hardware",
+        "Option C": "Rigid infrastructure management",
+        "Option D": "Fixed capacity regardless of demand",
+        "Correct Option": "A",
+        "Explanation": "Cloud platforms offer high availability, robust disaster recovery, and the ability to scale resources as needed."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the main advantage of using AWS?",
+        "Option A": "A vast array of services and global infrastructure",
+        "Option B": "Only local service offerings",
+        "Option C": "Limited scalability",
+        "Option D": "Minimal support for developers",
+        "Correct Option": "A",
+        "Explanation": "AWS offers a comprehensive suite of services and a global network of data centers, making it highly scalable and reliable."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which cloud platform is developed by Microsoft?",
+        "Option A": "Azure",
+        "Option B": "AWS",
+        "Option C": "Google Cloud",
+        "Option D": "IBM Cloud",
+        "Correct Option": "A",
+        "Explanation": "Microsoft Azure is Microsoft’s cloud computing platform, offering a wide range of services."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which cloud platform is known for its strong data analytics capabilities, including BigQuery?",
+        "Option A": "Google Cloud",
+        "Option B": "AWS",
+        "Option C": "Azure",
+        "Option D": "Oracle Cloud",
+        "Correct Option": "A",
+        "Explanation": "Google Cloud provides BigQuery and other analytics tools designed for processing large datasets."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which service on AWS provides scalable object storage?",
+        "Option A": "Amazon S3",
+        "Option B": "Amazon EC2",
+        "Option C": "Amazon RDS",
+        "Option D": "Amazon VPC",
+        "Correct Option": "A",
+        "Explanation": "Amazon S3 is used for scalable object storage in AWS."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is AWS EC2 primarily used for?",
+        "Option A": "Hosting scalable virtual servers",
+        "Option B": "Object storage",
+        "Option C": "Content delivery",
+        "Option D": "Domain registration",
+        "Correct Option": "A",
+        "Explanation": "AWS EC2 provides scalable virtual computing environments."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which Azure service offers virtual machines?",
+        "Option A": "Azure Virtual Machines",
+        "Option B": "Azure SQL Database",
+        "Option C": "Azure Blob Storage",
+        "Option D": "Azure Functions",
+        "Correct Option": "A",
+        "Explanation": "Azure Virtual Machines enable users to deploy and manage virtual servers in Microsoft Azure."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the primary function of Google Compute Engine?",
+        "Option A": "To provide scalable virtual machine instances on Google Cloud",
+        "Option B": "To store files in the cloud",
+        "Option C": "To manage DNS records",
+        "Option D": "To host email services",
+        "Correct Option": "A",
+        "Explanation": "Google Compute Engine offers virtual machines that can scale according to demand."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What does the term 'cloud migration' refer to?",
+        "Option A": "Moving applications, data, and workloads from on-premises infrastructure to the cloud",
+        "Option B": "The process of shutting down on-premises servers",
+        "Option C": "Upgrading local hardware to the latest technology",
+        "Option D": "Outsourcing software development",
+        "Correct Option": "A",
+        "Explanation": "Cloud migration is the process of transferring applications and data from on-premises environments to the cloud."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which deployment model is best for organizations with strict regulatory and security requirements?",
+        "Option A": "Private cloud",
+        "Option B": "Public cloud",
+        "Option C": "Hybrid cloud",
+        "Option D": "Multi-cloud",
+        "Correct Option": "A",
+        "Explanation": "Private clouds are tailored to a single organization’s needs, offering enhanced security and compliance."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following is an example of SaaS?",
+        "Option A": "Google Workspace",
+        "Option B": "AWS EC2",
+        "Option C": "Microsoft Azure Virtual Machines",
+        "Option D": "Google Compute Engine",
+        "Correct Option": "A",
+        "Explanation": "Google Workspace is a SaaS solution that delivers productivity applications over the Internet."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What does the term 'serverless' imply regarding resource management?",
+        "Option A": "Developers do not have to manage server infrastructure directly",
+        "Option B": "Physical servers are completely absent",
+        "Option C": "All applications are run on local machines",
+        "Option D": "It eliminates the need for virtualization",
+        "Correct Option": "A",
+        "Explanation": "In serverless computing, the cloud provider manages the server infrastructure, allowing developers to focus on code."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which characteristic of cloud computing allows businesses to adjust resources based on real-time demand?",
+        "Option A": "Scalability",
+        "Option B": "Fixed capacity",
+        "Option C": "Manual provisioning",
+        "Option D": "Hardware dependency",
+        "Correct Option": "A",
+        "Explanation": "Scalability enables businesses to quickly adjust computing resources to match demand."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What does 'measured service' mean in cloud computing?",
+        "Option A": "Resource usage is monitored, controlled, and reported, enabling pay-per-use billing",
+        "Option B": "All resources are free of charge",
+        "Option C": "Resources are allocated without tracking",
+        "Option D": "Billing is based solely on a flat fee",
+        "Correct Option": "A",
+        "Explanation": "Measured service means that resource usage is tracked and billed accordingly, typically in a pay-per-use model."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is one of the primary security challenges in cloud computing?",
+        "Option A": "Ensuring data privacy and secure multi-tenancy",
+        "Option B": "Guaranteeing that all data is unencrypted",
+        "Option C": "Eliminating the need for firewalls",
+        "Option D": "Restricting access to a single user only",
+        "Correct Option": "A",
+        "Explanation": "Data privacy and secure multi-tenancy are major concerns as multiple customers share the same physical resources."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which term describes the ability to automatically provision and deprovision resources in the cloud?",
+        "Option A": "Auto-scaling",
+        "Option B": "Manual scaling",
+        "Option C": "Fixed provisioning",
+        "Option D": "Static allocation",
+        "Correct Option": "A",
+        "Explanation": "Auto-scaling automatically adjusts resources based on current demand."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which cloud service is ideal for hosting large amounts of unstructured data?",
+        "Option A": "Object storage (e.g., Amazon S3)",
+        "Option B": "Virtual machines",
+        "Option C": "Relational databases",
+        "Option D": "Email services",
+        "Correct Option": "A",
+        "Explanation": "Object storage services like Amazon S3 are optimized for storing and retrieving unstructured data."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following best describes a cloud platform?",
+        "Option A": "A suite of services and tools provided over the Internet for building, deploying, and managing applications",
+        "Option B": "A local software application for managing files",
+        "Option C": "A physical data center",
+        "Option D": "A traditional desktop application",
+        "Correct Option": "A",
+        "Explanation": "A cloud platform offers a range of services for development, deployment, and management through the Internet."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What does the term 'latency' refer to in cloud computing?",
+        "Option A": "The delay between a request and its response",
+        "Option B": "The total storage capacity of a cloud system",
+        "Option C": "The cost of data transfer",
+        "Option D": "The bandwidth of the connection",
+        "Correct Option": "A",
+        "Explanation": "Latency is the time delay experienced in a cloud environment between a user’s request and the system’s response."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which concept involves distributing computing tasks across multiple servers in the cloud?",
+        "Option A": "Load balancing",
+        "Option B": "Single server hosting",
+        "Option C": "Manual clustering",
+        "Option D": "Fixed resource allocation",
+        "Correct Option": "A",
+        "Explanation": "Load balancing distributes workloads across multiple servers to optimize resource usage and minimize response time."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which service model is best suited for organizations that want to develop custom applications without managing infrastructure?",
+        "Option A": "PaaS",
+        "Option B": "IaaS",
+        "Option C": "SaaS",
+        "Option D": "DaaS",
+        "Correct Option": "A",
+        "Explanation": "PaaS provides the development platform and tools needed for custom application development without the overhead of managing underlying infrastructure."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is a key benefit of using cloud platforms for data backup?",
+        "Option A": "Automated, scalable, and offsite storage options",
+        "Option B": "Limited storage capacity",
+        "Option C": "High initial hardware costs",
+        "Option D": "Manual data replication",
+        "Correct Option": "A",
+        "Explanation": "Cloud platforms offer automated and scalable backup solutions that are maintained offsite for disaster recovery."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which cloud service enables businesses to build, run, and manage applications without managing servers?",
+        "Option A": "PaaS",
+        "Option B": "IaaS",
+        "Option C": "SaaS",
+        "Option D": "CaaS",
+        "Correct Option": "A",
+        "Explanation": "PaaS abstracts the infrastructure layer, allowing developers to focus on application development."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What does 'elasticity' in cloud computing primarily help with?",
+        "Option A": "Adjusting resources to meet fluctuating workloads",
+        "Option B": "Fixing code errors automatically",
+        "Option C": "Encrypting data in transit",
+        "Option D": "Increasing physical server count",
+        "Correct Option": "A",
+        "Explanation": "Elasticity allows cloud services to scale resources dynamically based on workload demands."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which of the following best describes a hybrid cloud?",
+        "Option A": "An environment that integrates both public and private cloud infrastructures",
+        "Option B": "A cloud that is accessible only to one organization",
+        "Option C": "A single public cloud with no private elements",
+        "Option D": "A non-virtualized cloud environment",
+        "Correct Option": "A",
+        "Explanation": "Hybrid clouds combine public and private cloud components to offer flexibility and enhanced security."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is one of the main drivers for businesses to adopt cloud computing?",
+        "Option A": "Cost efficiency and reduced capital expenditure",
+        "Option B": "The requirement to buy physical servers",
+        "Option C": "Limited scalability",
+        "Option D": "Increased maintenance complexity",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing reduces capital costs by eliminating the need for significant hardware investments."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is a cloud management platform (CMP)?",
+        "Option A": "A tool that provides centralized management, monitoring, and automation of cloud resources",
+        "Option B": "A hardware device for cloud storage",
+        "Option C": "A programming language for cloud applications",
+        "Option D": "A database for user data",
+        "Correct Option": "A",
+        "Explanation": "A CMP offers a centralized interface for managing and optimizing cloud resources and services."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which pricing model is commonly used in cloud computing?",
+        "Option A": "Pay-as-you-go",
+        "Option B": "Fixed-price licensing",
+        "Option C": "One-time hardware purchase",
+        "Option D": "Annual maintenance fees only",
+        "Correct Option": "A",
+        "Explanation": "Cloud providers typically use a pay-as-you-go pricing model where customers are billed based on resource usage."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What does 'virtualization' mean in cloud computing?",
+        "Option A": "The creation of virtual (rather than physical) versions of computing resources",
+        "Option B": "The process of physically duplicating hardware",
+        "Option C": "A method for reducing data size",
+        "Option D": "A technique for increasing network speed",
+        "Correct Option": "A",
+        "Explanation": "Virtualization creates virtual instances of resources such as servers, storage, and networks, allowing for flexible resource management."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which term describes a self-service portal that allows users to manage their cloud resources?",
+        "Option A": "Cloud dashboard",
+        "Option B": "Hardware console",
+        "Option C": "Operating system",
+        "Option D": "Local server",
+        "Correct Option": "A",
+        "Explanation": "A cloud dashboard is a self-service portal where users can provision, manage, and monitor cloud resources."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is a key challenge in cloud computing?",
+        "Option A": "Ensuring data security and compliance in a shared environment",
+        "Option B": "The inability to scale resources on demand",
+        "Option C": "Excessive reliance on local hardware",
+        "Option D": "Limited global reach",
+        "Correct Option": "A",
+        "Explanation": "Security and regulatory compliance are significant challenges due to the multi-tenant nature of public clouds."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which cloud service model is most appropriate for delivering complete business applications?",
+        "Option A": "SaaS",
+        "Option B": "IaaS",
+        "Option C": "PaaS",
+        "Option D": "DaaS",
+        "Correct Option": "A",
+        "Explanation": "SaaS provides fully developed software applications that are accessible over the Internet."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is one of the environmental benefits of cloud computing?",
+        "Option A": "Reduced energy consumption through efficient resource utilization",
+        "Option B": "Increased power usage due to always-on servers",
+        "Option C": "A need for larger physical data centers",
+        "Option D": "Greater electronic waste from hardware replacements",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing can reduce overall energy consumption by efficiently sharing resources across multiple users."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which of the following best defines 'multi-tenancy' in cloud computing?",
+        "Option A": "Multiple users sharing the same physical resources while maintaining data isolation",
+        "Option B": "A single user having exclusive access to all resources",
+        "Option C": "Users must manage their own hardware separately",
+        "Option D": "Cloud services available only for private networks",
+        "Correct Option": "A",
+        "Explanation": "Multi-tenancy allows multiple users (tenants) to share the same infrastructure while keeping their data isolated."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is the purpose of an API in the context of cloud services?",
+        "Option A": "To enable programmatic interaction and integration with cloud services",
+        "Option B": "To store data in cloud storage",
+        "Option C": "To monitor hardware performance",
+        "Option D": "To design user interfaces",
+        "Correct Option": "A",
+        "Explanation": "APIs allow developers to integrate and manage cloud services within their applications."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which of the following is a benefit of using containerization in the cloud?",
+        "Option A": "Portability of applications across different environments",
+        "Option B": "Increased hardware dependency",
+        "Option C": "Limited scalability",
+        "Option D": "Higher overhead compared to virtual machines",
+        "Correct Option": "A",
+        "Explanation": "Containers package applications with their dependencies, ensuring they run consistently across various environments."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is Kubernetes?",
+        "Option A": "An orchestration platform for managing containerized applications",
+        "Option B": "A cloud storage service",
+        "Option C": "A type of virtual machine",
+        "Option D": "A security protocol for cloud computing",
+        "Correct Option": "A",
+        "Explanation": "Kubernetes automates the deployment, scaling, and management of containerized applications."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which cloud service provides a managed Kubernetes environment?",
+        "Option A": "Amazon EKS",
+        "Option B": "Google Cloud Storage",
+        "Option C": "Azure SQL Database",
+        "Option D": "AWS S3",
+        "Correct Option": "A",
+        "Explanation": "Amazon Elastic Kubernetes Service (EKS) is a managed service for running Kubernetes on AWS."
+    },
+    {
+        "Q.No": "61",
+        "Question": "Which of the following is an advantage of cloud computing over traditional on-premises computing?",
+        "Option A": "Flexibility to scale resources as needed",
+        "Option B": "Fixed capacity and higher upfront costs",
+        "Option C": "Increased complexity in hardware maintenance",
+        "Option D": "Limited access to global networks",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing offers flexibility, enabling businesses to scale resources up or down based on demand."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What does the term 'serverless architecture' imply?",
+        "Option A": "Developers focus solely on code, while the provider manages server infrastructure",
+        "Option B": "There are no servers used at all",
+        "Option C": "Physical servers are replaced with desktop computers",
+        "Option D": "The architecture is less secure than traditional models",
+        "Correct Option": "A",
+        "Explanation": "In serverless architecture, the provider handles server management, letting developers concentrate on application logic."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which of the following is a typical characteristic of public cloud services?",
+        "Option A": "Resources are shared among multiple customers and accessed over the Internet",
+        "Option B": "Each customer gets a dedicated, isolated infrastructure",
+        "Option C": "Services are provided only for private organizations",
+        "Option D": "Hardware is physically located at the customer's premises",
+        "Correct Option": "A",
+        "Explanation": "Public clouds host resources that are shared by many customers, typically via the Internet."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What does 'cloud bursting' enable an organization to do?",
+        "Option A": "Utilize public cloud resources to handle peak loads when private cloud capacity is exceeded",
+        "Option B": "Eliminate the need for a private cloud entirely",
+        "Option C": "Prevent any data from leaving the on-premises network",
+        "Option D": "Automatically reduce application functionality during high load",
+        "Correct Option": "A",
+        "Explanation": "Cloud bursting allows an organization to use public cloud resources during demand spikes, ensuring continuity of service."
+    },
+    {
+        "Q.No": "65",
+        "Question": "Which term describes the process of migrating applications and data from on-premises infrastructure to the cloud?",
+        "Option A": "Cloud migration",
+        "Option B": "Cloud bursting",
+        "Option C": "Cloud replication",
+        "Option D": "Cloud synchronization",
+        "Correct Option": "A",
+        "Explanation": "Cloud migration is the process of moving data, applications, and workloads from local data centers to the cloud."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is the primary function of a hypervisor?",
+        "Option A": "To create and manage virtual machines on physical hardware",
+        "Option B": "To monitor cloud application performance",
+        "Option C": "To secure cloud APIs",
+        "Option D": "To provide user authentication services",
+        "Correct Option": "A",
+        "Explanation": "A hypervisor allows multiple virtual machines to run on a single physical server by abstracting the hardware."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which pricing model is most commonly associated with cloud computing?",
+        "Option A": "Pay-as-you-go",
+        "Option B": "Upfront capital expenditure",
+        "Option C": "One-time purchase",
+        "Option D": "Annual licensing fees only",
+        "Correct Option": "A",
+        "Explanation": "The pay-as-you-go model charges customers based on their actual consumption of cloud resources."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is meant by 'elastic pricing' in the context of cloud computing?",
+        "Option A": "Billing that fluctuates based on usage patterns and resource consumption",
+        "Option B": "Fixed monthly fees regardless of usage",
+        "Option C": "Pricing based solely on hardware costs",
+        "Option D": "A model where prices decrease only annually",
+        "Correct Option": "A",
+        "Explanation": "Elastic pricing adapts costs according to the level of resource usage, making it more cost-effective for variable workloads."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which cloud deployment model provides services to a limited group of organizations with similar requirements?",
+        "Option A": "Community cloud",
+        "Option B": "Public cloud",
+        "Option C": "Private cloud",
+        "Option D": "Hybrid cloud",
+        "Correct Option": "A",
+        "Explanation": "A community cloud is shared among organizations with common concerns, such as regulatory or security requirements."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is one of the main challenges of cloud computing?",
+        "Option A": "Data security and privacy in a multi-tenant environment",
+        "Option B": "Inability to scale resources",
+        "Option C": "Lack of access to global networks",
+        "Option D": "High upfront costs for hardware",
+        "Correct Option": "A",
+        "Explanation": "Ensuring data security and privacy is a key challenge in cloud computing due to resource sharing among multiple tenants."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What does the term 'cloud-native application' refer to?",
+        "Option A": "An application built specifically to run in cloud environments, leveraging scalability and resilience",
+        "Option B": "An application that is migrated from on-premises without modification",
+        "Option C": "A legacy application that runs on physical servers",
+        "Option D": "An application that requires no network connectivity",
+        "Correct Option": "A",
+        "Explanation": "Cloud-native applications are designed from the ground up to take full advantage of cloud environments."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which of the following is a benefit of using a multi-cloud strategy?",
+        "Option A": "Reduced dependency on a single provider and increased flexibility",
+        "Option B": "Increased vendor lock-in",
+        "Option C": "Uniform service levels across providers",
+        "Option D": "Simplified management with one provider",
+        "Correct Option": "A",
+        "Explanation": "A multi-cloud strategy reduces reliance on a single provider and allows organizations to choose the best services from different vendors."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is the role of an SLA in cloud computing?",
+        "Option A": "It defines the service performance and uptime guarantees provided by the cloud provider.",
+        "Option B": "It is a technical specification for virtual machines.",
+        "Option C": "It describes the programming interface of the cloud service.",
+        "Option D": "It is used to encrypt data during transmission.",
+        "Correct Option": "A",
+        "Explanation": "An SLA (Service Level Agreement) outlines the expected performance, availability, and responsibilities of the cloud provider."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which of the following best describes a cloud management platform (CMP)?",
+        "Option A": "A tool for managing, monitoring, and automating cloud resources across multiple providers",
+        "Option B": "A physical device for storing cloud data",
+        "Option C": "A programming language for cloud applications",
+        "Option D": "A protocol for encrypting cloud traffic",
+        "Correct Option": "A",
+        "Explanation": "A CMP provides a centralized dashboard to manage and monitor resources across various cloud environments."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which service model provides the highest level of abstraction from underlying hardware?",
+        "Option A": "SaaS",
+        "Option B": "IaaS",
+        "Option C": "PaaS",
+        "Option D": "FaaS",
+        "Correct Option": "A",
+        "Explanation": "SaaS offers complete software solutions that abstract away all hardware and platform management."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the advantage of using containerization in cloud environments?",
+        "Option A": "Consistency and portability of applications across different environments",
+        "Option B": "Increased hardware dependency",
+        "Option C": "Exclusive reliance on IaaS",
+        "Option D": "Manual resource scaling",
+        "Correct Option": "A",
+        "Explanation": "Containers ensure that applications run consistently regardless of the underlying infrastructure, enhancing portability and scalability."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which of the following is an example of a serverless computing service?",
+        "Option A": "AWS Lambda",
+        "Option B": "Amazon EC2",
+        "Option C": "Microsoft Azure Virtual Machines",
+        "Option D": "Google Compute Engine",
+        "Correct Option": "A",
+        "Explanation": "AWS Lambda is a serverless compute service that executes code in response to events without provisioning servers."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is the primary function of cloud orchestration?",
+        "Option A": "To automate the management and coordination of complex cloud resources and services",
+        "Option B": "To manually configure each cloud component",
+        "Option C": "To physically maintain data centers",
+        "Option D": "To design cloud-based websites",
+        "Correct Option": "A",
+        "Explanation": "Cloud orchestration automates and streamlines the management of multiple interconnected cloud services."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which cloud service is best suited for hosting scalable web applications?",
+        "Option A": "PaaS",
+        "Option B": "IaaS",
+        "Option C": "SaaS",
+        "Option D": "DaaS",
+        "Correct Option": "A",
+        "Explanation": "PaaS offers the platform and tools required for building and deploying web applications without managing underlying infrastructure."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is the significance of auto-scaling in cloud environments?",
+        "Option A": "It automatically adjusts the number of running resources based on demand, ensuring efficient use.",
+        "Option B": "It requires manual configuration of each server.",
+        "Option C": "It provides fixed resource allocation regardless of workload.",
+        "Option D": "It reduces the need for any monitoring tools.",
+        "Correct Option": "A",
+        "Explanation": "Auto-scaling dynamically adjusts resources to meet current workload requirements, optimizing performance and cost."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is a common challenge when migrating to the cloud?",
+        "Option A": "Ensuring compatibility of existing applications with cloud environments",
+        "Option B": "Eliminating all network latency",
+        "Option C": "Guaranteeing no downtime ever",
+        "Option D": "Avoiding any changes to security policies",
+        "Correct Option": "A",
+        "Explanation": "Compatibility issues, along with data transfer and integration challenges, are common during cloud migration."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the role of cloud brokers?",
+        "Option A": "They assist organizations in selecting and managing cloud services from multiple providers.",
+        "Option B": "They provide hardware for cloud data centers.",
+        "Option C": "They develop cloud applications exclusively.",
+        "Option D": "They enforce data encryption standards only.",
+        "Correct Option": "A",
+        "Explanation": "Cloud brokers help customers choose and manage cloud services, offering expert guidance and consolidation of services."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following describes a 'virtual machine'?",
+        "Option A": "A software emulation of a physical computer that runs an operating system and applications.",
+        "Option B": "A physical server with enhanced performance.",
+        "Option C": "A type of cloud storage service.",
+        "Option D": "A networking protocol for data transfer.",
+        "Correct Option": "A",
+        "Explanation": "Virtual machines allow multiple operating systems to run on a single physical server through virtualization."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is the main function of a cloud hypervisor?",
+        "Option A": "To create and manage virtual machines on a physical server.",
+        "Option B": "To encrypt data stored in the cloud.",
+        "Option C": "To provide a user interface for cloud management.",
+        "Option D": "To monitor network traffic in cloud environments.",
+        "Correct Option": "A",
+        "Explanation": "A hypervisor enables virtualization by creating and managing virtual machines on physical hardware."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which service offered by Azure is used for scalable virtual machine deployments?",
+        "Option A": "Azure Virtual Machines",
+        "Option B": "Azure Blob Storage",
+        "Option C": "Azure SQL Database",
+        "Option D": "Azure DevOps",
+        "Correct Option": "A",
+        "Explanation": "Azure Virtual Machines provide scalable compute capacity for various workloads in Microsoft Azure."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What is the key purpose of Google Cloud's App Engine?",
+        "Option A": "To enable developers to build and deploy applications without managing underlying infrastructure",
+        "Option B": "To host large-scale databases",
+        "Option C": "To provide virtual desktop solutions",
+        "Option D": "To manage cloud storage exclusively",
+        "Correct Option": "A",
+        "Explanation": "Google App Engine is a PaaS that allows developers to build and deploy applications without worrying about infrastructure management."
+    },
+    {
+        "Q.No": "87",
+        "Question": "Which cloud platform is known for its extensive machine learning and data analytics services?",
+        "Option A": "Google Cloud",
+        "Option B": "AWS",
+        "Option C": "Azure",
+        "Option D": "IBM Cloud",
+        "Correct Option": "A",
+        "Explanation": "Google Cloud is renowned for its data analytics and machine learning services, such as BigQuery and TensorFlow."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is one of the primary benefits of using a cloud-based backup solution?",
+        "Option A": "It provides offsite, scalable, and automated data protection.",
+        "Option B": "It requires manual intervention for each backup.",
+        "Option C": "It only works for small amounts of data.",
+        "Option D": "It limits data recovery options.",
+        "Correct Option": "A",
+        "Explanation": "Cloud-based backups offer scalable, automated, and geographically distributed data protection, enhancing disaster recovery."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What does the term 'cloud bursting' refer to?",
+        "Option A": "The use of public cloud resources to handle peak loads when private cloud capacity is exceeded.",
+        "Option B": "The gradual migration of on-premises data to the cloud.",
+        "Option C": "The sudden failure of cloud services.",
+        "Option D": "The routine update of cloud infrastructure.",
+        "Correct Option": "A",
+        "Explanation": "Cloud bursting allows a private cloud to \"\"burst\"\" into a public cloud during demand spikes, ensuring continuity."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which of the following best describes the concept of 'elastic compute'?",
+        "Option A": "Compute resources that can be rapidly scaled up or down based on workload demand.",
+        "Option B": "A fixed set of computing resources that never change.",
+        "Option C": "The process of compressing compute data.",
+        "Option D": "Hardware that physically expands during high demand.",
+        "Correct Option": "A",
+        "Explanation": "Elastic compute refers to the dynamic scalability of computing resources in response to workload changes."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the advantage of using a hybrid cloud model?",
+        "Option A": "It offers the flexibility to run sensitive workloads on private clouds while leveraging public clouds for scalability.",
+        "Option B": "It forces all workloads into a public cloud.",
+        "Option C": "It limits resource availability to a single location.",
+        "Option D": "It increases costs significantly without benefits.",
+        "Correct Option": "A",
+        "Explanation": "A hybrid cloud combines private and public clouds, providing control over sensitive data and the ability to scale resources."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which cloud service model is best for a company that wants to develop custom applications without managing hardware?",
+        "Option A": "PaaS",
+        "Option B": "IaaS",
+        "Option C": "SaaS",
+        "Option D": "DaaS",
+        "Correct Option": "A",
+        "Explanation": "PaaS provides a complete platform that lets developers build and deploy applications without the overhead of managing hardware."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the function of cloud load balancing?",
+        "Option A": "Distributing incoming traffic across multiple servers to optimize performance and reliability.",
+        "Option B": "Encrypting data across multiple nodes.",
+        "Option C": "Consolidating all traffic to a single server.",
+        "Option D": "Disabling auto-scaling features.",
+        "Correct Option": "A",
+        "Explanation": "Load balancing ensures that traffic is evenly distributed, preventing any single server from becoming a bottleneck."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which feature of cloud computing enables businesses to use computing resources on a subscription basis?",
+        "Option A": "Utility computing",
+        "Option B": "Traditional computing",
+        "Option C": "On-premises computing",
+        "Option D": "Legacy systems",
+        "Correct Option": "A",
+        "Explanation": "Utility computing allows organizations to pay only for the computing resources they use, often on a subscription basis."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the significance of a cloud API?",
+        "Option A": "It enables programmatic access to cloud services for automation and integration.",
+        "Option B": "It is used for data encryption only.",
+        "Option C": "It replaces the need for cloud storage.",
+        "Option D": "It is a method for manual configuration of cloud resources.",
+        "Correct Option": "A",
+        "Explanation": "Cloud APIs allow developers to interact with and manage cloud services programmatically, facilitating automation and integration."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which of the following best describes 'cloud orchestration'?",
+        "Option A": "The automated coordination and management of complex cloud operations and services.",
+        "Option B": "The manual deployment of cloud servers.",
+        "Option C": "A method for data compression in the cloud.",
+        "Option D": "A technique for encrypting cloud communications.",
+        "Correct Option": "A",
+        "Explanation": "Cloud orchestration automates workflows and the management of interconnected cloud services."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What does the term 'cloud-native' refer to?",
+        "Option A": "Applications designed specifically to run in cloud environments and take full advantage of cloud capabilities.",
+        "Option B": "Legacy applications migrated to the cloud without changes.",
+        "Option C": "Software that cannot be deployed on cloud infrastructure.",
+        "Option D": "A method for on-premises data storage.",
+        "Correct Option": "A",
+        "Explanation": "Cloud-native applications are built specifically for cloud environments, leveraging features like scalability and resilience."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which practice helps organizations avoid vendor lock-in in cloud computing?",
+        "Option A": "Adopting a multi-cloud strategy that uses services from multiple providers.",
+        "Option B": "Relying on a single cloud provider exclusively.",
+        "Option C": "Not using cloud services at all.",
+        "Option D": "Investing heavily in on-premises hardware.",
+        "Correct Option": "A",
+        "Explanation": "A multi-cloud strategy reduces dependency on any one provider, thus minimizing vendor lock-in risks."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which of the following best describes 'serverless' architectures?",
+        "Option A": "Architectures where application code runs in ephemeral containers without the user managing servers.",
+        "Option B": "Architectures that eliminate the need for code entirely.",
+        "Option C": "Systems that rely solely on physical hardware.",
+        "Option D": "Environments that require manual server maintenance.",
+        "Correct Option": "A",
+        "Explanation": "Serverless architectures allow developers to run code in ephemeral containers managed by the provider, without server management responsibilities."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is the primary purpose of cloud computing?",
+        "Option A": "To provide flexible, scalable, and cost-effective computing resources over the Internet.",
+        "Option B": "To require organizations to invest in expensive hardware.",
+        "Option C": "To limit access to computing resources to local networks.",
+        "Option D": "To increase the complexity of IT management.",
+        "Correct Option": "A",
+        "Explanation": "Cloud computing aims to deliver on-demand, scalable, and cost-effective computing services over the Internet, transforming traditional IT models."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

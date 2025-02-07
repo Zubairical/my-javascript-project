@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What does cybersecurity primarily aim to protect?",
+        "Option A": "Data, networks, and systems",
+        "Option B": "Only software applications",
+        "Option C": "Only hardware devices",
+        "Option D": "Only user credentials",
+        "Correct Option": "A",
+        "Explanation": "Cybersecurity focuses on protecting data, networks, and systems from unauthorized access and attacks."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is a common cyber threat?",
+        "Option A": "Malware",
+        "Option B": "Natural disasters",
+        "Option C": "Hardware malfunctions",
+        "Option D": "Software updates",
+        "Correct Option": "A",
+        "Explanation": "Malware, including viruses, worms, and trojans, is one of the most common cyber threats."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What is a firewall?",
+        "Option A": "A network security device that monitors and filters traffic",
+        "Option B": "A software for virus scanning",
+        "Option C": "A tool for encrypting files",
+        "Option D": "A type of intrusion detection system",
+        "Correct Option": "A",
+        "Explanation": "A firewall controls incoming and outgoing network traffic based on predetermined security rules."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What does IDS stand for?",
+        "Option A": "Intrusion Detection System",
+        "Option B": "Internal Data Storage",
+        "Option C": "Internet Defense Service",
+        "Option D": "Integrated Device Security",
+        "Correct Option": "A",
+        "Explanation": "IDS stands for Intrusion Detection System, which monitors network or system activities for malicious behavior."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What is the primary function of an Intrusion Prevention System (IPS)?",
+        "Option A": "To detect and block potential threats in real time",
+        "Option B": "To back up data securely",
+        "Option C": "To optimize network speed",
+        "Option D": "To store logs for later review",
+        "Correct Option": "A",
+        "Explanation": "An IPS actively blocks detected threats in real time, preventing potential attacks."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which of the following is an example of a social engineering attack?",
+        "Option A": "Phishing",
+        "Option B": "DDoS",
+        "Option C": "SQL Injection",
+        "Option D": "Buffer Overflow",
+        "Correct Option": "A",
+        "Explanation": "Phishing is a social engineering tactic that tricks users into revealing sensitive information."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is phishing?",
+        "Option A": "A fraudulent attempt to obtain sensitive information by masquerading as a trustworthy entity",
+        "Option B": "A method to encrypt data during transmission",
+        "Option C": "A type of firewall misconfiguration",
+        "Option D": "A software update strategy",
+        "Correct Option": "A",
+        "Explanation": "Phishing involves deceptive communications designed to steal sensitive data such as passwords and credit card numbers."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which technology is commonly used to secure wireless networks?",
+        "Option A": "WPA2 encryption",
+        "Option B": "Open Wi-Fi access",
+        "Option C": "Default passwords",
+        "Option D": "Unencrypted broadcast",
+        "Correct Option": "A",
+        "Explanation": "WPA2 (Wi-Fi Protected Access II) provides strong encryption to secure wireless networks."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is a Zero-Day exploit?",
+        "Option A": "A vulnerability exploited before a patch is available",
+        "Option B": "A virus that activates on the first day of the month",
+        "Option C": "A scheduled software update",
+        "Option D": "A test of network performance",
+        "Correct Option": "A",
+        "Explanation": "Zero-Day exploits target vulnerabilities unknown to the vendor, leaving no available patch at the time of the attack."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What does DDoS stand for?",
+        "Option A": "Distributed Denial of Service",
+        "Option B": "Dynamic Data Optimization Service",
+        "Option C": "Digital Denial of Service",
+        "Option D": "Direct Data Overload System",
+        "Correct Option": "A",
+        "Explanation": "DDoS refers to Distributed Denial of Service, an attack that floods a target with traffic to render it unavailable."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which measure helps protect against brute-force attacks?",
+        "Option A": "Account lockout policies",
+        "Option B": "Disabling user authentication",
+        "Option C": "Using weak passwords",
+        "Option D": "Sharing credentials openly",
+        "Correct Option": "A",
+        "Explanation": "Account lockout policies limit the number of failed login attempts, deterring brute-force attacks."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is multi-factor authentication (MFA)?",
+        "Option A": "A security process requiring two or more verification methods",
+        "Option B": "A single password login process",
+        "Option C": "A method of encrypting data transmissions",
+        "Option D": "A technique for speeding up logins",
+        "Correct Option": "A",
+        "Explanation": "MFA requires users to provide multiple forms of verification, enhancing account security."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What is ransomware?",
+        "Option A": "Malicious software that encrypts files and demands payment for decryption",
+        "Option B": "A tool used to secure endpoints",
+        "Option C": "A system backup method",
+        "Option D": "An antivirus update mechanism",
+        "Correct Option": "A",
+        "Explanation": "Ransomware encrypts a victim's files and demands a ransom to restore access."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which measure protects data at rest?",
+        "Option A": "Disk encryption",
+        "Option B": "VPN usage",
+        "Option C": "Port scanning",
+        "Option D": "Network throttling",
+        "Correct Option": "A",
+        "Explanation": "Disk encryption secures data stored on a device, protecting it even if the device is lost or stolen."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is two-factor authentication (2FA)?",
+        "Option A": "A method that requires two independent credentials for verification",
+        "Option B": "A single-step password entry",
+        "Option C": "A system that uses biometrics only",
+        "Option D": "A type of malware defense",
+        "Correct Option": "A",
+        "Explanation": "2FA enhances security by requiring two distinct forms of identification for access."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What does “endpoint security” refer to?",
+        "Option A": "Securing individual devices such as computers and mobile devices",
+        "Option B": "Encrypting network data only",
+        "Option C": "Managing user permissions exclusively",
+        "Option D": "Monitoring data center environments only",
+        "Correct Option": "A",
+        "Explanation": "Endpoint security focuses on protecting individual devices that connect to a network."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which of the following is NOT a type of malware?",
+        "Option A": "Firewall",
+        "Option B": "Virus",
+        "Option C": "Worm",
+        "Option D": "Trojan",
+        "Correct Option": "A",
+        "Explanation": "A firewall is a security device, not malware."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is a botnet?",
+        "Option A": "A network of compromised computers controlled by a malicious actor",
+        "Option B": "A group of legitimate servers for load balancing",
+        "Option C": "A secure cloud storage service",
+        "Option D": "A type of encryption algorithm",
+        "Correct Option": "A",
+        "Explanation": "Botnets consist of numerous compromised devices that can be remotely controlled to perform malicious tasks."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is the purpose of a SIEM system?",
+        "Option A": "To provide real-time analysis of security alerts and log data",
+        "Option B": "To manage software licensing",
+        "Option C": "To optimize system performance",
+        "Option D": "To schedule automated backups",
+        "Correct Option": "A",
+        "Explanation": "SIEM (Security Information and Event Management) systems collect and analyze log data to detect security incidents."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is vulnerability scanning?",
+        "Option A": "An automated process to identify security weaknesses in systems",
+        "Option B": "A manual code review process",
+        "Option C": "A method to encrypt sensitive files",
+        "Option D": "A technique for speeding up networks",
+        "Correct Option": "A",
+        "Explanation": "Vulnerability scanning uses automated tools to identify potential security flaws in systems."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is cryptography?",
+        "Option A": "The practice of securing information through encryption and decryption",
+        "Option B": "A technique to compress data efficiently",
+        "Option C": "A method of boosting network performance",
+        "Option D": "A protocol for device authentication",
+        "Correct Option": "A",
+        "Explanation": "Cryptography secures communications by converting information into unreadable formats and back."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What does encryption do?",
+        "Option A": "Converts plaintext into ciphertext to prevent unauthorized access",
+        "Option B": "Deletes sensitive data permanently",
+        "Option C": "Compresses data for faster transmission",
+        "Option D": "Converts binary code into text",
+        "Correct Option": "A",
+        "Explanation": "Encryption transforms plaintext into ciphertext, making data unintelligible without the decryption key."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is decryption?",
+        "Option A": "The process of converting ciphertext back into readable plaintext",
+        "Option B": "The process of compressing files before transfer",
+        "Option C": "A method to scramble data irreversibly",
+        "Option D": "The act of hashing data",
+        "Correct Option": "A",
+        "Explanation": "Decryption is the reverse of encryption, restoring ciphertext back to its original form."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is symmetric encryption?",
+        "Option A": "An encryption method using the same key for both encryption and decryption",
+        "Option B": "An encryption method using a public key for encryption and a private key for decryption",
+        "Option C": "A process that uses no keys",
+        "Option D": "A method that only works on small data sets",
+        "Correct Option": "A",
+        "Explanation": "Symmetric encryption uses a single secret key for both encrypting and decrypting data."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which algorithm is an example of symmetric encryption?",
+        "Option A": "AES",
+        "Option B": "RSA",
+        "Option C": "Diffie-Hellman",
+        "Option D": "ECC",
+        "Correct Option": "A",
+        "Explanation": "AES (Advanced Encryption Standard) is a widely used symmetric encryption algorithm."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is asymmetric encryption?",
+        "Option A": "An encryption method using a pair of keys—a public key for encryption and a private key for decryption",
+        "Option B": "An encryption method that uses a single key for all operations",
+        "Option C": "A type of encryption that requires no keys",
+        "Option D": "An outdated encryption method",
+        "Correct Option": "A",
+        "Explanation": "Asymmetric encryption uses two keys, enhancing security by separating the encryption and decryption processes."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which algorithm is a well-known example of asymmetric encryption?",
+        "Option A": "RSA",
+        "Option B": "AES",
+        "Option C": "DES",
+        "Option D": "Blowfish",
+        "Correct Option": "A",
+        "Explanation": "RSA is a commonly used asymmetric encryption algorithm for secure data transmission."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is a digital signature?",
+        "Option A": "A cryptographic mechanism that verifies the authenticity and integrity of a message or document",
+        "Option B": "A scanned image of a handwritten signature",
+        "Option C": "A method for encrypting data with a single key",
+        "Option D": "A type of network firewall",
+        "Correct Option": "A",
+        "Explanation": "Digital signatures use cryptographic techniques to confirm the origin and integrity of digital messages."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What do SSL/TLS protocols provide?",
+        "Option A": "Secure, encrypted communication over the Internet",
+        "Option B": "Faster web page loading times",
+        "Option C": "Data compression for emails",
+        "Option D": "Automatic system backups",
+        "Correct Option": "A",
+        "Explanation": "SSL/TLS protocols encrypt data in transit to protect communications between clients and servers."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the role of a Certificate Authority (CA) in cryptography?",
+        "Option A": "To issue digital certificates that verify the identity of entities",
+        "Option B": "To generate encryption keys automatically",
+        "Option C": "To perform vulnerability scans on websites",
+        "Option D": "To store backup copies of digital signatures",
+        "Correct Option": "A",
+        "Explanation": "Certificate Authorities validate and issue digital certificates that confirm the identity of a website or user."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is hashing in cryptography?",
+        "Option A": "The process of generating a fixed-size string from input data, typically irreversible",
+        "Option B": "Encrypting data using symmetric keys",
+        "Option C": "Compressing data for storage",
+        "Option D": "Converting plaintext into ciphertext using a key",
+        "Correct Option": "A",
+        "Explanation": "Hashing produces a fixed-length hash value from input data and is used to verify data integrity."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which algorithm is a common cryptographic hash function?",
+        "Option A": "SHA-256",
+        "Option B": "AES",
+        "Option C": "RSA",
+        "Option D": "3DES",
+        "Correct Option": "A",
+        "Explanation": "SHA-256 is a widely used cryptographic hash function that produces a 256-bit hash value."
+    },
+    {
+        "Q.No": "33",
+        "Question": "What is the purpose of salting in cryptography?",
+        "Option A": "To add random data to passwords before hashing, preventing precomputed hash attacks",
+        "Option B": "To compress data more effectively",
+        "Option C": "To convert ciphertext back to plaintext",
+        "Option D": "To increase the encryption key length",
+        "Correct Option": "A",
+        "Explanation": "Salting adds randomness to passwords before hashing, making attacks like rainbow table lookups more difficult."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is digital certificate used for?",
+        "Option A": "To verify the identity of websites and secure communications",
+        "Option B": "To compress web data",
+        "Option C": "To track user behavior on websites",
+        "Option D": "To optimize server performance",
+        "Correct Option": "A",
+        "Explanation": "Digital certificates, issued by CAs, verify identities and establish secure, encrypted connections."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which protocol secures web transactions by encrypting data between browsers and servers?",
+        "Option A": "HTTPS",
+        "Option B": "HTTP",
+        "Option C": "FTP",
+        "Option D": "SMTP",
+        "Correct Option": "A",
+        "Explanation": "HTTPS is the secure version of HTTP that uses SSL/TLS for encryption."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is a key exchange algorithm?",
+        "Option A": "A method that allows two parties to securely share cryptographic keys",
+        "Option B": "A process for encrypting data using one key",
+        "Option C": "A tool for compressing network traffic",
+        "Option D": "A protocol for authentication only",
+        "Correct Option": "A",
+        "Explanation": "Key exchange algorithms enable secure sharing of encryption keys over insecure channels."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which algorithm is commonly used for secure key exchange?",
+        "Option A": "Diffie-Hellman",
+        "Option B": "AES",
+        "Option C": "SHA-1",
+        "Option D": "MD5",
+        "Correct Option": "A",
+        "Explanation": "Diffie-Hellman is widely used for securely exchanging cryptographic keys over an insecure channel."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What does PGP stand for?",
+        "Option A": "Pretty Good Privacy",
+        "Option B": "Public Global Protocol",
+        "Option C": "Private Group Protection",
+        "Option D": "Protected General Password",
+        "Correct Option": "A",
+        "Explanation": "PGP stands for Pretty Good Privacy, a data encryption and decryption program used for secure communications."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is steganography?",
+        "Option A": "The practice of hiding secret information within an ordinary file or message",
+        "Option B": "The process of encrypting a message",
+        "Option C": "A method for data compression",
+        "Option D": "A firewall configuration technique",
+        "Correct Option": "A",
+        "Explanation": "Steganography conceals the existence of a message by embedding it within another file, such as an image."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What is ethical hacking?",
+        "Option A": "The legal practice of probing systems for vulnerabilities to improve security",
+        "Option B": "Unauthorized access to systems for personal gain",
+        "Option C": "The creation of malware for testing purposes",
+        "Option D": "A method of encrypting user data",
+        "Correct Option": "A",
+        "Explanation": "Ethical hacking is performed with permission to identify and remediate security vulnerabilities."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is penetration testing?",
+        "Option A": "A simulated cyber attack to assess the security of a system",
+        "Option B": "A technique for encrypting communications",
+        "Option C": "A method of compressing data files",
+        "Option D": "A routine system update process",
+        "Correct Option": "A",
+        "Explanation": "Penetration testing involves simulating attacks to uncover vulnerabilities before malicious hackers can exploit them."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is the primary goal of a penetration test?",
+        "Option A": "To identify and help remediate security vulnerabilities",
+        "Option B": "To improve system performance",
+        "Option C": "To design network architecture",
+        "Option D": "To document user activity",
+        "Correct Option": "A",
+        "Explanation": "The goal is to expose vulnerabilities so that they can be addressed before they are exploited."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which phase of a penetration test involves gathering publicly available information about a target?",
+        "Option A": "Reconnaissance",
+        "Option B": "Exploitation",
+        "Option C": "Reporting",
+        "Option D": "Post-Exploitation",
+        "Correct Option": "A",
+        "Explanation": "Reconnaissance is the initial phase where information about the target is collected."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is vulnerability scanning?",
+        "Option A": "An automated process to detect security weaknesses in systems",
+        "Option B": "The manual review of source code for errors",
+        "Option C": "The act of encrypting data files",
+        "Option D": "A method for network load balancing",
+        "Correct Option": "A",
+        "Explanation": "Vulnerability scanning uses automated tools to identify potential security issues in systems and networks."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which tool is commonly used for network scanning?",
+        "Option A": "Nmap",
+        "Option B": "Wireshark",
+        "Option C": "Metasploit",
+        "Option D": "John the Ripper",
+        "Correct Option": "A",
+        "Explanation": "Nmap is widely used for scanning networks to discover hosts and services."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is the purpose of port scanning?",
+        "Option A": "To identify open ports and the services running on them",
+        "Option B": "To encrypt network data",
+        "Option C": "To merge software versions",
+        "Option D": "To update operating systems",
+        "Correct Option": "A",
+        "Explanation": "Port scanning identifies which ports are open on a target, providing insights into potential vulnerabilities."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is SQL injection?",
+        "Option A": "An attack that exploits vulnerabilities in a web application’s database layer",
+        "Option B": "A method of securing databases",
+        "Option C": "A tool for encrypting data",
+        "Option D": "A technique for compressing web content",
+        "Correct Option": "A",
+        "Explanation": "SQL injection involves inserting malicious SQL code into a query to manipulate a database."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is a Zero-Day vulnerability?",
+        "Option A": "A vulnerability that is exploited before the vendor releases a patch",
+        "Option B": "A vulnerability that has been fixed for many days",
+        "Option C": "A vulnerability in outdated software only",
+        "Option D": "A vulnerability discovered through social engineering",
+        "Correct Option": "A",
+        "Explanation": "Zero-Day vulnerabilities are unknown to the vendor and are exploited before a patch is available."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is social engineering in cybersecurity?",
+        "Option A": "Manipulating people to divulge confidential information",
+        "Option B": "Using brute force to crack passwords",
+        "Option C": "Installing antivirus software",
+        "Option D": "Encrypting sensitive data",
+        "Correct Option": "A",
+        "Explanation": "Social engineering exploits human psychology to gain unauthorized access to information."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What does a honeypot do?",
+        "Option A": "Acts as a decoy to attract and analyze attackers",
+        "Option B": "Encrypts data on a system",
+        "Option C": "Serves as a backup server",
+        "Option D": "Monitors user activity internally",
+        "Correct Option": "A",
+        "Explanation": "Honeypots are decoy systems designed to lure attackers and study their methods."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is eavesdropping in the context of network security?",
+        "Option A": "Intercepting and listening to private communications",
+        "Option B": "A form of encryption",
+        "Option C": "A technique for compressing data",
+        "Option D": "A method for updating firmware",
+        "Correct Option": "A",
+        "Explanation": "Eavesdropping involves unauthorized interception of communications, often to capture sensitive data."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is a penetration testing report?",
+        "Option A": "A document detailing discovered vulnerabilities and recommendations for remediation",
+        "Option B": "A marketing document for cybersecurity products",
+        "Option C": "A list of all system users",
+        "Option D": "A guide for installing antivirus software",
+        "Correct Option": "A",
+        "Explanation": "It summarizes the findings of a penetration test and suggests measures to improve security."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which legal requirement is critical for ethical hacking?",
+        "Option A": "Obtaining proper authorization before testing",
+        "Option B": "Using default passwords during tests",
+        "Option C": "Publicly disclosing all vulnerabilities immediately",
+        "Option D": "Avoiding documentation of test results",
+        "Correct Option": "A",
+        "Explanation": "Ethical hacking must be conducted with explicit authorization to be legal and ethical."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is a bug bounty program?",
+        "Option A": "A program that rewards individuals for finding and reporting security vulnerabilities",
+        "Option B": "A method to test software performance",
+        "Option C": "A system for encrypting sensitive information",
+        "Option D": "A marketing campaign for antivirus software",
+        "Correct Option": "A",
+        "Explanation": "Bug bounty programs incentivize researchers to report vulnerabilities responsibly."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which security measure is used to secure email communications?",
+        "Option A": "Email encryption",
+        "Option B": "Open SMTP relays",
+        "Option C": "Plain text transmission",
+        "Option D": "No authentication protocols",
+        "Correct Option": "A",
+        "Explanation": "Email encryption converts messages into an unreadable format to protect their contents during transmission."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is a keylogger?",
+        "Option A": "A tool that records keystrokes on a device, often used maliciously",
+        "Option B": "A firewall configuration tool",
+        "Option C": "A method of network scanning",
+        "Option D": "A technique for speeding up data entry",
+        "Correct Option": "A",
+        "Explanation": "Keyloggers capture every keystroke, potentially exposing passwords and sensitive information."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is endpoint detection and response (EDR)?",
+        "Option A": "A security solution that monitors endpoints for suspicious activity and responds to threats",
+        "Option B": "A type of network switch",
+        "Option C": "A backup system for user data",
+        "Option D": "A process for patch management",
+        "Correct Option": "A",
+        "Explanation": "EDR solutions continuously monitor devices for signs of compromise and help respond to incidents."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is a man-in-the-middle attack?",
+        "Option A": "An attack where the attacker secretly intercepts and possibly alters communication between two parties",
+        "Option B": "An attack that floods a network with traffic",
+        "Option C": "An attack that uses phishing emails exclusively",
+        "Option D": "A method for encrypting messages automatically",
+        "Correct Option": "A",
+        "Explanation": "In a man-in-the-middle attack, the attacker intercepts communications between two parties without their knowledge."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which practice involves using deception to mislead attackers?",
+        "Option A": "Deploying honeypots",
+        "Option B": "Installing additional antivirus software",
+        "Option C": "Increasing password complexity",
+        "Option D": "Disabling user accounts",
+        "Correct Option": "A",
+        "Explanation": "Honeypots are used to deceive attackers and gather information about their techniques."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is port forwarding?",
+        "Option A": "Redirecting incoming network traffic to a specific device or service within a private network",
+        "Option B": "Encrypting data before transmission",
+        "Option C": "Merging multiple network connections",
+        "Option D": "Blocking unauthorized IP addresses",
+        "Correct Option": "A",
+        "Explanation": "Port forwarding directs traffic from a public IP to a specific internal IP address and port."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is Quality of Service (QoS) in networking?",
+        "Option A": "A technique to prioritize certain types of network traffic for improved performance",
+        "Option B": "A method for encrypting data",
+        "Option C": "A type of malware detection",
+        "Option D": "A network scanning tool",
+        "Correct Option": "A",
+        "Explanation": "QoS prioritizes traffic to ensure critical applications receive the necessary bandwidth."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which protocol is commonly used for secure remote login?",
+        "Option A": "SSH",
+        "Option B": "Telnet",
+        "Option C": "FTP",
+        "Option D": "HTTP",
+        "Correct Option": "A",
+        "Explanation": "SSH (Secure Shell) provides encrypted remote login capabilities."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the purpose of a VPN?",
+        "Option A": "To create a secure, encrypted connection over a public network",
+        "Option B": "To speed up internet connections",
+        "Option C": "To compress large files",
+        "Option D": "To host websites securely",
+        "Correct Option": "A",
+        "Explanation": "A VPN (Virtual Private Network) encrypts internet traffic, providing secure remote access."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which attack involves overwhelming a system with excessive traffic?",
+        "Option A": "Denial of Service (DoS)",
+        "Option B": "Phishing",
+        "Option C": "Spoofing",
+        "Option D": "Keylogging",
+        "Correct Option": "A",
+        "Explanation": "DoS attacks flood a system with traffic, making it unavailable to legitimate users."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What does multi-factor authentication (MFA) require?",
+        "Option A": "Multiple forms of verification before granting access",
+        "Option B": "A single password for all logins",
+        "Option C": "Biometric data only",
+        "Option D": "A change of IP address every login",
+        "Correct Option": "A",
+        "Explanation": "MFA enhances security by requiring more than one form of identification for access."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is exploitation in cybersecurity?",
+        "Option A": "Taking advantage of a vulnerability to gain unauthorized access",
+        "Option B": "Encrypting sensitive information",
+        "Option C": "Scanning a network for open ports",
+        "Option D": "Backing up system data",
+        "Correct Option": "A",
+        "Explanation": "Exploitation involves leveraging a vulnerability to compromise a system or gain unauthorized access."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is vulnerability disclosure?",
+        "Option A": "The responsible process of reporting security weaknesses to the vendor or owner",
+        "Option B": "Publicly sharing all vulnerabilities on social media",
+        "Option C": "Ignoring identified security flaws",
+        "Option D": "Automatically patching security holes",
+        "Correct Option": "A",
+        "Explanation": "Responsible vulnerability disclosure involves notifying the affected party so that they can address the security issue."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is the principle of least privilege?",
+        "Option A": "Granting users only the minimal level of access necessary to perform their tasks",
+        "Option B": "Allowing users full administrative access at all times",
+        "Option C": "Disabling all security measures to simplify access",
+        "Option D": "Sharing credentials among team members",
+        "Correct Option": "A",
+        "Explanation": "The principle of least privilege limits access rights to reduce the potential impact of a breach."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which attack method systematically tries all possible passwords until the correct one is found?",
+        "Option A": "Brute-force attack",
+        "Option B": "Phishing attack",
+        "Option C": "SQL injection",
+        "Option D": "Man-in-the-middle attack",
+        "Correct Option": "A",
+        "Explanation": "A brute-force attack attempts every possible combination to crack passwords or encryption keys."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is data exfiltration?",
+        "Option A": "The unauthorized transfer of data out of a system",
+        "Option B": "The process of encrypting files for storage",
+        "Option C": "The act of creating backups of sensitive data",
+        "Option D": "A method of compressing large data sets",
+        "Correct Option": "A",
+        "Explanation": "Data exfiltration is the covert removal or transfer of data from a system without authorization."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which tool is commonly used for password cracking?",
+        "Option A": "Hashcat",
+        "Option B": "Photoshop",
+        "Option C": "Excel",
+        "Option D": "Notepad",
+        "Correct Option": "A",
+        "Explanation": "Hashcat is a powerful tool used to crack hashed passwords using various attack methods."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is a digital signature used for?",
+        "Option A": "Verifying the authenticity and integrity of a digital message or document",
+        "Option B": "Encrypting data automatically",
+        "Option C": "Compressing files for storage",
+        "Option D": "Generating random keys for encryption",
+        "Correct Option": "A",
+        "Explanation": "Digital signatures provide assurance that a message or document has not been altered and is from a verified source."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is a common method to secure email communications?",
+        "Option A": "Email encryption",
+        "Option B": "Plaintext email",
+        "Option C": "Open SMTP relays",
+        "Option D": "No authentication",
+        "Correct Option": "A",
+        "Explanation": "Email encryption converts messages into an unreadable format, protecting them from interception."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is a sandbox in cybersecurity?",
+        "Option A": "A controlled environment used to execute and analyze untrusted code safely",
+        "Option B": "A method of encrypting sensitive data",
+        "Option C": "A firewall configuration tool",
+        "Option D": "A type of network switch",
+        "Correct Option": "A",
+        "Explanation": "Sandboxing isolates untrusted code so that its behavior can be analyzed without risking the host system."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the purpose of patch management?",
+        "Option A": "To apply software updates that fix vulnerabilities and bugs",
+        "Option B": "To remove unnecessary software features",
+        "Option C": "To compress application files",
+        "Option D": "To reorganize network architecture",
+        "Correct Option": "A",
+        "Explanation": "Patch management involves the timely application of updates to address known vulnerabilities and maintain security."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is a Trojan horse in the context of malware?",
+        "Option A": "Malicious software disguised as legitimate software",
+        "Option B": "A tool for system optimization",
+        "Option C": "A legitimate antivirus program",
+        "Option D": "A type of encryption protocol",
+        "Correct Option": "A",
+        "Explanation": "A Trojan horse appears legitimate to trick users into installing it, then performs malicious actions."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is endpoint protection?",
+        "Option A": "Security solutions that safeguard individual devices (endpoints) from threats",
+        "Option B": "A method for centralizing server backups",
+        "Option C": "A network performance monitoring tool",
+        "Option D": "A software development practice",
+        "Correct Option": "A",
+        "Explanation": "Endpoint protection focuses on securing devices like laptops, desktops, and mobile devices from cyber threats."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which of the following best describes an advanced persistent threat (APT)?",
+        "Option A": "A prolonged and targeted cyberattack in which an intruder gains access to a network and remains undetected for an extended period",
+        "Option B": "A short-term virus outbreak",
+        "Option C": "A type of phishing scam",
+        "Option D": "A network protocol for secure data transfer",
+        "Correct Option": "A",
+        "Explanation": "APTs are sophisticated, long-term attacks aimed at stealing information while remaining hidden."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the purpose of an intrusion detection system (IDS)?",
+        "Option A": "To monitor network traffic and alert administrators to potential security breaches",
+        "Option B": "To back up data automatically",
+        "Option C": "To encrypt files on a system",
+        "Option D": "To manage user accounts",
+        "Correct Option": "A",
+        "Explanation": "IDS monitors network or system activity to detect suspicious behavior and potential intrusions."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What does a honeypot do in cybersecurity?",
+        "Option A": "Acts as a decoy system to lure attackers and study their behavior",
+        "Option B": "Encrypts data transmissions automatically",
+        "Option C": "Serves as a backup for all critical data",
+        "Option D": "Automatically patches vulnerabilities",
+        "Correct Option": "A",
+        "Explanation": "A honeypot mimics a vulnerable system to attract attackers, allowing security teams to study their methods."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is port scanning used for?",
+        "Option A": "Identifying open ports and services on a target system",
+        "Option B": "Encrypting network traffic",
+        "Option C": "Blocking malicious IP addresses",
+        "Option D": "Compressing data streams",
+        "Correct Option": "A",
+        "Explanation": "Port scanning discovers open ports and associated services, which can reveal potential vulnerabilities."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is a man-in-the-middle attack?",
+        "Option A": "An attack where the attacker intercepts and possibly alters communication between two parties",
+        "Option B": "An attack that floods a server with traffic",
+        "Option C": "An attack that uses social engineering exclusively",
+        "Option D": "An attack that exploits encryption algorithms",
+        "Correct Option": "A",
+        "Explanation": "A man-in-the-middle attack involves intercepting and manipulating communications between two unsuspecting parties."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is keylogging?",
+        "Option A": "Recording keystrokes to capture sensitive information",
+        "Option B": "A method of encrypting passwords",
+        "Option C": "A technique for compressing log files",
+        "Option D": "A firewall configuration strategy",
+        "Correct Option": "A",
+        "Explanation": "Keylogging captures keyboard inputs, often used maliciously to steal passwords and other sensitive data."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which type of attack attempts to overwhelm a system with excessive traffic?",
+        "Option A": "Denial of Service (DoS)",
+        "Option B": "Phishing",
+        "Option C": "Spoofing",
+        "Option D": "SQL Injection",
+        "Correct Option": "A",
+        "Explanation": "DoS attacks flood systems with traffic, rendering them unavailable to legitimate users."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What does \"\"ethical hacking\"\" entail?",
+        "Option A": "Legally and proactively testing systems to identify vulnerabilities",
+        "Option B": "Hacking without permission for personal gain",
+        "Option C": "Using malware to test system strength",
+        "Option D": "Ignoring security flaws in a system",
+        "Correct Option": "A",
+        "Explanation": "Ethical hacking is performed with proper authorization to help organizations identify and fix security weaknesses."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which of the following is a primary goal of penetration testing?",
+        "Option A": "To identify vulnerabilities before malicious attackers can exploit them",
+        "Option B": "To design new network architectures",
+        "Option C": "To increase system performance",
+        "Option D": "To manage software updates automatically",
+        "Correct Option": "A",
+        "Explanation": "Penetration testing seeks to uncover vulnerabilities so they can be mitigated before being exploited by real attackers."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is a vulnerability assessment?",
+        "Option A": "The systematic process of identifying, quantifying, and prioritizing vulnerabilities in a system",
+        "Option B": "The process of encrypting sensitive data",
+        "Option C": "A method for increasing network bandwidth",
+        "Option D": "A technique for optimizing software code",
+        "Correct Option": "A",
+        "Explanation": "Vulnerability assessments systematically identify and prioritize security weaknesses within systems."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the role of a penetration testing report?",
+        "Option A": "To document the discovered vulnerabilities and recommend remediation steps",
+        "Option B": "To provide a marketing overview of the software",
+        "Option C": "To list hardware specifications",
+        "Option D": "To track employee attendance",
+        "Correct Option": "A",
+        "Explanation": "A penetration testing report details the findings and suggests corrective measures to improve security."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which practice involves reviewing changes to code and configurations to prevent security flaws?",
+        "Option A": "Change management",
+        "Option B": "Overclocking",
+        "Option C": "Data compression",
+        "Option D": "File defragmentation",
+        "Correct Option": "A",
+        "Explanation": "Change management ensures that modifications are properly reviewed and tested to maintain security."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is the benefit of implementing the principle of least privilege?",
+        "Option A": "Minimizing access rights to reduce the potential impact of a breach",
+        "Option B": "Allowing all users to have administrative rights",
+        "Option C": "Eliminating the need for user authentication",
+        "Option D": "Automatically encrypting all files",
+        "Correct Option": "A",
+        "Explanation": "The principle of least privilege limits user access to only what is necessary, reducing potential damage if an account is compromised."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which tool is popular for conducting comprehensive vulnerability assessments?",
+        "Option A": "Nessus",
+        "Option B": "Photoshop",
+        "Option C": "Word",
+        "Option D": "Excel",
+        "Correct Option": "A",
+        "Explanation": "Nessus is a widely used vulnerability scanner that helps identify security weaknesses."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the primary function of intrusion prevention systems (IPS)?",
+        "Option A": "To detect and block suspicious network activities in real time",
+        "Option B": "To compile system logs for later analysis",
+        "Option C": "To manage system backups automatically",
+        "Option D": "To increase the speed of data transfers",
+        "Correct Option": "A",
+        "Explanation": "IPS solutions actively block detected threats as they occur, preventing potential damage."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which type of encryption is generally considered more secure for data in transit?",
+        "Option A": "Asymmetric encryption",
+        "Option B": "Symmetric encryption",
+        "Option C": "No encryption",
+        "Option D": "Base64 encoding",
+        "Correct Option": "A",
+        "Explanation": "Asymmetric encryption, which uses public and private key pairs, is commonly used to secure data transmitted over insecure channels."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is a digital signature used for?",
+        "Option A": "To verify the authenticity and integrity of digital documents",
+        "Option B": "To compress large files",
+        "Option C": "To generate random encryption keys",
+        "Option D": "To speed up file transfers",
+        "Correct Option": "A",
+        "Explanation": "Digital signatures authenticate the source and ensure that data has not been altered."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the primary purpose of a Certificate Authority (CA) in a public key infrastructure?",
+        "Option A": "To verify and issue digital certificates that confirm the identity of entities",
+        "Option B": "To store encrypted data",
+        "Option C": "To manage network traffic",
+        "Option D": "To create cryptographic hash functions",
+        "Correct Option": "A",
+        "Explanation": "A Certificate Authority validates identities and issues digital certificates, enabling trust in secure communications."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What does a vulnerability scanner do?",
+        "Option A": "Automatically scans systems for known security vulnerabilities",
+        "Option B": "Encrypts data during transmission",
+        "Option C": "Monitors user behavior for insider threats",
+        "Option D": "Updates system software automatically",
+        "Correct Option": "A",
+        "Explanation": "Vulnerability scanners identify potential weaknesses by checking systems against known vulnerability databases."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which of the following is a method to mitigate brute-force attacks?",
+        "Option A": "Implementing account lockout policies after a number of failed attempts",
+        "Option B": "Disabling password requirements",
+        "Option C": "Allowing unlimited login attempts",
+        "Option D": "Using default passwords",
+        "Correct Option": "A",
+        "Explanation": "Account lockout policies deter brute-force attacks by temporarily disabling accounts after several failed login attempts."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is a risk register?",
+        "Option A": "A document that logs identified risks and tracks mitigation measures",
+        "Option B": "A list of all installed software on a system",
+        "Option C": "A database of encrypted files",
+        "Option D": "A backup of network configurations",
+        "Correct Option": "A",
+        "Explanation": "A risk register records potential risks along with their impact, likelihood, and remediation plans."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is a common goal of cybersecurity awareness training?",
+        "Option A": "To educate users about threats and best practices to reduce security risks",
+        "Option B": "To teach programming languages",
+        "Option C": "To configure firewalls automatically",
+        "Option D": "To develop encryption algorithms",
+        "Correct Option": "A",
+        "Explanation": "Cybersecurity awareness training helps users recognize threats and follow best practices to protect information."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which practice is crucial for maintaining a secure environment?",
+        "Option A": "Regularly applying patches and updates to address vulnerabilities",
+        "Option B": "Ignoring software updates to maintain system stability",
+        "Option C": "Disabling antivirus programs for speed",
+        "Option D": "Using default settings for all security configurations",
+        "Correct Option": "A",
+        "Explanation": "Consistent patch management is critical to close vulnerabilities and ensure system security over time."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

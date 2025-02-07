@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is computer software?",
+        "Option A": "A collection of programs and data",
+        "Option B": "The physical parts of a computer",
+        "Option C": "A type of network cable",
+        "Option D": "An electrical circuit board",
+        "Correct Option": "A",
+        "Explanation": "Software consists of programs and data that instruct hardware to perform tasks."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following best describes system software?",
+        "Option A": "Software designed to manage computer resources",
+        "Option B": "Software used to create multimedia",
+        "Option C": "A game application",
+        "Option D": "A set of office productivity tools",
+        "Correct Option": "A",
+        "Explanation": "System software manages and coordinates hardware components and provides a platform for applications."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which of the following is an example of system software?",
+        "Option A": "Windows OS",
+        "Option B": "Microsoft Word",
+        "Option C": "Google Chrome",
+        "Option D": "Adobe Photoshop",
+        "Correct Option": "A",
+        "Explanation": "Windows OS is an operating system that manages computer hardware and software resources."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is the primary function of an operating system?",
+        "Option A": "To manage hardware and software resources",
+        "Option B": "To design websites",
+        "Option C": "To create digital art",
+        "Option D": "To compile programming code",
+        "Correct Option": "A",
+        "Explanation": "An operating system allocates hardware resources and provides common services for computer programs."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which component is considered the core of an operating system?",
+        "Option A": "Kernel",
+        "Option B": "Compiler",
+        "Option C": "Application program",
+        "Option D": "Utility tool",
+        "Correct Option": "A",
+        "Explanation": "The kernel is the central component responsible for managing system resources and hardware."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What does utility software refer to?",
+        "Option A": "Programs that perform maintenance and optimization tasks",
+        "Option B": "Applications for word processing",
+        "Option C": "Graphics editing programs",
+        "Option D": "Games and entertainment software",
+        "Correct Option": "A",
+        "Explanation": "Utility software performs system maintenance tasks like disk cleanup and antivirus scanning."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which of the following is an example of utility software?",
+        "Option A": "Disk cleanup tool",
+        "Option B": "Web browser",
+        "Option C": "Word processor",
+        "Option D": "Media player",
+        "Correct Option": "A",
+        "Explanation": "A disk cleanup tool helps manage and optimize storage by removing unnecessary files."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What role does a device driver play in system software?",
+        "Option A": "It enables the operating system to communicate with hardware devices",
+        "Option B": "It edits multimedia files",
+        "Option C": "It creates spreadsheets",
+        "Option D": "It manages user emails",
+        "Correct Option": "A",
+        "Explanation": "Device drivers are software components that allow the OS to control and communicate with hardware."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which of the following is NOT a function of system software?",
+        "Option A": "Creating user documents",
+        "Option B": "Managing system resources",
+        "Option C": "Handling file systems",
+        "Option D": "Providing a user interface",
+        "Correct Option": "A",
+        "Explanation": "Creating user documents is the function of application software, not system software."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is a bootloader?",
+        "Option A": "A program that loads the operating system during startup",
+        "Option B": "A tool for editing text files",
+        "Option C": "A type of utility software for disk repair",
+        "Option D": "A compiler used in programming",
+        "Correct Option": "A",
+        "Explanation": "A bootloader is a small program that initializes hardware and loads the operating system into memory."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which operating system is known for its extensive command-line interface?",
+        "Option A": "Linux",
+        "Option B": "macOS",
+        "Option C": "Windows 10",
+        "Option D": "iOS",
+        "Correct Option": "A",
+        "Explanation": "Linux is renowned for its powerful command-line interface, although other OSs also provide CLI options."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is the primary purpose of system updates in an OS?",
+        "Option A": "To enhance security and fix bugs",
+        "Option B": "To install new hardware",
+        "Option C": "To change the color scheme of the desktop",
+        "Option D": "To increase the screen resolution",
+        "Correct Option": "A",
+        "Explanation": "System updates often include security patches and bug fixes to improve stability and performance."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What does a graphical user interface (GUI) provide in an operating system?",
+        "Option A": "A visual environment for user interaction",
+        "Option B": "A method for compiling code",
+        "Option C": "Direct hardware manipulation",
+        "Option D": "A tool for managing system logs",
+        "Correct Option": "A",
+        "Explanation": "A GUI offers a visual way for users to interact with the operating system and applications."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What does multitasking in an operating system refer to?",
+        "Option A": "Running multiple applications simultaneously",
+        "Option B": "Connecting multiple monitors",
+        "Option C": "Installing several operating systems on one machine",
+        "Option D": "Updating hardware drivers automatically",
+        "Correct Option": "A",
+        "Explanation": "Multitasking allows the OS to run more than one program at the same time."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which of the following utility programs is designed to protect a computer from malicious software?",
+        "Option A": "Antivirus software",
+        "Option B": "Word processor",
+        "Option C": "Spreadsheet application",
+        "Option D": "Media player",
+        "Correct Option": "A",
+        "Explanation": "Antivirus software scans, detects, and removes malware from the computer."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which system software component is responsible for managing file storage?",
+        "Option A": "File management system",
+        "Option B": "Web browser",
+        "Option C": "Presentation software",
+        "Option D": "Database application",
+        "Correct Option": "A",
+        "Explanation": "The file management system organizes and controls data storage and retrieval in the OS."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What does the system scheduler in an operating system do?",
+        "Option A": "Allocates CPU time to various processes",
+        "Option B": "Designs user interfaces",
+        "Option C": "Compiles source code",
+        "Option D": "Manages network connections",
+        "Correct Option": "A",
+        "Explanation": "The system scheduler allocates processing time among running processes to optimize performance."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which operating system is developed by Apple Inc.?",
+        "Option A": "macOS",
+        "Option B": "Linux",
+        "Option C": "Windows",
+        "Option D": "Android",
+        "Correct Option": "A",
+        "Explanation": "macOS is Apple Inc.'s operating system used in Mac computers."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is virtualization in the context of system software?",
+        "Option A": "Creating virtual versions of computing resources",
+        "Option B": "Upgrading the physical hardware",
+        "Option C": "Designing user interfaces",
+        "Option D": "Encrypting system files",
+        "Correct Option": "A",
+        "Explanation": "Virtualization allows the creation of virtual machines that simulate physical computers."
+    },
+    {
+        "Q.No": "20",
+        "Question": "Which of the following is an example of a command-line shell?",
+        "Option A": "Bash",
+        "Option B": "Microsoft Word",
+        "Option C": "Adobe Reader",
+        "Option D": "Google Chrome",
+        "Correct Option": "A",
+        "Explanation": "Bash is a popular command-line shell used primarily in Unix and Linux systems."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is application software?",
+        "Option A": "Programs designed to help users perform specific tasks",
+        "Option B": "Software that manages hardware resources",
+        "Option C": "Low-level code that boots the computer",
+        "Option D": "Firmware integrated into the motherboard",
+        "Correct Option": "A",
+        "Explanation": "Application software provides tools for users to perform tasks such as document creation, browsing, or multimedia editing."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which of the following is an example of application software?",
+        "Option A": "Microsoft Word",
+        "Option B": "Linux kernel",
+        "Option C": "Disk defragmenter",
+        "Option D": "Device driver",
+        "Correct Option": "A",
+        "Explanation": "Microsoft Word is a word processor used for creating and editing text documents."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which category of application software does a word processor belong to?",
+        "Option A": "Productivity software",
+        "Option B": "System utility",
+        "Option C": "Programming tool",
+        "Option D": "Multimedia software",
+        "Correct Option": "A",
+        "Explanation": "Word processors are part of productivity software that help users create and manage documents."
+    },
+    {
+        "Q.No": "24",
+        "Question": "Which of the following is a popular web browser?",
+        "Option A": "Google Chrome",
+        "Option B": "Windows Explorer",
+        "Option C": "Notepad",
+        "Option D": "Microsoft Paint",
+        "Correct Option": "A",
+        "Explanation": "Google Chrome is a widely used web browser for accessing the internet."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What differentiates application software from system software?",
+        "Option A": "It directly assists users with specific tasks",
+        "Option B": "It manages computer hardware resources",
+        "Option C": "It controls the computer’s boot process",
+        "Option D": "It handles low-level system operations",
+        "Correct Option": "A",
+        "Explanation": "Application software is designed for end-user tasks, while system software manages the hardware and core functions of a computer."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which type of application software is primarily used for browsing the internet?",
+        "Option A": "Web browser",
+        "Option B": "Spreadsheet",
+        "Option C": "Word processor",
+        "Option D": "Compiler",
+        "Correct Option": "A",
+        "Explanation": "A web browser is designed to access and display web pages on the internet."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which feature is commonly found in word processing software?",
+        "Option A": "Spell checking and formatting tools",
+        "Option B": "File system management",
+        "Option C": "Process scheduling",
+        "Option D": "Kernel optimization",
+        "Correct Option": "A",
+        "Explanation": "Word processors include features like spell checking, formatting, and editing tools to enhance document creation."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which of the following is an example of a spreadsheet application?",
+        "Option A": "Microsoft Excel",
+        "Option B": "Adobe Photoshop",
+        "Option C": "Mozilla Firefox",
+        "Option D": "Windows Media Player",
+        "Correct Option": "A",
+        "Explanation": "Microsoft Excel is a spreadsheet program used for organizing and analyzing data."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What type of application software is used to create and deliver presentations?",
+        "Option A": "Presentation software",
+        "Option B": "System utility",
+        "Option C": "Programming environment",
+        "Option D": "Antivirus program",
+        "Correct Option": "A",
+        "Explanation": "Presentation software (like Microsoft PowerPoint) is used for creating slide shows and visual presentations."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which application is typically used for managing and organizing emails?",
+        "Option A": "Email client",
+        "Option B": "Word processor",
+        "Option C": "Disk cleanup utility",
+        "Option D": "Compiler",
+        "Correct Option": "A",
+        "Explanation": "An email client (like Microsoft Outlook) is used to send, receive, and organize email messages."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is an example of a media player application?",
+        "Option A": "VLC Media Player",
+        "Option B": "Windows Command Prompt",
+        "Option C": "Notepad",
+        "Option D": "Calculator",
+        "Correct Option": "A",
+        "Explanation": "VLC Media Player is used for playing audio and video files."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What is the main purpose of application software?",
+        "Option A": "To enable users to perform specific tasks and improve productivity",
+        "Option B": "To manage computer hardware resources",
+        "Option C": "To provide low-level system functions",
+        "Option D": "To control peripheral devices",
+        "Correct Option": "A",
+        "Explanation": "Application software is designed to help users accomplish various tasks such as document editing, web browsing, and data analysis."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following is considered a productivity suite?",
+        "Option A": "Office suites",
+        "Option B": "Operating systems",
+        "Option C": "Compiler collections",
+        "Option D": "Device drivers",
+        "Correct Option": "A",
+        "Explanation": "Office suites include a collection of applications such as word processors, spreadsheets, and presentation tools."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is the main function of a PDF reader?",
+        "Option A": "To view and interact with PDF documents",
+        "Option B": "To compile programming code",
+        "Option C": "To manage system processes",
+        "Option D": "To edit image files",
+        "Correct Option": "A",
+        "Explanation": "A PDF reader enables users to view and navigate documents in PDF format."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which of the following is a benefit of using application software?",
+        "Option A": "Increased productivity and ease of task management",
+        "Option B": "Direct manipulation of hardware circuits",
+        "Option C": "Kernel-level process control",
+        "Option D": "Real-time system scheduling",
+        "Correct Option": "A",
+        "Explanation": "Application software helps users perform tasks more efficiently and effectively."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which application software is commonly used for digital photo editing?",
+        "Option A": "Adobe Photoshop",
+        "Option B": "Linux kernel",
+        "Option C": "Disk cleanup utility",
+        "Option D": "Command Prompt",
+        "Correct Option": "A",
+        "Explanation": "Adobe Photoshop is a popular application for editing and enhancing digital images."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What distinguishes a web browser from other types of application software?",
+        "Option A": "It enables access to and navigation of the internet",
+        "Option B": "It manages hardware resources",
+        "Option C": "It compiles source code",
+        "Option D": "It performs system backups",
+        "Correct Option": "A",
+        "Explanation": "Web browsers are specifically designed to retrieve, present, and traverse information on the World Wide Web."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which application software is used for database management?",
+        "Option A": "Microsoft Access",
+        "Option B": "Windows OS",
+        "Option C": "Adobe Illustrator",
+        "Option D": "VLC Media Player",
+        "Correct Option": "A",
+        "Explanation": "Microsoft Access is a database management system used for creating and managing databases."
+    },
+    {
+        "Q.No": "39",
+        "Question": "Which application would you use to manage your emails?",
+        "Option A": "Email client",
+        "Option B": "Spreadsheet program",
+        "Option C": "System utility",
+        "Option D": "IDE",
+        "Correct Option": "A",
+        "Explanation": "An email client is specifically designed to handle email communication and management."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following is NOT typically a function of application software?",
+        "Option A": "Direct hardware control",
+        "Option B": "Providing user interfaces for specific tasks",
+        "Option C": "Processing and analyzing data",
+        "Option D": "Creating and editing documents",
+        "Correct Option": "A",
+        "Explanation": "Direct hardware control is managed by system software, not by application software."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What does multimedia software enable users to do?",
+        "Option A": "Create and edit audio, video, and graphics content",
+        "Option B": "Manage system processes",
+        "Option C": "Update device drivers",
+        "Option D": "Partition hard drives",
+        "Correct Option": "A",
+        "Explanation": "Multimedia software allows users to create, edit, and manage various forms of media content."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which of the following is an example of a text editor application?",
+        "Option A": "Notepad",
+        "Option B": "Windows Explorer",
+        "Option C": "Microsoft PowerPoint",
+        "Option D": "Command Prompt",
+        "Correct Option": "A",
+        "Explanation": "Notepad is a simple text editor used for writing and editing plain text."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which application software is popular for video conferencing?",
+        "Option A": "Zoom",
+        "Option B": "Microsoft Word",
+        "Option C": "Disk Defragmenter",
+        "Option D": "Adobe Flash Player",
+        "Correct Option": "A",
+        "Explanation": "Zoom is a widely used application for video conferencing and online meetings."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What type of application software is used to manage digital calendars and schedules?",
+        "Option A": "Calendar application",
+        "Option B": "Compiler",
+        "Option C": "Device driver",
+        "Option D": "Disk utility",
+        "Correct Option": "A",
+        "Explanation": "Calendar applications help users schedule events, appointments, and reminders."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which application is designed for performing statistical analysis?",
+        "Option A": "Statistical software",
+        "Option B": "Web browser",
+        "Option C": "Operating system",
+        "Option D": "Multimedia editor",
+        "Correct Option": "A",
+        "Explanation": "Statistical software (like SPSS or R) is used for analyzing data and performing statistical calculations."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is programming software?",
+        "Option A": "Tools used for writing, testing, and debugging programs",
+        "Option B": "Applications used solely for word processing",
+        "Option C": "Software that manages system hardware",
+        "Option D": "Utility software for system maintenance",
+        "Correct Option": "A",
+        "Explanation": "Programming software includes tools that assist developers in creating, testing, and maintaining code."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which of the following is an example of a compiler?",
+        "Option A": "GCC (GNU Compiler Collection)",
+        "Option B": "Microsoft Excel",
+        "Option C": "Adobe Acrobat",
+        "Option D": "Mozilla Firefox",
+        "Correct Option": "A",
+        "Explanation": "GCC is a compiler that translates source code written in languages like C into machine code."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What does an Integrated Development Environment (IDE) provide?",
+        "Option A": "A complete environment including a code editor, debugger, and build tools",
+        "Option B": "Only a text editor for writing code",
+        "Option C": "A simple command-line interface for system tasks",
+        "Option D": "A web browser for testing websites",
+        "Correct Option": "A",
+        "Explanation": "An IDE integrates multiple tools to streamline the development process."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which of the following is a popular IDE for Java development?",
+        "Option A": "Eclipse",
+        "Option B": "Notepad",
+        "Option C": "Microsoft Paint",
+        "Option D": "Windows Media Player",
+        "Correct Option": "A",
+        "Explanation": "Eclipse is a widely used open-source IDE for Java and other programming languages."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is the primary function of a debugger in programming software?",
+        "Option A": "To identify and help fix errors in code",
+        "Option B": "To design graphical user interfaces",
+        "Option C": "To compile high-level code into machine language",
+        "Option D": "To perform system backups",
+        "Correct Option": "A",
+        "Explanation": "A debugger is used to test and troubleshoot code by identifying errors and issues."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which programming tool translates high-level source code into machine code?",
+        "Option A": "Compiler",
+        "Option B": "Web browser",
+        "Option C": "Word processor",
+        "Option D": "Disk utility",
+        "Correct Option": "A",
+        "Explanation": "A compiler converts human-readable code into machine language that can be executed by the CPU."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is an interpreter in the context of programming?",
+        "Option A": "A tool that executes code line-by-line",
+        "Option B": "A program that compiles code before execution",
+        "Option C": "A type of system software",
+        "Option D": "A hardware component for processing graphics",
+        "Correct Option": "A",
+        "Explanation": "An interpreter directly executes instructions written in a programming language without prior compilation."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which of the following best describes source code?",
+        "Option A": "The human-readable instructions written in a programming language",
+        "Option B": "The binary output produced after compilation",
+        "Option C": "The machine code stored in ROM",
+        "Option D": "The configuration settings of an operating system",
+        "Correct Option": "A",
+        "Explanation": "Source code is the original code written by programmers in high-level languages."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the role of a version control system in software development?",
+        "Option A": "To manage and track changes to source code over time",
+        "Option B": "To compile code into executables",
+        "Option C": "To serve as an email client for developers",
+        "Option D": "To edit multimedia files",
+        "Correct Option": "A",
+        "Explanation": "Version control systems like Git help manage code changes and collaboration among developers."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which of the following is a common version control system?",
+        "Option A": "Git",
+        "Option B": "Microsoft Word",
+        "Option C": "Adobe Photoshop",
+        "Option D": "Windows Media Player",
+        "Correct Option": "A",
+        "Explanation": "Git is a popular version control system used to track changes and manage source code."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is a syntax error in programming?",
+        "Option A": "An error that occurs when code violates the rules of the programming language",
+        "Option B": "An error caused by hardware failure",
+        "Option C": "An error in the computer’s BIOS",
+        "Option D": "An error in the operating system’s kernel",
+        "Correct Option": "A",
+        "Explanation": "A syntax error occurs when the code does not follow the correct structure or grammar of the programming language."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which programming tool automates the process of building and compiling code?",
+        "Option A": "Build automation tool",
+        "Option B": "Spreadsheet application",
+        "Option C": "Web browser",
+        "Option D": "Antivirus software",
+        "Correct Option": "A",
+        "Explanation": "Build automation tools, such as Make or Maven, automate compiling and linking of source code."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is one major advantage of using an IDE over a simple text editor?",
+        "Option A": "Integrated debugging and build tools",
+        "Option B": "Lower memory usage",
+        "Option C": "Simplified hardware management",
+        "Option D": "Direct system updates",
+        "Correct Option": "A",
+        "Explanation": "IDEs provide many integrated features (e.g., debugging, code completion) that streamline software development."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which of the following is an example of a lightweight code editor?",
+        "Option A": "Sublime Text",
+        "Option B": "Visual Studio",
+        "Option C": "Eclipse",
+        "Option D": "NetBeans",
+        "Correct Option": "A",
+        "Explanation": "Sublime Text is known for being a fast, lightweight editor favored by many developers."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What does code refactoring mean?",
+        "Option A": "Improving the structure and readability of code without changing its functionality",
+        "Option B": "Removing all comments from the code",
+        "Option C": "Encrypting the code for security purposes",
+        "Option D": "Translating code from one programming language to another",
+        "Correct Option": "A",
+        "Explanation": "Refactoring involves reorganizing code to improve its structure and maintainability without altering its external behavior."
+    },
+    {
+        "Q.No": "61",
+        "Question": "Which of the following best describes an algorithm?",
+        "Option A": "A step-by-step procedure for solving a problem",
+        "Option B": "A type of computer hardware",
+        "Option C": "A user interface design method",
+        "Option D": "A system security protocol",
+        "Correct Option": "A",
+        "Explanation": "An algorithm is a defined set of steps used to solve computational problems."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the purpose of a build system in programming?",
+        "Option A": "To automate the compilation and linking of source code into executables",
+        "Option B": "To manage hardware drivers",
+        "Option C": "To create graphic designs",
+        "Option D": "To monitor network traffic",
+        "Correct Option": "A",
+        "Explanation": "Build systems streamline the process of converting source code into runnable programs."
+    },
+    {
+        "Q.No": "63",
+        "Question": "Which programming paradigm focuses on objects and classes?",
+        "Option A": "Object-oriented programming",
+        "Option B": "Procedural programming",
+        "Option C": "Functional programming",
+        "Option D": "Assembly programming",
+        "Correct Option": "A",
+        "Explanation": "Object-oriented programming organizes code around objects and classes to model real-world entities."
+    },
+    {
+        "Q.No": "64",
+        "Question": "What is one benefit of using a compiler?",
+        "Option A": "Faster execution of programs compared to interpreted code",
+        "Option B": "Direct real-time code editing",
+        "Option C": "Automatic hardware configuration",
+        "Option D": "Built-in operating system updates",
+        "Correct Option": "A",
+        "Explanation": "Compiled code is generally faster because it is translated into efficient machine code prior to execution."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the primary difference between compiled and interpreted languages?",
+        "Option A": "Compiled languages are translated into machine code before execution; interpreted languages are executed line-by-line",
+        "Option B": "There is no significant difference",
+        "Option C": "Interpreted languages always run faster",
+        "Option D": "Compiled languages are used only for system software",
+        "Correct Option": "A",
+        "Explanation": "The main difference is in how code is translated and executed, affecting performance and error detection."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which programming language is typically compiled into bytecode?",
+        "Option A": "Java",
+        "Option B": "Python",
+        "Option C": "JavaScript",
+        "Option D": "Ruby",
+        "Correct Option": "A",
+        "Explanation": "Java source code is compiled into bytecode, which runs on the Java Virtual Machine (JVM)."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which tool is often used for automated testing in software development?",
+        "Option A": "Unit testing framework",
+        "Option B": "Disk defragmenter",
+        "Option C": "Media player",
+        "Option D": "File compression tool",
+        "Correct Option": "A",
+        "Explanation": "Unit testing frameworks (like JUnit) help developers write and run tests for individual code units."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What does “integrated” in Integrated Development Environment (IDE) imply?",
+        "Option A": "Multiple development tools (editor, debugger, compiler) are combined in one application",
+        "Option B": "The integration of hardware and software",
+        "Option C": "A built-in operating system feature",
+        "Option D": "Combining multiple computer networks",
+        "Correct Option": "A",
+        "Explanation": "The “integrated” nature of an IDE means it brings together various development tools under one interface."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which feature is commonly found in modern IDEs?",
+        "Option A": "Syntax highlighting",
+        "Option B": "Disk defragmentation",
+        "Option C": "Virus scanning",
+        "Option D": "File encryption",
+        "Correct Option": "A",
+        "Explanation": "Syntax highlighting improves code readability by color-coding elements of the source code."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the purpose of code completion in an IDE?",
+        "Option A": "To assist programmers by suggesting possible code completions",
+        "Option B": "To compile code faster",
+        "Option C": "To manage system hardware",
+        "Option D": "To display multimedia content",
+        "Correct Option": "A",
+        "Explanation": "Code completion helps speed up coding by automatically suggesting possible continuations based on context."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which of the following is an example of a debugging feature in an IDE?",
+        "Option A": "Breakpoint setting",
+        "Option B": "File formatting",
+        "Option C": "Disk cleanup",
+        "Option D": "Screen capture",
+        "Correct Option": "A",
+        "Explanation": "Setting breakpoints allows developers to pause program execution and inspect the state of the code."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What does the term “runtime environment” refer to?",
+        "Option A": "The environment in which a program is executed",
+        "Option B": "The source code of a program",
+        "Option C": "The compiler settings for a project",
+        "Option D": "The hardware specifications of a computer",
+        "Correct Option": "A",
+        "Explanation": "A runtime environment provides the necessary services and resources for a program to execute."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which of the following is NOT typically a feature of programming software?",
+        "Option A": "File management for multimedia content",
+        "Option B": "Code editing and debugging",
+        "Option C": "Version control integration",
+        "Option D": "Automated build processes",
+        "Correct Option": "A",
+        "Explanation": "Multimedia file management is not a typical function of programming software."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is the function of a linker in software development?",
+        "Option A": "To combine multiple object files into a single executable",
+        "Option B": "To edit source code files",
+        "Option C": "To provide a graphical user interface",
+        "Option D": "To check code for syntax errors",
+        "Correct Option": "A",
+        "Explanation": "A linker combines object files generated by a compiler into a complete executable program."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which tool helps programmers identify performance bottlenecks in their code?",
+        "Option A": "Profiler",
+        "Option B": "Word processor",
+        "Option C": "Disk utility",
+        "Option D": "Media player",
+        "Correct Option": "A",
+        "Explanation": "A profiler analyzes code performance to identify slow or inefficient sections during execution."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What does “source code management” refer to?",
+        "Option A": "Tracking and controlling changes to code over time",
+        "Option B": "Managing hardware drivers",
+        "Option C": "Editing image files",
+        "Option D": "Configuring system security settings",
+        "Correct Option": "A",
+        "Explanation": "Source code management systems help track code changes and facilitate collaboration among developers."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which tool converts human-readable assembly instructions into object code?",
+        "Option A": "Assembler",
+        "Option B": "Web browser",
+        "Option C": "Word processor",
+        "Option D": "Disk defragmenter",
+        "Correct Option": "A",
+        "Explanation": "An assembler translates assembly language into machine-readable object code."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What does API stand for in programming?",
+        "Option A": "Application Programming Interface",
+        "Option B": "Automated Process Integration",
+        "Option C": "Advanced Programming Instruction",
+        "Option D": "Applied Protocol Interface",
+        "Correct Option": "A",
+        "Explanation": "An API is a set of protocols and tools for building software applications."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following best describes open-source programming software?",
+        "Option A": "Software whose source code is publicly available for use and modification",
+        "Option B": "Software that is only available for purchase",
+        "Option C": "Software that runs exclusively on one platform",
+        "Option D": "Software with built-in proprietary restrictions",
+        "Correct Option": "A",
+        "Explanation": "Open-source software allows users to access, modify, and distribute its source code."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is the purpose of a code repository?",
+        "Option A": "To store and manage different versions of source code",
+        "Option B": "To run compiled binaries",
+        "Option C": "To edit multimedia files",
+        "Option D": "To manage system hardware settings",
+        "Correct Option": "A",
+        "Explanation": "Code repositories are used to store, track, and collaborate on source code changes."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which tool is commonly used for continuous integration in software development?",
+        "Option A": "Jenkins",
+        "Option B": "Microsoft Word",
+        "Option C": "Adobe Photoshop",
+        "Option D": "VLC Media Player",
+        "Correct Option": "A",
+        "Explanation": "Jenkins is a widely used continuous integration tool that automates the build and testing of code."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is a software framework?",
+        "Option A": "A reusable set of libraries and tools to help develop applications",
+        "Option B": "A type of operating system",
+        "Option C": "A hardware configuration standard",
+        "Option D": "A proprietary multimedia editor",
+        "Correct Option": "A",
+        "Explanation": "A framework provides a structured foundation and pre-written code to ease application development."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which programming language is known for its use in web development and is typically interpreted?",
+        "Option A": "Python",
+        "Option B": "C",
+        "Option C": "C++",
+        "Option D": "Java",
+        "Correct Option": "A",
+        "Explanation": "Python is a high-level language often used in web development and is typically executed by an interpreter."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is a key benefit of using an IDE during software development?",
+        "Option A": "Integrated debugging, compiling, and source code management",
+        "Option B": "Direct manipulation of system hardware",
+        "Option C": "Automatic operating system updates",
+        "Option D": "Built-in disk defragmentation",
+        "Correct Option": "A",
+        "Explanation": "IDEs offer an all-in-one environment that integrates multiple tools to simplify and accelerate development."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What does static code analysis involve?",
+        "Option A": "Analyzing source code for errors without executing it",
+        "Option B": "Running the code to detect runtime issues",
+        "Option C": "Encrypting the source code for security",
+        "Option D": "Deploying the code to a production server",
+        "Correct Option": "A",
+        "Explanation": "Static code analysis examines the code to identify potential errors and adherence to coding standards without executing the program."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which of the following is NOT a typical function of programming software?",
+        "Option A": "Direct hardware management",
+        "Option B": "Automating repetitive coding tasks",
+        "Option C": "Code refactoring",
+        "Option D": "Syntax error detection",
+        "Correct Option": "A",
+        "Explanation": "Programming software is focused on helping write and debug code, not on managing hardware directly."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is the role of a software debugger?",
+        "Option A": "To help locate and resolve errors in source code",
+        "Option B": "To compile source code into executable programs",
+        "Option C": "To manage operating system resources",
+        "Option D": "To create multimedia presentations",
+        "Correct Option": "A",
+        "Explanation": "A debugger is a tool that allows developers to monitor program execution and identify bugs in the code."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What does the process of compilation involve?",
+        "Option A": "Converting source code into machine-executable code",
+        "Option B": "Interpreting code line-by-line during execution",
+        "Option C": "Compressing files for storage",
+        "Option D": "Encrypting data for security purposes",
+        "Correct Option": "A",
+        "Explanation": "Compilation translates high-level source code into machine code that the CPU can execute."
+    },
+    {
+        "Q.No": "89",
+        "Question": "Which programming software feature assists in identifying potential errors as you write code?",
+        "Option A": "Syntax checking",
+        "Option B": "Disk formatting",
+        "Option C": "File encryption",
+        "Option D": "Process scheduling",
+        "Correct Option": "A",
+        "Explanation": "Syntax checking continuously analyzes the code for errors and highlights them during development."
+    },
+    {
+        "Q.No": "90",
+        "Question": "What is one common advantage of using open-source programming tools?",
+        "Option A": "Access to source code for customization and community support",
+        "Option B": "Increased licensing fees",
+        "Option C": "Limited functionality due to restrictions",
+        "Option D": "Mandatory use of a specific programming language",
+        "Correct Option": "A",
+        "Explanation": "Open-source tools provide transparency and flexibility, allowing developers to modify and improve the software."
+    },
+    {
+        "Q.No": "91",
+        "Question": "Which tool is used to manage software dependencies in many programming projects?",
+        "Option A": "Package manager",
+        "Option B": "Web browser",
+        "Option C": "Media player",
+        "Option D": "Disk utility",
+        "Correct Option": "A",
+        "Explanation": "A package manager automates the installation, upgrading, and configuration of software dependencies."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What does code refactoring aim to achieve?",
+        "Option A": "Improving code readability and structure without changing its functionality",
+        "Option B": "Adding new features to an application",
+        "Option C": "Encrypting source code for protection",
+        "Option D": "Removing all comments from the code",
+        "Correct Option": "A",
+        "Explanation": "Refactoring enhances the internal structure of code, making it more maintainable without altering its external behavior."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which of the following is a benefit of using high-level programming languages?",
+        "Option A": "Easier to write, read, and maintain code",
+        "Option B": "Direct control over hardware resources",
+        "Option C": "Faster execution than assembly language",
+        "Option D": "Minimal abstraction from machine code",
+        "Correct Option": "A",
+        "Explanation": "High-level languages provide abstraction that makes development easier and code more maintainable."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What does integrated version control in an IDE offer?",
+        "Option A": "Seamless source code management and collaboration",
+        "Option B": "Direct access to system hardware",
+        "Option C": "Automatic software licensing",
+        "Option D": "Built-in antivirus protection",
+        "Correct Option": "A",
+        "Explanation": "Integration with version control systems enables developers to manage code changes and collaborate effectively from within the IDE."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which programming software feature assists with real-time error detection?",
+        "Option A": "Linting",
+        "Option B": "Disk defragmentation",
+        "Option C": "File compression",
+        "Option D": "System backup",
+        "Correct Option": "A",
+        "Explanation": "Linting tools analyze code as it is written to flag potential errors and style issues immediately."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is continuous integration in software development?",
+        "Option A": "Regularly merging code changes and automatically testing them",
+        "Option B": "Manually compiling code after every change",
+        "Option C": "Scheduling periodic system restarts",
+        "Option D": "Using multiple monitors during coding sessions",
+        "Correct Option": "A",
+        "Explanation": "Continuous integration involves automatically testing and integrating code changes to catch issues early in development."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which of the following best describes a source code editor?",
+        "Option A": "A specialized text editor designed for writing and editing code",
+        "Option B": "A general-purpose word processor",
+        "Option C": "A system utility for disk cleanup",
+        "Option D": "A graphic design application",
+        "Correct Option": "A",
+        "Explanation": "Source code editors are optimized for writing and editing code, often featuring syntax highlighting and code completion."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the purpose of an API documentation tool?",
+        "Option A": "To generate and maintain documentation for software interfaces",
+        "Option B": "To compile source code into executables",
+        "Option C": "To manage system hardware drivers",
+        "Option D": "To edit multimedia content",
+        "Correct Option": "A",
+        "Explanation": "API documentation tools help developers create and update clear documentation for software libraries and interfaces."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which of the following is a benefit of using modular programming practices?",
+        "Option A": "Improved code reusability and easier maintenance",
+        "Option B": "Increased dependency on hardware manufacturers",
+        "Option C": "Direct manipulation of operating system kernels",
+        "Option D": "Requirement of specialized hardware for compilation",
+        "Correct Option": "A",
+        "Explanation": "Modular programming divides code into independent modules, enhancing reusability and simplifying maintenance."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is the primary role of an integrated debugger in an IDE?",
+        "Option A": "To assist in finding and resolving programming errors during code execution",
+        "Option B": "To compile source code into machine code automatically",
+        "Option C": "To manage user email accounts",
+        "Option D": "To edit multimedia presentations",
+        "Correct Option": "A",
+        "Explanation": "An integrated debugger helps developers step through code execution, inspect variables, and identify bugs effectively."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is a class in OOP?",
+        "Option A": "A blueprint for creating objects",
+        "Option B": "A function for dynamic memory allocation",
+        "Option C": "A method for encapsulating behavior only",
+        "Option D": "A type of variable declaration",
+        "Correct Option": "A",
+        "Explanation": "A class is a blueprint defining the structure and behavior (methods) of objects."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is an object in OOP?",
+        "Option A": "An instance of a class",
+        "Option B": "A static method",
+        "Option C": "A template for data",
+        "Option D": "A block of code without state",
+        "Correct Option": "A",
+        "Explanation": "An object is an instantiation of a class with its own state and behavior."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What does encapsulation mean in OOP?",
+        "Option A": "Bundling data and methods together in a class",
+        "Option B": "Inheriting properties from a parent class",
+        "Option C": "Overloading a method with multiple signatures",
+        "Option D": "Dynamically binding method calls",
+        "Correct Option": "A",
+        "Explanation": "Encapsulation combines data and behavior into a single unit and restricts direct access to some of an object's components."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What is inheritance in OOP?",
+        "Option A": "A mechanism where a new class acquires the properties of an existing class",
+        "Option B": "The process of combining two classes into one",
+        "Option C": "A method of overloading functions in a class",
+        "Option D": "The technique of hiding object data",
+        "Correct Option": "A",
+        "Explanation": "Inheritance allows a class (child) to inherit attributes and behaviors (methods) from another class (parent)."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What is polymorphism in OOP?",
+        "Option A": "The ability of objects to take on multiple forms through a common interface",
+        "Option B": "The process of encapsulating data and methods",
+        "Option C": "The mechanism to create abstract classes",
+        "Option D": "A design pattern to implement interfaces",
+        "Correct Option": "A",
+        "Explanation": "Polymorphism enables objects of different classes to be treated as objects of a common superclass, often using method overriding."
+    },
+    {
+        "Q.No": "6",
+        "Question": "What is abstraction in OOP?",
+        "Option A": "Hiding the complex implementation details and exposing only the essential features",
+        "Option B": "The act of inheriting methods from a parent class",
+        "Option C": "Overloading a method with different parameters",
+        "Option D": "Combining multiple classes into one",
+        "Correct Option": "A",
+        "Explanation": "Abstraction involves exposing only the necessary aspects of an object while hiding the internal implementation details."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is an interface in OOP?",
+        "Option A": "A contract that specifies methods a class must implement without providing their implementation",
+        "Option B": "A class that can be instantiated directly",
+        "Option C": "A mechanism to overload operators",
+        "Option D": "A template for creating static methods",
+        "Correct Option": "A",
+        "Explanation": "An interface defines a set of abstract methods that a class must implement, establishing a contract for behavior."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which access modifier restricts access to class members from outside the class?",
+        "Option A": "private",
+        "Option B": "public",
+        "Option C": "protected",
+        "Option D": "internal",
+        "Correct Option": "A",
+        "Explanation": "Private members are accessible only within the class itself."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which access modifier allows members to be accessible only in the same package or subclasses?",
+        "Option A": "protected",
+        "Option B": "public",
+        "Option C": "private",
+        "Option D": "static",
+        "Correct Option": "A",
+        "Explanation": "Protected members are accessible within the same package and in subclasses."
+    },
+    {
+        "Q.No": "10",
+        "Question": "What is a constructor?",
+        "Option A": "A special method used to initialize a new object",
+        "Option B": "A method that destroys an object",
+        "Option C": "A static function in a class",
+        "Option D": "A method used to encapsulate data",
+        "Correct Option": "A",
+        "Explanation": "A constructor initializes an object's state when it is created."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What is a destructor?",
+        "Option A": "A method automatically invoked to release resources when an object is destroyed",
+        "Option B": "A method that creates an object",
+        "Option C": "A method for copying objects",
+        "Option D": "A method for overloading operators",
+        "Correct Option": "A",
+        "Explanation": "A destructor is called when an object is about to be destroyed, used to clean up resources."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is a static member in a class?",
+        "Option A": "A member shared by all instances of the class",
+        "Option B": "A member that can be changed only at compile time",
+        "Option C": "A member that is unique to each object",
+        "Option D": "A member used only in inheritance",
+        "Correct Option": "A",
+        "Explanation": "Static members belong to the class itself rather than to any individual instance."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which OOP concept restricts direct access to some of an object's components?",
+        "Option A": "Encapsulation",
+        "Option B": "Inheritance",
+        "Option C": "Polymorphism",
+        "Option D": "Abstraction",
+        "Correct Option": "A",
+        "Explanation": "Encapsulation hides internal object details and allows controlled access through methods."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is method overloading?",
+        "Option A": "Defining multiple methods in the same class with the same name but different parameters",
+        "Option B": "Redefining a method in a subclass",
+        "Option C": "Changing a method's return type",
+        "Option D": "Hiding a method from outside classes",
+        "Correct Option": "A",
+        "Explanation": "Method overloading allows multiple methods with the same name but different parameter lists within the same class."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What is method overriding?",
+        "Option A": "A subclass provides its own implementation for a method defined in its superclass",
+        "Option B": "Defining multiple methods with the same name in one class",
+        "Option C": "Changing a method's parameters in a subclass",
+        "Option D": "Creating a static version of a method",
+        "Correct Option": "A",
+        "Explanation": "Method overriding occurs when a subclass redefines a method inherited from its superclass with a new implementation."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What does dynamic binding (late binding) mean?",
+        "Option A": "The method to call is determined at runtime based on the object’s type",
+        "Option B": "The method to call is determined at compile time",
+        "Option C": "Binding static variables to their values",
+        "Option D": "Linking libraries during compilation",
+        "Correct Option": "A",
+        "Explanation": "Dynamic binding resolves method calls at runtime, enabling polymorphism."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is multiple inheritance?",
+        "Option A": "A class inheriting from more than one superclass",
+        "Option B": "A class inheriting from one superclass",
+        "Option C": "A class that cannot be inherited",
+        "Option D": "A class that only implements interfaces",
+        "Correct Option": "A",
+        "Explanation": "Multiple inheritance allows a class to inherit properties and methods from more than one parent class."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which language does not support multiple inheritance for classes?",
+        "Option A": "Java",
+        "Option B": "C++",
+        "Option C": "Python",
+        "Option D": "Ruby",
+        "Correct Option": "A",
+        "Explanation": "Java does not allow multiple inheritance of classes; it uses interfaces to achieve similar behavior."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is an abstract class?",
+        "Option A": "A class that cannot be instantiated and may contain abstract methods",
+        "Option B": "A class with only static methods",
+        "Option C": "A class that must be inherited and can be instantiated",
+        "Option D": "A class with no methods",
+        "Correct Option": "A",
+        "Explanation": "An abstract class serves as a base for other classes and cannot be instantiated; it can contain abstract methods that subclasses must implement."
+    },
+    {
+        "Q.No": "20",
+        "Question": "How do you declare an abstract class in Java?",
+        "Option A": "Using the keyword abstract before the class declaration",
+        "Option B": "Using the keyword interface before the class name",
+        "Option C": "Using the keyword static before the class name",
+        "Option D": "Using the keyword final before the class name",
+        "Correct Option": "A",
+        "Explanation": "The abstract keyword is used to declare an abstract class in Java."
+    },
+    {
+        "Q.No": "21",
+        "Question": "What is an abstract method?",
+        "Option A": "A method declared without an implementation that must be overridden by subclasses",
+        "Option B": "A method with a complete implementation",
+        "Option C": "A method that cannot be overridden",
+        "Option D": "A method declared as static",
+        "Correct Option": "A",
+        "Explanation": "Abstract methods have no body and must be implemented by subclasses."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is an interface?",
+        "Option A": "A reference type that declares methods without implementing them",
+        "Option B": "A concrete class with full implementations",
+        "Option C": "A static class",
+        "Option D": "A method that handles multiple inheritance",
+        "Correct Option": "A",
+        "Explanation": "An interface defines a contract of methods that implementing classes must provide without any implementation details."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which keyword is used to implement an interface in Java?",
+        "Option A": "implements",
+        "Option B": "extends",
+        "Option C": "inherits",
+        "Option D": "interfaces",
+        "Correct Option": "A",
+        "Explanation": "The implements keyword is used in Java for a class to adhere to an interface's contract."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the primary benefit of using interfaces?",
+        "Option A": "They allow different classes to share a common contract without sharing implementation",
+        "Option B": "They allow multiple inheritance of implementation",
+        "Option C": "They automatically implement methods",
+        "Option D": "They hide the class details completely",
+        "Correct Option": "A",
+        "Explanation": "Interfaces enable disparate classes to implement the same set of methods, providing a common contract while allowing different implementations."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What does the 'this' keyword refer to in an instance method?",
+        "Option A": "The current object instance",
+        "Option B": "The parent class object",
+        "Option C": "The static context of the class",
+        "Option D": "The method itself",
+        "Correct Option": "A",
+        "Explanation": "The this keyword refers to the current object for which the method was called."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What does the 'super' keyword do?",
+        "Option A": "It refers to the parent class and is used to access its members",
+        "Option B": "It refers to a static method in the class",
+        "Option C": "It creates a new object of the same class",
+        "Option D": "It hides private members",
+        "Correct Option": "A",
+        "Explanation": "The super keyword is used to call methods and access variables from a parent class."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which concept allows a subclass to inherit fields and methods from its parent?",
+        "Option A": "Inheritance",
+        "Option B": "Encapsulation",
+        "Option C": "Abstraction",
+        "Option D": "Polymorphism",
+        "Correct Option": "A",
+        "Explanation": "Inheritance is the mechanism by which a subclass inherits attributes and behaviors from its parent class."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is method chaining?",
+        "Option A": "A technique where multiple methods are called sequentially on the same object, each returning the object",
+        "Option B": "Calling multiple methods simultaneously",
+        "Option C": "Overloading methods with the same name",
+        "Option D": "Using recursion in method calls",
+        "Correct Option": "A",
+        "Explanation": "Method chaining involves returning the object from methods so that multiple calls can be concatenated in a single statement."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What is constructor chaining?",
+        "Option A": "Calling one constructor from another within the same class or in a superclass",
+        "Option B": "Overloading a constructor with multiple parameters",
+        "Option C": "Creating multiple objects in sequence",
+        "Option D": "Invoking a method after object construction",
+        "Correct Option": "A",
+        "Explanation": "Constructor chaining is the process where one constructor calls another to reuse initialization code."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the role of a destructor?",
+        "Option A": "To perform cleanup before an object is destroyed",
+        "Option B": "To initialize an object",
+        "Option C": "To overload operators",
+        "Option D": "To override methods in a subclass",
+        "Correct Option": "A",
+        "Explanation": "A destructor releases resources and performs cleanup when an object is no longer needed."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is a singleton pattern?",
+        "Option A": "A design pattern that restricts a class to a single instance and provides a global point of access",
+        "Option B": "A pattern that allows multiple instances of a class",
+        "Option C": "A pattern used for method overloading",
+        "Option D": "A pattern that hides a class's constructor",
+        "Correct Option": "A",
+        "Explanation": "The singleton pattern ensures only one instance of a class exists and provides a single access point to it."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What is meant by 'loose coupling'?",
+        "Option A": "Minimizing dependencies between classes to improve modularity and maintainability",
+        "Option B": "Maximizing dependencies between classes",
+        "Option C": "Hiding all implementation details",
+        "Option D": "Relying solely on inheritance for code reuse",
+        "Correct Option": "A",
+        "Explanation": "Loose coupling reduces interdependencies between classes, making systems more maintainable and flexible."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which principle states that classes should be open for extension but closed for modification?",
+        "Option A": "Open/Closed Principle",
+        "Option B": "Liskov Substitution Principle",
+        "Option C": "Dependency Inversion Principle",
+        "Option D": "Single Responsibility Principle",
+        "Correct Option": "A",
+        "Explanation": "The Open/Closed Principle dictates that classes should be extendable without modifying their source code."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What does the Liskov Substitution Principle (LSP) imply?",
+        "Option A": "Subclasses should be replaceable for their base classes without altering the correctness of the program",
+        "Option B": "Classes should be open for modification",
+        "Option C": "Methods should be overloaded for different types",
+        "Option D": "Interfaces should be segregated",
+        "Correct Option": "A",
+        "Explanation": "LSP means that objects of a subclass should be able to replace objects of the superclass without affecting the program's correctness."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the Dependency Inversion Principle (DIP)?",
+        "Option A": "High-level modules should not depend on low-level modules; both should depend on abstractions",
+        "Option B": "Classes should have only one reason to change",
+        "Option C": "Subtypes must be substitutable for their base types",
+        "Option D": "Clients should not depend on interfaces they do not use",
+        "Correct Option": "A",
+        "Explanation": "DIP encourages decoupling by ensuring that high-level modules depend on abstractions rather than concrete implementations."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What does 'interface segregation' mean?",
+        "Option A": "Clients should not be forced to depend on methods they do not use",
+        "Option B": "Classes should inherit from multiple classes",
+        "Option C": "All methods should be implemented in a single interface",
+        "Option D": "Interfaces should be avoided for better performance",
+        "Correct Option": "A",
+        "Explanation": "The Interface Segregation Principle recommends that clients only depend on interfaces that are relevant to them."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is composition in OOP?",
+        "Option A": "A design technique where a class is composed of one or more objects from other classes, implying a \"\"has‑a\"\" relationship",
+        "Option B": "A form of inheritance where a class derives from multiple classes",
+        "Option C": "The act of hiding methods within a class",
+        "Option D": "Overloading a method in a subclass",
+        "Correct Option": "A",
+        "Explanation": "Composition involves building classes by including instances of other classes, promoting reusability and flexibility."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is the key difference between composition and inheritance?",
+        "Option A": "Composition models a \"\"has‑a\"\" relationship, while inheritance models an \"\"is‑a\"\" relationship",
+        "Option B": "Inheritance is used for code reuse; composition is not",
+        "Option C": "Composition requires abstract classes, inheritance does not",
+        "Option D": "There is no difference",
+        "Correct Option": "A",
+        "Explanation": "Composition implies that a class is made up of one or more objects (has‑a), whereas inheritance implies an \"\"is‑a\"\" relationship between classes."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is method hiding?",
+        "Option A": "When a subclass declares a static method with the same signature as a static method in its superclass, effectively hiding it",
+        "Option B": "When a method is overridden in a subclass",
+        "Option C": "When a method is overloaded with different parameters",
+        "Option D": "When a method is declared as abstract",
+        "Correct Option": "A",
+        "Explanation": "Method hiding occurs with static methods when the subclass method hides the one defined in the superclass."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which of the following best describes dynamic binding?",
+        "Option A": "Resolving method calls at runtime based on the actual object type",
+        "Option B": "Determining method signatures at compile time",
+        "Option C": "Binding variables to their types during compilation",
+        "Option D": "Linking static libraries during program build",
+        "Correct Option": "A",
+        "Explanation": "Dynamic binding (late binding) allows the correct method implementation to be chosen at runtime, enabling polymorphism."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is a concrete class?",
+        "Option A": "A class that can be instantiated because it provides implementations for all its methods",
+        "Option B": "A class that contains only abstract methods",
+        "Option C": "A class that cannot be extended",
+        "Option D": "A class used only for interfaces",
+        "Correct Option": "A",
+        "Explanation": "A concrete class provides complete implementations and can be instantiated, unlike abstract classes."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which keyword in Java prevents a class from being subclassed?",
+        "Option A": "final",
+        "Option B": "abstract",
+        "Option C": "static",
+        "Option D": "private",
+        "Correct Option": "A",
+        "Explanation": "The final keyword marks a class as non-inheritable in Java."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is the primary purpose of getters and setters?",
+        "Option A": "To provide controlled access to an object's private fields",
+        "Option B": "To initialize an object’s fields during construction",
+        "Option C": "To overload methods in a class",
+        "Option D": "To implement inheritance",
+        "Correct Option": "A",
+        "Explanation": "Getters and setters allow controlled retrieval and modification of private fields, enforcing encapsulation."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which term describes a scenario where objects of different classes can be treated as objects of a common superclass?",
+        "Option A": "Polymorphism",
+        "Option B": "Encapsulation",
+        "Option C": "Inheritance",
+        "Option D": "Abstraction",
+        "Correct Option": "A",
+        "Explanation": "Polymorphism enables treating objects of various subclasses as objects of a common superclass."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What does 'static binding' mean?",
+        "Option A": "Method calls are resolved at compile time",
+        "Option B": "Method calls are resolved at runtime",
+        "Option C": "Variables are bound to memory addresses at runtime",
+        "Option D": "The class is loaded statically",
+        "Correct Option": "A",
+        "Explanation": "Static binding determines method calls during compile time, as seen in method overloading."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which concept ensures that an object's internal state is protected from unwanted external modification?",
+        "Option A": "Encapsulation",
+        "Option B": "Inheritance",
+        "Option C": "Polymorphism",
+        "Option D": "Abstraction",
+        "Correct Option": "A",
+        "Explanation": "Encapsulation protects an object's state by restricting direct access to its internal data."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is an example of compile-time polymorphism?",
+        "Option A": "Method overloading",
+        "Option B": "Method overriding",
+        "Option C": "Dynamic method dispatch",
+        "Option D": "Runtime type checking",
+        "Correct Option": "A",
+        "Explanation": "Method overloading is resolved at compile time, providing compile-time polymorphism."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which term describes the act of a subclass providing its own specific implementation for a method defined in the parent class?",
+        "Option A": "Method overriding",
+        "Option B": "Method overloading",
+        "Option C": "Method hiding",
+        "Option D": "Method chaining",
+        "Correct Option": "A",
+        "Explanation": "Method overriding occurs when a subclass redefines a method inherited from its parent class."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which of the following is an advantage of using abstraction in OOP?",
+        "Option A": "Simplifying complex systems by modeling only relevant features",
+        "Option B": "Exposing all implementation details to the user",
+        "Option C": "Forcing all classes to have the same methods",
+        "Option D": "Eliminating the need for inheritance",
+        "Correct Option": "A",
+        "Explanation": "Abstraction reduces complexity by hiding unnecessary details and exposing only essential features."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What is the purpose of an interface in OOP?",
+        "Option A": "To define a contract of methods that must be implemented by a class",
+        "Option B": "To provide a fully implemented class for reuse",
+        "Option C": "To store data without behavior",
+        "Option D": "To overload constructors",
+        "Correct Option": "A",
+        "Explanation": "An interface specifies a set of methods without implementation, ensuring that implementing classes adhere to a contract."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which of the following best describes method overriding?",
+        "Option A": "Redefining a method in a subclass that is already defined in its superclass",
+        "Option B": "Creating multiple methods with the same name in the same class",
+        "Option C": "Declaring a method as static in a subclass",
+        "Option D": "Hiding a private method from the superclass",
+        "Correct Option": "A",
+        "Explanation": "Method overriding allows a subclass to provide its own version of a method defined in its parent class."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What is meant by 'object lifetime'?",
+        "Option A": "The duration from when an object is created to when it is destroyed",
+        "Option B": "The time taken to execute a method",
+        "Option C": "The period during which a class is defined",
+        "Option D": "The number of instances created from a class",
+        "Correct Option": "A",
+        "Explanation": "Object lifetime is the period an object exists in memory, from creation to destruction."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What is constructor overloading?",
+        "Option A": "Defining multiple constructors with different parameter lists within the same class",
+        "Option B": "Defining a constructor and a destructor in the same class",
+        "Option C": "Overriding a constructor in a subclass",
+        "Option D": "Creating static methods for object initialization",
+        "Correct Option": "A",
+        "Explanation": "Constructor overloading allows a class to have more than one constructor, each with different parameters for various initialization needs."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What does it mean for an object to be immutable?",
+        "Option A": "Its state cannot be modified after creation",
+        "Option B": "It can be modified only once",
+        "Option C": "It does not use encapsulation",
+        "Option D": "It is created using a constructor only",
+        "Correct Option": "A",
+        "Explanation": "Immutable objects cannot change their state once they have been created, ensuring consistency."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which design principle is summarized by the acronym SOLID?",
+        "Option A": "A set of five principles for designing maintainable and scalable software",
+        "Option B": "A framework for building web applications",
+        "Option C": "A set of guidelines for functional programming",
+        "Option D": "A method for optimizing code performance",
+        "Correct Option": "A",
+        "Explanation": "SOLID stands for Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion, which are key design principles in OOP."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What does the Single Responsibility Principle (SRP) state?",
+        "Option A": "A class should have only one reason to change",
+        "Option B": "A class should be open for extension but closed for modification",
+        "Option C": "Subclasses should be substitutable for their base classes",
+        "Option D": "High-level modules should not depend on low-level modules",
+        "Correct Option": "A",
+        "Explanation": "SRP states that a class should have only one responsibility or reason to change, promoting modularity."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which principle advises that classes should be open for extension but closed for modification?",
+        "Option A": "Open/Closed Principle",
+        "Option B": "Single Responsibility Principle",
+        "Option C": "Liskov Substitution Principle",
+        "Option D": "Interface Segregation Principle",
+        "Correct Option": "A",
+        "Explanation": "The Open/Closed Principle asserts that classes should allow new functionality through extension without altering existing code."
+    },
+    {
+        "Q.No": "58",
+        "Question": "What is an example of using abstraction in OOP?",
+        "Option A": "Defining an abstract class with abstract methods that subclasses must implement",
+        "Option B": "Using a concrete class with fully implemented methods",
+        "Option C": "Declaring all variables as public",
+        "Option D": "Overloading a method multiple times",
+        "Correct Option": "A",
+        "Explanation": "Abstraction involves creating abstract classes or interfaces that define methods without implementation, to be provided by subclasses."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which of the following best describes method overloading?",
+        "Option A": "Defining multiple methods in the same class with the same name but different parameter lists",
+        "Option B": "Redefining a method in a subclass",
+        "Option C": "Hiding a method in the superclass with a new static method",
+        "Option D": "Using an interface to force method implementation",
+        "Correct Option": "A",
+        "Explanation": "Method overloading allows a class to have more than one method with the same name but different parameters, resolved at compile time."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What is the benefit of using static methods in a class?",
+        "Option A": "They can be called without creating an instance of the class",
+        "Option B": "They provide polymorphic behavior",
+        "Option C": "They enable inheritance of private members",
+        "Option D": "They allow dynamic binding",
+        "Correct Option": "A",
+        "Explanation": "Static methods belong to the class and can be called without instantiating an object, making them useful for utility functions."
+    },
+    {
+        "Q.No": "61",
+        "Question": "Which of the following is an example of runtime polymorphism?",
+        "Option A": "Method overriding in a subclass",
+        "Option B": "Method overloading in a single class",
+        "Option C": "Using static methods",
+        "Option D": "Defining a constructor with parameters",
+        "Correct Option": "A",
+        "Explanation": "Runtime polymorphism is achieved via method overriding, where the method call is resolved at runtime based on the object’s type."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is the role of an abstract method?",
+        "Option A": "To force subclasses to provide an implementation",
+        "Option B": "To provide a default implementation that cannot be changed",
+        "Option C": "To overload a method with different signatures",
+        "Option D": "To allow static method calls",
+        "Correct Option": "A",
+        "Explanation": "Abstract methods declare a method signature without implementation, requiring subclasses to implement them."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What does the term 'object-oriented design' refer to?",
+        "Option A": "The process of planning a system of interacting classes and objects to solve a problem",
+        "Option B": "The process of writing procedural code",
+        "Option C": "The technique of using global variables for state management",
+        "Option D": "The method of creating a database schema",
+        "Correct Option": "A",
+        "Explanation": "Object-oriented design involves planning and organizing classes and objects to model and solve real-world problems."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which of the following is NOT a core concept of OOP?",
+        "Option A": "Inheritance",
+        "Option B": "Encapsulation",
+        "Option C": "Polymorphism",
+        "Option D": "Linear iteration",
+        "Correct Option": "D",
+        "Explanation": "Linear iteration is not an OOP concept; the core concepts are encapsulation, inheritance, polymorphism, and abstraction."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the purpose of using accessors (getters) in a class?",
+        "Option A": "To retrieve the value of private fields safely",
+        "Option B": "To set the value of private fields",
+        "Option C": "To initialize an object",
+        "Option D": "To overload a method",
+        "Correct Option": "A",
+        "Explanation": "Accessors (getters) provide controlled, read-only access to private fields."
+    },
+    {
+        "Q.No": "66",
+        "Question": "What is the purpose of mutators (setters) in a class?",
+        "Option A": "To modify the value of private fields in a controlled manner",
+        "Option B": "To retrieve the value of private fields",
+        "Option C": "To create new instances of a class",
+        "Option D": "To delete an object",
+        "Correct Option": "A",
+        "Explanation": "Mutators (setters) allow controlled modification of private fields while preserving encapsulation."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which of the following statements about static members is true?",
+        "Option A": "They are shared among all instances of a class",
+        "Option B": "They are unique to each instance",
+        "Option C": "They must be accessed through an object reference",
+        "Option D": "They cannot be modified after declaration",
+        "Correct Option": "A",
+        "Explanation": "Static members are shared by all instances of a class, meaning they belong to the class rather than any particular object."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What does 'tight coupling' in software design mean?",
+        "Option A": "High interdependency between classes, making them difficult to modify independently",
+        "Option B": "Minimal dependency between classes",
+        "Option C": "A system where classes do not interact",
+        "Option D": "A design where classes are completely isolated",
+        "Correct Option": "A",
+        "Explanation": "Tight coupling refers to a high degree of interdependency between classes, which can make maintenance and testing challenging."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which concept ensures that objects of different types can be treated as objects of a common super type?",
+        "Option A": "Polymorphism",
+        "Option B": "Encapsulation",
+        "Option C": "Inheritance",
+        "Option D": "Abstraction",
+        "Correct Option": "A",
+        "Explanation": "Polymorphism allows objects of different classes to be treated uniformly as instances of a common superclass."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the role of an interface in achieving loose coupling?",
+        "Option A": "It defines a contract without specifying implementation, allowing different classes to work together with minimal dependencies",
+        "Option B": "It enforces a specific implementation for all classes",
+        "Option C": "It increases dependency between classes",
+        "Option D": "It eliminates the need for inheritance",
+        "Correct Option": "A",
+        "Explanation": "Interfaces help achieve loose coupling by specifying a common set of methods without tying classes to a specific implementation."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which of the following best describes a 'concrete' method?",
+        "Option A": "A method that has a complete implementation in a class",
+        "Option B": "A method declared without an implementation",
+        "Option C": "A method that is abstract",
+        "Option D": "A method that cannot be overridden",
+        "Correct Option": "A",
+        "Explanation": "A concrete method is fully implemented and can be called on objects of the class."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What does the term 'object composition' refer to?",
+        "Option A": "Constructing complex objects from simpler ones, establishing a \"\"has‑a\"\" relationship",
+        "Option B": "Inheriting properties from a parent class",
+        "Option C": "Overloading methods in a class",
+        "Option D": "Creating static methods only",
+        "Correct Option": "A",
+        "Explanation": "Object composition builds complex functionality by combining simpler, constituent objects."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which principle promotes designing software so that classes have a single, well-defined responsibility?",
+        "Option A": "Single Responsibility Principle",
+        "Option B": "Open/Closed Principle",
+        "Option C": "Liskov Substitution Principle",
+        "Option D": "Dependency Inversion Principle",
+        "Correct Option": "A",
+        "Explanation": "The Single Responsibility Principle states that a class should have only one reason to change, leading to more maintainable code."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is a potential drawback of using inheritance excessively?",
+        "Option A": "It can lead to fragile base class problems and increased coupling between classes",
+        "Option B": "It reduces code reusability",
+        "Option C": "It always improves performance",
+        "Option D": "It simplifies debugging",
+        "Correct Option": "A",
+        "Explanation": "Overusing inheritance can create tight coupling and make code harder to maintain if changes in a base class ripple through subclasses."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is meant by 'object composition over inheritance'?",
+        "Option A": "Favoring composition (has‑a relationships) over inheritance (is‑a relationships) to achieve code reuse and flexibility",
+        "Option B": "Always using inheritance to achieve code reuse",
+        "Option C": "Avoiding both inheritance and composition",
+        "Option D": "Using global variables instead of objects",
+        "Correct Option": "A",
+        "Explanation": "This principle suggests using composition to achieve code reuse and flexibility rather than relying heavily on inheritance."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which OOP concept allows an object to exhibit behavior determined by its runtime type?",
+        "Option A": "Polymorphism",
+        "Option B": "Encapsulation",
+        "Option C": "Abstraction",
+        "Option D": "Inheritance",
+        "Correct Option": "A",
+        "Explanation": "Polymorphism enables behavior that varies according to the object's runtime type through dynamic binding."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is the effect of declaring a class member as 'final' in Java?",
+        "Option A": "It prevents the member from being overridden or modified",
+        "Option B": "It makes the member accessible only within the class",
+        "Option C": "It allows the member to be inherited but not instantiated",
+        "Option D": "It indicates that the member is static",
+        "Correct Option": "A",
+        "Explanation": "Declaring a member as final in Java prevents it from being overridden (for methods) or reassigned (for variables)."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is a 'helper class' in OOP?",
+        "Option A": "A class designed to provide supportive functions and utilities to other classes without representing a real-world entity",
+        "Option B": "A class that inherits from multiple classes",
+        "Option C": "A class that defines abstract methods only",
+        "Option D": "A class used exclusively for UI design",
+        "Correct Option": "A",
+        "Explanation": "A helper class provides common utility functions to support the main classes of an application."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following is a key feature of OOP that enables code reuse?",
+        "Option A": "Inheritance",
+        "Option B": "Encapsulation",
+        "Option C": "Abstraction",
+        "Option D": "Polymorphism",
+        "Correct Option": "A",
+        "Explanation": "Inheritance allows a class to reuse code from a parent class, facilitating code reuse and reducing duplication."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is the primary purpose of the 'final' keyword when applied to a method in Java?",
+        "Option A": "To prevent the method from being overridden in subclasses",
+        "Option B": "To allow the method to be overridden freely",
+        "Option C": "To declare the method as static",
+        "Option D": "To ensure the method is abstract",
+        "Correct Option": "A",
+        "Explanation": "Marking a method as final in Java prevents subclasses from providing a new implementation for that method."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is a design pattern in the context of OOP?",
+        "Option A": "A reusable solution to common software design problems",
+        "Option B": "A specific programming language syntax",
+        "Option C": "A unique class name convention",
+        "Option D": "A method for optimizing algorithm performance",
+        "Correct Option": "A",
+        "Explanation": "Design patterns are established solutions to recurring design problems in software development."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which design pattern is used to provide a simplified interface to a complex subsystem?",
+        "Option A": "Facade Pattern",
+        "Option B": "Singleton Pattern",
+        "Option C": "Observer Pattern",
+        "Option D": "Builder Pattern",
+        "Correct Option": "A",
+        "Explanation": "The Facade Pattern provides a simplified interface to a complex set of classes or a subsystem."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is the Observer Pattern used for?",
+        "Option A": "To allow an object (subject) to notify a set of observer objects about changes in its state",
+        "Option B": "To implement multiple inheritance",
+        "Option C": "To encapsulate data in a class",
+        "Option D": "To provide a static method for object creation",
+        "Correct Option": "A",
+        "Explanation": "The Observer Pattern defines a one-to-many dependency, allowing observers to be notified of state changes in the subject."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following best describes the Adapter Pattern?",
+        "Option A": "It allows incompatible interfaces to work together by converting one interface into another",
+        "Option B": "It creates a simplified interface to a complex system",
+        "Option C": "It restricts a class to a single instance",
+        "Option D": "It manages object creation",
+        "Correct Option": "A",
+        "Explanation": "The Adapter Pattern enables classes with incompatible interfaces to collaborate by translating one interface to another."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is the benefit of using the Singleton Pattern?",
+        "Option A": "It ensures that only one instance of a class exists and provides global access to it",
+        "Option B": "It allows multiple instances to be created",
+        "Option C": "It hides the implementation of a class",
+        "Option D": "It facilitates method overloading",
+        "Correct Option": "A",
+        "Explanation": "The Singleton Pattern restricts the instantiation of a class to one object, ensuring controlled access to shared resources."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What does 'coupling' refer to in software design?",
+        "Option A": "The degree of dependency between modules or classes",
+        "Option B": "The speed of execution of methods",
+        "Option C": "The number of methods in a class",
+        "Option D": "The depth of inheritance hierarchies",
+        "Correct Option": "A",
+        "Explanation": "Coupling measures how interdependent different classes or modules are; low coupling is preferred for maintainability."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is meant by 'high cohesion' in OOP?",
+        "Option A": "A class or module is focused on a single task or closely related tasks",
+        "Option B": "A class contains many unrelated methods",
+        "Option C": "Classes have many dependencies on one another",
+        "Option D": "Multiple classes share the same functionality",
+        "Correct Option": "A",
+        "Explanation": "High cohesion means that a class or module has a single, well-defined responsibility, which improves maintainability and clarity."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is a 'proxy' in OOP design patterns?",
+        "Option A": "An object that controls access to another object, often adding additional functionality",
+        "Option B": "A class that directly implements an interface",
+        "Option C": "A static method used to create objects",
+        "Option D": "An abstract class with no implementation",
+        "Correct Option": "A",
+        "Explanation": "The Proxy Pattern involves an intermediary that manages access to a target object, often for purposes such as lazy initialization or access control."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What does it mean for a method to be 'chainable'?",
+        "Option A": "It returns an object (often itself) so that multiple method calls can be linked together",
+        "Option B": "It calls itself recursively",
+        "Option C": "It overloads the + operator",
+        "Option D": "It is declared as static",
+        "Correct Option": "A",
+        "Explanation": "Chainable methods return an object, enabling multiple method calls to be linked together in a single expression."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which concept allows objects to be treated as instances of their parent class?",
+        "Option A": "Polymorphism",
+        "Option B": "Encapsulation",
+        "Option C": "Abstraction",
+        "Option D": "Inheritance",
+        "Correct Option": "A",
+        "Explanation": "Polymorphism enables objects of different subclasses to be treated as instances of a common superclass."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the purpose of an abstract factory pattern?",
+        "Option A": "To create families of related or dependent objects without specifying their concrete classes",
+        "Option B": "To enforce single inheritance",
+        "Option C": "To provide a global point of access to an object",
+        "Option D": "To separate interface from implementation",
+        "Correct Option": "A",
+        "Explanation": "The Abstract Factory Pattern provides an interface for creating related objects without specifying their concrete classes."
+    },
+    {
+        "Q.No": "92",
+        "Question": "What is the role of the 'final' keyword when applied to a variable in Java?",
+        "Option A": "It makes the variable a constant, meaning its value cannot change after initialization",
+        "Option B": "It allows the variable to be modified",
+        "Option C": "It makes the variable accessible from other classes",
+        "Option D": "It designates the variable as an instance variable",
+        "Correct Option": "A",
+        "Explanation": "Declaring a variable as final in Java makes it a constant whose value cannot be changed once assigned."
+    },
+    {
+        "Q.No": "93",
+        "Question": "Which of the following best describes an immutable object?",
+        "Option A": "An object whose state cannot be changed after it is created",
+        "Option B": "An object that can change state at any time",
+        "Option C": "An object with no methods",
+        "Option D": "An object that is created dynamically",
+        "Correct Option": "A",
+        "Explanation": "Immutable objects cannot be altered after creation, ensuring their state remains constant."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What is meant by 'method signature'?",
+        "Option A": "The combination of a method's name and its parameter list",
+        "Option B": "The return type of a method",
+        "Option C": "The access modifier of a method",
+        "Option D": "The documentation comment for a method",
+        "Correct Option": "A",
+        "Explanation": "A method signature consists of the method name and the types (and order) of its parameters, uniquely identifying the method in a class."
+    },
+    {
+        "Q.No": "95",
+        "Question": "Which principle states that a class should have only one reason to change?",
+        "Option A": "Single Responsibility Principle",
+        "Option B": "Open/Closed Principle",
+        "Option C": "Liskov Substitution Principle",
+        "Option D": "Dependency Inversion Principle",
+        "Correct Option": "A",
+        "Explanation": "The Single Responsibility Principle mandates that a class should have only one responsibility, reducing the impact of changes."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the effect of using the 'protected' access modifier on a class member?",
+        "Option A": "It makes the member accessible within its own class, subclasses, and classes in the same package",
+        "Option B": "It restricts the member to the class only",
+        "Option C": "It makes the member accessible from anywhere",
+        "Option D": "It makes the member static",
+        "Correct Option": "A",
+        "Explanation": "Protected members are accessible within the class itself, its subclasses, and other classes in the same package."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which design pattern provides a surrogate or placeholder for another object to control access to it?",
+        "Option A": "Proxy Pattern",
+        "Option B": "Singleton Pattern",
+        "Option C": "Observer Pattern",
+        "Option D": "Builder Pattern",
+        "Correct Option": "A",
+        "Explanation": "The Proxy Pattern creates an intermediary to control access to another object, often adding additional functionality such as caching or security checks."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the benefit of using composition over inheritance?",
+        "Option A": "It promotes greater flexibility by allowing behavior to be changed at runtime without modifying the class hierarchy",
+        "Option B": "It forces a rigid class structure",
+        "Option C": "It eliminates the need for encapsulation",
+        "Option D": "It guarantees faster execution",
+        "Correct Option": "A",
+        "Explanation": "Composition provides flexibility by enabling behavior changes at runtime and reducing tight coupling compared to inheritance."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which statement is true regarding interfaces in OOP?",
+        "Option A": "They define a contract that implementing classes must fulfill without dictating how methods are implemented",
+        "Option B": "They provide complete method implementations",
+        "Option C": "They are the same as abstract classes",
+        "Option D": "They cannot contain constants",
+        "Correct Option": "A",
+        "Explanation": "Interfaces specify method signatures that implementing classes must provide, ensuring a contract without implementation details."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What does it mean for a class to be 'loosely coupled'?",
+        "Option A": "It has minimal dependencies on other classes, making it easier to modify and maintain",
+        "Option B": "It has many dependencies on other classes",
+        "Option C": "It is tightly integrated with global variables",
+        "Option D": "It inherits from multiple classes",
+        "Correct Option": "A",
+        "Explanation": "Loose coupling indicates that a class interacts with other classes through well-defined interfaces and minimal dependencies, enhancing maintainability and flexibility."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

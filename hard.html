@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which term best describes computer hardware?",
+        "Option A": "Physical components of a computer",
+        "Option B": "Software applications",
+        "Option C": "Network protocols",
+        "Option D": "Cloud services",
+        "Correct Option": "A",
+        "Explanation": "Computer hardware refers to the tangible parts of a computer system."
+    },
+    {
+        "Q.No": "2",
+        "Question": "Which of the following is an example of computer hardware?",
+        "Option A": "Operating system",
+        "Option B": "CPU",
+        "Option C": "Spreadsheet application",
+        "Option D": "Web browser",
+        "Correct Option": "B",
+        "Explanation": "The CPU is a physical component, whereas the other options are software."
+    },
+    {
+        "Q.No": "3",
+        "Question": "What is the primary function of computer hardware?",
+        "Option A": "To process data through physical components",
+        "Option B": "To provide programming languages",
+        "Option C": "To manage software licenses",
+        "Option D": "To offer online services",
+        "Correct Option": "A",
+        "Explanation": "Hardware provides the physical means to process and store data."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which of the following is NOT considered computer hardware?",
+        "Option A": "Keyboard",
+        "Option B": "Printer",
+        "Option C": "Microsoft Word",
+        "Option D": "Monitor",
+        "Correct Option": "C",
+        "Explanation": "Microsoft Word is software, not hardware."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What type of hardware is responsible for storing data permanently?",
+        "Option A": "RAM",
+        "Option B": "CPU",
+        "Option C": "SSD",
+        "Option D": "GPU",
+        "Correct Option": "C",
+        "Explanation": "SSDs (Solid State Drives) store data persistently, unlike volatile memory such as RAM."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which component is considered most critical for performing arithmetic and logical operations?",
+        "Option A": "CPU",
+        "Option B": "Hard disk",
+        "Option C": "Monitor",
+        "Option D": "Power supply",
+        "Correct Option": "A",
+        "Explanation": "The CPU executes arithmetic and logical operations."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What does “peripheral” refer to in computer hardware?",
+        "Option A": "A core processing unit",
+        "Option B": "An external device connected to the computer",
+        "Option C": "A type of software",
+        "Option D": "A storage medium integrated into the motherboard",
+        "Correct Option": "B",
+        "Explanation": "Peripherals are external devices such as keyboards, mice, and printers."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following best illustrates hardware modularity?",
+        "Option A": "The ability to install or replace a graphics card",
+        "Option B": "Running multiple software applications",
+        "Option C": "Creating a complex network",
+        "Option D": "Storing data in the cloud",
+        "Correct Option": "A",
+        "Explanation": "Modularity allows components like graphics cards to be added or replaced easily."
+    },
+    {
+        "Q.No": "9",
+        "Question": "What is the role of cooling systems in computer hardware?",
+        "Option A": "They increase processing speed",
+        "Option B": "They dissipate heat to prevent overheating",
+        "Option C": "They provide power to the CPU",
+        "Option D": "They connect peripherals to the motherboard",
+        "Correct Option": "B",
+        "Explanation": "Cooling systems help maintain safe operating temperatures by dissipating heat."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which term describes hardware integrated into the computer system rather than external?",
+        "Option A": "Peripheral",
+        "Option B": "Internal component",
+        "Option C": "Cloud-based hardware",
+        "Option D": "Input device",
+        "Correct Option": "B",
+        "Explanation": "Internal components are built into the system (e.g., motherboard, CPU)."
+    },
+    {
+        "Q.No": "11",
+        "Question": "What is the primary purpose of a power supply unit (PSU) in computer hardware?",
+        "Option A": "To process data",
+        "Option B": "To cool the system",
+        "Option C": "To convert electrical power to usable DC power",
+        "Option D": "To display graphics",
+        "Correct Option": "C",
+        "Explanation": "The PSU converts AC power to the regulated DC power required by components."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which of the following is a characteristic of solid-state hardware?",
+        "Option A": "It uses moving parts",
+        "Option B": "It offers higher durability and faster access times",
+        "Option C": "It relies on magnetic storage",
+        "Option D": "It consumes more power",
+        "Correct Option": "B",
+        "Explanation": "Solid-state devices like SSDs have no moving parts, making them faster and more durable."
+    },
+    {
+        "Q.No": "13",
+        "Question": "In the context of computer hardware, what does “expansion” refer to?",
+        "Option A": "Increasing screen size",
+        "Option B": "Adding additional components or cards to a system",
+        "Option C": "Upgrading software versions",
+        "Option D": "Connecting to the internet",
+        "Correct Option": "B",
+        "Explanation": "Expansion involves adding hardware components (e.g., additional memory or cards) to enhance functionality."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which device is commonly used as an input device in computer hardware?",
+        "Option A": "Monitor",
+        "Option B": "Keyboard",
+        "Option C": "Printer",
+        "Option D": "Speaker",
+        "Correct Option": "B",
+        "Explanation": "The keyboard is an input device used for data entry."
+    },
+    {
+        "Q.No": "15",
+        "Question": "Which type of port is primarily used for connecting external storage devices?",
+        "Option A": "HDMI",
+        "Option B": "USB",
+        "Option C": "VGA",
+        "Option D": "Ethernet",
+        "Correct Option": "B",
+        "Explanation": "USB ports are commonly used to connect external storage and other peripherals."
+    },
+    {
+        "Q.No": "16",
+        "Question": "What distinguishes embedded hardware from general-purpose hardware?",
+        "Option A": "Embedded hardware is always portable",
+        "Option B": "It is designed for specific control functions within larger systems",
+        "Option C": "General-purpose hardware cannot run operating systems",
+        "Option D": "Embedded hardware uses wireless connectivity exclusively",
+        "Correct Option": "B",
+        "Explanation": "Embedded hardware is built to perform dedicated functions in a larger system."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which component is essential for connecting various hardware parts within a computer?",
+        "Option A": "The motherboard",
+        "Option B": "The CPU",
+        "Option C": "The monitor",
+        "Option D": "The keyboard",
+        "Correct Option": "A",
+        "Explanation": "The motherboard acts as the central hub that connects all hardware components."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the significance of bus architecture in computer hardware?",
+        "Option A": "It determines the physical size of the computer",
+        "Option B": "It facilitates data transfer between components",
+        "Option C": "It enhances aesthetic design",
+        "Option D": "It regulates the operating system",
+        "Correct Option": "B",
+        "Explanation": "Bus architecture enables communication between different hardware components."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which term refers to the integrated circuits on a computer’s motherboard that manage data flow?",
+        "Option A": "Microprocessors",
+        "Option B": "Chipsets",
+        "Option C": "Batteries",
+        "Option D": "Cooling fans",
+        "Correct Option": "B",
+        "Explanation": "Chipsets are the circuits that control communication between the CPU, memory, and peripherals."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the role of firmware in computer hardware?",
+        "Option A": "It provides a user interface for the operating system",
+        "Option B": "It serves as low-level software controlling hardware functions",
+        "Option C": "It enhances graphic performance",
+        "Option D": "It increases system memory capacity",
+        "Correct Option": "B",
+        "Explanation": "Firmware is embedded software that controls basic hardware functions."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which device is primarily used for capturing visual images as input?",
+        "Option A": "Monitor",
+        "Option B": "Scanner",
+        "Option C": "Printer",
+        "Option D": "Speaker",
+        "Correct Option": "B",
+        "Explanation": "A scanner captures images and converts them into digital data."
+    },
+    {
+        "Q.No": "22",
+        "Question": "Which device converts digital data into printed text or images?",
+        "Option A": "Printer",
+        "Option B": "Keyboard",
+        "Option C": "Mouse",
+        "Option D": "Microphone",
+        "Correct Option": "A",
+        "Explanation": "A printer produces a hard copy of digital information."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which of the following is an output device?",
+        "Option A": "Webcam",
+        "Option B": "Microphone",
+        "Option C": "Speaker",
+        "Option D": "Touchscreen",
+        "Correct Option": "C",
+        "Explanation": "Speakers are output devices that produce sound."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the primary function of a keyboard in a computer system?",
+        "Option A": "Input text and commands",
+        "Option B": "Display images",
+        "Option C": "Produce sound",
+        "Option D": "Connect to the internet",
+        "Correct Option": "A",
+        "Explanation": "Keyboards allow users to input text and commands."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which device allows users to interact with graphical elements on the screen?",
+        "Option A": "Mouse",
+        "Option B": "Printer",
+        "Option C": "Scanner",
+        "Option D": "Speaker",
+        "Correct Option": "A",
+        "Explanation": "A mouse is used to navigate and interact with graphical user interfaces."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is a touchscreen primarily classified as?",
+        "Option A": "Input device",
+        "Option B": "Output device",
+        "Option C": "Storage device",
+        "Option D": "Processing device",
+        "Correct Option": "A",
+        "Explanation": "A touchscreen is an input device that also displays information."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which device is used to capture sound as input?",
+        "Option A": "Monitor",
+        "Option B": "Printer",
+        "Option C": "Microphone",
+        "Option D": "Scanner",
+        "Correct Option": "C",
+        "Explanation": "A microphone converts sound into digital signals."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What type of device is a projector typically considered?",
+        "Option A": "Input device",
+        "Option B": "Output device",
+        "Option C": "Storage device",
+        "Option D": "Network device",
+        "Correct Option": "B",
+        "Explanation": "A projector is an output device that displays images or videos."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which of the following best describes an input device?",
+        "Option A": "A device that displays digital information",
+        "Option B": "A device that sends data out of the computer",
+        "Option C": "A device that allows users to send data into a computer",
+        "Option D": "A device that stores digital data",
+        "Correct Option": "C",
+        "Explanation": "Input devices are used to send data into a computer system."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What distinguishes a digital camera as an input device?",
+        "Option A": "It displays images on a screen",
+        "Option B": "It captures photographs and converts them to digital data",
+        "Option C": "It prints photographs",
+        "Option D": "It connects to a printer",
+        "Correct Option": "B",
+        "Explanation": "A digital camera captures images and provides digital data for processing."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which device would most likely be used for data entry in a retail setting?",
+        "Option A": "Barcode scanner",
+        "Option B": "Monitor",
+        "Option C": "Printer",
+        "Option D": "Webcam",
+        "Correct Option": "A",
+        "Explanation": "Barcode scanners quickly read barcodes and input data into the system."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What function does an output device serve in a computer system?",
+        "Option A": "It converts digital signals into a human-perceivable form",
+        "Option B": "It stores data",
+        "Option C": "It processes instructions",
+        "Option D": "It provides power",
+        "Correct Option": "A",
+        "Explanation": "Output devices convert digital data into forms such as visual, audio, or printed output."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following devices can serve as both an input and output device?",
+        "Option A": "Printer",
+        "Option B": "Touchscreen",
+        "Option C": "Keyboard",
+        "Option D": "Scanner",
+        "Correct Option": "B",
+        "Explanation": "Touchscreens both display output and accept user touch input."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which device is commonly used for video conferencing as both input and output?",
+        "Option A": "Digital camera",
+        "Option B": "Printer",
+        "Option C": "Monitor",
+        "Option D": "Webcam",
+        "Correct Option": "D",
+        "Explanation": "A webcam is used to capture video (input) and sometimes displays feedback (output)."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What is the role of a plotter in computer hardware?",
+        "Option A": "To capture sound",
+        "Option B": "To print large-scale graphics and drawings",
+        "Option C": "To scan documents",
+        "Option D": "To provide network connectivity",
+        "Correct Option": "B",
+        "Explanation": "Plotters are specialized printers for large-format graphics."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which of the following is NOT a typical function of an input device?",
+        "Option A": "Converting analog signals to digital data",
+        "Option B": "Providing tactile feedback to the user",
+        "Option C": "Capturing user commands",
+        "Option D": "Displaying output information",
+        "Correct Option": "D",
+        "Explanation": "Input devices capture data; they do not display output."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What distinguishes a joystick from a traditional mouse?",
+        "Option A": "A joystick is used for gaming and flight simulation",
+        "Option B": "A joystick is used for printing",
+        "Option C": "A joystick captures text input",
+        "Option D": "A joystick displays images",
+        "Correct Option": "A",
+        "Explanation": "Joysticks are primarily used in gaming and simulation environments."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which input device is particularly useful for capturing handwritten notes?",
+        "Option A": "Scanner",
+        "Option B": "Digitizer tablet",
+        "Option C": "Printer",
+        "Option D": "Microphone",
+        "Correct Option": "B",
+        "Explanation": "A digitizer tablet allows users to write or draw with a stylus."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the primary role of an output device in a computer system?",
+        "Option A": "To receive commands from the user",
+        "Option B": "To display or produce results of processed data",
+        "Option C": "To store program data",
+        "Option D": "To cool the CPU",
+        "Correct Option": "B",
+        "Explanation": "Output devices present the results of data processing to the user."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which device is mainly used for audio output?",
+        "Option A": "Headphones",
+        "Option B": "Microphone",
+        "Option C": "Scanner",
+        "Option D": "Keyboard",
+        "Correct Option": "A",
+        "Explanation": "Headphones convert digital audio signals into sound for the user."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What does RAM stand for?",
+        "Option A": "Random Access Memory",
+        "Option B": "Readily Available Memory",
+        "Option C": "Rapid Application Module",
+        "Option D": "Random Active Module",
+        "Correct Option": "A",
+        "Explanation": "RAM stands for Random Access Memory, used for temporary data storage."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which type of memory is volatile and loses its contents when power is off?",
+        "Option A": "ROM",
+        "Option B": "SSD",
+        "Option C": "RAM",
+        "Option D": "HDD",
+        "Correct Option": "C",
+        "Explanation": "RAM is volatile, meaning its data is lost when the computer is powered down."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which type of memory is non-volatile and typically contains firmware?",
+        "Option A": "ROM",
+        "Option B": "RAM",
+        "Option C": "Cache",
+        "Option D": "DRAM",
+        "Correct Option": "A",
+        "Explanation": "ROM retains its contents without power and often stores firmware."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What is the main advantage of an SSD over an HDD?",
+        "Option A": "Lower cost per gigabyte",
+        "Option B": "Faster data access speeds",
+        "Option C": "Higher storage capacity",
+        "Option D": "Uses moving parts for reliability",
+        "Correct Option": "B",
+        "Explanation": "SSDs are faster because they use flash memory with no moving parts."
+    },
+    {
+        "Q.No": "45",
+        "Question": "Which type of storage device uses spinning disks to store data?",
+        "Option A": "SSD",
+        "Option B": "HDD",
+        "Option C": "RAM",
+        "Option D": "Flash drive",
+        "Correct Option": "B",
+        "Explanation": "HDDs use magnetic, spinning disks to store data."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which type of memory is typically used as cache memory in a computer?",
+        "Option A": "ROM",
+        "Option B": "DRAM (a type of RAM)",
+        "Option C": "HDD",
+        "Option D": "SSD",
+        "Correct Option": "B",
+        "Explanation": "DRAM is often used as cache memory to speed up processing."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which memory is used to store the BIOS of a computer?",
+        "Option A": "RAM",
+        "Option B": "ROM",
+        "Option C": "HDD",
+        "Option D": "SSD",
+        "Correct Option": "B",
+        "Explanation": "The BIOS is stored in ROM, which retains data without power."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which type of storage device is most suitable for long-term data preservation?",
+        "Option A": "RAM",
+        "Option B": "ROM",
+        "Option C": "HDD/SSD",
+        "Option D": "Cache",
+        "Correct Option": "C",
+        "Explanation": "HDDs and SSDs are used for long-term storage of data."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What does the term “volatile memory” refer to?",
+        "Option A": "Memory that retains data without power",
+        "Option B": "Memory that loses its content when power is lost",
+        "Option C": "Memory used for permanent storage",
+        "Option D": "Memory that is exclusively read-only",
+        "Correct Option": "B",
+        "Explanation": "Volatile memory requires power to maintain its data."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which storage device is known for its mechanical parts and noise during operation?",
+        "Option A": "SSD",
+        "Option B": "HDD",
+        "Option C": "ROM",
+        "Option D": "Flash memory",
+        "Correct Option": "B",
+        "Explanation": "HDDs have moving parts that can produce noise when operating."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the function of cache memory in a computer system?",
+        "Option A": "To store data permanently",
+        "Option B": "To provide high-speed temporary storage for frequently accessed data",
+        "Option C": "To cool the CPU",
+        "Option D": "To manage peripheral devices",
+        "Correct Option": "B",
+        "Explanation": "Cache memory holds frequently used data for quick access by the CPU."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which of the following best describes flash memory?",
+        "Option A": "A type of volatile memory",
+        "Option B": "A type of non-volatile memory used in SSDs and USB drives",
+        "Option C": "A type of mechanical storage",
+        "Option D": "A component of the CPU",
+        "Correct Option": "B",
+        "Explanation": "Flash memory is non-volatile and commonly used in SSDs and USB drives."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What does “booting” refer to in relation to memory and storage?",
+        "Option A": "Installing new hardware",
+        "Option B": "Starting up the computer by loading the OS from storage into memory",
+        "Option C": "Shutting down the computer",
+        "Option D": "Replacing the motherboard",
+        "Correct Option": "B",
+        "Explanation": "Booting is the process of loading the operating system from storage into RAM."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which component typically provides the primary temporary storage for running programs?",
+        "Option A": "ROM",
+        "Option B": "HDD",
+        "Option C": "RAM",
+        "Option D": "SSD",
+        "Correct Option": "C",
+        "Explanation": "RAM serves as the temporary workspace for active programs and data."
+    },
+    {
+        "Q.No": "55",
+        "Question": "How does an SSD store data compared to an HDD?",
+        "Option A": "Using magnetic disks",
+        "Option B": "Using flash memory cells",
+        "Option C": "Using optical discs",
+        "Option D": "Using mechanical arms",
+        "Correct Option": "B",
+        "Explanation": "SSDs use flash memory cells, which have no moving parts."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which of the following is NOT a characteristic of RAM?",
+        "Option A": "High-speed data access",
+        "Option B": "Volatility",
+        "Option C": "Permanent data retention",
+        "Option D": "Temporary data storage",
+        "Correct Option": "C",
+        "Explanation": "RAM does not permanently retain data; it is cleared when power is lost."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What type of ROM is commonly reprogrammable in modern computers?",
+        "Option A": "PROM",
+        "Option B": "EPROM",
+        "Option C": "EEPROM/Flash ROM",
+        "Option D": "Mask ROM",
+        "Correct Option": "C",
+        "Explanation": "EEPROM/Flash ROM can be electrically erased and reprogrammed."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which factor most directly impacts the overall speed of a computer system?",
+        "Option A": "The amount of installed RAM",
+        "Option B": "The color of the computer case",
+        "Option C": "The brand of the keyboard",
+        "Option D": "The type of monitor",
+        "Correct Option": "A",
+        "Explanation": "More RAM allows more data to be accessed quickly, improving performance."
+    },
+    {
+        "Q.No": "59",
+        "Question": "Which storage medium typically offers the highest durability against physical shock?",
+        "Option A": "HDD",
+        "Option B": "SSD",
+        "Option C": "Optical disc",
+        "Option D": "Magnetic tape",
+        "Correct Option": "B",
+        "Explanation": "SSDs are more resistant to shock since they have no moving parts."
+    },
+    {
+        "Q.No": "60",
+        "Question": "What does “read/write speed” refer to in memory and storage devices?",
+        "Option A": "The speed at which data is permanently stored",
+        "Option B": "The speed at which data is read from and written to a device",
+        "Option C": "The rate at which power is consumed",
+        "Option D": "The speed of data encryption",
+        "Correct Option": "B",
+        "Explanation": "Read/write speed measures how quickly data can be accessed or saved."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What does CPU stand for in computer systems?",
+        "Option A": "Central Processing Unit",
+        "Option B": "Computer Personal Unit",
+        "Option C": "Central Performance Unit",
+        "Option D": "Core Processing Utility",
+        "Correct Option": "A",
+        "Explanation": "CPU stands for Central Processing Unit, the core of computer processing."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which component of the CPU performs arithmetic and logical operations?",
+        "Option A": "Control Unit",
+        "Option B": "Arithmetic Logic Unit (ALU)",
+        "Option C": "Register",
+        "Option D": "Cache Memory",
+        "Correct Option": "B",
+        "Explanation": "The ALU handles arithmetic and logic operations within the CPU."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the primary function of the Control Unit (CU) in the CPU?",
+        "Option A": "To perform arithmetic calculations",
+        "Option B": "To store data permanently",
+        "Option C": "To direct the operation of the processor",
+        "Option D": "To generate graphics output",
+        "Correct Option": "C",
+        "Explanation": "The Control Unit directs and coordinates the operations of the CPU."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which of the following best describes a register within the CPU?",
+        "Option A": "A high-speed storage location within the CPU",
+        "Option B": "An external storage device",
+        "Option C": "A type of input device",
+        "Option D": "A cooling mechanism",
+        "Correct Option": "A",
+        "Explanation": "Registers are small, fast storage locations used to hold data temporarily during processing."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the purpose of the program counter in the CPU?",
+        "Option A": "To hold the address of the next instruction to be executed",
+        "Option B": "To store temporary data during calculations",
+        "Option C": "To manage input/output operations",
+        "Option D": "To control peripheral devices",
+        "Correct Option": "A",
+        "Explanation": "The program counter keeps track of the next instruction's memory address."
+    },
+    {
+        "Q.No": "66",
+        "Question": "How does the ALU contribute to CPU functionality?",
+        "Option A": "It stores program instructions",
+        "Option B": "It performs data calculations and logical operations",
+        "Option C": "It manages system power supply",
+        "Option D": "It cools the processor",
+        "Correct Option": "B",
+        "Explanation": "The ALU performs the core arithmetic and logic operations required by programs."
+    },
+    {
+        "Q.No": "67",
+        "Question": "Which component of the CPU is responsible for fetching instructions from memory?",
+        "Option A": "ALU",
+        "Option B": "Control Unit",
+        "Option C": "Register",
+        "Option D": "Cache",
+        "Correct Option": "B",
+        "Explanation": "The Control Unit fetches instructions and directs their processing."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What role do registers play in CPU instruction execution?",
+        "Option A": "They provide long-term data storage",
+        "Option B": "They temporarily hold data and instructions for rapid access",
+        "Option C": "They cool the CPU",
+        "Option D": "They manage input/output operations",
+        "Correct Option": "B",
+        "Explanation": "Registers store data temporarily for quick access during processing."
+    },
+    {
+        "Q.No": "69",
+        "Question": "Which of the following is NOT a typical component of the CPU?",
+        "Option A": "ALU",
+        "Option B": "CU",
+        "Option C": "RAM",
+        "Option D": "Registers",
+        "Correct Option": "C",
+        "Explanation": "RAM is separate from the CPU and serves as system memory."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is the function of the flag register in the CPU?",
+        "Option A": "To store temporary data",
+        "Option B": "To hold status flags indicating the outcome of operations",
+        "Option C": "To control the power supply",
+        "Option D": "To manage external devices",
+        "Correct Option": "B",
+        "Explanation": "The flag register stores status information from arithmetic and logic operations."
+    },
+    {
+        "Q.No": "71",
+        "Question": "How do pipelining techniques improve CPU performance?",
+        "Option A": "By increasing the number of registers",
+        "Option B": "By overlapping the execution of multiple instructions",
+        "Option C": "By reducing the clock speed",
+        "Option D": "By increasing the hard drive size",
+        "Correct Option": "B",
+        "Explanation": "Pipelining allows multiple instruction phases to be processed concurrently."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which component is responsible for decoding instructions in the CPU?",
+        "Option A": "Arithmetic Logic Unit",
+        "Option B": "Control Unit",
+        "Option C": "Register",
+        "Option D": "System Bus",
+        "Correct Option": "B",
+        "Explanation": "The Control Unit decodes instructions fetched from memory."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What does “clock speed” of a CPU refer to?",
+        "Option A": "The number of processing cores",
+        "Option B": "The rate at which a CPU executes instructions, measured in Hertz",
+        "Option C": "The amount of cache memory",
+        "Option D": "The number of registers",
+        "Correct Option": "B",
+        "Explanation": "Clock speed is the frequency (in GHz) at which a CPU operates."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which CPU component is directly involved in performing conditional comparisons?",
+        "Option A": "Control Unit",
+        "Option B": "ALU",
+        "Option C": "Register File",
+        "Option D": "System Bus",
+        "Correct Option": "B",
+        "Explanation": "The ALU handles conditional comparisons as part of logical operations."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is the purpose of cache memory in relation to the CPU?",
+        "Option A": "To permanently store user files",
+        "Option B": "To provide a small, fast memory area for frequently used data",
+        "Option C": "To manage network connections",
+        "Option D": "To control peripheral devices",
+        "Correct Option": "B",
+        "Explanation": "Cache memory stores frequently used data for quick CPU access."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which phase of the instruction cycle involves reading an instruction from memory?",
+        "Option A": "Execute",
+        "Option B": "Fetch",
+        "Option C": "Decode",
+        "Option D": "Write-back",
+        "Correct Option": "B",
+        "Explanation": "The fetch phase retrieves the next instruction from memory."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What is the main difference between a general-purpose register and a special-purpose register?",
+        "Option A": "General-purpose registers store data temporarily, while special-purpose registers have specific control functions.",
+        "Option B": "General-purpose registers are faster than special-purpose registers.",
+        "Option C": "Special-purpose registers store more data.",
+        "Option D": "There is no difference.",
+        "Correct Option": "A",
+        "Explanation": "General-purpose registers are for temporary data storage; special-purpose registers serve defined roles (e.g., program counter)."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which CPU component is primarily responsible for logical decision-making?",
+        "Option A": "Control Unit",
+        "Option B": "ALU",
+        "Option C": "Register",
+        "Option D": "Cache",
+        "Correct Option": "B",
+        "Explanation": "The ALU performs logical operations and comparisons."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What does the “instruction set” of a CPU refer to?",
+        "Option A": "The physical layout of the CPU",
+        "Option B": "The set of commands that the CPU can execute",
+        "Option C": "The number of available registers",
+        "Option D": "The speed at which instructions are executed",
+        "Correct Option": "B",
+        "Explanation": "An instruction set is the collection of commands a CPU is designed to execute."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which term describes the coordination of activities within the CPU to execute instructions?",
+        "Option A": "Clock distribution",
+        "Option B": "Control flow",
+        "Option C": "Instruction pipelining",
+        "Option D": "Data caching",
+        "Correct Option": "B",
+        "Explanation": "Control flow is the process by which the CPU sequences and executes instructions."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is the primary function of a motherboard?",
+        "Option A": "To store data permanently",
+        "Option B": "To serve as the main circuit board connecting all computer components",
+        "Option C": "To provide internet connectivity",
+        "Option D": "To manage power distribution exclusively",
+        "Correct Option": "B",
+        "Explanation": "The motherboard connects and enables communication between all hardware components."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which of the following is considered a peripheral device?",
+        "Option A": "CPU",
+        "Option B": "Motherboard",
+        "Option C": "Printer",
+        "Option D": "RAM",
+        "Correct Option": "C",
+        "Explanation": "A printer is an external device used to output data."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What is an expansion slot on a motherboard used for?",
+        "Option A": "Increasing storage capacity",
+        "Option B": "Adding additional hardware components like graphics or network cards",
+        "Option C": "Cooling the CPU",
+        "Option D": "Connecting the monitor",
+        "Correct Option": "B",
+        "Explanation": "Expansion slots allow for additional cards that enhance system functionality."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which connector on a motherboard is commonly used to attach a hard drive?",
+        "Option A": "USB port",
+        "Option B": "SATA connector",
+        "Option C": "HDMI port",
+        "Option D": "VGA port",
+        "Correct Option": "B",
+        "Explanation": "SATA connectors are used to connect storage devices such as HDDs and SSDs."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is the purpose of the BIOS on a motherboard?",
+        "Option A": "To store user files",
+        "Option B": "To perform the initial booting process and hardware initialization",
+        "Option C": "To manage network settings",
+        "Option D": "To run applications",
+        "Correct Option": "B",
+        "Explanation": "The BIOS conducts the power-on self-test (POST) and initializes hardware components."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which of the following best describes a peripheral expansion card?",
+        "Option A": "A card that stores data permanently",
+        "Option B": "A card installed in an expansion slot to add functionality such as sound or video",
+        "Option C": "A type of motherboard",
+        "Option D": "A memory module",
+        "Correct Option": "B",
+        "Explanation": "Expansion cards add specific functions (e.g., sound, video) to a computer system."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What does the term “form factor” refer to in the context of motherboards?",
+        "Option A": "The number of USB ports available",
+        "Option B": "The physical dimensions and layout of a motherboard",
+        "Option C": "The clock speed of the CPU",
+        "Option D": "The type of cooling system used",
+        "Correct Option": "B",
+        "Explanation": "Form factor defines the size, shape, and mounting layout of the motherboard."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which peripheral device is essential for user interaction with a computer system?",
+        "Option A": "Monitor",
+        "Option B": "CPU",
+        "Option C": "Power supply",
+        "Option D": "Motherboard",
+        "Correct Option": "A",
+        "Explanation": "The monitor displays output, making it essential for user interaction."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the role of the chipset on a motherboard?",
+        "Option A": "To manage data flow between the CPU, memory, and peripherals",
+        "Option B": "To generate electricity for the system",
+        "Option C": "To cool the computer components",
+        "Option D": "To store data permanently",
+        "Correct Option": "A",
+        "Explanation": "The chipset controls communications between the CPU, memory, and connected devices."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which type of motherboard slot is typically used for installing a dedicated graphics card?",
+        "Option A": "PCIe slot",
+        "Option B": "AGP slot",
+        "Option C": "DIMM slot",
+        "Option D": "SATA slot",
+        "Correct Option": "A",
+        "Explanation": "PCIe slots are the standard for high-speed expansion cards like graphics cards."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is the significance of having multiple USB ports on a motherboard?",
+        "Option A": "It increases the CPU speed",
+        "Option B": "It allows connection of multiple peripheral devices",
+        "Option C": "It enhances video resolution",
+        "Option D": "It stores additional data",
+        "Correct Option": "B",
+        "Explanation": "Multiple USB ports enable the simultaneous connection of various external devices."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which peripheral device is typically used to provide external storage?",
+        "Option A": "External hard drive",
+        "Option B": "Printer",
+        "Option C": "Monitor",
+        "Option D": "Keyboard",
+        "Correct Option": "A",
+        "Explanation": "External hard drives are used to store data outside the main system."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the function of a sound card on a motherboard?",
+        "Option A": "To process video signals",
+        "Option B": "To generate and process audio signals",
+        "Option C": "To provide internet connectivity",
+        "Option D": "To manage power supply",
+        "Correct Option": "B",
+        "Explanation": "A sound card handles audio input and output functions."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which port on a motherboard is most commonly used for video output?",
+        "Option A": "USB port",
+        "Option B": "HDMI port",
+        "Option C": "Ethernet port",
+        "Option D": "Audio jack",
+        "Correct Option": "B",
+        "Explanation": "HDMI ports are commonly used to output video (and audio) to monitors and TVs."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What does the term “back panel” on a motherboard refer to?",
+        "Option A": "The internal circuitry of the motherboard",
+        "Option B": "The set of connectors and ports on the rear of the computer case",
+        "Option C": "The storage compartment for batteries",
+        "Option D": "The cooling system assembly",
+        "Correct Option": "B",
+        "Explanation": "The back panel contains ports for connecting peripherals and external devices."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which peripheral is commonly used for wireless networking?",
+        "Option A": "Wireless network adapter",
+        "Option B": "Graphics card",
+        "Option C": "Sound card",
+        "Option D": "Hard drive",
+        "Correct Option": "A",
+        "Explanation": "A wireless network adapter enables a computer to connect to Wi-Fi networks."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the primary function of a computer's optical drive?",
+        "Option A": "To connect to the internet",
+        "Option B": "To read and write data on optical discs such as CDs and DVDs",
+        "Option C": "To store data permanently like an SSD",
+        "Option D": "To provide input through scanning",
+        "Correct Option": "B",
+        "Explanation": "Optical drives use lasers to read/write data on discs."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which peripheral device can be used for both input and output functions?",
+        "Option A": "Scanner",
+        "Option B": "Printer",
+        "Option C": "Monitor",
+        "Option D": "Touchscreen",
+        "Correct Option": "D",
+        "Explanation": "A touchscreen both displays output and accepts touch input."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the role of a network interface card (NIC) on a motherboard?",
+        "Option A": "To store data temporarily",
+        "Option B": "To facilitate wired network connectivity",
+        "Option C": "To generate graphics output",
+        "Option D": "To provide power to peripherals",
+        "Correct Option": "B",
+        "Explanation": "A NIC enables the computer to connect to a network via Ethernet."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which component on the motherboard is responsible for connecting the CPU with other hardware devices?",
+        "Option A": "The chipset",
+        "Option B": "The power supply unit",
+        "Option C": "The graphics card",
+        "Option D": "The hard drive",
+        "Correct Option": "A",
+        "Explanation": "The chipset manages communication between the CPU and other system components."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

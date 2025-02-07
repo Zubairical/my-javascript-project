@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What is a database?",
+        "Option A": "A structured collection of data",
+        "Option B": "A programming language",
+        "Option C": "An operating system",
+        "Option D": "A network protocol",
+        "Correct Option": "A",
+        "Explanation": "A database is a structured collection of data stored and accessed electronically."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What does DBMS stand for?",
+        "Option A": "Database Management System",
+        "Option B": "Data Backup Management Service",
+        "Option C": "Database Binary Memory Storage",
+        "Option D": "Data Based Management Software",
+        "Correct Option": "A",
+        "Explanation": "DBMS stands for Database Management System, which is software for creating and managing databases."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which of the following best describes a relational database?",
+        "Option A": "A database that stores data in tables with relationships",
+        "Option B": "A database that stores data hierarchically",
+        "Option C": "A database that uses key‑value pairs exclusively",
+        "Option D": "A database with no fixed schema",
+        "Correct Option": "A",
+        "Explanation": "Relational databases store data in tables and establish relationships between them."
+    },
+    {
+        "Q.No": "4",
+        "Question": "Which language is used to query relational databases?",
+        "Option A": "HTML",
+        "Option B": "SQL",
+        "Option C": "Python",
+        "Option D": "C++",
+        "Correct Option": "B",
+        "Explanation": "SQL (Structured Query Language) is the standard language for querying relational databases."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What does SQL stand for?",
+        "Option A": "Structured Query Language",
+        "Option B": "Simple Query List",
+        "Option C": "Standard Query Language",
+        "Option D": "Sequential Query Logic",
+        "Correct Option": "A",
+        "Explanation": "SQL stands for Structured Query Language."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which SQL command is used to retrieve data?",
+        "Option A": "SELECT",
+        "Option B": "INSERT",
+        "Option C": "UPDATE",
+        "Option D": "DELETE",
+        "Correct Option": "A",
+        "Explanation": "The SELECT command is used to retrieve data from one or more tables."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which SQL command is used to insert new data into a table?",
+        "Option A": "INSERT",
+        "Option B": "ADD",
+        "Option C": "UPDATE",
+        "Option D": "CREATE",
+        "Correct Option": "A",
+        "Explanation": "INSERT adds new records to a table."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which SQL command is used to update existing data?",
+        "Option A": "ALTER",
+        "Option B": "UPDATE",
+        "Option C": "MODIFY",
+        "Option D": "CHANGE",
+        "Correct Option": "B",
+        "Explanation": "UPDATE modifies existing records within a table."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which SQL command is used to delete data from a table?",
+        "Option A": "REMOVE",
+        "Option B": "DELETE",
+        "Option C": "ERASE",
+        "Option D": "DROP",
+        "Correct Option": "B",
+        "Explanation": "DELETE removes records from a table."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which SQL clause is used to filter query results?",
+        "Option A": "WHERE",
+        "Option B": "HAVING",
+        "Option C": "ORDER BY",
+        "Option D": "GROUP BY",
+        "Correct Option": "A",
+        "Explanation": "The WHERE clause is used to specify conditions for filtering rows."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which SQL keyword is used to sort query results?",
+        "Option A": "SORT",
+        "Option B": "ORDER BY",
+        "Option C": "ARRANGE",
+        "Option D": "GROUP BY",
+        "Correct Option": "B",
+        "Explanation": "ORDER BY sorts the results returned by a query."
+    },
+    {
+        "Q.No": "12",
+        "Question": "Which SQL clause groups rows that have the same values in specified columns?",
+        "Option A": "ORDER BY",
+        "Option B": "GROUP BY",
+        "Option C": "HAVING",
+        "Option D": "WHERE",
+        "Correct Option": "B",
+        "Explanation": "GROUP BY aggregates rows based on column values."
+    },
+    {
+        "Q.No": "13",
+        "Question": "What does CRUD stand for in the context of databases?",
+        "Option A": "Create, Read, Update, Delete",
+        "Option B": "Copy, Read, Update, Delete",
+        "Option C": "Create, Run, Update, Drop",
+        "Option D": "Copy, Remove, Update, Delete",
+        "Correct Option": "A",
+        "Explanation": "CRUD represents the basic operations: Create, Read, Update, and Delete."
+    },
+    {
+        "Q.No": "14",
+        "Question": "Which of the following is a CRUD operation?",
+        "Option A": "SELECT",
+        "Option B": "COMMIT",
+        "Option C": "ROLLBACK",
+        "Option D": "ALTER",
+        "Correct Option": "A",
+        "Explanation": "SELECT is the Read operation in CRUD."
+    },
+    {
+        "Q.No": "15",
+        "Question": "In SQL, which command creates a new table?",
+        "Option A": "CREATE TABLE",
+        "Option B": "MAKE TABLE",
+        "Option C": "NEW TABLE",
+        "Option D": "BUILD TABLE",
+        "Correct Option": "A",
+        "Explanation": "CREATE TABLE defines a new table and its columns."
+    },
+    {
+        "Q.No": "16",
+        "Question": "In SQL, which command is used to modify an existing table’s structure?",
+        "Option A": "CHANGE TABLE",
+        "Option B": "ALTER TABLE",
+        "Option C": "MODIFY TABLE",
+        "Option D": "UPDATE TABLE",
+        "Correct Option": "B",
+        "Explanation": "ALTER TABLE modifies an existing table (e.g., adding or removing columns)."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Which of the following is NOT a SQL Data Definition Language (DDL) command?",
+        "Option A": "CREATE",
+        "Option B": "DROP",
+        "Option C": "SELECT",
+        "Option D": "ALTER",
+        "Correct Option": "C",
+        "Explanation": "SELECT is a Data Manipulation Language (DML) command, not DDL."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What is the primary key in a relational database?",
+        "Option A": "A unique identifier for a record",
+        "Option B": "A foreign key linking tables",
+        "Option C": "A data type",
+        "Option D": "A type of index",
+        "Correct Option": "A",
+        "Explanation": "The primary key uniquely identifies each record in a table."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is a foreign key?",
+        "Option A": "A unique identifier for a record",
+        "Option B": "A field that links to a primary key in another table",
+        "Option C": "An index used for searching",
+        "Option D": "A duplicate key",
+        "Correct Option": "B",
+        "Explanation": "A foreign key establishes a link between data in two tables."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What does normalization aim to do?",
+        "Option A": "Reduce data redundancy",
+        "Option B": "Increase query speed",
+        "Option C": "Create indexes",
+        "Option D": "Encrypt data",
+        "Correct Option": "A",
+        "Explanation": "Normalization organizes data to reduce redundancy and improve data integrity."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which normal form removes transitive dependencies?",
+        "Option A": "First Normal Form",
+        "Option B": "Second Normal Form",
+        "Option C": "Third Normal Form",
+        "Option D": "Boyce‑Codd Normal Form",
+        "Correct Option": "C",
+        "Explanation": "Third Normal Form removes transitive dependencies between non‑key attributes and the primary key."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is denormalization?",
+        "Option A": "Breaking a table into smaller tables",
+        "Option B": "Reintroducing redundancy for performance gains",
+        "Option C": "Removing indexes from a table",
+        "Option D": "Converting SQL to NoSQL",
+        "Correct Option": "B",
+        "Explanation": "Denormalization intentionally introduces redundancy to improve read performance."
+    },
+    {
+        "Q.No": "23",
+        "Question": "What is an index in a database?",
+        "Option A": "A pointer to data in a table",
+        "Option B": "A query optimizer",
+        "Option C": "A stored procedure",
+        "Option D": "A type of transaction",
+        "Correct Option": "A",
+        "Explanation": "An index is a data structure that improves the speed of data retrieval operations."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the primary benefit of using an index?",
+        "Option A": "Faster data retrieval",
+        "Option B": "Data encryption",
+        "Option C": "Reduced storage usage",
+        "Option D": "Simplified database design",
+        "Correct Option": "A",
+        "Explanation": "Indexes speed up data retrieval by reducing the number of records to scan."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which type of index is most commonly used in relational databases?",
+        "Option A": "B‑tree index",
+        "Option B": "Hash index",
+        "Option C": "Bitmap index",
+        "Option D": "R‑tree index",
+        "Correct Option": "A",
+        "Explanation": "B‑tree indexes are widely used for their efficiency in range queries and ordered data retrieval."
+    },
+    {
+        "Q.No": "26",
+        "Question": "What is a unique index?",
+        "Option A": "An index that allows duplicate values",
+        "Option B": "An index that ensures all values are distinct",
+        "Option C": "An index that is automatically created for foreign keys",
+        "Option D": "An index that sorts data in descending order",
+        "Correct Option": "B",
+        "Explanation": "A unique index enforces the uniqueness of the indexed column values."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which SQL command creates an index?",
+        "Option A": "CREATE INDEX",
+        "Option B": "BUILD INDEX",
+        "Option C": "ADD INDEX",
+        "Option D": "MAKE INDEX",
+        "Correct Option": "A",
+        "Explanation": "CREATE INDEX is used to create an index on one or more columns of a table."
+    },
+    {
+        "Q.No": "28",
+        "Question": "What is an advantage of non‑relational databases?",
+        "Option A": "Strict table schemas",
+        "Option B": "Flexibility in handling unstructured data",
+        "Option C": "Enforced ACID compliance",
+        "Option D": "Built‑in join operations",
+        "Correct Option": "B",
+        "Explanation": "Non‑relational databases offer schema flexibility and can handle unstructured or semi‑structured data."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which non‑relational database type stores data as documents?",
+        "Option A": "Key‑value store",
+        "Option B": "Document store",
+        "Option C": "Column store",
+        "Option D": "Graph database",
+        "Correct Option": "B",
+        "Explanation": "Document stores (e.g., MongoDB) store data in document formats such as JSON or BSON."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which non‑relational database is known for its key‑value store?",
+        "Option A": "MongoDB",
+        "Option B": "Redis",
+        "Option C": "Cassandra",
+        "Option D": "Neo4j",
+        "Correct Option": "B",
+        "Explanation": "Redis is a popular key‑value store used for caching and fast data retrieval."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What is the main difference between relational and non‑relational databases?",
+        "Option A": "Relational databases use fixed schemas; non‑relational databases are schema‑less",
+        "Option B": "Relational databases are always faster than non‑relational ones",
+        "Option C": "Non‑relational databases use SQL exclusively",
+        "Option D": "There is no difference",
+        "Correct Option": "A",
+        "Explanation": "Relational databases have fixed schemas with tables, while non‑relational databases often use flexible or schema‑less structures."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which of the following is an example of an RDBMS?",
+        "Option A": "MySQL",
+        "Option B": "MongoDB",
+        "Option C": "Redis",
+        "Option D": "Cassandra",
+        "Correct Option": "A",
+        "Explanation": "MySQL is a relational database management system (RDBMS) that uses SQL."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which of the following is an example of a NoSQL database?",
+        "Option A": "PostgreSQL",
+        "Option B": "Oracle",
+        "Option C": "MongoDB",
+        "Option D": "SQL Server",
+        "Correct Option": "C",
+        "Explanation": "MongoDB is a NoSQL, document‑oriented database."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is ACID compliance?",
+        "Option A": "A set of properties that guarantee reliable processing of database transactions",
+        "Option B": "A method of data encryption",
+        "Option C": "A network protocol for databases",
+        "Option D": "A type of indexing strategy",
+        "Correct Option": "A",
+        "Explanation": "ACID stands for Atomicity, Consistency, Isolation, and Durability, ensuring reliable transactions."
+    },
+    {
+        "Q.No": "35",
+        "Question": "Which of the following is NOT an ACID property?",
+        "Option A": "Atomicity",
+        "Option B": "Consistency",
+        "Option C": "Isolation",
+        "Option D": "Indexing",
+        "Correct Option": "D",
+        "Explanation": "Indexing is not an ACID property."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Which SQL clause is used to join two tables?",
+        "Option A": "JOIN",
+        "Option B": "UNION",
+        "Option C": "INTERSECT",
+        "Option D": "MERGE",
+        "Correct Option": "A",
+        "Explanation": "JOIN is used to combine rows from two or more tables based on a related column."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What is an inner join?",
+        "Option A": "A join that returns only matching rows from both tables",
+        "Option B": "A join that returns all rows from both tables",
+        "Option C": "A join that returns only non‑matching rows",
+        "Option D": "A join that merges duplicate rows",
+        "Correct Option": "A",
+        "Explanation": "An inner join returns rows where there is a match in both tables."
+    },
+    {
+        "Q.No": "38",
+        "Question": "What is an outer join?",
+        "Option A": "A join that returns only matching rows",
+        "Option B": "A join that returns all rows from one table and matched rows from the other",
+        "Option C": "A join that returns only non‑matching rows",
+        "Option D": "A join that excludes NULL values",
+        "Correct Option": "B",
+        "Explanation": "An outer join returns all rows from one table and the matched rows from the other, filling with NULLs if there is no match."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is the purpose of a self‑join in SQL?",
+        "Option A": "To join a table to itself",
+        "Option B": "To join two unrelated tables",
+        "Option C": "To merge duplicate records",
+        "Option D": "To combine query results",
+        "Correct Option": "A",
+        "Explanation": "A self‑join is used to join a table with itself, often to compare rows within the same table."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What does the GROUP BY clause do?",
+        "Option A": "Sorts the result set",
+        "Option B": "Groups rows that have the same values",
+        "Option C": "Filters rows based on conditions",
+        "Option D": "Limits the number of rows returned",
+        "Correct Option": "B",
+        "Explanation": "GROUP BY aggregates rows that share common values in specified columns."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What does the HAVING clause do?",
+        "Option A": "Filters individual rows before grouping",
+        "Option B": "Filters groups after aggregation",
+        "Option C": "Sorts the grouped results",
+        "Option D": "Joins tables",
+        "Correct Option": "B",
+        "Explanation": "HAVING is used to filter groups created by GROUP BY based on aggregate conditions."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which function counts the number of rows in SQL?",
+        "Option A": "COUNT()",
+        "Option B": "SUM()",
+        "Option C": "AVG()",
+        "Option D": "TOTAL()",
+        "Correct Option": "A",
+        "Explanation": "COUNT() returns the number of rows that match a specified condition."
+    },
+    {
+        "Q.No": "43",
+        "Question": "Which function returns the maximum value in a column?",
+        "Option A": "MIN()",
+        "Option B": "MAX()",
+        "Option C": "TOP()",
+        "Option D": "GREATEST()",
+        "Correct Option": "B",
+        "Explanation": "MAX() returns the highest value in a specified column."
+    },
+    {
+        "Q.No": "44",
+        "Question": "What does the DISTINCT keyword do?",
+        "Option A": "Sorts the result set",
+        "Option B": "Eliminates duplicate rows",
+        "Option C": "Filters rows based on a condition",
+        "Option D": "Groups rows",
+        "Correct Option": "B",
+        "Explanation": "DISTINCT removes duplicate rows from the query result."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is a view in a database?",
+        "Option A": "A virtual table based on the result of a query",
+        "Option B": "A physical copy of a table",
+        "Option C": "A type of index",
+        "Option D": "A stored procedure",
+        "Correct Option": "A",
+        "Explanation": "A view is a virtual table created by a query, presenting data without storing it physically."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Which command creates a view?",
+        "Option A": "CREATE VIEW",
+        "Option B": "MAKE VIEW",
+        "Option C": "NEW VIEW",
+        "Option D": "ALTER VIEW",
+        "Correct Option": "A",
+        "Explanation": "CREATE VIEW is used to define a new view in the database."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What is a stored procedure?",
+        "Option A": "A precompiled set of SQL statements",
+        "Option B": "A query that retrieves data",
+        "Option C": "A type of index",
+        "Option D": "A trigger",
+        "Correct Option": "A",
+        "Explanation": "A stored procedure is a saved collection of SQL statements that can be executed as a program."
+    },
+    {
+        "Q.No": "48",
+        "Question": "Which command creates a stored procedure?",
+        "Option A": "CREATE PROCEDURE",
+        "Option B": "NEW PROCEDURE",
+        "Option C": "MAKE PROCEDURE",
+        "Option D": "ALTER PROCEDURE",
+        "Correct Option": "A",
+        "Explanation": "CREATE PROCEDURE defines a new stored procedure in SQL."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is a trigger?",
+        "Option A": "A set of actions automatically executed in response to certain events",
+        "Option B": "A manual command to update data",
+        "Option C": "A query optimizer",
+        "Option D": "A type of join",
+        "Correct Option": "A",
+        "Explanation": "A trigger automatically executes predefined actions when specified events occur in the database."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which event can fire a trigger?",
+        "Option A": "INSERT",
+        "Option B": "UPDATE",
+        "Option C": "DELETE",
+        "Option D": "All of the above",
+        "Correct Option": "D",
+        "Explanation": "Triggers can be set to execute on INSERT, UPDATE, or DELETE events."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is a transaction in a database?",
+        "Option A": "A sequence of operations performed as a single logical unit",
+        "Option B": "A single SQL statement",
+        "Option C": "An index creation process",
+        "Option D": "A stored procedure",
+        "Correct Option": "A",
+        "Explanation": "A transaction is a group of operations that execute as a unit, ensuring data integrity."
+    },
+    {
+        "Q.No": "52",
+        "Question": "What does the COMMIT command do?",
+        "Option A": "Saves all changes made in the transaction",
+        "Option B": "Undoes changes made in the transaction",
+        "Option C": "Deletes the transaction",
+        "Option D": "Starts a new transaction",
+        "Correct Option": "A",
+        "Explanation": "COMMIT finalizes a transaction, making all changes permanent."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What does the ROLLBACK command do?",
+        "Option A": "Saves changes",
+        "Option B": "Undoes changes made in the current transaction",
+        "Option C": "Commits the transaction",
+        "Option D": "Starts a new transaction",
+        "Correct Option": "B",
+        "Explanation": "ROLLBACK reverts the changes made during the current transaction."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is a join operation?",
+        "Option A": "Combining columns from two or more tables based on a related column",
+        "Option B": "Appending rows from one table to another",
+        "Option C": "Filtering data",
+        "Option D": "Sorting data",
+        "Correct Option": "A",
+        "Explanation": "A join operation combines rows from two or more tables based on a common field."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the purpose of the UNION operator?",
+        "Option A": "Combine result sets of two queries and remove duplicates",
+        "Option B": "Join two tables",
+        "Option C": "Update multiple rows",
+        "Option D": "Delete duplicate rows",
+        "Correct Option": "A",
+        "Explanation": "UNION merges the results of two queries and removes duplicates."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is the difference between UNION and UNION ALL?",
+        "Option A": "UNION removes duplicates; UNION ALL does not",
+        "Option B": "UNION ALL removes duplicates; UNION does not",
+        "Option C": "They are identical",
+        "Option D": "UNION orders the results; UNION ALL does not",
+        "Correct Option": "A",
+        "Explanation": "UNION removes duplicate rows while UNION ALL includes all duplicates."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which of the following is a DDL command?",
+        "Option A": "CREATE",
+        "Option B": "SELECT",
+        "Option C": "INSERT",
+        "Option D": "UPDATE",
+        "Correct Option": "A",
+        "Explanation": "CREATE is a Data Definition Language command used to define database objects."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which of the following is a DML command?",
+        "Option A": "DELETE",
+        "Option B": "CREATE",
+        "Option C": "ALTER",
+        "Option D": "DROP",
+        "Correct Option": "A",
+        "Explanation": "DELETE is a Data Manipulation Language command used for modifying data."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What does the SELECT statement do?",
+        "Option A": "Retrieves data from one or more tables",
+        "Option B": "Inserts data into a table",
+        "Option C": "Updates existing data",
+        "Option D": "Deletes data from a table",
+        "Correct Option": "A",
+        "Explanation": "SELECT is used to query and retrieve data from a database."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which keyword limits the number of rows returned by a query?",
+        "Option A": "LIMIT",
+        "Option B": "TOP",
+        "Option C": "ROWCOUNT",
+        "Option D": "MAX",
+        "Correct Option": "A",
+        "Explanation": "LIMIT restricts the number of rows in the result set (common in MySQL and PostgreSQL)."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is a subquery?",
+        "Option A": "A query nested within another query",
+        "Option B": "A query that updates data",
+        "Option C": "A query that creates a table",
+        "Option D": "A query that deletes data",
+        "Correct Option": "A",
+        "Explanation": "A subquery is a query embedded within another SQL query."
+    },
+    {
+        "Q.No": "62",
+        "Question": "What is a correlated subquery?",
+        "Option A": "A subquery that runs independently",
+        "Option B": "A subquery that references columns from the outer query",
+        "Option C": "A subquery that performs joins",
+        "Option D": "A subquery that updates data",
+        "Correct Option": "B",
+        "Explanation": "A correlated subquery depends on the outer query for its values."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the role of the CASE statement in SQL?",
+        "Option A": "To implement conditional logic in queries",
+        "Option B": "To sort results",
+        "Option C": "To join tables",
+        "Option D": "To create indexes",
+        "Correct Option": "A",
+        "Explanation": "The CASE statement provides if‑then‑else logic within SQL queries."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which clause specifies the source table in a query?",
+        "Option A": "FROM",
+        "Option B": "WHERE",
+        "Option C": "GROUP BY",
+        "Option D": "ORDER BY",
+        "Correct Option": "A",
+        "Explanation": "The FROM clause indicates the table(s) from which data is retrieved."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What does the DROP command do?",
+        "Option A": "Permanently removes a table or other database object",
+        "Option B": "Deletes rows from a table",
+        "Option C": "Creates a new table",
+        "Option D": "Updates a table",
+        "Correct Option": "A",
+        "Explanation": "DROP completely removes a database object such as a table."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which command removes all rows from a table but keeps its structure?",
+        "Option A": "DELETE",
+        "Option B": "TRUNCATE",
+        "Option C": "DROP",
+        "Option D": "REMOVE",
+        "Correct Option": "B",
+        "Explanation": "TRUNCATE deletes all rows while retaining the table structure."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the purpose of ALTER TABLE?",
+        "Option A": "To modify an existing table's structure",
+        "Option B": "To delete a table",
+        "Option C": "To create a new table",
+        "Option D": "To insert data into a table",
+        "Correct Option": "A",
+        "Explanation": "ALTER TABLE is used to change the structure of an existing table."
+    },
+    {
+        "Q.No": "68",
+        "Question": "What is a composite key?",
+        "Option A": "A key consisting of a single column",
+        "Option B": "A key consisting of multiple columns",
+        "Option C": "A key that is automatically generated",
+        "Option D": "A key used for indexing",
+        "Correct Option": "B",
+        "Explanation": "A composite key is made up of two or more columns that uniquely identify a record."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What is a candidate key?",
+        "Option A": "A key that could serve as a primary key",
+        "Option B": "A key that is used only for indexing",
+        "Option C": "A foreign key candidate",
+        "Option D": "A key that is automatically generated",
+        "Correct Option": "A",
+        "Explanation": "Candidate keys are attributes that can uniquely identify a record and any one of them may serve as the primary key."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which normal form removes partial dependencies?",
+        "Option A": "First Normal Form",
+        "Option B": "Second Normal Form",
+        "Option C": "Third Normal Form",
+        "Option D": "Boyce‑Codd Normal Form",
+        "Correct Option": "B",
+        "Explanation": "Second Normal Form eliminates partial dependencies of non‑key attributes on a composite key."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which normal form removes transitive dependencies?",
+        "Option A": "First Normal Form",
+        "Option B": "Second Normal Form",
+        "Option C": "Third Normal Form",
+        "Option D": "Fourth Normal Form",
+        "Correct Option": "C",
+        "Explanation": "Third Normal Form removes transitive dependencies to ensure non‑key attributes depend only on the primary key."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What does the term \"\"foreign key constraint\"\" mean?",
+        "Option A": "A rule enforcing a link between tables",
+        "Option B": "A unique identifier",
+        "Option C": "An index",
+        "Option D": "A stored procedure",
+        "Correct Option": "A",
+        "Explanation": "A foreign key constraint ensures that a value in one table corresponds to a value in another, maintaining referential integrity."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is referential integrity?",
+        "Option A": "Ensuring relationships between tables remain consistent",
+        "Option B": "Encrypting data in a database",
+        "Option C": "Performing regular backups",
+        "Option D": "Normalizing data",
+        "Correct Option": "A",
+        "Explanation": "Referential integrity guarantees that foreign keys correctly reference primary keys, ensuring consistency."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What is a one‑to‑many relationship?",
+        "Option A": "One record in a table relates to many records in another table",
+        "Option B": "Many records relate to one record",
+        "Option C": "One record relates to one record",
+        "Option D": "Many records relate to many records",
+        "Correct Option": "A",
+        "Explanation": "In a one‑to‑many relationship, a single record in one table can be associated with multiple records in another table."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What is a many‑to‑many relationship?",
+        "Option A": "Each record in one table relates to multiple records in another and vice versa",
+        "Option B": "Each record relates to only one record",
+        "Option C": "No relationships exist between the tables",
+        "Option D": "A hierarchical relationship",
+        "Correct Option": "A",
+        "Explanation": "In a many‑to‑many relationship, multiple records in one table are associated with multiple records in another, often implemented via a junction table."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which SQL statement modifies data in a table?",
+        "Option A": "INSERT",
+        "Option B": "UPDATE",
+        "Option C": "DELETE",
+        "Option D": "SELECT",
+        "Correct Option": "B",
+        "Explanation": "UPDATE changes existing data in a table."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What does the SET clause do in an UPDATE statement?",
+        "Option A": "Specifies new values for columns",
+        "Option B": "Filters rows to update",
+        "Option C": "Joins tables",
+        "Option D": "Sorts results",
+        "Correct Option": "A",
+        "Explanation": "The SET clause specifies the column values to be updated in an UPDATE statement."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which SQL command retrieves data from multiple tables?",
+        "Option A": "JOIN",
+        "Option B": "SELECT",
+        "Option C": "MERGE",
+        "Option D": "COMBINE",
+        "Correct Option": "A",
+        "Explanation": "JOIN is used to combine data from multiple tables based on related columns."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is the significance of using indexes in large databases?",
+        "Option A": "They improve query performance",
+        "Option B": "They increase storage requirements",
+        "Option C": "They simplify database design",
+        "Option D": "They eliminate the need for normalization",
+        "Correct Option": "A",
+        "Explanation": "Indexes significantly speed up data retrieval by reducing the amount of data scanned."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What is a potential drawback of excessive indexing?",
+        "Option A": "Improved query performance",
+        "Option B": "Increased storage space and slower write operations",
+        "Option C": "Enhanced data security",
+        "Option D": "Simplified query syntax",
+        "Correct Option": "B",
+        "Explanation": "Too many indexes can slow down data modifications and require additional storage space."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What is the purpose of a clustered index?",
+        "Option A": "To determine the physical order of data in a table",
+        "Option B": "To store data in a separate table",
+        "Option C": "To encrypt table data",
+        "Option D": "To maintain referential integrity",
+        "Correct Option": "A",
+        "Explanation": "A clustered index sorts and stores the actual data rows in the table based on key values."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is the purpose of a non‑clustered index?",
+        "Option A": "To define the physical order of data",
+        "Option B": "To create a logical order for data that references the table",
+        "Option C": "To store duplicate copies of data",
+        "Option D": "To replace the primary key",
+        "Correct Option": "B",
+        "Explanation": "A non‑clustered index provides a logical ordering that helps speed up queries without altering the physical data storage."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which NoSQL database is known for its scalability and document‑oriented model?",
+        "Option A": "MongoDB",
+        "Option B": "MySQL",
+        "Option C": "Oracle",
+        "Option D": "PostgreSQL",
+        "Correct Option": "A",
+        "Explanation": "MongoDB is a widely used document‑oriented NoSQL database noted for its scalability."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What does the term \"\"schema\"\" refer to in a relational database?",
+        "Option A": "The structure of the database (tables, columns, relationships)",
+        "Option B": "The data stored in the database",
+        "Option C": "The performance metrics of queries",
+        "Option D": "The backup schedule",
+        "Correct Option": "A",
+        "Explanation": "A schema defines the organization and structure of a database."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which SQL command is used to change a database user's password?",
+        "Option A": "ALTER USER",
+        "Option B": "UPDATE USER",
+        "Option C": "SET PASSWORD",
+        "Option D": "MODIFY USER",
+        "Correct Option": "A",
+        "Explanation": "ALTER USER is used in many SQL databases to change user credentials, including passwords."
+    },
+    {
+        "Q.No": "86",
+        "Question": "What does data integrity mean?",
+        "Option A": "Ensuring data accuracy and consistency",
+        "Option B": "Maximizing query speed",
+        "Option C": "Encrypting database data",
+        "Option D": "Increasing storage capacity",
+        "Correct Option": "A",
+        "Explanation": "Data integrity ensures that the data remains accurate and consistent over its lifecycle."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is a transaction log?",
+        "Option A": "A record of all changes made to the database",
+        "Option B": "A list of user accounts",
+        "Option C": "A type of database index",
+        "Option D": "A backup file",
+        "Correct Option": "A",
+        "Explanation": "A transaction log records every change to the database, aiding in recovery and auditing."
+    },
+    {
+        "Q.No": "88",
+        "Question": "What is the role of the SQL JOIN operator?",
+        "Option A": "To combine rows from two or more tables",
+        "Option B": "To insert new data",
+        "Option C": "To delete records",
+        "Option D": "To update data",
+        "Correct Option": "A",
+        "Explanation": "JOIN is used to merge rows from different tables based on related columns."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the key difference between DELETE and TRUNCATE?",
+        "Option A": "DELETE removes rows one by one (can be rolled back); TRUNCATE removes all rows quickly (often cannot be rolled back)",
+        "Option B": "TRUNCATE removes rows one by one; DELETE removes all rows",
+        "Option C": "They are functionally identical",
+        "Option D": "DELETE creates a backup; TRUNCATE does not",
+        "Correct Option": "A",
+        "Explanation": "DELETE removes rows individually and can be rolled back, while TRUNCATE is faster but less flexible."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which command is used to remove a table from a database?",
+        "Option A": "DROP TABLE",
+        "Option B": "DELETE TABLE",
+        "Option C": "REMOVE TABLE",
+        "Option D": "TRUNCATE TABLE",
+        "Correct Option": "A",
+        "Explanation": "DROP TABLE permanently deletes the table and its data."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is a materialized view?",
+        "Option A": "A view whose query results are stored physically",
+        "Option B": "A virtual table defined by a query",
+        "Option C": "A temporary table",
+        "Option D": "A type of index",
+        "Correct Option": "A",
+        "Explanation": "A materialized view stores the results of a query physically and can be refreshed periodically."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which concept in normalization is aimed at reducing data redundancy?",
+        "Option A": "First Normal Form",
+        "Option B": "Normalization",
+        "Option C": "Denormalization",
+        "Option D": "Data Warehousing",
+        "Correct Option": "B",
+        "Explanation": "Normalization organizes data to reduce redundancy and improve consistency."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is a key characteristic of NoSQL databases?",
+        "Option A": "Rigid schema",
+        "Option B": "Scalability and flexibility",
+        "Option C": "Strict ACID compliance",
+        "Option D": "Fixed table structures",
+        "Correct Option": "B",
+        "Explanation": "NoSQL databases offer scalability and flexible schema designs compared to traditional relational databases."
+    },
+    {
+        "Q.No": "94",
+        "Question": "What does \"\"scalability\"\" mean in the context of databases?",
+        "Option A": "The ability to handle increasing amounts of data and users",
+        "Option B": "The speed of query execution",
+        "Option C": "The process of normalization",
+        "Option D": "The creation of indexes",
+        "Correct Option": "A",
+        "Explanation": "Scalability refers to a system’s ability to grow and manage increased demand."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is a data warehouse?",
+        "Option A": "A system used for reporting and data analysis",
+        "Option B": "A transactional database",
+        "Option C": "A type of NoSQL database",
+        "Option D": "An in‑memory cache",
+        "Correct Option": "A",
+        "Explanation": "A data warehouse is designed for querying and analysis of large volumes of historical data."
+    },
+    {
+        "Q.No": "96",
+        "Question": "What is the role of an ETL process?",
+        "Option A": "Extract, Transform, and Load data into a data warehouse",
+        "Option B": "Encrypt, Transfer, and Log data",
+        "Option C": "Evaluate, Test, and Load applications",
+        "Option D": "Execute, Transform, and Launch queries",
+        "Correct Option": "A",
+        "Explanation": "ETL stands for Extract, Transform, and Load—the process of preparing data for analysis."
+    },
+    {
+        "Q.No": "97",
+        "Question": "Which language is commonly used for querying OLAP systems?",
+        "Option A": "SQL",
+        "Option B": "MDX",
+        "Option C": "NoSQL",
+        "Option D": "Java",
+        "Correct Option": "B",
+        "Explanation": "MDX (Multidimensional Expressions) is used to query OLAP (Online Analytical Processing) databases."
+    },
+    {
+        "Q.No": "98",
+        "Question": "What is the purpose of a star schema in a data warehouse?",
+        "Option A": "To simplify complex queries by organizing data into fact and dimension tables",
+        "Option B": "To fully normalize data",
+        "Option C": "To create a NoSQL environment",
+        "Option D": "To implement a graph database",
+        "Correct Option": "A",
+        "Explanation": "A star schema organizes data into fact and dimension tables to simplify query complexity in data warehousing."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What is the role of indexing in query optimization?",
+        "Option A": "To speed up data retrieval by reducing the amount of data scanned",
+        "Option B": "To encrypt data for security",
+        "Option C": "To create duplicate backups",
+        "Option D": "To join tables automatically",
+        "Correct Option": "A",
+        "Explanation": "Indexing improves query performance by allowing rapid data location without scanning entire tables."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What does SQL injection refer to?",
+        "Option A": "A security vulnerability that allows attackers to execute malicious SQL code",
+        "Option B": "A method of query optimization",
+        "Option C": "A technique for indexing tables",
+        "Option D": "A type of data backup",
+        "Correct Option": "A",
+        "Explanation": "SQL injection is a security vulnerability in which an attacker inserts malicious SQL into a query."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "Which of the following best defines computer science?",
+        "Option A": "The study of natural phenomena",
+        "Option B": "The study of computational systems and algorithms",
+        "Option C": "The study of computer hardware exclusively",
+        "Option D": "The study of software only",
+        "Correct Option": "B",
+        "Explanation": "Computer science encompasses both hardware and software as well as the theory behind computation."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is one of the primary goals of computer science?",
+        "Option A": "Understanding computation",
+        "Option B": "Exploring human behavior",
+        "Option C": "Studying astrophysics",
+        "Option D": "Analyzing literature",
+        "Correct Option": "A",
+        "Explanation": "Computer science aims to understand computation, its principles, and its applications."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Why is computer science considered an important field?",
+        "Option A": "It only focuses on building computers",
+        "Option B": "It revolutionizes problem-solving in various disciplines",
+        "Option C": "It is limited to video game development",
+        "Option D": "It has no real-world applications",
+        "Correct Option": "B",
+        "Explanation": "Computer science has diverse applications in various fields, making it critical for innovation and problem-solving."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What does the term “algorithm” refer to in computer science?",
+        "Option A": "A computer hardware component",
+        "Option B": "A set of instructions to solve a problem",
+        "Option C": "A type of software",
+        "Option D": "A computer network",
+        "Correct Option": "B",
+        "Explanation": "An algorithm is a step-by-step procedure or set of rules to be followed in problem-solving operations."
+    },
+    {
+        "Q.No": "5",
+        "Question": "Which term is used to describe a detailed procedure for solving a problem in computer science?",
+        "Option A": "Program",
+        "Option B": "Algorithm",
+        "Option C": "Database",
+        "Option D": "Operating system",
+        "Correct Option": "B",
+        "Explanation": "Algorithms are fundamental to designing programs that solve computational problems."
+    },
+    {
+        "Q.No": "6",
+        "Question": "In computer science, what does “data processing” refer to?",
+        "Option A": "Storing data without any modification",
+        "Option B": "Converting raw data into meaningful information",
+        "Option C": "Deleting unnecessary files",
+        "Option D": "Hardware maintenance",
+        "Correct Option": "B",
+        "Explanation": "Data processing involves transforming raw data into a useful form."
+    },
+    {
+        "Q.No": "7",
+        "Question": "What is a key characteristic of computer science?",
+        "Option A": "It is exclusively theoretical",
+        "Option B": "It blends theoretical foundations with practical applications",
+        "Option C": "It is limited to hardware design",
+        "Option D": "It avoids mathematical principles",
+        "Correct Option": "B",
+        "Explanation": "Computer science integrates theory and practical application to solve problems."
+    },
+    {
+        "Q.No": "8",
+        "Question": "Which of the following best illustrates the importance of computational thinking?",
+        "Option A": "It improves artistic skills",
+        "Option B": "It enhances problem-solving in various disciplines",
+        "Option C": "It only benefits computer programmers",
+        "Option D": "It has no application outside computers",
+        "Correct Option": "B",
+        "Explanation": "Computational thinking is a universal problem-solving method applicable across fields."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which area does computer science not typically cover?",
+        "Option A": "Software development",
+        "Option B": "Hardware design",
+        "Option C": "Algorithm analysis",
+        "Option D": "Culinary arts",
+        "Correct Option": "D",
+        "Explanation": "Culinary arts are unrelated to the technical focus of computer science."
+    },
+    {
+        "Q.No": "10",
+        "Question": "How does computer science contribute to modern society?",
+        "Option A": "By limiting technological advancements",
+        "Option B": "By enhancing automation and data analysis",
+        "Option C": "By solely focusing on hardware repair",
+        "Option D": "By reducing innovation",
+        "Correct Option": "B",
+        "Explanation": "Computer science drives innovation in automation, data processing, and more, benefiting society."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which of the following statements is true about computer science?",
+        "Option A": "It only involves coding",
+        "Option B": "It encompasses theory, design, development, and application of software and hardware",
+        "Option C": "It focuses solely on computer hardware",
+        "Option D": "It is not involved in artificial intelligence",
+        "Correct Option": "B",
+        "Explanation": "Computer science is a broad discipline that includes both hardware and software aspects, as well as theoretical underpinnings."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is one common misconception about computer science?",
+        "Option A": "It is solely about programming",
+        "Option B": "It involves various disciplines such as mathematics and engineering",
+        "Option C": "It contributes to problem-solving",
+        "Option D": "It is applied in many industries",
+        "Correct Option": "A",
+        "Explanation": "Many mistakenly believe computer science is only about coding, whereas it involves diverse areas including theory and design."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which aspect is essential in the study of computer science?",
+        "Option A": "Memorizing hardware specifications",
+        "Option B": "Creativity in algorithm design",
+        "Option C": "Avoiding mathematical concepts",
+        "Option D": "Disregarding software development",
+        "Correct Option": "B",
+        "Explanation": "Creativity is crucial for designing effective algorithms and solving problems."
+    },
+    {
+        "Q.No": "14",
+        "Question": "How does computer science influence other fields?",
+        "Option A": "It has no influence outside computing",
+        "Option B": "It provides computational tools to solve problems in science, business, and more",
+        "Option C": "It only impacts the tech industry",
+        "Option D": "It is confined to academic research",
+        "Correct Option": "B",
+        "Explanation": "Computer science provides computational methods that enhance various fields."
+    },
+    {
+        "Q.No": "15",
+        "Question": "What does the term “computational problem solving” imply?",
+        "Option A": "Solving problems through manual calculations only",
+        "Option B": "Using algorithms and data analysis to address complex issues",
+        "Option C": "Ignoring algorithmic methods",
+        "Option D": "Focusing only on theoretical mathematics",
+        "Correct Option": "B",
+        "Explanation": "Computational problem solving uses algorithms and structured approaches to solve problems."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which of the following best describes “software” in computer science?",
+        "Option A": "Physical components of a computer",
+        "Option B": "Programs and operating information for computers",
+        "Option C": "Only the central processing unit",
+        "Option D": "Network cables",
+        "Correct Option": "B",
+        "Explanation": "Software refers to the programs and instructions that enable hardware to perform tasks."
+    },
+    {
+        "Q.No": "17",
+        "Question": "Why is the study of computer science important for innovation?",
+        "Option A": "It discourages technological progress",
+        "Option B": "It provides tools to develop new technologies and improve existing systems",
+        "Option C": "It solely focuses on historical computers",
+        "Option D": "It limits creative thinking",
+        "Correct Option": "B",
+        "Explanation": "Computer science drives innovation through new computational methods and technology advancements."
+    },
+    {
+        "Q.No": "18",
+        "Question": "What role does abstraction play in computer science?",
+        "Option A": "It complicates problem-solving",
+        "Option B": "It simplifies complex systems by modeling them at a high level",
+        "Option C": "It is irrelevant to programming",
+        "Option D": "It is only used in hardware design",
+        "Correct Option": "B",
+        "Explanation": "Abstraction helps manage complexity by focusing on high-level concepts rather than intricate details."
+    },
+    {
+        "Q.No": "19",
+        "Question": "Which is a primary reason for studying algorithms in computer science?",
+        "Option A": "To ensure programs run inefficiently",
+        "Option B": "To solve problems systematically and optimize performance",
+        "Option C": "To increase hardware cost",
+        "Option D": "To ignore data structures",
+        "Correct Option": "B",
+        "Explanation": "Studying algorithms is essential for solving problems in an efficient and systematic manner."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What does “computational thinking” involve?",
+        "Option A": "Random guessing",
+        "Option B": "Breaking down problems into smaller parts",
+        "Option C": "Ignoring the problem structure",
+        "Option D": "Copying code without understanding",
+        "Correct Option": "B",
+        "Explanation": "Computational thinking involves decomposition, pattern recognition, abstraction, and algorithm design."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which area is fundamental to computer science education?",
+        "Option A": "Cooking techniques",
+        "Option B": "Mathematics and logic",
+        "Option C": "Physical exercise",
+        "Option D": "Historical literature",
+        "Correct Option": "B",
+        "Explanation": "Mathematics and logic provide the foundational principles for understanding algorithms and computational theory."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is a benefit of learning computer science?",
+        "Option A": "Limiting career opportunities",
+        "Option B": "Developing problem-solving skills that are applicable in many fields",
+        "Option C": "Focusing only on repetitive tasks",
+        "Option D": "Avoiding collaboration",
+        "Correct Option": "B",
+        "Explanation": "Computer science enhances critical thinking and problem-solving skills beneficial in diverse careers."
+    },
+    {
+        "Q.No": "23",
+        "Question": "How does computer science impact everyday life?",
+        "Option A": "It only affects computer engineers",
+        "Option B": "It enhances communication, automation, and access to information",
+        "Option C": "It has minimal effect",
+        "Option D": "It exclusively deals with gaming",
+        "Correct Option": "B",
+        "Explanation": "Computer science influences everyday activities through technological advancements."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is one major challenge in computer science?",
+        "Option A": "Solving complex computational problems",
+        "Option B": "Avoiding technological innovation",
+        "Option C": "Focusing only on art",
+        "Option D": "Disregarding user needs",
+        "Correct Option": "A",
+        "Explanation": "Complex computational problems require innovative algorithms and solutions, which is a central challenge in computer science."
+    },
+    {
+        "Q.No": "25",
+        "Question": "Which statement best summarizes the significance of computer science in modern society?",
+        "Option A": "It is only about computer repair",
+        "Option B": "It drives technological advancement and improves efficiency in various sectors",
+        "Option C": "It is irrelevant to modern industries",
+        "Option D": "It only concerns coding for video games",
+        "Correct Option": "B",
+        "Explanation": "Computer science is pivotal in driving innovation, improving efficiency, and solving complex problems in multiple sectors."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Who is considered the father of the computer?",
+        "Option A": "Alan Turing",
+        "Option B": "Charles Babbage",
+        "Option C": "Bill Gates",
+        "Option D": "Steve Jobs",
+        "Correct Option": "B",
+        "Explanation": "Charles Babbage is known as the father of the computer for his designs of the Analytical Engine."
+    },
+    {
+        "Q.No": "27",
+        "Question": "Which computer is considered the first general-purpose electronic computer?",
+        "Option A": "ENIAC",
+        "Option B": "UNIVAC",
+        "Option C": "Colossus",
+        "Option D": "Z3",
+        "Correct Option": "A",
+        "Explanation": "ENIAC was the first general-purpose electronic computer."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which war influenced significant advancements in computer technology?",
+        "Option A": "World War I",
+        "Option B": "World War II",
+        "Option C": "The Cold War",
+        "Option D": "The Vietnam War",
+        "Correct Option": "B",
+        "Explanation": "World War II spurred significant advancements in computer technology, including code-breaking and ballistics calculations."
+    },
+    {
+        "Q.No": "29",
+        "Question": "What does “Babbage’s Difference Engine” refer to?",
+        "Option A": "A type of modern laptop",
+        "Option B": "A mechanical calculator designed to compute polynomial functions",
+        "Option C": "A software program",
+        "Option D": "An electronic calculator",
+        "Correct Option": "B",
+        "Explanation": "The Difference Engine was a mechanical calculator designed by Charles Babbage to compute polynomial functions."
+    },
+    {
+        "Q.No": "30",
+        "Question": "Which of the following is a milestone in computer history due to its use in code-breaking?",
+        "Option A": "ENIAC",
+        "Option B": "Colossus",
+        "Option C": "IBM 701",
+        "Option D": "Apple I",
+        "Correct Option": "B",
+        "Explanation": "Colossus was used during World War II to break German codes."
+    },
+    {
+        "Q.No": "31",
+        "Question": "What was the significance of the UNIVAC computer?",
+        "Option A": "It was the first personal computer",
+        "Option B": "It was the first commercially produced computer",
+        "Option C": "It was used exclusively for gaming",
+        "Option D": "It had no practical applications",
+        "Correct Option": "B",
+        "Explanation": "UNIVAC was the first commercially produced computer and marked a turning point in computer history."
+    },
+    {
+        "Q.No": "32",
+        "Question": "Which invention is considered a precursor to modern computers?",
+        "Option A": "The abacus",
+        "Option B": "The smartphone",
+        "Option C": "The television",
+        "Option D": "The refrigerator",
+        "Correct Option": "A",
+        "Explanation": "The abacus is one of the earliest devices used for computation, influencing later developments in computing."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Who is known for conceptualizing the Turing machine?",
+        "Option A": "John von Neumann",
+        "Option B": "Alan Turing",
+        "Option C": "Charles Babbage",
+        "Option D": "Steve Wozniak",
+        "Correct Option": "B",
+        "Explanation": "Alan Turing introduced the concept of a universal Turing machine, a fundamental model in computer science."
+    },
+    {
+        "Q.No": "34",
+        "Question": "Which event marked the beginning of the computer revolution in the 20th century?",
+        "Option A": "The launch of the first smartphone",
+        "Option B": "The development of the transistor",
+        "Option C": "The invention of the printing press",
+        "Option D": "The discovery of electricity",
+        "Correct Option": "B",
+        "Explanation": "The development of the transistor in the 1940s paved the way for modern computers."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What does the term “mainframe computer” refer to in history?",
+        "Option A": "A small personal computer",
+        "Option B": "A large, powerful computer used primarily by large organizations",
+        "Option C": "A mobile phone",
+        "Option D": "A handheld device",
+        "Correct Option": "B",
+        "Explanation": "Mainframe computers were large and powerful machines used by organizations for bulk data processing."
+    },
+    {
+        "Q.No": "36",
+        "Question": "Who introduced the concept of stored-program architecture?",
+        "Option A": "Steve Jobs",
+        "Option B": "John von Neumann",
+        "Option C": "Bill Gates",
+        "Option D": "Tim Berners-Lee",
+        "Correct Option": "B",
+        "Explanation": "John von Neumann proposed the stored-program concept, which is the basis of most modern computers."
+    },
+    {
+        "Q.No": "37",
+        "Question": "What was a significant contribution of Ada Lovelace to computing?",
+        "Option A": "Inventing the computer monitor",
+        "Option B": "Writing the first algorithm intended for a machine",
+        "Option C": "Designing the first smartphone",
+        "Option D": "Developing the Internet",
+        "Correct Option": "B",
+        "Explanation": "Ada Lovelace is credited with writing the first algorithm for Charles Babbage’s Analytical Engine."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which computer era is associated with vacuum tubes?",
+        "Option A": "First generation computers",
+        "Option B": "Second generation computers",
+        "Option C": "Third generation computers",
+        "Option D": "Fourth generation computers",
+        "Correct Option": "A",
+        "Explanation": "First generation computers used vacuum tubes for circuitry."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What technological component replaced vacuum tubes in second generation computers?",
+        "Option A": "Transistors",
+        "Option B": "Microprocessors",
+        "Option C": "Integrated circuits",
+        "Option D": "Fiber optics",
+        "Correct Option": "A",
+        "Explanation": "Transistors replaced vacuum tubes, leading to smaller and more efficient computers."
+    },
+    {
+        "Q.No": "40",
+        "Question": "Which development marked the advent of personal computing?",
+        "Option A": "The invention of the transistor",
+        "Option B": "The development of microprocessors",
+        "Option C": "The creation of mainframes",
+        "Option D": "The use of vacuum tubes",
+        "Correct Option": "B",
+        "Explanation": "The invention of microprocessors enabled the development of personal computers."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is the significance of the Internet in computer history?",
+        "Option A": "It was the first computer",
+        "Option B": "It revolutionized global communication and information sharing",
+        "Option C": "It is only used for gaming",
+        "Option D": "It was developed before computers",
+        "Correct Option": "B",
+        "Explanation": "The Internet has transformed communication, commerce, and information access worldwide."
+    },
+    {
+        "Q.No": "42",
+        "Question": "Which of the following was a significant milestone in computer storage evolution?",
+        "Option A": "The use of punch cards",
+        "Option B": "The invention of the floppy disk",
+        "Option C": "The creation of handwritten ledgers",
+        "Option D": "The development of paper files",
+        "Correct Option": "B",
+        "Explanation": "The floppy disk was an important step in the evolution of computer storage technologies."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What role did World War II play in the development of computers?",
+        "Option A": "It halted computer development",
+        "Option B": "It accelerated research in computing for military applications",
+        "Option C": "It had no impact",
+        "Option D": "It only affected mobile phones",
+        "Correct Option": "B",
+        "Explanation": "World War II spurred research and innovation in computing for tasks like code-breaking and calculations."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which innovation is considered the foundation for modern microprocessors?",
+        "Option A": "Vacuum tubes",
+        "Option B": "Transistors",
+        "Option C": "Typewriters",
+        "Option D": "Telephones",
+        "Correct Option": "B",
+        "Explanation": "Transistors are the fundamental building blocks of microprocessors and modern computers."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What was the primary purpose of the Colossus computer?",
+        "Option A": "To run business applications",
+        "Option B": "To break encrypted messages during WWII",
+        "Option C": "To manage bank transactions",
+        "Option D": "To play video games",
+        "Correct Option": "B",
+        "Explanation": "Colossus was built to decipher encrypted messages during World War II."
+    },
+    {
+        "Q.No": "46",
+        "Question": "Who is credited with developing the first compiler?",
+        "Option A": "Grace Hopper",
+        "Option B": "Ada Lovelace",
+        "Option C": "Bill Gates",
+        "Option D": "Linus Torvalds",
+        "Correct Option": "A",
+        "Explanation": "Grace Hopper developed the first compiler, making it easier to program computers."
+    },
+    {
+        "Q.No": "47",
+        "Question": "What does the term “hardware” refer to in the context of computer history?",
+        "Option A": "The physical components of a computer",
+        "Option B": "Software applications",
+        "Option C": "The theory of computing",
+        "Option D": "Computer algorithms",
+        "Correct Option": "A",
+        "Explanation": "Hardware refers to the tangible, physical parts of a computer."
+    },
+    {
+        "Q.No": "48",
+        "Question": "How did the invention of the microprocessor impact computers?",
+        "Option A": "Made them larger",
+        "Option B": "Enabled the development of compact, personal computers",
+        "Option C": "Increased power consumption",
+        "Option D": "Reduced processing speed",
+        "Correct Option": "B",
+        "Explanation": "The microprocessor allowed computers to become smaller and more affordable, leading to personal computing."
+    },
+    {
+        "Q.No": "49",
+        "Question": "Which decade is most associated with the rise of personal computers?",
+        "Option A": "1950s",
+        "Option B": "1960s",
+        "Option C": "1970s",
+        "Option D": "1990s",
+        "Correct Option": "C",
+        "Explanation": "The 1970s saw the advent of personal computers with innovations in microprocessors and affordable systems."
+    },
+    {
+        "Q.No": "50",
+        "Question": "What impact did the development of the World Wide Web have on computer history?",
+        "Option A": "It had no impact",
+        "Option B": "It enabled global connectivity and information sharing",
+        "Option C": "It only affected military systems",
+        "Option D": "It replaced hardware innovation",
+        "Correct Option": "B",
+        "Explanation": "The World Wide Web revolutionized communication and access to information worldwide."
+    },
+    {
+        "Q.No": "51",
+        "Question": "Which of the following is considered computer hardware?",
+        "Option A": "Operating system",
+        "Option B": "Processor (CPU)",
+        "Option C": "Word processor software",
+        "Option D": "Web browser",
+        "Correct Option": "B",
+        "Explanation": "The CPU is a physical component of a computer, representing hardware."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which component is considered the brain of the computer?",
+        "Option A": "Hard drive",
+        "Option B": "RAM",
+        "Option C": "CPU",
+        "Option D": "Monitor",
+        "Correct Option": "C",
+        "Explanation": "The CPU executes instructions and processes data, functioning as the computer’s brain."
+    },
+    {
+        "Q.No": "53",
+        "Question": "What does “software” refer to in a computer system?",
+        "Option A": "The physical parts of a computer",
+        "Option B": "The programs and operating systems that run on a computer",
+        "Option C": "The computer’s power supply",
+        "Option D": "The motherboard",
+        "Correct Option": "B",
+        "Explanation": "Software includes the applications and systems that control computer hardware."
+    },
+    {
+        "Q.No": "54",
+        "Question": "Which type of software manages computer hardware and provides services for other software?",
+        "Option A": "Application software",
+        "Option B": "Operating system",
+        "Option C": "Utility software",
+        "Option D": "Database software",
+        "Correct Option": "B",
+        "Explanation": "An operating system is a system software that manages hardware resources and provides common services."
+    },
+    {
+        "Q.No": "55",
+        "Question": "What is the function of RAM in a computer?",
+        "Option A": "Permanent data storage",
+        "Option B": "Temporary data storage for quick access",
+        "Option C": "Processing power",
+        "Option D": "Display output",
+        "Correct Option": "B",
+        "Explanation": "RAM provides temporary storage for data and instructions that are in active use."
+    },
+    {
+        "Q.No": "56",
+        "Question": "Which of the following is an example of application software?",
+        "Option A": "Microsoft Word",
+        "Option B": "BIOS firmware",
+        "Option C": "CPU microcode",
+        "Option D": "Motherboard firmware",
+        "Correct Option": "A",
+        "Explanation": "Microsoft Word is an application software used for word processing."
+    },
+    {
+        "Q.No": "57",
+        "Question": "What is the purpose of the motherboard in a computer?",
+        "Option A": "To store data permanently",
+        "Option B": "To connect and allow communication between all hardware components",
+        "Option C": "To cool the system",
+        "Option D": "To provide power supply",
+        "Correct Option": "B",
+        "Explanation": "The motherboard is the central circuit board that connects and allows communication between various components."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which component is used for long-term data storage in computers?",
+        "Option A": "RAM",
+        "Option B": "CPU",
+        "Option C": "Hard disk drive (HDD)",
+        "Option D": "Graphics card",
+        "Correct Option": "C",
+        "Explanation": "Hard disk drives provide long-term data storage."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What does BIOS stand for in computer systems?",
+        "Option A": "Binary Input Output System",
+        "Option B": "Basic Input Output System",
+        "Option C": "Basic Integrated Operating System",
+        "Option D": "Binary Integrated Operating Software",
+        "Correct Option": "B",
+        "Explanation": "BIOS stands for Basic Input Output System, which initializes hardware during boot-up."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which of the following is an example of system software?",
+        "Option A": "Windows OS",
+        "Option B": "Adobe Photoshop",
+        "Option C": "Video games",
+        "Option D": "Mobile apps",
+        "Correct Option": "A",
+        "Explanation": "Windows OS is system software that manages hardware and software resources."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the role of a GPU in a computer?",
+        "Option A": "To manage system memory",
+        "Option B": "To process and render graphics",
+        "Option C": "To store data permanently",
+        "Option D": "To power the computer",
+        "Correct Option": "B",
+        "Explanation": "A GPU (Graphics Processing Unit) is specialized for rendering images and video."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which device is essential for inputting data into a computer?",
+        "Option A": "Printer",
+        "Option B": "Keyboard",
+        "Option C": "Monitor",
+        "Option D": "Speaker",
+        "Correct Option": "B",
+        "Explanation": "A keyboard is a primary input device for entering data."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What is the function of an operating system?",
+        "Option A": "To create graphics",
+        "Option B": "To manage computer hardware and software resources",
+        "Option C": "To manufacture computer components",
+        "Option D": "To act as a power supply",
+        "Correct Option": "B",
+        "Explanation": "An operating system manages hardware, software, and provides common services for computer programs."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which component is responsible for temporary data storage used during processing?",
+        "Option A": "ROM",
+        "Option B": "SSD",
+        "Option C": "RAM",
+        "Option D": "HDD",
+        "Correct Option": "C",
+        "Explanation": "RAM temporarily stores data for quick access during processing."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is firmware in a computer system?",
+        "Option A": "A type of hardware",
+        "Option B": "Permanent software programmed into hardware",
+        "Option C": "A type of operating system",
+        "Option D": "A peripheral device",
+        "Correct Option": "B",
+        "Explanation": "Firmware is embedded software that provides low-level control for hardware."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which of the following is an example of a peripheral device?",
+        "Option A": "CPU",
+        "Option B": "Keyboard",
+        "Option C": "Motherboard",
+        "Option D": "RAM",
+        "Correct Option": "B",
+        "Explanation": "A keyboard is an external device used to interact with the computer."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is the primary purpose of an operating system’s file management system?",
+        "Option A": "To generate graphics",
+        "Option B": "To manage the storage, retrieval, and organization of files",
+        "Option C": "To control hardware voltage",
+        "Option D": "To display web pages",
+        "Correct Option": "B",
+        "Explanation": "The file management system organizes and manages data stored on the computer."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which component is primarily responsible for executing instructions?",
+        "Option A": "GPU",
+        "Option B": "CPU",
+        "Option C": "RAM",
+        "Option D": "HDD",
+        "Correct Option": "B",
+        "Explanation": "The CPU executes instructions and processes data."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What does SSD stand for in computer storage devices?",
+        "Option A": "Solid State Drive",
+        "Option B": "Software Storage Device",
+        "Option C": "System Storage Disk",
+        "Option D": "Sequential Storage Device",
+        "Correct Option": "A",
+        "Explanation": "SSD stands for Solid State Drive, which is a fast, flash-based storage device."
+    },
+    {
+        "Q.No": "70",
+        "Question": "Which of the following best describes an application program?",
+        "Option A": "Software designed to perform a specific user task",
+        "Option B": "Hardware component",
+        "Option C": "System firmware",
+        "Option D": "Operating system utility",
+        "Correct Option": "A",
+        "Explanation": "Application programs are designed to help users perform specific tasks."
+    },
+    {
+        "Q.No": "71",
+        "Question": "What is the primary function of a power supply unit (PSU) in a computer?",
+        "Option A": "To cool the system",
+        "Option B": "To convert electrical power to the correct form for internal components",
+        "Option C": "To store data",
+        "Option D": "To process graphics",
+        "Correct Option": "B",
+        "Explanation": "The PSU converts AC power to regulated DC power for computer components."
+    },
+    {
+        "Q.No": "72",
+        "Question": "Which of the following is a characteristic of open-source software?",
+        "Option A": "Its source code is publicly available",
+        "Option B": "It is only available for purchase",
+        "Option C": "It cannot be modified",
+        "Option D": "It is exclusively developed by corporations",
+        "Correct Option": "A",
+        "Explanation": "Open-source software allows users to view and modify its source code."
+    },
+    {
+        "Q.No": "73",
+        "Question": "What is a device driver?",
+        "Option A": "A software component that allows the operating system to communicate with hardware",
+        "Option B": "A physical cable connecting devices",
+        "Option C": "A type of peripheral",
+        "Option D": "A component of the CPU",
+        "Correct Option": "A",
+        "Explanation": "Device drivers are software that allow the OS to interface with hardware components."
+    },
+    {
+        "Q.No": "74",
+        "Question": "Which of the following best describes cloud computing?",
+        "Option A": "Running software on local hardware only",
+        "Option B": "Delivering computing services over the internet",
+        "Option C": "Storing data on a personal computer",
+        "Option D": "Exclusive to gaming systems",
+        "Correct Option": "B",
+        "Explanation": "Cloud computing involves providing computing services over the internet."
+    },
+    {
+        "Q.No": "75",
+        "Question": "What distinguishes system software from application software?",
+        "Option A": "System software manages computer hardware, while application software performs specific user tasks",
+        "Option B": "They are the same",
+        "Option C": "System software is only for gaming",
+        "Option D": "Application software runs the computer’s hardware",
+        "Correct Option": "A",
+        "Explanation": "System software, like operating systems, manages hardware, while application software is designed for specific tasks."
+    },
+    {
+        "Q.No": "76",
+        "Question": "Which of the following is a type of computer designed for personal use?",
+        "Option A": "Mainframe computer",
+        "Option B": "Supercomputer",
+        "Option C": "Personal Computer (PC)",
+        "Option D": "Minicomputer",
+        "Correct Option": "C",
+        "Explanation": "Personal computers are designed for individual use."
+    },
+    {
+        "Q.No": "77",
+        "Question": "What type of computer is typically used by large organizations for bulk data processing?",
+        "Option A": "Personal computer",
+        "Option B": "Mainframe computer",
+        "Option C": "Tablet",
+        "Option D": "Smartphone",
+        "Correct Option": "B",
+        "Explanation": "Mainframe computers are used for large-scale data processing in organizations."
+    },
+    {
+        "Q.No": "78",
+        "Question": "Which computer type is characterized by extremely high processing power for complex computations?",
+        "Option A": "Supercomputer",
+        "Option B": "Personal computer",
+        "Option C": "Tablet",
+        "Option D": "Embedded system",
+        "Correct Option": "A",
+        "Explanation": "Supercomputers are designed for high-speed computations and complex tasks."
+    },
+    {
+        "Q.No": "79",
+        "Question": "What is an example of an embedded system?",
+        "Option A": "A desktop computer",
+        "Option B": "A smartphone",
+        "Option C": "A microcontroller in a washing machine",
+        "Option D": "A mainframe computer",
+        "Correct Option": "C",
+        "Explanation": "Embedded systems are specialized computing systems integrated into devices like appliances."
+    },
+    {
+        "Q.No": "80",
+        "Question": "Which type of computer is most commonly used for everyday computing tasks at home?",
+        "Option A": "Supercomputer",
+        "Option B": "Personal computer (PC)",
+        "Option C": "Mainframe computer",
+        "Option D": "Server computer",
+        "Correct Option": "B",
+        "Explanation": "Personal computers are designed for everyday tasks and are commonly used in homes."
+    },
+    {
+        "Q.No": "81",
+        "Question": "What distinguishes a laptop from a desktop computer?",
+        "Option A": "Laptops are portable and include an integrated screen and keyboard",
+        "Option B": "Desktops are portable",
+        "Option C": "Laptops are less powerful",
+        "Option D": "Desktops have built-in batteries",
+        "Correct Option": "A",
+        "Explanation": "Laptops are portable computers that integrate the screen, keyboard, and trackpad."
+    },
+    {
+        "Q.No": "82",
+        "Question": "Which computer is best suited for mobile applications due to its compact design?",
+        "Option A": "Mainframe",
+        "Option B": "Smartphone",
+        "Option C": "Supercomputer",
+        "Option D": "Workstation",
+        "Correct Option": "B",
+        "Explanation": "Smartphones are designed for mobile use with compact, integrated designs."
+    },
+    {
+        "Q.No": "83",
+        "Question": "What type of computer is often used in scientific research and weather forecasting?",
+        "Option A": "Tablet",
+        "Option B": "Supercomputer",
+        "Option C": "Personal computer",
+        "Option D": "Embedded system",
+        "Correct Option": "B",
+        "Explanation": "Supercomputers handle complex calculations used in scientific research and forecasting."
+    },
+    {
+        "Q.No": "84",
+        "Question": "Which of the following is an example of a wearable computer?",
+        "Option A": "Desktop computer",
+        "Option B": "Smartwatch",
+        "Option C": "Laptop",
+        "Option D": "Mainframe",
+        "Correct Option": "B",
+        "Explanation": "Smartwatches are wearable devices that function as computers."
+    },
+    {
+        "Q.No": "85",
+        "Question": "What is a distinguishing feature of a server computer?",
+        "Option A": "It is used for personal gaming",
+        "Option B": "It provides resources and services to other computers over a network",
+        "Option C": "It is only used in laboratories",
+        "Option D": "It is a type of smartphone",
+        "Correct Option": "B",
+        "Explanation": "Server computers manage network resources and provide services to other connected devices."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which type of computer would most likely be used in an industrial control system?",
+        "Option A": "Personal computer",
+        "Option B": "Embedded system",
+        "Option C": "Mainframe",
+        "Option D": "Supercomputer",
+        "Correct Option": "B",
+        "Explanation": "Embedded systems are used in industrial controls due to their specialized functions."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What distinguishes a tablet from a traditional laptop?",
+        "Option A": "Tablets are typically touch-screen devices without a physical keyboard",
+        "Option B": "Tablets are larger than laptops",
+        "Option C": "Laptops are touch-screen only",
+        "Option D": "There is no difference",
+        "Correct Option": "A",
+        "Explanation": "Tablets are designed for touch-based interaction and usually do not include a built-in physical keyboard."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which computer type is specifically designed to handle multiple tasks simultaneously for business applications?",
+        "Option A": "Supercomputer",
+        "Option B": "Server",
+        "Option C": "Personal computer",
+        "Option D": "Embedded system",
+        "Correct Option": "B",
+        "Explanation": "Servers are designed to manage multiple tasks and provide resources to multiple users concurrently."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What is the primary purpose of a workstation?",
+        "Option A": "To serve as a gaming console",
+        "Option B": "To provide high-performance computing for technical or scientific applications",
+        "Option C": "To manage large databases",
+        "Option D": "To control home appliances",
+        "Correct Option": "B",
+        "Explanation": "Workstations are high-performance computers intended for technical and scientific tasks."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which computer type is designed with energy efficiency and portability in mind for use on the go?",
+        "Option A": "Desktop",
+        "Option B": "Laptop",
+        "Option C": "Mainframe",
+        "Option D": "Supercomputer",
+        "Correct Option": "B",
+        "Explanation": "Laptops are designed to be portable and energy-efficient."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What does the term “minicomputer” refer to?",
+        "Option A": "A smaller version of a mainframe computer used for moderate processing needs",
+        "Option B": "A computer smaller than a smartphone",
+        "Option C": "A type of wearable device",
+        "Option D": "An outdated term with no modern equivalent",
+        "Correct Option": "A",
+        "Explanation": "Minicomputers are mid-sized computers that were used for tasks requiring less processing power than mainframes."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which type of computer is best known for its use in mobile communication?",
+        "Option A": "Mainframe",
+        "Option B": "Smartphone",
+        "Option C": "Desktop",
+        "Option D": "Supercomputer",
+        "Correct Option": "B",
+        "Explanation": "Smartphones are primarily used for mobile communication."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is one key advantage of personal computers over mainframe computers?",
+        "Option A": "They are less accessible",
+        "Option B": "They are designed for individual use and portability",
+        "Option C": "They have more processing power",
+        "Option D": "They require specialized facilities",
+        "Correct Option": "B",
+        "Explanation": "Personal computers are designed for individual use and offer portability and convenience."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which computer is typically used in high-end gaming due to its superior graphics and processing capabilities?",
+        "Option A": "Supercomputer",
+        "Option B": "Gaming PC or workstation",
+        "Option C": "Mainframe",
+        "Option D": "Tablet",
+        "Correct Option": "B",
+        "Explanation": "Gaming PCs or workstations are built for high performance in graphics-intensive applications."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What distinguishes an all-in-one desktop computer?",
+        "Option A": "It has separate components connected by cables",
+        "Option B": "It integrates the computer components within the monitor",
+        "Option C": "It is larger than a traditional desktop",
+        "Option D": "It only runs on battery power",
+        "Correct Option": "B",
+        "Explanation": "All-in-one desktops combine components within the monitor for a streamlined design."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which computer type would be most appropriate for a small business server?",
+        "Option A": "Supercomputer",
+        "Option B": "Personal computer",
+        "Option C": "Rack server",
+        "Option D": "Tablet",
+        "Correct Option": "C",
+        "Explanation": "Rack servers are designed to be compact and efficient for business server applications."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is the primary difference between a desktop and a laptop computer?",
+        "Option A": "Desktops are portable",
+        "Option B": "Laptops have built-in batteries and portability",
+        "Option C": "Desktops have touchscreens",
+        "Option D": "Laptops are not used for work",
+        "Correct Option": "B",
+        "Explanation": "Laptops are designed for portability with integrated batteries, unlike desktops."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which type of computer is commonly used in educational settings for interactive learning?",
+        "Option A": "Mainframe",
+        "Option B": "Tablet",
+        "Option C": "Supercomputer",
+        "Option D": "Embedded system",
+        "Correct Option": "B",
+        "Explanation": "Tablets are widely used in education for interactive learning due to their portability and ease of use."
+    },
+    {
+        "Q.No": "99",
+        "Question": "What type of computer is specifically designed to perform a dedicated function within a larger system?",
+        "Option A": "Personal computer",
+        "Option B": "Embedded system",
+        "Option C": "Mainframe",
+        "Option D": "Server",
+        "Correct Option": "B",
+        "Explanation": "Embedded systems are tailored for specific tasks within a larger system."
+    },
+    {
+        "Q.No": "100",
+        "Question": "Which computer type is best suited for tasks requiring high reliability and fault tolerance, such as in aviation or space exploration?",
+        "Option A": "Personal computer",
+        "Option B": "Mainframe computer",
+        "Option C": "Embedded system",
+        "Option D": "Supercomputer",
+        "Correct Option": "D",
+        "Explanation": "Supercomputers and specialized fault-tolerant systems are used in critical applications like aviation and space exploration."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All right Reserved @P-a-s-h-t-o-o-g-l-e</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      user-select: none; /* Disable text selection */
+    }
+    .quiz-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .options button {
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .options button.correct {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #dc3545 !important;
+      color: #fff;
+    }
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 10px;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .quiz-container {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="quiz">
+      <!-- Quiz questions will be dynamically injected here -->
+    </div>
+  </div>
+
+<script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
+
+
+<script>
+    setTimeout(function() {
+        try {
+            let allowedDomain = "https://pashtoogle.com";
+
+            // If inside an iframe
+            if (window.self !== window.top) {
+                if (document.referrer && !document.referrer.startsWith(allowedDomain)) {
+                    window.top.location.href = "https://pashtoogle.com/";
+                }
+            } else {
+                // If accessed directly, force redirect
+                if (window.location.origin !== allowedDomain) {
+                    window.location.href = "https://pashtoogle.com/";
+                }
+            }
+        } catch (e) {
+            window.location.href = "https://pashtoogle.com/";
+        }
+    }, 10); // .02-second delay before redirecting
+</script>
+
+
+
+
+  
+  <script>
+    // Quiz Data from JSON
+    const jsonData = [
+    {
+        "Q.No": "1",
+        "Question": "What does AI stand for?",
+        "Option A": "Artificial Intelligence",
+        "Option B": "Automated Inference",
+        "Option C": "Advanced Integration",
+        "Option D": "Algorithmic Innovation",
+        "Correct Option": "A",
+        "Explanation": "AI stands for Artificial Intelligence, which refers to machines simulating human intelligence."
+    },
+    {
+        "Q.No": "2",
+        "Question": "What is Machine Learning?",
+        "Option A": "A subset of AI that enables systems to learn from data",
+        "Option B": "A method for manually coding algorithms",
+        "Option C": "A hardware optimization technique",
+        "Option D": "A way to store large datasets",
+        "Correct Option": "A",
+        "Explanation": "Machine Learning is a branch of AI that uses data to improve performance without explicit programming."
+    },
+    {
+        "Q.No": "3",
+        "Question": "Which statement best defines Artificial Intelligence?",
+        "Option A": "The simulation of human intelligence by machines",
+        "Option B": "The process of automating computer hardware",
+        "Option C": "The study of operating systems",
+        "Option D": "A type of software development",
+        "Correct Option": "A",
+        "Explanation": "AI is the simulation of human intelligence processes by computers."
+    },
+    {
+        "Q.No": "4",
+        "Question": "What distinguishes Machine Learning from traditional programming?",
+        "Option A": "ML learns patterns from data rather than following explicit instructions",
+        "Option B": "ML is used only for image processing",
+        "Option C": "ML requires no data for training",
+        "Option D": "ML is solely based on rule-based systems",
+        "Correct Option": "A",
+        "Explanation": "ML models learn from data, unlike traditional programs that follow set instructions."
+    },
+    {
+        "Q.No": "5",
+        "Question": "What is deep learning?",
+        "Option A": "A subset of ML that uses neural networks with many layers",
+        "Option B": "A type of unsupervised learning algorithm",
+        "Option C": "A method for data encryption",
+        "Option D": "A hardware acceleration technique",
+        "Correct Option": "A",
+        "Explanation": "Deep learning employs neural networks with multiple layers to learn high-level features."
+    },
+    {
+        "Q.No": "6",
+        "Question": "Which learning paradigm uses labeled data for training?",
+        "Option A": "Supervised Learning",
+        "Option B": "Unsupervised Learning",
+        "Option C": "Reinforcement Learning",
+        "Option D": "Semi-supervised Learning",
+        "Correct Option": "A",
+        "Explanation": "Supervised Learning uses labeled datasets to train models."
+    },
+    {
+        "Q.No": "7",
+        "Question": "Which learning approach finds patterns in data without explicit labels?",
+        "Option A": "Unsupervised Learning",
+        "Option B": "Supervised Learning",
+        "Option C": "Reinforcement Learning",
+        "Option D": "Transfer Learning",
+        "Correct Option": "A",
+        "Explanation": "Unsupervised Learning discovers hidden patterns from unlabeled data."
+    },
+    {
+        "Q.No": "8",
+        "Question": "What is the main goal of supervised learning?",
+        "Option A": "To predict outputs for new inputs using labeled examples",
+        "Option B": "To discover hidden data structures without labels",
+        "Option C": "To optimize system hardware",
+        "Option D": "To simulate human conversation",
+        "Correct Option": "A",
+        "Explanation": "Supervised learning uses labeled data to predict outcomes for unseen inputs."
+    },
+    {
+        "Q.No": "9",
+        "Question": "Which technique is commonly used for grouping similar data in unsupervised learning?",
+        "Option A": "Clustering",
+        "Option B": "Classification",
+        "Option C": "Regression",
+        "Option D": "Reinforcement",
+        "Correct Option": "A",
+        "Explanation": "Clustering groups data points into clusters based on similarity without pre-assigned labels."
+    },
+    {
+        "Q.No": "10",
+        "Question": "Which algorithm is an example of supervised learning used for classification?",
+        "Option A": "Support Vector Machine",
+        "Option B": "K-Means Clustering",
+        "Option C": "Apriori",
+        "Option D": "Principal Component Analysis",
+        "Correct Option": "A",
+        "Explanation": "SVM is a supervised algorithm used for classification tasks."
+    },
+    {
+        "Q.No": "11",
+        "Question": "Which algorithm is typically used for regression tasks?",
+        "Option A": "Linear Regression",
+        "Option B": "K-Means Clustering",
+        "Option C": "Decision Trees (for classification)",
+        "Option D": "DBSCAN",
+        "Correct Option": "A",
+        "Explanation": "Linear Regression predicts continuous values based on input variables."
+    },
+    {
+        "Q.No": "12",
+        "Question": "What is overfitting in a machine learning model?",
+        "Option A": "When the model learns noise in the training data and fails to generalize",
+        "Option B": "When the model is too simple to capture data patterns",
+        "Option C": "When the model has too few features",
+        "Option D": "When the model is trained on insufficient data",
+        "Correct Option": "A",
+        "Explanation": "Overfitting occurs when a model learns the details and noise in training data, reducing its performance on new data."
+    },
+    {
+        "Q.No": "13",
+        "Question": "Which technique helps to reduce overfitting?",
+        "Option A": "Regularization",
+        "Option B": "Increasing model complexity",
+        "Option C": "Removing validation data",
+        "Option D": "Ignoring cross-validation",
+        "Correct Option": "A",
+        "Explanation": "Regularization techniques like L1/L2 penalties help prevent overfitting by discouraging overly complex models."
+    },
+    {
+        "Q.No": "14",
+        "Question": "What is a neural network?",
+        "Option A": "A computational model inspired by the human brain composed of interconnected neurons",
+        "Option B": "A type of decision tree algorithm",
+        "Option C": "A data storage system",
+        "Option D": "A sorting algorithm",
+        "Correct Option": "A",
+        "Explanation": "Neural networks consist of layers of interconnected nodes (neurons) that process data."
+    },
+    {
+        "Q.No": "15",
+        "Question": "In neural networks, what is the function of an activation function?",
+        "Option A": "To introduce non-linearity into the model",
+        "Option B": "To connect neurons linearly",
+        "Option C": "To store data values permanently",
+        "Option D": "To calculate the network's loss",
+        "Correct Option": "A",
+        "Explanation": "Activation functions introduce non-linearity, enabling the network to learn complex patterns."
+    },
+    {
+        "Q.No": "16",
+        "Question": "Which activation function outputs values between 0 and 1?",
+        "Option A": "Sigmoid",
+        "Option B": "ReLU",
+        "Option C": "Tanh",
+        "Option D": "Linear",
+        "Correct Option": "A",
+        "Explanation": "The sigmoid function squashes input values into a range between 0 and 1."
+    },
+    {
+        "Q.No": "17",
+        "Question": "What is backpropagation used for in neural networks?",
+        "Option A": "To update network weights by propagating errors backward",
+        "Option B": "To forward propagate inputs through the network",
+        "Option C": "To normalize the input data",
+        "Option D": "To determine the network's structure",
+        "Correct Option": "A",
+        "Explanation": "Backpropagation computes the gradient of the loss function and updates weights accordingly."
+    },
+    {
+        "Q.No": "18",
+        "Question": "Which optimization algorithm is most commonly used in training neural networks?",
+        "Option A": "Gradient Descent",
+        "Option B": "K-Means Clustering",
+        "Option C": "Apriori Algorithm",
+        "Option D": "Random Search",
+        "Correct Option": "A",
+        "Explanation": "Gradient Descent minimizes the loss function by iteratively updating network parameters."
+    },
+    {
+        "Q.No": "19",
+        "Question": "What is a loss function in machine learning?",
+        "Option A": "A function that quantifies the difference between predicted and actual values",
+        "Option B": "A function that increases model complexity",
+        "Option C": "A metric for measuring model speed",
+        "Option D": "A tool for data preprocessing",
+        "Correct Option": "A",
+        "Explanation": "A loss function measures how far off a model's predictions are from the actual outcomes."
+    },
+    {
+        "Q.No": "20",
+        "Question": "What is the goal of training a machine learning model?",
+        "Option A": "To minimize the loss function and improve prediction accuracy",
+        "Option B": "To maximize the loss function",
+        "Option C": "To increase the number of features",
+        "Option D": "To reduce the dataset size",
+        "Correct Option": "A",
+        "Explanation": "Training aims to minimize loss, thereby enhancing the model's accuracy on unseen data."
+    },
+    {
+        "Q.No": "21",
+        "Question": "Which deep learning framework is widely used?",
+        "Option A": "TensorFlow",
+        "Option B": "Scikit-learn",
+        "Option C": "Pandas",
+        "Option D": "Matplotlib",
+        "Correct Option": "A",
+        "Explanation": "TensorFlow is a popular open-source deep learning framework developed by Google."
+    },
+    {
+        "Q.No": "22",
+        "Question": "What is the primary purpose of Convolutional Neural Networks (CNNs)?",
+        "Option A": "To extract spatial features from image data",
+        "Option B": "To process sequential data",
+        "Option C": "To perform clustering tasks",
+        "Option D": "To generate text summaries",
+        "Correct Option": "A",
+        "Explanation": "CNNs are specifically designed to process grid-like data such as images."
+    },
+    {
+        "Q.No": "23",
+        "Question": "Which neural network architecture is best for processing sequential data?",
+        "Option A": "Recurrent Neural Networks (RNNs)",
+        "Option B": "Convolutional Neural Networks (CNNs)",
+        "Option C": "Feedforward Neural Networks",
+        "Option D": "Autoencoders",
+        "Correct Option": "A",
+        "Explanation": "RNNs are designed to handle sequential data, such as time series or language data."
+    },
+    {
+        "Q.No": "24",
+        "Question": "What is the role of dropout in training deep neural networks?",
+        "Option A": "To prevent overfitting by randomly disabling neurons during training",
+        "Option B": "To speed up the training process by reducing layers",
+        "Option C": "To increase the model’s capacity by adding neurons",
+        "Option D": "To enhance the linearity of the model",
+        "Correct Option": "A",
+        "Explanation": "Dropout is a regularization technique that reduces overfitting by randomly dropping units during training."
+    },
+    {
+        "Q.No": "25",
+        "Question": "What is reinforcement learning?",
+        "Option A": "A learning paradigm where an agent learns by receiving rewards or penalties from its environment",
+        "Option B": "A method for clustering unlabeled data",
+        "Option C": "A technique for supervised classification",
+        "Option D": "A process for data normalization",
+        "Correct Option": "A",
+        "Explanation": "Reinforcement Learning trains an agent through rewards and punishments based on its actions."
+    },
+    {
+        "Q.No": "26",
+        "Question": "Which of the following is an example of an application of reinforcement learning?",
+        "Option A": "Training a game-playing AI, such as for chess or Go",
+        "Option B": "Classifying emails as spam or not spam",
+        "Option C": "Clustering customers by behavior",
+        "Option D": "Performing sentiment analysis on text",
+        "Correct Option": "A",
+        "Explanation": "Reinforcement learning is often used in training AI for games, where the agent learns optimal strategies through trial and error."
+    },
+    {
+        "Q.No": "27",
+        "Question": "What is the Turing Test used for?",
+        "Option A": "To evaluate a machine's ability to exhibit human-like intelligence",
+        "Option B": "To measure a model's training accuracy",
+        "Option C": "To validate clustering results",
+        "Option D": "To benchmark hardware performance",
+        "Correct Option": "A",
+        "Explanation": "The Turing Test assesses whether a machine's behavior is indistinguishable from that of a human."
+    },
+    {
+        "Q.No": "28",
+        "Question": "Which of the following is a common application of AI in Natural Language Processing (NLP)?",
+        "Option A": "Language translation",
+        "Option B": "Image classification",
+        "Option C": "Fraud detection",
+        "Option D": "Weather forecasting",
+        "Correct Option": "A",
+        "Explanation": "NLP applications include language translation, sentiment analysis, and chatbots."
+    },
+    {
+        "Q.No": "29",
+        "Question": "Which AI application involves converting spoken language into text?",
+        "Option A": "Speech Recognition",
+        "Option B": "Image Segmentation",
+        "Option C": "Object Detection",
+        "Option D": "Text Summarization",
+        "Correct Option": "A",
+        "Explanation": "Speech recognition systems convert audio signals into text."
+    },
+    {
+        "Q.No": "30",
+        "Question": "What is the primary purpose of Natural Language Processing (NLP)?",
+        "Option A": "To enable machines to understand and generate human language",
+        "Option B": "To optimize image processing",
+        "Option C": "To predict numerical data",
+        "Option D": "To manage database queries",
+        "Correct Option": "A",
+        "Explanation": "NLP focuses on the interaction between computers and human languages."
+    },
+    {
+        "Q.No": "31",
+        "Question": "Which of the following is a common application of AI in finance?",
+        "Option A": "Algorithmic trading",
+        "Option B": "Video streaming",
+        "Option C": "Social media marketing",
+        "Option D": "Website development",
+        "Correct Option": "A",
+        "Explanation": "AI is used in algorithmic trading to analyze market data and execute trades automatically."
+    },
+    {
+        "Q.No": "32",
+        "Question": "What is the role of feature engineering in ML?",
+        "Option A": "To select and transform raw data into features that improve model performance",
+        "Option B": "To design the network architecture",
+        "Option C": "To directly evaluate model performance",
+        "Option D": "To generate synthetic data without transformation",
+        "Correct Option": "A",
+        "Explanation": "Feature engineering transforms raw data into meaningful features that enhance model learning."
+    },
+    {
+        "Q.No": "33",
+        "Question": "Which method is commonly used for dimensionality reduction?",
+        "Option A": "Principal Component Analysis (PCA)",
+        "Option B": "Linear Regression",
+        "Option C": "K-Means Clustering",
+        "Option D": "Decision Trees",
+        "Correct Option": "A",
+        "Explanation": "PCA reduces the number of features while preserving as much variance as possible."
+    },
+    {
+        "Q.No": "34",
+        "Question": "What is meant by the term 'bias' in machine learning?",
+        "Option A": "The error due to erroneous assumptions in the learning algorithm",
+        "Option B": "The variance of the model's predictions",
+        "Option C": "A measure of data noise",
+        "Option D": "The speed of model convergence",
+        "Correct Option": "A",
+        "Explanation": "Bias refers to systematic error introduced by the model's assumptions."
+    },
+    {
+        "Q.No": "35",
+        "Question": "What does 'variance' refer to in a machine learning context?",
+        "Option A": "The model’s sensitivity to fluctuations in the training data",
+        "Option B": "The measure of bias in the model",
+        "Option C": "The total number of parameters in a model",
+        "Option D": "The learning rate of the model",
+        "Correct Option": "A",
+        "Explanation": "Variance measures how much a model's predictions change when trained on different datasets."
+    },
+    {
+        "Q.No": "36",
+        "Question": "What is the bias-variance tradeoff?",
+        "Option A": "Balancing model simplicity and complexity to achieve optimal generalization",
+        "Option B": "The tradeoff between training time and model accuracy",
+        "Option C": "The balance between data quantity and quality",
+        "Option D": "The conflict between overfitting and underfitting exclusively",
+        "Correct Option": "A",
+        "Explanation": "The bias-variance tradeoff balances model complexity (variance) and model assumptions (bias) to optimize generalization."
+    },
+    {
+        "Q.No": "37",
+        "Question": "Which of the following is a common supervised learning algorithm for classification?",
+        "Option A": "Decision Trees",
+        "Option B": "K-Means Clustering",
+        "Option C": "Apriori Algorithm",
+        "Option D": "Hierarchical Clustering",
+        "Correct Option": "A",
+        "Explanation": "Decision Trees are widely used for classification tasks in supervised learning."
+    },
+    {
+        "Q.No": "38",
+        "Question": "Which algorithm is typically used for unsupervised clustering tasks?",
+        "Option A": "K-Means Clustering",
+        "Option B": "Logistic Regression",
+        "Option C": "Support Vector Machine",
+        "Option D": "Random Forest",
+        "Correct Option": "A",
+        "Explanation": "K-Means Clustering is a standard unsupervised algorithm for grouping similar data points."
+    },
+    {
+        "Q.No": "39",
+        "Question": "What is a confusion matrix used for?",
+        "Option A": "Evaluating the performance of classification models",
+        "Option B": "Measuring regression error",
+        "Option C": "Clustering validation",
+        "Option D": "Data normalization",
+        "Correct Option": "A",
+        "Explanation": "A confusion matrix helps assess classification performance by comparing predicted and actual labels."
+    },
+    {
+        "Q.No": "40",
+        "Question": "What does the F1-score measure?",
+        "Option A": "The harmonic mean of precision and recall in classification",
+        "Option B": "The arithmetic mean of accuracy and error",
+        "Option C": "The variance in model predictions",
+        "Option D": "The total number of true positives",
+        "Correct Option": "A",
+        "Explanation": "The F1-score is the harmonic mean of precision and recall, balancing both metrics."
+    },
+    {
+        "Q.No": "41",
+        "Question": "What is cross-validation used for?",
+        "Option A": "To estimate the performance of a model on unseen data",
+        "Option B": "To increase the size of the training set",
+        "Option C": "To train the model faster",
+        "Option D": "To reduce the dataset's dimensionality",
+        "Correct Option": "A",
+        "Explanation": "Cross-validation partitions data to evaluate a model's performance on unseen data."
+    },
+    {
+        "Q.No": "42",
+        "Question": "What is hyperparameter tuning?",
+        "Option A": "The process of optimizing the parameters that control the learning process",
+        "Option B": "The method of updating weights during training",
+        "Option C": "A strategy for data augmentation",
+        "Option D": "A process to split data into training and test sets",
+        "Correct Option": "A",
+        "Explanation": "Hyperparameter tuning adjusts settings like learning rate and regularization to optimize model performance."
+    },
+    {
+        "Q.No": "43",
+        "Question": "What is transfer learning?",
+        "Option A": "Using a pre-trained model on a new, related task to reduce training time",
+        "Option B": "Training a model from scratch on a large dataset",
+        "Option C": "Transferring data between models",
+        "Option D": "Combining two models into one ensemble",
+        "Correct Option": "A",
+        "Explanation": "Transfer learning leverages pre-trained models to improve learning on related tasks with less data."
+    },
+    {
+        "Q.No": "44",
+        "Question": "Which neural network is most commonly used for image recognition tasks?",
+        "Option A": "Convolutional Neural Network (CNN)",
+        "Option B": "Recurrent Neural Network (RNN)",
+        "Option C": "Autoencoder",
+        "Option D": "Boltzmann Machine",
+        "Correct Option": "A",
+        "Explanation": "CNNs are specifically designed to process and analyze visual data."
+    },
+    {
+        "Q.No": "45",
+        "Question": "What is the purpose of pooling layers in a CNN?",
+        "Option A": "To reduce the spatial dimensions of feature maps",
+        "Option B": "To increase the number of parameters",
+        "Option C": "To perform backpropagation",
+        "Option D": "To generate new data features",
+        "Correct Option": "A",
+        "Explanation": "Pooling layers reduce the dimensions of feature maps, lowering computation and controlling overfitting."
+    },
+    {
+        "Q.No": "46",
+        "Question": "What is an embedding layer used for in deep learning?",
+        "Option A": "To convert categorical data, such as words, into dense vector representations",
+        "Option B": "To perform convolution operations on images",
+        "Option C": "To normalize continuous data",
+        "Option D": "To output final predictions",
+        "Correct Option": "A",
+        "Explanation": "Embedding layers map high-dimensional categorical data into a lower-dimensional continuous vector space."
+    },
+    {
+        "Q.No": "47",
+        "Question": "Which of the following is an example of a recurrent neural network application?",
+        "Option A": "Language modeling and text generation",
+        "Option B": "Image segmentation",
+        "Option C": "Object detection in photos",
+        "Option D": "Audio signal filtering",
+        "Correct Option": "A",
+        "Explanation": "RNNs are well suited for tasks involving sequences, such as language modeling."
+    },
+    {
+        "Q.No": "48",
+        "Question": "What is the purpose of the softmax function in neural networks?",
+        "Option A": "To convert raw output scores into probabilities for classification tasks",
+        "Option B": "To apply non-linearity to hidden layers",
+        "Option C": "To calculate the loss function",
+        "Option D": "To scale input data",
+        "Correct Option": "A",
+        "Explanation": "The softmax function normalizes output scores into a probability distribution over classes."
+    },
+    {
+        "Q.No": "49",
+        "Question": "What is meant by the term \"\"generalization\"\" in machine learning?",
+        "Option A": "The ability of a model to perform well on unseen data",
+        "Option B": "The process of fitting the model perfectly to training data",
+        "Option C": "The increase of training error over time",
+        "Option D": "The adjustment of hyperparameters during training",
+        "Correct Option": "A",
+        "Explanation": "Generalization refers to a model's capacity to apply learned patterns to new, unseen data."
+    },
+    {
+        "Q.No": "50",
+        "Question": "Which of the following is an application of AI in healthcare?",
+        "Option A": "Medical image analysis for diagnosing diseases",
+        "Option B": "Automated web page design",
+        "Option C": "Video game development",
+        "Option D": "Social media content creation",
+        "Correct Option": "A",
+        "Explanation": "AI is applied in healthcare for tasks such as analyzing medical images to assist in diagnosis."
+    },
+    {
+        "Q.No": "51",
+        "Question": "What is the primary function of a recommendation system?",
+        "Option A": "To suggest items to users based on their past behavior and preferences",
+        "Option B": "To cluster data into groups",
+        "Option C": "To secure user data during transactions",
+        "Option D": "To optimize database queries",
+        "Correct Option": "A",
+        "Explanation": "Recommendation systems analyze user behavior to suggest relevant products or content."
+    },
+    {
+        "Q.No": "52",
+        "Question": "Which AI application involves generating human-like text responses?",
+        "Option A": "Chatbots using Natural Language Generation (NLG)",
+        "Option B": "Image classification systems",
+        "Option C": "Reinforcement learning agents",
+        "Option D": "Clustering algorithms",
+        "Correct Option": "A",
+        "Explanation": "Chatbots powered by NLG generate text responses that mimic human conversation."
+    },
+    {
+        "Q.No": "53",
+        "Question": "Which technique is used to detect anomalies in datasets using unsupervised learning?",
+        "Option A": "Autoencoders",
+        "Option B": "Linear Regression",
+        "Option C": "Decision Trees",
+        "Option D": "Logistic Regression",
+        "Correct Option": "A",
+        "Explanation": "Autoencoders can learn a compressed representation of data and help detect anomalies by measuring reconstruction errors."
+    },
+    {
+        "Q.No": "54",
+        "Question": "What is the primary goal of anomaly detection?",
+        "Option A": "To identify unusual patterns that do not conform to expected behavior",
+        "Option B": "To classify data into predefined categories",
+        "Option C": "To optimize network throughput",
+        "Option D": "To cluster similar data points",
+        "Correct Option": "A",
+        "Explanation": "Anomaly detection aims to spot data points that deviate significantly from the norm."
+    },
+    {
+        "Q.No": "55",
+        "Question": "Which algorithm is often used for dimensionality reduction?",
+        "Option A": "Principal Component Analysis (PCA)",
+        "Option B": "Support Vector Machine (SVM)",
+        "Option C": "Decision Tree",
+        "Option D": "K-Means Clustering",
+        "Correct Option": "A",
+        "Explanation": "PCA reduces dimensionality by identifying the directions of maximum variance in the data."
+    },
+    {
+        "Q.No": "56",
+        "Question": "What is ensemble learning?",
+        "Option A": "Combining multiple models to improve overall prediction accuracy",
+        "Option B": "Using a single model to make predictions",
+        "Option C": "Reducing the dataset size for faster training",
+        "Option D": "A method of feature selection",
+        "Correct Option": "A",
+        "Explanation": "Ensemble learning aggregates predictions from multiple models to achieve better performance than any single model."
+    },
+    {
+        "Q.No": "57",
+        "Question": "Which method is used to combine multiple neural network predictions?",
+        "Option A": "Averaging or voting (ensemble methods)",
+        "Option B": "Single linear regression",
+        "Option C": "K-means clustering",
+        "Option D": "Data normalization",
+        "Correct Option": "A",
+        "Explanation": "Ensemble methods, such as averaging predictions or majority voting, combine outputs from multiple models."
+    },
+    {
+        "Q.No": "58",
+        "Question": "Which AI application is used for autonomous vehicle navigation?",
+        "Option A": "Real-time object detection and decision-making",
+        "Option B": "Social media monitoring",
+        "Option C": "Email filtering",
+        "Option D": "Web content recommendation",
+        "Correct Option": "A",
+        "Explanation": "Autonomous vehicles rely on real-time AI to detect objects and make navigational decisions."
+    },
+    {
+        "Q.No": "59",
+        "Question": "What is Natural Language Understanding (NLU)?",
+        "Option A": "A subfield of NLP focused on machine comprehension of human language",
+        "Option B": "A method for image processing",
+        "Option C": "A clustering algorithm for big data",
+        "Option D": "A technique for network security",
+        "Correct Option": "A",
+        "Explanation": "NLU enables machines to interpret and understand human language meaningfully."
+    },
+    {
+        "Q.No": "60",
+        "Question": "Which of the following best describes a chatbot?",
+        "Option A": "An AI system designed to simulate conversation with human users",
+        "Option B": "A neural network that processes images",
+        "Option C": "A clustering algorithm for text data",
+        "Option D": "A recommendation system for products",
+        "Correct Option": "A",
+        "Explanation": "Chatbots use AI techniques to simulate human conversation, often through NLP."
+    },
+    {
+        "Q.No": "61",
+        "Question": "What is the purpose of sentiment analysis?",
+        "Option A": "To determine the emotional tone behind a series of words",
+        "Option B": "To classify images into categories",
+        "Option C": "To segment customer data",
+        "Option D": "To optimize search engine rankings",
+        "Correct Option": "A",
+        "Explanation": "Sentiment analysis evaluates text to determine the writer's attitude or emotional tone."
+    },
+    {
+        "Q.No": "62",
+        "Question": "Which of the following is a common application of AI in marketing?",
+        "Option A": "Personalized advertisement targeting",
+        "Option B": "Image compression",
+        "Option C": "Database indexing",
+        "Option D": "Hardware acceleration",
+        "Correct Option": "A",
+        "Explanation": "AI in marketing is often used for personalized advertisement targeting based on consumer behavior."
+    },
+    {
+        "Q.No": "63",
+        "Question": "What does the term \"\"feature extraction\"\" mean in ML?",
+        "Option A": "The process of transforming raw data into informative attributes for a model",
+        "Option B": "The reduction of training data size",
+        "Option C": "The optimization of hyperparameters",
+        "Option D": "The encryption of sensitive data",
+        "Correct Option": "A",
+        "Explanation": "Feature extraction transforms raw data into a set of features that better represent the underlying problem."
+    },
+    {
+        "Q.No": "64",
+        "Question": "Which of the following best describes a support vector machine (SVM)?",
+        "Option A": "A supervised learning algorithm used for classification and regression",
+        "Option B": "An unsupervised clustering algorithm",
+        "Option C": "A neural network model",
+        "Option D": "A reinforcement learning technique",
+        "Correct Option": "A",
+        "Explanation": "SVM is a supervised algorithm that finds the optimal hyperplane for classification or regression tasks."
+    },
+    {
+        "Q.No": "65",
+        "Question": "What is the kernel trick in SVM?",
+        "Option A": "A technique to transform data into a higher-dimensional space without explicit computation",
+        "Option B": "A method for reducing the number of support vectors",
+        "Option C": "A way to speed up the training process by limiting iterations",
+        "Option D": "A process for normalizing input data",
+        "Correct Option": "A",
+        "Explanation": "The kernel trick enables SVMs to perform non-linear classification by implicitly mapping data to a higher-dimensional space."
+    },
+    {
+        "Q.No": "66",
+        "Question": "Which of the following is an application of AI in computer vision?",
+        "Option A": "Image and video recognition",
+        "Option B": "Speech-to-text conversion",
+        "Option C": "Text summarization",
+        "Option D": "Natural language translation",
+        "Correct Option": "A",
+        "Explanation": "AI in computer vision is used for tasks such as object detection and image classification."
+    },
+    {
+        "Q.No": "67",
+        "Question": "What is one major challenge in training deep neural networks?",
+        "Option A": "High computational resource requirements",
+        "Option B": "Easy convergence without issues",
+        "Option C": "Minimal data requirements",
+        "Option D": "Guaranteed interpretability of results",
+        "Correct Option": "A",
+        "Explanation": "Deep neural networks often require substantial computational power and large datasets for effective training."
+    },
+    {
+        "Q.No": "68",
+        "Question": "Which concept refers to the ability of a model to maintain performance on new, unseen data?",
+        "Option A": "Generalization",
+        "Option B": "Overfitting",
+        "Option C": "Underfitting",
+        "Option D": "Regularization",
+        "Correct Option": "A",
+        "Explanation": "Generalization is the model's ability to apply learned patterns to new data."
+    },
+    {
+        "Q.No": "69",
+        "Question": "What is an epoch in deep learning?",
+        "Option A": "One complete pass through the entire training dataset",
+        "Option B": "The number of neurons in a layer",
+        "Option C": "The rate at which the model learns",
+        "Option D": "A type of activation function",
+        "Correct Option": "A",
+        "Explanation": "An epoch is one full iteration over the entire training dataset."
+    },
+    {
+        "Q.No": "70",
+        "Question": "What is a batch in neural network training?",
+        "Option A": "A subset of the training data used to update model weights during one iteration",
+        "Option B": "The entire training dataset",
+        "Option C": "A single data point",
+        "Option D": "A complete cycle through the validation set",
+        "Correct Option": "A",
+        "Explanation": "A batch is a portion of the dataset processed in one iteration during training."
+    },
+    {
+        "Q.No": "71",
+        "Question": "Which term describes the process of optimizing a model's performance by adjusting its parameters?",
+        "Option A": "Training",
+        "Option B": "Validation",
+        "Option C": "Inference",
+        "Option D": "Deployment",
+        "Correct Option": "A",
+        "Explanation": "Training involves adjusting model parameters to minimize the loss function and improve performance."
+    },
+    {
+        "Q.No": "72",
+        "Question": "What is the purpose of early stopping in model training?",
+        "Option A": "To prevent overfitting by halting training when performance on a validation set stops improving",
+        "Option B": "To speed up the training process without regard to accuracy",
+        "Option C": "To increase the complexity of the model",
+        "Option D": "To reset the model parameters periodically",
+        "Correct Option": "A",
+        "Explanation": "Early stopping halts training once the model's performance on a validation set begins to degrade, preventing overfitting."
+    },
+    {
+        "Q.No": "73",
+        "Question": "Which of the following is an example of unsupervised learning used for anomaly detection?",
+        "Option A": "Autoencoders",
+        "Option B": "Logistic Regression",
+        "Option C": "Decision Trees",
+        "Option D": "Naive Bayes",
+        "Correct Option": "A",
+        "Explanation": "Autoencoders are often used in unsupervised settings to detect anomalies by measuring reconstruction errors."
+    },
+    {
+        "Q.No": "74",
+        "Question": "What does the term \"\"adaptive learning rate\"\" refer to?",
+        "Option A": "Adjusting the learning rate during training based on the progress of optimization",
+        "Option B": "A fixed learning rate throughout training",
+        "Option C": "Increasing the learning rate after each epoch",
+        "Option D": "Decreasing the batch size over time",
+        "Correct Option": "A",
+        "Explanation": "Adaptive learning rate techniques modify the learning rate during training to improve convergence."
+    },
+    {
+        "Q.No": "75",
+        "Question": "Which technique is used to combine the predictions of multiple models?",
+        "Option A": "Ensemble Learning",
+        "Option B": "Singular Value Decomposition",
+        "Option C": "Dimensionality Reduction",
+        "Option D": "Gradient Boosting (alone)",
+        "Correct Option": "A",
+        "Explanation": "Ensemble learning combines predictions from multiple models to achieve better overall performance."
+    },
+    {
+        "Q.No": "76",
+        "Question": "What is the primary objective of a neural network during training?",
+        "Option A": "To minimize the loss function by adjusting its weights and biases",
+        "Option B": "To maximize the number of hidden layers",
+        "Option C": "To increase the model's computational complexity",
+        "Option D": "To replicate the training data exactly",
+        "Correct Option": "A",
+        "Explanation": "The network adjusts its parameters to reduce the loss, thereby improving prediction accuracy."
+    },
+    {
+        "Q.No": "77",
+        "Question": "Which of the following is a common challenge in deploying AI models?",
+        "Option A": "Ensuring the model generalizes well to real-world data",
+        "Option B": "Guaranteeing zero error in all predictions",
+        "Option C": "Eliminating the need for training data",
+        "Option D": "Automatically generating new features",
+        "Correct Option": "A",
+        "Explanation": "A key challenge is ensuring that models perform well on real-world, unseen data."
+    },
+    {
+        "Q.No": "78",
+        "Question": "What is meant by \"\"model interpretability\"\"?",
+        "Option A": "The degree to which a human can understand the decisions or predictions made by a model",
+        "Option B": "The speed at which a model can be trained",
+        "Option C": "The complexity of the model's architecture",
+        "Option D": "The number of layers in a neural network",
+        "Correct Option": "A",
+        "Explanation": "Model interpretability refers to how easily a human can understand a model’s inner workings and outputs."
+    },
+    {
+        "Q.No": "79",
+        "Question": "Which of the following is an application of AI in robotics?",
+        "Option A": "Autonomous navigation and manipulation",
+        "Option B": "Web page design",
+        "Option C": "Database management",
+        "Option D": "Financial forecasting exclusively",
+        "Correct Option": "A",
+        "Explanation": "AI in robotics is used for autonomous navigation, object manipulation, and decision-making."
+    },
+    {
+        "Q.No": "80",
+        "Question": "What does the term \"\"reinforcement signal\"\" refer to in reinforcement learning?",
+        "Option A": "A reward or penalty provided to guide the agent's learning process",
+        "Option B": "The input data fed into the model",
+        "Option C": "The hyperparameter controlling learning rate",
+        "Option D": "The network's output after inference",
+        "Correct Option": "A",
+        "Explanation": "A reinforcement signal (reward or penalty) guides the learning of an agent in reinforcement learning."
+    },
+    {
+        "Q.No": "81",
+        "Question": "Which of the following best describes semi-supervised learning?",
+        "Option A": "A learning method that uses a small amount of labeled data along with a large amount of unlabeled data",
+        "Option B": "A learning method that uses only labeled data",
+        "Option C": "A learning method that uses no labeled data at all",
+        "Option D": "A method that randomly assigns labels to data",
+        "Correct Option": "A",
+        "Explanation": "Semi-supervised learning leverages a small labeled dataset to guide learning from a larger unlabeled dataset."
+    },
+    {
+        "Q.No": "82",
+        "Question": "What is \"\"model deployment\"\" in the context of ML?",
+        "Option A": "The process of integrating a trained model into a production environment",
+        "Option B": "The initial training of the model",
+        "Option C": "The creation of a dataset",
+        "Option D": "The evaluation of model performance in a lab setting",
+        "Correct Option": "A",
+        "Explanation": "Model deployment is the act of integrating a trained model into a live production environment for real-world use."
+    },
+    {
+        "Q.No": "83",
+        "Question": "Which of the following is an example of AI in customer service?",
+        "Option A": "Chatbots that provide real-time assistance",
+        "Option B": "Image classification systems",
+        "Option C": "Autonomous vehicle navigation",
+        "Option D": "Weather prediction models",
+        "Correct Option": "A",
+        "Explanation": "AI-powered chatbots are commonly used in customer service to provide instant support."
+    },
+    {
+        "Q.No": "84",
+        "Question": "What is \"\"natural language generation\"\" (NLG)?",
+        "Option A": "The process of automatically producing human-like text from data",
+        "Option B": "The process of converting speech to text",
+        "Option C": "The method of classifying images",
+        "Option D": "The technique of clustering data points",
+        "Correct Option": "A",
+        "Explanation": "NLG is the process by which machines generate coherent text from data inputs."
+    },
+    {
+        "Q.No": "85",
+        "Question": "Which of the following describes \"\"computer vision\"\"?",
+        "Option A": "Enabling machines to interpret and process visual information from the world",
+        "Option B": "Converting text to speech",
+        "Option C": "Enhancing database queries",
+        "Option D": "Optimizing network protocols",
+        "Correct Option": "A",
+        "Explanation": "Computer vision focuses on enabling machines to understand and interpret visual data."
+    },
+    {
+        "Q.No": "86",
+        "Question": "Which AI application is used to identify objects within images?",
+        "Option A": "Object Detection",
+        "Option B": "Sentiment Analysis",
+        "Option C": "Topic Modeling",
+        "Option D": "Sequence Prediction",
+        "Correct Option": "A",
+        "Explanation": "Object detection algorithms are used to locate and identify objects within images."
+    },
+    {
+        "Q.No": "87",
+        "Question": "What is the main function of a generative adversarial network (GAN)?",
+        "Option A": "To generate new data instances that mimic the training data",
+        "Option B": "To perform regression analysis",
+        "Option C": "To classify data into categories",
+        "Option D": "To compress large datasets",
+        "Correct Option": "A",
+        "Explanation": "GANs consist of two networks competing to produce realistic synthetic data similar to the training set."
+    },
+    {
+        "Q.No": "88",
+        "Question": "Which of the following is a common challenge in AI ethics?",
+        "Option A": "Ensuring fairness and avoiding bias in algorithmic decision-making",
+        "Option B": "Increasing the computational power of GPUs",
+        "Option C": "Reducing the number of training epochs",
+        "Option D": "Simplifying neural network architectures",
+        "Correct Option": "A",
+        "Explanation": "AI ethics involves ensuring that algorithms are fair, unbiased, and transparent."
+    },
+    {
+        "Q.No": "89",
+        "Question": "What does \"\"explainable AI\"\" (XAI) refer to?",
+        "Option A": "AI systems that provide human-understandable justifications for their decisions",
+        "Option B": "AI systems that require no human intervention",
+        "Option C": "AI systems that automatically optimize themselves",
+        "Option D": "AI systems that use unsupervised learning exclusively",
+        "Correct Option": "A",
+        "Explanation": "Explainable AI aims to make the decision-making process of AI systems transparent and understandable to humans."
+    },
+    {
+        "Q.No": "90",
+        "Question": "Which technology is frequently used to process large-scale data for ML applications?",
+        "Option A": "Distributed computing frameworks (e.g., Apache Spark)",
+        "Option B": "Single-threaded applications",
+        "Option C": "Manual data entry",
+        "Option D": "Local spreadsheets",
+        "Correct Option": "A",
+        "Explanation": "Distributed computing frameworks are essential for processing and analyzing large-scale datasets for ML."
+    },
+    {
+        "Q.No": "91",
+        "Question": "What is \"\"online learning\"\" in the context of ML?",
+        "Option A": "A model that continuously updates as new data arrives",
+        "Option B": "A model trained once and never updated",
+        "Option C": "Learning from offline datasets only",
+        "Option D": "A technique for batch processing data",
+        "Correct Option": "A",
+        "Explanation": "Online learning refers to models that update incrementally as new data becomes available."
+    },
+    {
+        "Q.No": "92",
+        "Question": "Which metric is used to measure the performance of clustering algorithms?",
+        "Option A": "Silhouette Score",
+        "Option B": "Accuracy",
+        "Option C": "Precision",
+        "Option D": "Recall",
+        "Correct Option": "A",
+        "Explanation": "The Silhouette Score evaluates how well data points have been clustered."
+    },
+    {
+        "Q.No": "93",
+        "Question": "What is the primary objective of anomaly detection using ML?",
+        "Option A": "To identify data points that deviate significantly from normal patterns",
+        "Option B": "To classify all data into predefined categories",
+        "Option C": "To increase the overall dataset size",
+        "Option D": "To enhance image resolution",
+        "Correct Option": "A",
+        "Explanation": "Anomaly detection aims to find rare or unusual data points that differ from the norm."
+    },
+    {
+        "Q.No": "94",
+        "Question": "Which AI application is used in voice assistants?",
+        "Option A": "Speech Recognition and Natural Language Processing",
+        "Option B": "Object Detection",
+        "Option C": "Image Segmentation",
+        "Option D": "Data Clustering",
+        "Correct Option": "A",
+        "Explanation": "Voice assistants use speech recognition and NLP to understand and respond to user commands."
+    },
+    {
+        "Q.No": "95",
+        "Question": "What is the role of a validation set in model training?",
+        "Option A": "To fine-tune model hyperparameters and monitor overfitting",
+        "Option B": "To train the model exclusively",
+        "Option C": "To store the final model weights",
+        "Option D": "To replace the test set",
+        "Correct Option": "A",
+        "Explanation": "A validation set is used during training to adjust hyperparameters and detect overfitting."
+    },
+    {
+        "Q.No": "96",
+        "Question": "Which concept in ML refers to the ability of a model to perform well on new, unseen data?",
+        "Option A": "Generalization",
+        "Option B": "Memorization",
+        "Option C": "Overfitting",
+        "Option D": "Regularization",
+        "Correct Option": "A",
+        "Explanation": "Generalization is the model's ability to apply learned patterns to unseen data."
+    },
+    {
+        "Q.No": "97",
+        "Question": "What is feature scaling, and why is it important?",
+        "Option A": "Transforming data features to a common scale to improve model performance",
+        "Option B": "Removing irrelevant features from the dataset",
+        "Option C": "Combining multiple features into one",
+        "Option D": "Splitting features into separate groups",
+        "Correct Option": "A",
+        "Explanation": "Feature scaling standardizes data ranges, which improves convergence in many ML algorithms."
+    },
+    {
+        "Q.No": "98",
+        "Question": "Which term describes the iterative process of minimizing the loss function in training?",
+        "Option A": "Optimization",
+        "Option B": "Regularization",
+        "Option C": "Augmentation",
+        "Option D": "Validation",
+        "Correct Option": "A",
+        "Explanation": "Optimization is the process of adjusting parameters to minimize the loss function during training."
+    },
+    {
+        "Q.No": "99",
+        "Question": "Which of the following is an example of AI being used in social media?",
+        "Option A": "Content recommendation and sentiment analysis",
+        "Option B": "Database management",
+        "Option C": "Hardware diagnostics",
+        "Option D": "Operating system development",
+        "Correct Option": "A",
+        "Explanation": "AI is widely used in social media for recommending content and analyzing user sentiment."
+    },
+    {
+        "Q.No": "100",
+        "Question": "What is the primary purpose of the Turing Test?",
+        "Option A": "To evaluate a machine's ability to exhibit human-like intelligence",
+        "Option B": "To measure a model's prediction speed",
+        "Option C": "To determine the size of training datasets",
+        "Option D": "To benchmark GPU performance",
+        "Correct Option": "A",
+        "Explanation": "The Turing Test assesses whether a machine's behavior is indistinguishable from that of a human."
+    }
+];
+
+    // Convert JSON to quizData format
+    const quizData = jsonData.map(item => ({
+      qNo: parseInt(item["Q.No"]),
+      question: item["Question"],
+      options: [item["Option A"], item["Option B"], item["Option C"], item["Option D"]],
+      correct: item["Correct Option"].charCodeAt(0) - 65, // Convert "A" to 0, "B" to 1, etc.
+      explanation: item["Explanation"]
+    }));
+
+    // Inject Quiz Questions into HTML
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((data, index) => {
+      const questionHTML = `
+        <div class="mb-4">
+          <div class="question">${data.qNo}. ${data.question}</div>
+          <div class="options">
+            ${data.options.map((option, i) => `
+              <button class="btn btn-outline-primary w-100" onclick="checkAnswer(this, ${index}, ${i})">${option}</button>
+            `).join("")}
+          </div>
+          <button class="btn btn-info mt-2 explanation-btn" onclick="toggleExplanation(this)">Show Explanation</button>
+          <div class="explanation">${data.explanation}</div>
+        </div>
+      `;
+      quizContainer.innerHTML += questionHTML;
+    });
+
+    // Check Answer Function
+    function checkAnswer(btn, questionIndex, optionIndex) {
+      const parent = btn.closest('.options');
+      const buttons = parent.querySelectorAll('button');
+      const correctIndex = quizData[questionIndex].correct;
+
+      // Disable all buttons
+      buttons.forEach(button => button.disabled = true);
+
+      // Highlight correct/incorrect answers
+      if (optionIndex === correctIndex) {
+        btn.classList.add('correct');
+      } else {
+        btn.classList.add('incorrect');
+        buttons[correctIndex].classList.add('correct');
+      }
+    }
+
+    // Toggle Explanation Visibility
+    function toggleExplanation(btn) {
+      const explanationDiv = btn.nextElementSibling;
+      if (explanationDiv.style.display === "block") {
+        explanationDiv.style.display = "none";
+        btn.textContent = "Show Explanation";
+      } else {
+        explanationDiv.style.display = "block";
+        btn.textContent = "Hide Explanation";
+      }
+    }
+  </script>
+</body>
+</html>
