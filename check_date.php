@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 // Manually set your cutoff date in "Y-m-d" format.
 // Update this date manually when you want the redirection to occur.
-$cutoffDate = "2026-02-16";
+$cutoffDate = "2024-02-16";
 
 // Get today's date.
 $today = date("Y-m-d");
