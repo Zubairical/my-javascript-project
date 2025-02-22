@@ -8,7 +8,7 @@
    * In this example, we use localStorage. Replace this with your actual implementation.
    *
    * To test, open your browser's console and run:
-   * localStorage.setItem("systemDeviceID", "4CC92C8B-2CAC-4800-B920-AE6822CA7C1B");
+   * localStorage.setItem("systemDeviceID", "4CC92C8B-2CAC-4800-B920-AE6822CA7C1C");
    */
   function getSystemDeviceId() {
     return localStorage.getItem("systemDeviceID");
