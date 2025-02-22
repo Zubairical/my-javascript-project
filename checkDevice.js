@@ -1,29 +1,30 @@
-// Immediately Invoked Function Expression to avoid polluting global scope
+// checkDevice.js
+
 (function() {
-  // Expected device ID as defined in this JS file
-  const expectedDeviceID = "ABC";
+  // Update this expected device ID as needed.
+  const expectedDeviceID = "4CC92C8B-2CAC-4800-B920-AE6822CA7C1B";
 
   /**
-   * Simulate retrieval of the system's device ID.
-   * In this example, we use localStorage. Replace this with your actual implementation.
-   *
-   * To test, open your browser's console and run:
-   * localStorage.setItem("systemDeviceID", "ABCD");
+   * Retrieve the system's device ID.
+   * In this example, we use localStorage. To test, open the console and run:
+   * localStorage.setItem("systemDeviceID", "<your-device-id>");
    */
   function getSystemDeviceId() {
-    return localStorage.getItem("systemDeviceID");
+    const id = localStorage.getItem("systemDeviceID");
+    console.log("Retrieved systemDeviceID:", id);
+    return id;
   }
 
-  // Retrieve the system device ID
+  // Get the current system device ID.
   const systemDeviceID = getSystemDeviceId();
+  console.log("Expected Device ID:", expectedDeviceID);
 
-  // Check if the device ID exists and matches the expected value.
+  // Compare the retrieved device ID to the expected value.
   if (systemDeviceID && systemDeviceID === expectedDeviceID) {
     console.log("Device is valid. Loading dashboard...");
-    // Dashboard continues loading normally.
+    // The dashboard will continue loading.
   } else {
     console.log("Device is not valid. Redirecting to design2.html...");
-    // If not valid, redirect the user to design2.html.
     window.location.href = "design2.html";
   }
 })();
