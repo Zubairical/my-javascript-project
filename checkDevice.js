@@ -1,14 +1,14 @@
 // Immediately Invoked Function Expression to avoid polluting global scope
 (function() {
   // Expected device ID as defined in this JS file
-  const expectedDeviceID = "4CC92C8B-2CAC-4800-B920-AE6822CA7C1C";
+  const expectedDeviceID = "ABC";
 
   /**
    * Simulate retrieval of the system's device ID.
    * In this example, we use localStorage. Replace this with your actual implementation.
    *
    * To test, open your browser's console and run:
-   * localStorage.setItem("systemDeviceID", "4CC92C8B-2CAC-4800-B920-AE6822CA7C1C");
+   * localStorage.setItem("systemDeviceID", "ABCD");
    */
   function getSystemDeviceId() {
     return localStorage.getItem("systemDeviceID");
