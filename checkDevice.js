@@ -1,7 +1,7 @@
 // Immediately Invoked Function Expression to avoid polluting global scope
 (function() {
   // Expected device ID as defined in this JS file
-  const expectedDeviceID = "4CC92C8B-2CAC-4800-B920-AE6822CA7C1B";
+  const expectedDeviceID = "4CC92C8B-2CAC-4800-B920-AE6822CA7C1C";
 
   /**
    * Simulate retrieval of the system's device ID.
