@@ -2,7 +2,7 @@
 
 (function() {
   // Update this expected device ID as needed.
-  const expectedDeviceID = "4CC92C8B-2CAC-4800-B920-AE6822CA7C1B";
+  const expectedDeviceID = "4CC92C8B-2CAC-4800-B920-";
 
   /**
    * Retrieve the system's device ID.
