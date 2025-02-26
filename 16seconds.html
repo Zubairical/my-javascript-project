@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .full-width-btn {
+            display: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://pashtoogle.com" class="btn btn-primary full-width-btn" id="delayedButton">Visit Pashtoogle</a>
+
+    <script>
+        setTimeout(function() {
+            document.getElementById("delayedButton").style.display = "block";
+        }, 16000); // 16 seconds delay
+    </script>
+
+</body>
+</html>
