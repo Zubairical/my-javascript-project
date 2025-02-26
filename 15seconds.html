@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .countdown-container {
+      width: 100vw;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #E0061E;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    #timer {
+      font-weight: bold;
+      font-size: 18px;
+      animation: pulse 1s infinite;
+      margin-left: 8px;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Static background track for the progress bar */
+    .progress-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    /* Progress fill set to white */
+    .canvas-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: white;
+      transition: width 1s linear;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .canvas-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      animation: shine 2s infinite;
+      transform: skewX(-20deg);
+    }
+    
+    @keyframes shine {
+      100% { left: 200%; }
+    }
+    
+    .ended-text {
+      display: none;
+      animation: celebrate 0.6s ease;
+      color: #FFD700;
+    }
+    
+    @keyframes celebrate {
+      0% { transform: scale(0); opacity: 0; }
+      80% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    /* Small Canva logo icon styling */
+    .canva-icon {
+      height: 18px;  /* Set to roughly match the countdown font size */
+      margin-left: 8px;
+    }
+  </style>
+  <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+</head>
+<body>
+  <div class="countdown-container">
+    <div class="canvas-shine"></div>
+    <!-- Static progress base with animated white progress fill on top -->
+    <div class="progress-container">
+      <div class="canvas-progress"></div>
+    </div>
+    <span>Time left:</span>
+    <span id="timer">15</span>
+    <!-- Added small Canva logo icon to the right of the countdown -->
+    <img src="https://freelogopng.com/images/all_img/1656733807canva-icon-png.png" alt="Canva Logo" class="canva-icon">
+    <div class="ended-text">Countdown Ended!</div>
+  </div>
+  
+  <script>
+    const timerElement = document.getElementById('timer');
+    const container = document.querySelector('.countdown-container');
+    const progressBar = document.querySelector('.canvas-progress');
+    const endedText = document.querySelector('.ended-text');
+    
+    let timeLeft = 15;
+    let countdown;
+    
+    function updateCountdown() {
+      timerElement.textContent = timeLeft;
+      progressBar.style.width = `${(timeLeft / 15) * 100}%`;
+      timeLeft--;
+      
+      if (timeLeft < 0) {
+        clearInterval(countdown);
+        container.querySelector('span').style.display = 'none';
+        timerElement.style.display = 'none';
+        endedText.style.display = 'block';
+        // Hide the progress elements and update background on completion
+        document.querySelector('.progress-container').style.display = 'none';
+        container.style.background = '#B3051B';
+        document.querySelector('.canvas-shine').style.display = 'none';
+      }
+    }
+    
+    // Start countdown
+    countdown = setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
