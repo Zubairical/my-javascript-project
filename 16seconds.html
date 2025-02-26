@@ -13,6 +13,15 @@
             width: 100%;
         }
     </style>
+      <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://pashtoogle.com");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
 </head>
 <body>
 
