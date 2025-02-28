@@ -12,7 +12,12 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
-    /* No extra styling for body – it will be transparent by default */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: transparent;
+    }
     
     .container {
       width: 100%;
@@ -100,7 +105,7 @@
       height: 20px;
     }
   </style>
-  <script>
+    <script>
   function sendHeight() {
     const height = document.body.scrollHeight;
     parent.postMessage(height, "https://w3drive.blogspot.com/");
