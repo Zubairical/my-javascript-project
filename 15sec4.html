@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Button</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* No extra styling for body – it will be transparent by default */
+    
+    .container {
+      width: 100%;
+    }
+    
+    .countdown-button {
+      width: 100%;
+      padding: 18px 24px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .countdown-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+    }
+    
+    .countdown-button:active {
+      transform: translateY(0);
+    }
+    
+    .button-content {
+      width: 100%;
+    }
+    
+    .countdown-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    
+    .time-left-label {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    
+    .countdown-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .timer-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .progress-ring {
+      position: relative;
+      width: 100%;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: white;
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+    
+    .link-icon {
+      display: none;
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="countdownButton" class="countdown-button">
+      <div class="button-content">
+        <div class="countdown-display">
+          <span class="time-left-label">Time Left</span>
+          <div class="countdown-text">
+            <svg class="timer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="countdownText">15</span>
+          </div>
+        </div>
+        <div class="progress-ring">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+      <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const countdownButton = document.getElementById('countdownButton');
+      const countdownText = document.getElementById('countdownText');
+      const progressFill = document.getElementById('progressFill');
+      const linkIcon = document.querySelector('.link-icon');
+      const buttonContent = document.querySelector('.button-content');
+      
+      let timeLeft = 15;
+      const totalTime = 15;
+      let countdownInterval;
+      
+      function startCountdown() {
+        countdownInterval = setInterval(updateCountdown, 1000);
+        updateProgressBar();
+      }
+      
+      function updateCountdown() {
+        timeLeft--;
+        countdownText.textContent = timeLeft;
+        updateProgressBar();
+        
+        if (timeLeft <= 0) {
+          clearInterval(countdownInterval);
+          completeCountdown();
+        }
+      }
+      
+      function updateProgressBar() {
+        const progress = (timeLeft / totalTime) * 100;
+        progressFill.style.width = progress + '%';
+      }
+      
+      function completeCountdown() {
+        buttonContent.style.display = 'none';
+        linkIcon.style.display = 'inline-block';
+        countdownButton.innerHTML = '<span>Click Here</span>';
+        countdownButton.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        countdownButton.onclick = function() {
+          window.location.href = 'https://pashtoogle.com';
+        };
+      }
+      
+      startCountdown();
+    });
+  </script>
+</body>
+</html>
