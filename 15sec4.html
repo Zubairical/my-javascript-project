@@ -100,6 +100,15 @@
       height: 20px;
     }
   </style>
+  <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage(height, "https://w3drive.blogspot.com/");
+  }
+
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
 </head>
 <body>
   <div class="container">
