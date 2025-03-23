@@ -1,160 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Countdown</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            background: transparent; /* Transparent background */
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-        }
-
-        .countdown-container {
-            position: relative;
-            width: min(90vw, 600px);
-            aspect-ratio: 1;
-        }
-
-        .gradient-border {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                #00ff87 0%,
-                #60efff 25%,
-                #0061ff 50%,
-                #ff0080 75%,
-                #00ff87 100%
-            );
-            animation: rotate 3s linear infinite;
-            filter: drop-shadow(0 0 30px rgba(0,255,135,0.3));
-            border: 25px solid rgba(255, 255, 255, 0.1); /* Bold border */
-        }
-
-        .countdown-inner {
-            position: absolute;
-            inset: 25px; /* Adjusted for bold circle */
-            background: rgba(10, 10, 10, 0.95);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(20px);
-            border: 4px solid rgba(255, 255, 255, 0.1); /* Inner border */
-        }
-
-        #countdown {
-            font-size: clamp(5rem, 30vw, 9rem);
-            font-weight: 800;
-            background: linear-gradient(45deg, #00ff87, #60efff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .title {
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
-            color: rgba(255,255,255,0.8);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        #redirectButton {
-            position: absolute;
-            bottom: -20%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 1.2rem 3rem;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #00ff87, #60efff);
-            color: #0a0a0a;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
-        }
-
-        #redirectButton:hover {
-            transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 0 40px rgba(0,255,135,0.3);
-        }
-
-        .glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, 
-                rgba(0,255,135,0.1) 0%, 
-                transparent 60%);
-            pointer-events: none;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            .countdown-container {
-                width: 80vw;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown Timer</title>
+  <style>
+    /* Reset default margins and paddings */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Fullscreen container with transparent background */
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Arial', sans-serif;
+    }
+    /* Countdown container styling */
+    .countdown-container {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    /* Countdown text styling */
+    .countdown {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    /* Label styling */
+    .label {
+      font-size: 1rem;
+      color: #666;
+    }
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 600px) {
+      .countdown {
+        font-size: 2rem;
+      }
+      .countdown-container {
+        padding: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="countdown-container">
-        <div class="glow"></div>
-        <div class="gradient-border"></div>
-        <div class="countdown-inner">
-            <div id="countdown">30</div>
-            <div class="title">Canva Pro</div>
-        </div>
-        <button id="redirectButton">ENTER PASHTOOGLE</button>
-    </div>
+  <div class="countdown-container">
+    <div id="timer" class="countdown"></div>
+    <div class="label">Time Left to 28-03-2025 12:00 AM</div>
+  </div>
 
-    <script>
-        let countdown = 30;
-        const countdownElement = document.getElementById('countdown');
-        const button = document.getElementById('redirectButton');
+  <script>
+    // Set the target date: March 28, 2025 at 12:00 AM
+    const targetDate = new Date('March 28, 2025 00:00:00').getTime();
 
-        const updateCountdown = () => {
-            countdownElement.style.transform = 'scale(1.1)';
-            setTimeout(() => countdownElement.style.transform = 'scale(1)', 150);
-        }
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-        const timer = setInterval(() => {
-            countdown--;
-            countdownElement.textContent = countdown;
-            updateCountdown();
-            
-            if(countdown <= 0) {
-                clearInterval(timer);
-                document.querySelector('.countdown-inner').style.opacity = '0.5';
-                button.style.opacity = '1';
-                button.style.bottom = '-15%';
-            }
-        }, 1000);
+      // If the countdown is finished, display "EXPIRED"
+      if (distance < 0) {
+        document.getElementById("timer").innerHTML = "EXPIRED";
+        clearInterval(interval);
+        return;
+      }
 
-        button.addEventListener('click', () => {
-            button.style.transform = 'translateX(-50%) scale(0.95)';
-            setTimeout(() => window.location.href = 'https://pashtoogle.com', 200);
-        });
-    </script>
+      // Calculate time components
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the countdown
+      document.getElementById("timer").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    }
+
+    // Update the countdown every 1 second
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
