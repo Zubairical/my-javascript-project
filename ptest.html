@@ -4867,7 +4867,7 @@ body, .container {
 
                 let marksHtml = "";
                 ["Is/MQ ", "Urdu ", "English", "Hist & Geo", "Maths", "G. Science ", "Drawing", "C. Science", "Pashto", "Qir'at"].forEach(subject => {
-                    let totalMarks = subject === "Is/MQ " ? 50 : subject === "Qir'at" ? 25 : 100;
+                    let totalMarks = subject === "Is/MQ " ? 100 : subject === "Qir'at" ? 25 : 100;
                     marksHtml += `<tr><td style="text-align: left;">${subject}</td><td>${student[subject]}</td><td>${totalMarks}</td></tr>`;
                 });
                 document.getElementById("marksTable").innerHTML = marksHtml;
